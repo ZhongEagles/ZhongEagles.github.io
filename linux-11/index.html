@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-运维进阶-11 存储结构与磁盘划分">
+<meta name="keywords" content="linux,Centos,RedHat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-运维进阶-11 存储结构与磁盘划分">
+<meta property="og:url" content="http://yoursite.com/linux-11/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-运维进阶-11 存储结构与磁盘划分">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8pdxclb6j30u00mlalw.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzhw08ocs0j30j80hmmz5.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzhwnvc3jjj30j80im4g4.jpg">
+<meta property="og:updated_time" content="2019-02-23T13:26:57.936Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-运维进阶-11 存储结构与磁盘划分">
+<meta name="twitter:description" content="linux-运维进阶-11 存储结构与磁盘划分">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8pdxclb6j30u00mlalw.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/linux-11/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-运维进阶-11 存储结构与磁盘划分 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/linux-11/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-运维进阶-11 存储结构与磁盘划分
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-23 11:34:18" itemprop="dateCreated datePublished" datetime="2019-01-23T11:34:18+08:00">2019-01-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-23 21:26:57" itemprop="dateModified" datetime="2019-02-23T21:26:57+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-运维进阶/" itemprop="url" rel="index"><span itemprop="name">linux-运维进阶</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-运维进阶-11 存储结构与磁盘划分</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-运维进阶-11-存储结构与磁盘划分"><a href="#linux-运维进阶-11-存储结构与磁盘划分" class="headerlink" title="linux-运维进阶-11 存储结构与磁盘划分"></a>linux-运维进阶-11 存储结构与磁盘划分</h1><h2 id="Linux文件结构"><a href="#Linux文件结构" class="headerlink" title="Linux文件结构"></a>Linux文件结构</h2><p>　　Linux 文件系统是一个目录树的结构，文件系统结构从一个根目录开始，根目录下可以有任意多个文件和子目录，子目录中又可以有任意多个文件和子目录。Linux 的这种文件系统结构使得一个目录和它包含的文件/子目录之间形成一种层次关系。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8pdxclb6j30u00mlalw.jpg" alt=""></p>
+<h2 id="物理设备的命名规则"><a href="#物理设备的命名规则" class="headerlink" title="物理设备的命名规则"></a>物理设备的命名规则</h2><table>
+<thead>
+<tr>
+<th>硬件设备</th>
+<th>文件名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IDE设备</td>
+<td>/dev/hd[a-d]</td>
+</tr>
+<tr>
+<td>SCSI/SATA/U盘</td>
+<td>/dev/sd[a-p]</td>
+</tr>
+<tr>
+<td>软驱</td>
+<td>/dev/fd[0-1]</td>
+</tr>
+<tr>
+<td>打印机</td>
+<td>/dev/lp[0-15]</td>
+</tr>
+<tr>
+<td>光驱</td>
+<td>/dev/cdrom</td>
+</tr>
+<tr>
+<td>鼠标</td>
+<td>/dev/mouse</td>
+</tr>
+<tr>
+<td>磁带机</td>
+<td>/dev/st0或/dev/ht0</td>
+</tr>
+</tbody>
+</table>
+<p>主分区或扩展分区的编号从1开始，到4结束； •逻辑分区从编号5开始。 </p>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><h3 id="Ext3"><a href="#Ext3" class="headerlink" title="Ext3"></a>Ext3</h3><p>​    一款日志文件系统，能够在系统异常宕机时避免文件系统资料丢失，并能自动修复数据的不一致与错误。然而，当硬盘容量较大时，所需的修复时间也会很长，而且也不能百分之百地保证资料不会丢失。它会把整个磁盘的每个写入动作的细节都预先记录下来，以便在发生异常宕机后能回溯追踪到被中断的部分，然后尝试进行修复。</p>
+<h3 id="Ext4"><a href="#Ext4" class="headerlink" title="Ext4"></a>Ext4</h3><p>​    Ext3的改进版本，作为RHEL 6系统中的默认文件管理系统，它支持的存储容量高达1EB（1EB=1,073,741,824GB），且能够有无限多的子目录。另外，Ext4文件系统能够批量分配block块，从而极大地提高了读写效率。</p>
+<h3 id="XFS"><a href="#XFS" class="headerlink" title="XFS"></a>XFS</h3><p>​    一种高性能的日志文件系统，而且是RHEL 7中默认的文件管理系统，它的优势在发生意外宕机后尤其明显，即可以快速地恢复可能被破坏的文件，而且强大的日志功能只用花费极低的计算和存储性能。并且它最大可支持的存储容量为18EB，这几乎满足了所有需求。</p>
+<h2 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h2><p>　　在windows操作系统中， 挂载通常是指给磁盘分区（包括被虚拟出来的磁盘分区）分配一个盘符。 第三方软件，如磁盘分区管理软件、虚拟磁盘软件等，通常也附带挂载功能。</p>
+<p>​     在linux操作系统中， 挂载是指将一个设备（通常是存储设备）挂接到一个已存在的目录上。 我们要访问存储设备中的文件，必须将文件所在的分区挂载到一个已存在的目录上， 然后通过访问这个目录来访问存储设备。</p>
+<p>　　在linux 操作系统中，挂载是一个非常重要的功能，使用非常频繁。它指将一个设备（通常是存储设备）挂接到一个已存在的目录上。（这个目录可以不为空，但挂载后这个目录下以前的内容将不可用。）需要理解的是，linux操作系统将所有的设备都看作文件，它将整个计算机的资源都整合。我们要访问存储设备中的文件，必须将文件所在的分区挂载到一个已存在的目录上，然后通过访问这个目录来访问存储设备。</p>
+<h4 id="举个栗子："><a href="#举个栗子：" class="headerlink" title="举个栗子："></a>举个栗子：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /dev</span><br><span class="line">[root@localhost dev]# ll cdrom</span><br><span class="line">lrwxrwxrwx. 1 root root 3 Jan 24 04:37 cdrom -&gt; sr0</span><br><span class="line">[root@localhost dev]# cd cdrom</span><br><span class="line">-bash: cd: cdrom: Not a directory</span><br><span class="line">[root@localhost dev]#</span><br></pre></td></tr></table></figure>
+<p>　　如上，我们的/dev目录下有个叫做cdrom的文件（就是指设备，设备也是一种文件），但是我们没办法cd到这个文件（设备）里面去看它究竟包含了哪些东西。所以呢，我们可以新建一个目录/mnt/cdrom/，然后把原来的cdrom文件（设备）挂载到/mnt/cdrom/这个目录底下，此时你可以cd到/mnt/cdrom/目录下看看，多出来一堆东西就是原来的cdrom文件（设备）里包含的东西了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost dev]# mkdir -p /mnt/cdrom</span><br><span class="line">[root@localhost dev]# ls /mnt/cdrom/</span><br><span class="line">[root@localhost dev]# mount /dev/cdrom /mnt/cdrom/</span><br><span class="line">mount: /dev/sr0 is write-protected, mounting read-only</span><br><span class="line">[root@localhost dev]# ls /mnt/cdrom/</span><br><span class="line">CentOS_BuildTag  EULA  images    LiveOS    repodata              RPM-GPG-KEY-CentOS-Testing-7</span><br><span class="line">EFI              GPL   isolinux  Packages  RPM-GPG-KEY-CentOS-7  TRANS.TBL</span><br><span class="line">[root@localhost dev]#</span><br></pre></td></tr></table></figure>
+<h3 id="挂载条件"><a href="#挂载条件" class="headerlink" title="挂载条件"></a>挂载条件</h3><p>1、挂载点必须是一个目录。</p>
+<p>2、一个分区挂载在一个已存在的目录上，这个目录可以不为空，但挂载后这个目录下以前的内容将不可用。对于其他操作系统建立的文件系统的挂载也是这样。</p>
+<h2 id="挂载硬件设备"><a href="#挂载硬件设备" class="headerlink" title="挂载硬件设备"></a>挂载硬件设备</h2><h3 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h3><p>mount命令用于挂载文件系统，格式为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount 文件系统 挂载目录</span><br></pre></td></tr></table></figure>
+<h4 id="临时挂载、使用mount命令来查看mount的挂载情况举例："><a href="#临时挂载、使用mount命令来查看mount的挂载情况举例：" class="headerlink" title="临时挂载、使用mount命令来查看mount的挂载情况举例："></a>临时挂载、使用mount命令来查看mount的挂载情况举例：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /mnt</span><br><span class="line">[root@localhost mnt]# mkdir cdrom</span><br><span class="line">[root@localhost mnt]# cd /</span><br><span class="line">[root@localhost /]# mount /dev/cdrom /mnt/cdrom/</span><br><span class="line">mount: /dev/sr0 is write-protected, mounting read-only</span><br><span class="line">[root@localhost /]# ls /mnt/cdrom</span><br><span class="line">CentOS_BuildTag  EULA  images    LiveOS    repodata              RPM-GPG-KEY-CentOS-Testing-7</span><br><span class="line">EFI              GPL   isolinux  Packages  RPM-GPG-KEY-CentOS-7  TRANS.TBL</span><br><span class="line"></span><br><span class="line">我们可以使用mount命令来查看mount的挂载情况</span><br><span class="line">[root@localhost /]# cd /mnt/cdrom/</span><br><span class="line">[root@localhost cdrom]# mount | grep /mnt/cdrom		#注意这里cdrom后面没有/</span><br><span class="line">/dev/sr0 on /mnt/cdrom type iso9660 (ro,relatime)</span><br><span class="line">[root@localhost cdrom]# </span><br><span class="line">注意：这样挂载的文件系统是临时的，会在重启之后消失！</span><br><span class="line"></span><br><span class="line">重启后：</span><br><span class="line">[root@localhost ~]# ls /mnt/cdrom/</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">可以看到，重启后咱们挂载的文件的确消失了！</span><br></pre></td></tr></table></figure>
+<h4 id="卸载文件系统（取消挂载）的两种方法"><a href="#卸载文件系统（取消挂载）的两种方法" class="headerlink" title="卸载文件系统（取消挂载）的两种方法"></a>卸载文件系统（取消挂载）的两种方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ls /mnt/cdrom/</span><br><span class="line">CentOS_BuildTag  EULA  images    LiveOS    repodata              RPM-GPG-KEY-CentOS-Testing-7</span><br><span class="line">EFI              GPL   isolinux  Packages  RPM-GPG-KEY-CentOS-7  TRANS.TBL</span><br><span class="line">[root@localhost ~]# umount /mnt/cdrom/			#也可以 umount /dev/sr0</span><br><span class="line">[root@localhost ~]# ls /mnt/cdrom/</span><br><span class="line">[root@localhost ~]# mount /dev/cdrom /mnt/cdrom/</span><br><span class="line">mount: /dev/sr0 is write-protected, mounting read-only</span><br><span class="line">[root@localhost ~]# ls /mnt/cdrom/</span><br><span class="line">CentOS_BuildTag  EULA  images    LiveOS    repodata              RPM-GPG-KEY-CentOS-Testing-7</span><br><span class="line">EFI              GPL   isolinux  Packages  RPM-GPG-KEY-CentOS-7  TRANS.TBL</span><br><span class="line">[root@localhost ~]# umount /dev/sr0</span><br><span class="line">[root@localhost ~]# ls /mnt/cdrom/</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>umount 的时候要求目标设备没有在使用中，比如当前没有用户cd到这个目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /mnt/cdrom/</span><br><span class="line">[root@localhost cdrom]# umount /mnt/cdrom/</span><br><span class="line">umount: /mnt/cdrom/: not mounted</span><br></pre></td></tr></table></figure>
+<h4 id="开机自动挂载"><a href="#开机自动挂载" class="headerlink" title="开机自动挂载"></a>开机自动挂载</h4><p>　　注意：现在咱们是继续上面的实验继续做，也就是说，上面咱们已经把挂载好的卸载掉了，/mnt/cdrom/现在仅仅是空目录，现在先让它空着就好！呐：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ls /mnt/cdrom/</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>接下来咱们开始做开机自动挂载</p>
+<p>在/etc目录下有个fstab文件，它里面列出了linux开机时自动挂载的文件系统的列表。</p>
+<p>编辑/etc/fstab文件使分区开机自动挂载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost cdrom]# vim /etc/fstab </span><br><span class="line">在文件最后一行加上如下内容：</span><br><span class="line">/dev/sr0        /mnt/cdrom                      ext4    defaults        0 0</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>设备文件</td>
+<td>一般为设备的路径+设备名称，也可以写唯一识别码（UUID，Universally Unique Identifier）</td>
+</tr>
+<tr>
+<td>挂载目录</td>
+<td>指定要挂载到的目录，需在挂载前创建好</td>
+</tr>
+<tr>
+<td>格式类型</td>
+<td>指定文件系统的格式，比如Ext3、Ext4、XFS、SWAP、iso9660（此为光盘设备）等</td>
+</tr>
+<tr>
+<td>权限选项</td>
+<td>若设置为defaults，则默认权限为：rw, suid, dev, exec, auto, nouser, async</td>
+</tr>
+<tr>
+<td>是否备份</td>
+<td>若为1则开机后使用dump进行磁盘备份，为0则不备份</td>
+</tr>
+<tr>
+<td>是否自检</td>
+<td>若为1则开机后自动进行磁盘自检，为0则不自检</td>
+</tr>
+</tbody>
+</table>
+<p>mount -a命令可以重新加载fstab文件测试此文件是否修改成功且配置生效,如果哪里出错它会显示出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mount -a</span><br><span class="line">mount: /dev/sr0 is write-protected, mounting read-only</span><br><span class="line">mount: wrong fs type, bad option, bad superblock on /dev/sr0,</span><br><span class="line">       missing codepage or helper program, or other error</span><br><span class="line"></span><br><span class="line">       In some cases useful info is found in syslog - try</span><br><span class="line">       dmesg | tail or so.</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>如上，哎，出错了    QAQ。如果刚刚没有用mount -a检查一下就重启，后面就会遇到一系列问题。</p>
+<p>　　解决思路：把你出错的提示复制下来，百度一下即可。我了个去，刚刚百度花了快十分钟，才找到问题所在，其实虽然从报错字面wrong fs type可以看出是我的文件格式类型写错了，也就是不能写ext4，关键是我也不知道写啥呀。万能的百度上搜到的，原来就是咱们上面敲过的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost cdrom]# mount | grep /mnt/cdrom		#注意这里cdrom后面没有符号/</span><br><span class="line">/dev/sr0 on /mnt/cdrom type iso9660 (ro,relatime)</span><br></pre></td></tr></table></figure>
+<p>我刚刚没有认真看它的type是iso9660，于是后面就写错了，现在改正：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/fstab </span><br><span class="line">最后一行改为：</span><br><span class="line">/dev/sr0        /mnt/cdrom                      iso9660 defaults        0 0</span><br></pre></td></tr></table></figure>
+<p>然后再检查一下，就没有报错了！同时顺带检查了一下挂载情况，的确挂载成功了！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mount -a</span><br><span class="line">mount: /dev/sr0 is write-protected, mounting read-only</span><br><span class="line">[root@localhost ~]# df -h</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/mapper/centos-root   17G  1.3G   16G   8% /</span><br><span class="line">devtmpfs                 476M     0  476M   0% /dev</span><br><span class="line">tmpfs                    488M     0  488M   0% /dev/shm</span><br><span class="line">tmpfs                    488M  7.7M  480M   2% /run</span><br><span class="line">tmpfs                    488M     0  488M   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda1               1014M  130M  885M  13% /boot</span><br><span class="line">tmpfs                     98M     0   98M   0% /run/user/0</span><br><span class="line">/dev/sr0                 906M  906M     0 100% /mnt/cdrom</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# ls /mnt/cdrom/</span><br><span class="line">CentOS_BuildTag  EULA  images    LiveOS    repodata              RPM-GPG-KEY-CentOS-Testing-7</span><br><span class="line">EFI              GPL   isolinux  Packages  RPM-GPG-KEY-CentOS-7  TRANS.TBL</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>重启</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# reboot</span><br></pre></td></tr></table></figure>
+<p>再次检查</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ls /mnt/cdrom/</span><br><span class="line">CentOS_BuildTag  EULA  images    LiveOS    repodata              RPM-GPG-KEY-CentOS-Testing-7</span><br><span class="line">EFI              GPL   isolinux  Packages  RPM-GPG-KEY-CentOS-7  TRANS.TBL</span><br><span class="line">[root@localhost ~]# df -h</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/mapper/centos-root   17G  1.3G   16G   8% /</span><br><span class="line">devtmpfs                 476M     0  476M   0% /dev</span><br><span class="line">tmpfs                    488M     0  488M   0% /dev/shm</span><br><span class="line">tmpfs                    488M  7.6M  480M   2% /run</span><br><span class="line">tmpfs                    488M     0  488M   0% /sys/fs/cgroup</span><br><span class="line">/dev/sr0                 906M  906M     0 100% /mnt/cdrom</span><br><span class="line">/dev/sda1               1014M  130M  885M  13% /boot</span><br><span class="line">tmpfs                     98M     0   98M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+<p>可以看到，上面的挂载并未消失，所以这个开机自动挂载是成功滴！</p>
+<h2 id="磁盘分区"><a href="#磁盘分区" class="headerlink" title="磁盘分区"></a>磁盘分区</h2><p>fdisk工具：</p>
+<p>　　在Linux系统中，管理硬盘设备最常用的方法就当属fdisk命令了。fdisk命令用于管理磁盘分区它提供了集添加、删除、转换分区等功能于一身的“一站式分区服务”，格式为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk  [磁盘名称]</span><br></pre></td></tr></table></figure>
+<p>题目：添加一块20G硬盘，分出一个5G大小的分区，分区格式分别为xfs，将分区通过UUID永久挂载到/mnt/note目录</p>
+<p>首先，查看硬盘及分区信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# fdisk -l </span><br><span class="line"></span><br><span class="line">Disk /dev/sda: 21.5 GB, 21474836480 bytes, 41943040 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk label type: dos</span><br><span class="line">Disk identifier: 0x000bf707</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/sda2         2099200    41943039    19921920   8e  Linux LVM</span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-root: 18.2 GB, 18249416704 bytes, 35643392 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-swap: 2147 MB, 2147483648 bytes, 4194304 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>可以看出，Disk /dev/sda: 21.5 GB说明只有一块磁盘，我们现在给它加上第二块磁盘：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzhw08ocs0j30j80hmmz5.jpg" alt=""></p>
+<p>然后再次查看硬盘及分区信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# fdisk -l </span><br><span class="line"></span><br><span class="line">Disk /dev/sda: 21.5 GB, 21474836480 bytes, 41943040 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk label type: dos</span><br><span class="line">Disk identifier: 0x000bf707</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/sda2         2099200    41943039    19921920   8e  Linux LVM</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb: 21.5 GB, 21474836480 bytes, 41943040 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-root: 18.2 GB, 18249416704 bytes, 35643392 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-swap: 2147 MB, 2147483648 bytes, 4194304 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>可以看到多出了Disk /dev/sdb: 21.5 GB的另一块磁盘。咱们接下来就在这个新磁盘上完成题目要求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"># 1.使用fdisk分出一个大小为5G的分区</span><br><span class="line"> </span><br><span class="line">[root@localhost ~]# fdisk /dev/sdb</span><br><span class="line">欢迎使用 fdisk (util-linux 2.23.2)。</span><br><span class="line"> </span><br><span class="line">更改将停留在内存中，直到您决定将更改写入磁盘。</span><br><span class="line">使用写入命令前请三思。</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">命令(输入 m 获取帮助)：n</span><br><span class="line">Partition type:</span><br><span class="line">   p   primary (0 primary, 0 extended, 4 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): p</span><br><span class="line">分区号 (1-4，默认 1)：</span><br><span class="line">起始 扇区 (2048-41943039，默认为 2048)：</span><br><span class="line">将使用默认值 2048</span><br><span class="line">Last 扇区, +扇区 or +size&#123;K,M,G&#125; (2048-41943039，默认为 41943039)：+5G</span><br><span class="line">分区 1 已设置为 Linux 类型，大小设为 5 GiB</span><br><span class="line"> </span><br><span class="line">命令(输入 m 获取帮助)：p</span><br><span class="line"> </span><br><span class="line">磁盘 /dev/sdb：21.5 GB, 21474836480 字节，41943040 个扇区</span><br><span class="line">Units = 扇区 of 1 * 512 = 512 bytes</span><br><span class="line">扇区大小(逻辑/物理)：512 字节 / 512 字节</span><br><span class="line">I/O 大小(最小/最佳)：512 字节 / 512 字节</span><br><span class="line">磁盘标签类型：dos</span><br><span class="line">磁盘标识符：0x802025ce</span><br><span class="line"> </span><br><span class="line">   设备 Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sdb1            2048    10487807     5242880   83  Linux</span><br><span class="line"> </span><br><span class="line">命令(输入 m 获取帮助)：w</span><br><span class="line">The partition table has been altered!</span><br><span class="line"> </span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">正在同步磁盘。</span><br><span class="line"> </span><br><span class="line"># 2.格式化磁盘为xfs格式</span><br><span class="line">[root@localhost ~]# mkfs.xfs /dev/sdb1</span><br><span class="line">meta-data=/dev/sdb1              isize=512    agcount=4, agsize=327680 blks</span><br><span class="line">         =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">         =                       crc=1        finobt=0, sparse=0</span><br><span class="line">data     =                       bsize=4096   blocks=1310720, imaxpct=25</span><br><span class="line">         =                       sunit=0      swidth=0 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0 ftype=1</span><br><span class="line">log      =internal log           bsize=4096   blocks=2560, version=2</span><br><span class="line">         =                       sectsz=512   sunit=0 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"># 3.用partprobe命令将修改写入硬盘</span><br><span class="line">[root@localhost ~]# partprobe</span><br><span class="line"> </span><br><span class="line"># 4.用blkid命令查看分区的UUID</span><br><span class="line">[root@localhost ~]# blkid | grep /dev/sdb1</span><br><span class="line">/dev/sdb1: UUID=&quot;081fb70a-c886-4926-bc0d-0e94a9c31687&quot; TYPE=&quot;xfs&quot; </span><br><span class="line"> </span><br><span class="line"># 5.修改/etc/fstab达到开机挂载的目的</span><br><span class="line">[root@localhost ~]# tail -n 1 /etc/fstab </span><br><span class="line">UUID=&quot;081fb70a-c886-4926-bc0d-0e94a9c31687&quot;	/mnt/note xfs defaults 0 0</span><br><span class="line"># 6.使用mount -a命令测试fstab挂载是否成功</span><br><span class="line">[root@localhost ~]# mount  | grep /dev/sdb1</span><br><span class="line">[root@localhost ~]# mount -a</span><br><span class="line">[root@localhost ~]# mount  | grep /dev/sdb1</span><br><span class="line">/dev/sdb1 on /mnt/note type xfs (rw,relatime,seclabel,attr2,inode64,noquota)</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="df-h"><a href="#df-h" class="headerlink" title="df -h"></a>df -h</h3><p>用于查看文件系统的使用情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# df -h</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/mapper/centos-root   17G  1.3G   16G   8% /</span><br><span class="line">devtmpfs                 476M     0  476M   0% /dev</span><br><span class="line">tmpfs                    488M     0  488M   0% /dev/shm</span><br><span class="line">tmpfs                    488M  7.7M  480M   2% /run</span><br><span class="line">tmpfs                    488M     0  488M   0% /sys/fs/cgroup</span><br><span class="line">/dev/sr0                 906M  906M     0 100% /mnt/cdrom</span><br><span class="line">/dev/sda1               1014M  130M  885M  13% /boot</span><br><span class="line">tmpfs                     98M     0   98M   0% /run/user/0</span><br><span class="line">/dev/sdb1                5.0G   33M  5.0G   1% /mnt/note</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="du-sh"><a href="#du-sh" class="headerlink" title="du -sh"></a>du -sh</h3><p>用于查看文件数据占用量的du命令，其格式为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du [选项] [文件]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /</span><br><span class="line">[root@localhost /]# du -sh /root</span><br><span class="line">4.9M	/root</span><br><span class="line">[root@localhost /]#</span><br></pre></td></tr></table></figure>
+<h3 id="交换分区"><a href="#交换分区" class="headerlink" title="交换分区"></a>交换分区</h3><p>　　题目：添加一个3G大小的交换分区，删除原先系统里的交换分区fstab挂载（如下图有“swap”的那一行），然后再用mount -a命令重新挂载fstab文件，还要敲下面的命令关闭当前系统生效的交换分区</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzhwnvc3jjj30j80im4g4.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# swapoff /dev/mapper/centos-swap </span><br><span class="line">[root@localhost ~]# free -m</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:            974         126         693           7         155         680</span><br><span class="line">Swap:             0           0           0</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>1.首先添加一块3G的分区sdb2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# fdisk /dev/sdb</span><br><span class="line">Welcome to fdisk (util-linux 2.23.2).</span><br><span class="line"></span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Partition type:</span><br><span class="line">   p   primary (1 primary, 0 extended, 3 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): </span><br><span class="line">Using default response p</span><br><span class="line">Partition number (2-4, default 2): </span><br><span class="line">First sector (10487808-41943039, default 10487808): </span><br><span class="line">Using default value 10487808</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G&#125; (10487808-41943039, default 41943039): +3G</span><br><span class="line">Partition 2 of type Linux and of size 3 GiB is set</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line"></span><br><span class="line">WARNING: Re-reading the partition table failed with error 16: Device or resource busy.</span><br><span class="line">The kernel still uses the old table. The new table will be used at</span><br><span class="line">the next reboot or after you run partprobe(8) or kpartx(8)</span><br><span class="line">Syncing disks.</span><br><span class="line">[root@localhost ~]# fdisk -l /dev/sdb</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb: 21.5 GB, 21474836480 bytes, 41943040 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk label type: dos</span><br><span class="line">Disk identifier: 0xbfd160d1</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sdb1            2048    10487807     5242880   83  Linux</span><br><span class="line">/dev/sdb2        10487808    16779263     3145728   83  Linux</span><br><span class="line">[root@localhost ~]# partprobe </span><br><span class="line">注意：最后一条命令别忘了敲！</span><br></pre></td></tr></table></figure>
+<p>2.将分区格式化为交换分区</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mkswap /dev/sdb2</span><br><span class="line">Setting up swapspace version 1, size = 3145724 KiB</span><br><span class="line">no label, UUID=3060761d-8f1b-4222-96ba-2d2a101864ae</span><br><span class="line">[root@localhost ~]# swapon /dev/sdb2</span><br><span class="line">[root@localhost ~]# free -m</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:            974         128         687           7         158         675</span><br><span class="line">Swap:          3071           0        3071</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>3.让交换分区能开机启动生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# blkid | grep /dev/sdb2</span><br><span class="line">/dev/sdb2: UUID=&quot;3060761d-8f1b-4222-96ba-2d2a101864ae&quot; TYPE=&quot;swap&quot; </span><br><span class="line">[root@localhost ~]# vim /etc/fstab </span><br><span class="line">[root@localhost ~]# init 6</span><br><span class="line">重启后：</span><br><span class="line">[root@localhost ~]# free -m</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:            976         119         718           6         138         695</span><br><span class="line">Swap:          3071           0        3071</span><br><span class="line"># 看到我们设置的虚拟内存，生效</span><br></pre></td></tr></table></figure>
+<h1 id="磁盘配额"><a href="#磁盘配额" class="headerlink" title="磁盘配额"></a>磁盘配额</h1><p>　　为了限制用户在分区上使用磁盘的容量，利用磁盘限额技术来限制，一般应用场景有网盘、邮箱，还有网络论坛用户上传文件限制等等。</p>
+<p>修改/etc/fstab中的类型字段来开启分期的磁盘配额功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/fstab </span><br><span class="line">[root@localhost ~]# grep note /etc/fstab </span><br><span class="line">UUID=&quot;081fb70a-c886-4926-bc0d-0e94a9c31687&quot;	/mnt/note xfs defaults,uquota 0 0</span><br><span class="line"># 重启使分区的磁盘配额功能</span><br><span class="line">[root@localhost ~]# reboot</span><br><span class="line">[root@localhost ~]# xfs_quota -x -c &apos;limit bsoft=3m bhard=6m isoft=3 ihard=6 aaa&apos; /mnt/note/</span><br><span class="line"># 其中软限制为3m，硬限制为6m</span><br><span class="line"> </span><br><span class="line">[aaa@localhost root]$ cd /mnt/note/</span><br><span class="line"># 生成一个4M的文件</span><br><span class="line">[aaa@localhost note]$ dd if=/dev/zero of=4mfile bs=1M count=4</span><br><span class="line">记录了4+0 的读入</span><br><span class="line">记录了4+0 的写出</span><br><span class="line">4194304字节(4.2 MB)已复制，0.00425314 秒，986 MB/秒</span><br><span class="line">[eagle@localhost note]$ ll</span><br><span class="line">总用量 4096</span><br><span class="line">-rw-rw-r--. 1 aaa afeng 4194304 8月  14 17:18 4mfile</span><br><span class="line">[aaa@localhost note]$ ll -h</span><br><span class="line">总用量 4.0M</span><br><span class="line">-rw-rw-r--. 1 aaa afeng 4.0M 8月  14 17:18 4mfile</span><br><span class="line">[aaa@localhost note]$ </span><br><span class="line"># 生成一个3M的文件，报错失败，最终这个文件只生成出来2M</span><br><span class="line">[aaa@localhost note]$ dd if=/dev/zero of=3mfile bs=1M count=3</span><br><span class="line">dd: 写入&quot;3mfile&quot; 出错: 超出磁盘限额</span><br><span class="line">记录了3+0 的读入</span><br><span class="line">记录了2+0 的写出</span><br><span class="line">2097152字节(2.1 MB)已复制，0.00378417 秒，554 MB/秒</span><br><span class="line">[aaa@localhost note]$ ll -h</span><br><span class="line">总用量 6.0M</span><br><span class="line">-rw-rw-r--. 1 aaa afeng 2.0M 8月  14 17:19 3mfile</span><br><span class="line">-rw-rw-r--. 1 aaa afeng 4.0M 8月  14 17:18 4mfile</span><br></pre></td></tr></table></figure>
+<p>本篇到此结束</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"># Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"># RedHat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-10/" rel="next" title="linux-运维进阶-10 用户权限与文件权限">
+                <i class="fa fa-chevron-left"></i> linux-运维进阶-10 用户权限与文件权限
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-12/" rel="prev" title="linux-运维进阶-12 RAID和LVM">
+                linux-运维进阶-12 RAID和LVM <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-11-存储结构与磁盘划分"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-11 存储结构与磁盘划分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux文件结构"><span class="nav-number">1.1.</span> <span class="nav-text">Linux文件结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#物理设备的命名规则"><span class="nav-number">1.2.</span> <span class="nav-text">物理设备的命名规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件系统"><span class="nav-number">1.3.</span> <span class="nav-text">文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ext3"><span class="nav-number">1.3.1.</span> <span class="nav-text">Ext3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ext4"><span class="nav-number">1.3.2.</span> <span class="nav-text">Ext4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XFS"><span class="nav-number">1.3.3.</span> <span class="nav-text">XFS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载"><span class="nav-number">1.4.</span> <span class="nav-text">挂载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#举个栗子："><span class="nav-number">1.4.0.1.</span> <span class="nav-text">举个栗子：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载条件"><span class="nav-number">1.4.1.</span> <span class="nav-text">挂载条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载硬件设备"><span class="nav-number">1.5.</span> <span class="nav-text">挂载硬件设备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mount"><span class="nav-number">1.5.1.</span> <span class="nav-text">mount</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#临时挂载、使用mount命令来查看mount的挂载情况举例："><span class="nav-number">1.5.1.1.</span> <span class="nav-text">临时挂载、使用mount命令来查看mount的挂载情况举例：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#卸载文件系统（取消挂载）的两种方法"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">卸载文件系统（取消挂载）的两种方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开机自动挂载"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">开机自动挂载</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘分区"><span class="nav-number">1.6.</span> <span class="nav-text">磁盘分区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#df-h"><span class="nav-number">1.6.1.</span> <span class="nav-text">df -h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#du-sh"><span class="nav-number">1.6.2.</span> <span class="nav-text">du -sh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换分区"><span class="nav-number">1.6.3.</span> <span class="nav-text">交换分区</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#磁盘配额"><span class="nav-number">2.</span> <span class="nav-text">磁盘配额</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

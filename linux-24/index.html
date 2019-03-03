@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-运维进阶-24 PXE+Kickstart 无人值守安装系统">
+<meta name="keywords" content="linux,Centos,RedHat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-运维进阶-24 PXE+Kickstart 无人值守安装系统">
+<meta property="og:url" content="http://yoursite.com/linux-24/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-运维进阶-24 PXE+Kickstart 无人值守安装系统">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g009un8zohj30j80hewgw.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g009x6kf1sj30mx0kfwfm.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dw8ggd0j30j80kin06.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dvvk286j30j80kgwfs.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dx3ssx2j30ir0oejsg.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dxkn1l9j30j80g4414.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dyowd64j30j80f0ad9.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00e13aop3j30j90elgnn.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00e7opqdtj30j80ee0u3.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00egr6xu7j30j80h0aat.jpg">
+<meta property="og:updated_time" content="2019-02-23T13:40:40.731Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-运维进阶-24 PXE+Kickstart 无人值守安装系统">
+<meta name="twitter:description" content="linux-运维进阶-24 PXE+Kickstart 无人值守安装系统">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g009un8zohj30j80hewgw.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/linux-24/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-运维进阶-24 PXE+Kickstart 无人值守安装系统 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/linux-24/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-运维进阶-24 PXE+Kickstart 无人值守安装系统
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-04 08:21:02" itemprop="dateCreated datePublished" datetime="2019-02-04T08:21:02+08:00">2019-02-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-23 21:40:40" itemprop="dateModified" datetime="2019-02-23T21:40:40+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-运维进阶/" itemprop="url" rel="index"><span itemprop="name">linux-运维进阶</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-运维进阶-24 PXE+Kickstart 无人值守安装系统</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-运维进阶-24-PXE-Kickstart无人值守安装系统"><a href="#linux-运维进阶-24-PXE-Kickstart无人值守安装系统" class="headerlink" title="linux-运维进阶-24 PXE+Kickstart无人值守安装系统"></a>linux-运维进阶-24 PXE+Kickstart无人值守安装系统</h1><h2 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h2><h3 id="一、pxe介绍"><a href="#一、pxe介绍" class="headerlink" title="一、pxe介绍"></a>一、pxe介绍</h3><p>　　PXE(preboot execute environment，预启动执行环境)是由Intel公司开发的最新技术，工作于Client/Server的网络模式，支持工作站通过网络从远端服务器下载映像，并由此支持通过网络启动操作系统，在启动过程中，终端要求服务器分配IP地址再用TFTP或MTFTP协议下载一个启动软件包到本机内存中执行，由这个启动软件包完成终端(客户?)基本软件设置，从而引导预先安装在服务器中的终端操作系统。PXE可以引导多种操作系统。</p>
+<h3 id="二、-kickstart介绍"><a href="#二、-kickstart介绍" class="headerlink" title="二、.kickstart介绍"></a>二、.kickstart介绍</h3><p>　　许多系统管理员倾向于使用自动安装方法来安装RedHat企业Linux在他们的机器上。为了满足这个需要，RedHat创建了kickstart安装方法。使用kickstart，系统管理员可以创建一个包含所有在典型的安装过程中通常会被问到的问题的答案的文件。启动文件可以保存在单个服务器系统上，并在运行期间有个人计算机读取安装。这安装方法可以支持使用一个启动文件来安装RedHat企业Linux在多台机器上。kickstart为用户提供了一种自动化的安装方法。</p>
+<p>　　Kickstart是一种无人值守的安装方式。它的工作原理是在安装过程中记录人工干预填写的各种参数，并生成一个名为ks.cfg的文件。如果在自动安装过程中出现要填写参数的情况，安装程序首先会去查找ks.cfg文件，如果找到合适的参数，就采用所找到的参数；如果没有找到合适的参数，便会弹出对话框让安装者手工填写。所以，如果ks.cfg文件涵盖了安装过程中所有需要填写的参数，那么安装者完全可以只告诉安装程序从何处下载ks.cfg文件，然后就去忙自己的事情。等安装完毕，安装程序会根据ks.cfg中的设置重启/关闭系统，并结束安装。</p>
+<h3 id="三、应用"><a href="#三、应用" class="headerlink" title="三、应用"></a>三、应用</h3><p>　　刚入职的运维新手经常会被要求去做一些安装操作系统的工作。如果按照第1章讲解的用光盘镜像来安装操作系统，其效率会相当低下。本章将介绍可以实现无人值守安装服务的PXE+Kickstart服务程序，并带领大家动手安装部署PXE + TFTP + FTP + DHCP + Kickstart等服务程序，从而搭建出一套可批量安装Linux系统的无人值守安装系统。在学完本章内容之后，运维新手就可以避免枯燥乏味的重复性工作，大大提供系统安装的效率。</p>
+<h2 id="PXE-Kicstart-无人值守安装系统"><a href="#PXE-Kicstart-无人值守安装系统" class="headerlink" title="PXE+Kicstart 无人值守安装系统"></a>PXE+Kicstart 无人值守安装系统</h2><table>
+<thead>
+<tr>
+<th>主机名称</th>
+<th>操作系统</th>
+<th>IP地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无人值守系统</td>
+<td>CENTOS 7</td>
+<td>ens33：192.168.141.132                ens37：192.168.10.10</td>
+</tr>
+<tr>
+<td>客户端主机</td>
+<td>未安装操作系统</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>　　客户端主机先不要开机，服务器Server增加一块网卡，设置为仅主机模式，客户机client一块网卡为仅主机模式，尚未安装系统的客户机内存至少大于等于2G，其CD/DVD里不用放置iso系统镜像，如下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g009un8zohj30j80hewgw.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g009x6kf1sj30mx0kfwfm.jpg" alt=""></p>
+<h3 id="配置Server服务器"><a href="#配置Server服务器" class="headerlink" title="配置Server服务器"></a>配置Server服务器</h3><p>直接关闭服务器上防火墙和selinux，省事儿</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# setenforce 0</span><br><span class="line">[root@localhost ~]# systemctl stop firewalld</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>设置服务器新添加的仅主机模式网卡为固定ip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# nmcli connection add con-name ens37 ifname ens37 type ethernet autoconnect yes ipv4.method manual ipv4.addresses 192.168.10.10/24</span><br><span class="line">连接“ens37”(4a690975-263e-4f5f-8ba9-d08fb16ff66d) 已成功添加。</span><br><span class="line">[root@localhost ~]# systemctl restart network</span><br><span class="line">[root@localhost ~]# ip add</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:98:66:4e brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.141.132/24 brd 192.168.141.255 scope global noprefixroute dynamic ens33</span><br><span class="line">       valid_lft 1797sec preferred_lft 1797sec</span><br><span class="line">    inet6 fe80::5a82:cc9d:de3:b9f0/64 scope link noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">3: ens37: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:98:66:58 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.10.10/24 brd 192.168.10.255 scope global noprefixroute ens37</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::8df1:2a48:abf7:c67b/64 scope link noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">可以看到网卡ens37的ip已经成功改为192.168.10.10/24了</span><br></pre></td></tr></table></figure>
+<p>配置DHCP服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install dhcp -y</span><br><span class="line">[root@localhost ~]# vim /etc/dhcp/dhcpd.conf </span><br><span class="line"></span><br><span class="line">#</span><br><span class="line"># DHCP Server Configuration file.</span><br><span class="line">#   see /usr/share/doc/dhcp*/dhcpd.conf.example</span><br><span class="line">#   see dhcpd.conf(5) man page</span><br><span class="line">#</span><br><span class="line">allow booting;</span><br><span class="line">allow bootp;</span><br><span class="line">ddns-update-style interim;</span><br><span class="line">ignore client-updates;</span><br><span class="line">subnet 192.168.10.0 netmask 255.255.255.0 &#123;</span><br><span class="line">        option subnet-mask      255.255.255.0;</span><br><span class="line">        option domain-name-servers      192.168.10.10;</span><br><span class="line">        range dynamic-bootp     192.168.10.100 192.168.10.200;</span><br><span class="line">        default-lease-time      21600;</span><br><span class="line">        max-lease-time          43200;</span><br><span class="line">        next-server             192.168.10.10;</span><br><span class="line">        filename                &quot;pxelinux.0&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">保存退出，重启dhcp服务</span><br><span class="line">[root@localhost ~]# systemctl restart dhcpd</span><br></pre></td></tr></table></figure>
+<p>配置TFTP服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install tftp-server xinetd -y</span><br><span class="line">[root@localhost ~]# vim /etc/xinetd.d/tftp </span><br><span class="line">将第14行的</span><br><span class="line">        disable                 = yes</span><br><span class="line">改为：</span><br><span class="line">        disable                 = no</span><br><span class="line">即可。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">保存退出，重启xinetd服务</span><br><span class="line">[root@localhost ~]# systemctl restart xinetd</span><br><span class="line">[root@localhost ~]# systemctl enable xinetd</span><br></pre></td></tr></table></figure>
+<p>配置syslinux服务程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install syslinux -y</span><br></pre></td></tr></table></figure>
+<p>　　在安装好SYSLinux服务程序软件包后，/usr/share/syslinux目录中会出现很多引导文件。</p>
+<p>　　首先需要把SYSLinux提供的引导文件复制到TFTP服务程序的默认目录中，也就是前文提到的文件pxelinux.0，这样客户端主机就能够顺利地获取到引导文件了。</p>
+<p>　　另外在Centos 7系统光盘镜像中也有一些我们需要调取的引导文件。确认光盘镜像已经被挂载到/media/cdrom目录后，使用复制命令将光盘镜像中自带的一些引导文件也复制到TFTP服务程序的默认目录中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /var/lib/tftpboot/</span><br><span class="line">[root@localhost tftpboot]# cp /usr/share/syslinux/pxelinux.0 .</span><br><span class="line">[root@localhost tftpboot]# mkdir -p /media/cdrom</span><br><span class="line">[root@localhost tftpboot]# mount /dev/cdrom /media/cdrom/</span><br><span class="line">mount: /dev/sr0 写保护，将以只读方式挂载</span><br><span class="line">[root@localhost tftpboot]# cd /media/cdrom/images/pxeboot/</span><br><span class="line">[root@localhost pxeboot]# ls</span><br><span class="line">initrd.img  TRANS.TBL  vmlinuz</span><br><span class="line">[root@localhost pxeboot]# cd -</span><br><span class="line">/var/lib/tftpboot</span><br><span class="line">[root@localhost tftpboot]# </span><br><span class="line">[root@localhost tftpboot]# cp /media/cdrom/images/pxeboot/&#123;vmlinuz,initrd.img&#125; .</span><br><span class="line">[root@localhost tftpboot]# cp /media/cdrom/isolinux/&#123;vesamenu.c32,boot.msg&#125; .</span><br></pre></td></tr></table></figure>
+<p>　　然后在TFTP服务程序的目录中新建pxelinux.cfg目录，虽然该目录的名字带有后缀，但依然也是目录，而非文件！将系统光盘中的开机选项菜单复制到该目录中，并命名为default。这个default文件就是开机时的选项菜单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost tftpboot]# mkdir pxelinux.cfg</span><br><span class="line">[root@localhost tftpboot]# cp /media/cdrom/isolinux/isolinux.cfg pxelinux.cfg/default</span><br><span class="line">[root@localhost tftpboot]#</span><br></pre></td></tr></table></figure>
+<p>默认安装系统会对安装介质进行检验，无法做到无人值守，所以修改菜单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost tftpboot]# vi pxelinux.cfg/default</span><br><span class="line">1行    default linux</span><br><span class="line">64行   append initrd=initrd.img inst.stage2=ftp://192.168.10.10 ks=ftp://192.168.10.10/pub/ks.cfg quiet</span><br></pre></td></tr></table></figure>
+<p>配置vsftpd服务</p>
+<p>光盘镜像是通过FTP协议传输的，因此要用到vsftpd服务程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost tftpboot]# cd </span><br><span class="line">[root@localhost ~]# yum install vsftpd -y</span><br><span class="line">[root@localhost ~]# systemctl restart vsftpd</span><br><span class="line">[root@localhost ~]# systemctl enable vsftpd</span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/vsftpd.service to /usr/lib/systemd/system/vsftpd.service.</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>　　在确认系统光盘镜像已经正常挂载到/media/cdrom目录后，把目录中的光盘镜像文件全部复制到vsftpd服务程序的工作目录中。并且添加防火墙策略和设置SELinux安全上下文</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cp -r /media/cdrom/* /var/ftp/</span><br><span class="line">[root@localhost ~]# setsebool -P ftpd_connect_all_unreserved=on</span><br></pre></td></tr></table></figure>
+<h2 id="创建KickStart应答文件"><a href="#创建KickStart应答文件" class="headerlink" title="创建KickStart应答文件"></a>创建KickStart应答文件</h2><p>　　Kickstart应答文件中包含了系统安装过程中需要使用的选项和参数信息，系统可以自动调取这个应答文件的内容，从而彻底实现了无人值守安装系统。</p>
+<p>　　在root管理员的家目录中有一个名为anaconda-ks.cfg的文件，它就是应答文件。下面将这个文件复制到vsftpd服务程序的工作目录中（在开机选项菜单的配置文件中已经定义了该文件的获取路径，也就是vsftpd服务程序数据目录中的pub子目录中）。使用chmod命令设置该文件的权限，确保所有人都有可读的权限，以保证客户端主机可以顺利获取到应答文件及里面的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cp ~/anaconda-ks.cfg /var/ftp/pub/ks.cfg</span><br><span class="line">[root@localhost ~]# chmod +r /var/ftp/pub/ks.cfg </span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>　　注意，既然应答文件ks.cfg 来自于Server的anaconda-ks.cfg文件，那么之后的客户机装好后root密码和Server的是一样的。</p>
+<p>修改这个文件，root密码就不改了，就和Server用一样的吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vi /var/ftp/pub/ks.cfg </span><br><span class="line">5行 url --url=ftp://192.168.10.10   //删除原本的cdrom，把镜像来源定位到Server上</span><br><span class="line">30行 clearpart --all --initlabel    //意思是清空所有磁盘内容并初始化磁盘</span><br></pre></td></tr></table></figure>
+<p>　　如果觉得系统默认自带的应答文件参数较少，不能满足生产环境的需求，则可以通过Yum软件仓库来安装system-config-kickstart软件包。这是一款图形化的Kickstart应答文件生成工具，可以根据自己的需求生成自定义的应答文件，然后将生成的文件放到/var/ftp/pub目录中并将名字修改为ks.cfg即可。</p>
+<p>开启一台没有安装系统的虚拟机（内存至少大于等于2G）</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dw8ggd0j30j80kin06.jpg" alt=""></p>
+<p>选择否</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dvvk286j30j80kgwfs.jpg" alt=""></p>
+<p>下图中敲完回车不要急，等~</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dx3ssx2j30ir0oejsg.jpg" alt=""></p>
+<p>可以看到自动安装已经开始了，咱们不用去动它，它自己会装好的，我们耐心等待即可</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dxkn1l9j30j80g4414.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dyowd64j30j80f0ad9.jpg" alt=""></p>
+<p>​    它自动给root设置了密码，就是我们之前提到的，和Server一样的root密码。我们不用进行任何操作，等，等蛮久的，等吧~</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00e13aop3j30j90elgnn.jpg" alt=""></p>
+<p>终于等到它完成了，点击重启</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00e7opqdtj30j80ee0u3.jpg" alt=""></p>
+<p>重启后，用root以及Server的root密码来登录客户机：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00egr6xu7j30j80h0aat.jpg" alt=""></p>
+<p>可以看到登录成功！</p>
+<p>　　Server关机后保存好快照，以后咱们装新的虚拟机可以找开启Server后关掉防火墙和selinux后，让它自动安装系统。</p>
+<p>本篇到此结束。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"># Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"># RedHat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-23/" rel="next" title="linux-运维进阶-23 MariaDB数据库管理系统">
+                <i class="fa fa-chevron-left"></i> linux-运维进阶-23 MariaDB数据库管理系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-25/" rel="prev" title="linux-运维进阶-25 常见网站架构">
+                linux-运维进阶-25 常见网站架构 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-24-PXE-Kickstart无人值守安装系统"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-24 PXE+Kickstart无人值守安装系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念解析"><span class="nav-number">1.1.</span> <span class="nav-text">概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、pxe介绍"><span class="nav-number">1.1.1.</span> <span class="nav-text">一、pxe介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、-kickstart介绍"><span class="nav-number">1.1.2.</span> <span class="nav-text">二、.kickstart介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、应用"><span class="nav-number">1.1.3.</span> <span class="nav-text">三、应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PXE-Kicstart-无人值守安装系统"><span class="nav-number">1.2.</span> <span class="nav-text">PXE+Kicstart 无人值守安装系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Server服务器"><span class="nav-number">1.2.1.</span> <span class="nav-text">配置Server服务器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建KickStart应答文件"><span class="nav-number">1.3.</span> <span class="nav-text">创建KickStart应答文件</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

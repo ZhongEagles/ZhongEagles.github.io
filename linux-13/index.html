@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-运维进阶-13 iptables与firewalld防火墙">
+<meta name="keywords" content="linux,Centos,RedHat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-运维进阶-13 iptables与firewalld防火墙">
+<meta property="og:url" content="http://yoursite.com/linux-13/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-运维进阶-13 iptables与firewalld防火墙">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzinyr890uj30j80cvai0.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzio1bq4a4j30iv0br75j.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzio3g5559j30iz09ygmu.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzio6v8s52j30j70argrq.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzio88gie6j30j908ztcy.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fziogqhosmj30j00993yu.jpg">
+<meta property="og:updated_time" content="2019-02-23T13:28:31.705Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-运维进阶-13 iptables与firewalld防火墙">
+<meta name="twitter:description" content="linux-运维进阶-13 iptables与firewalld防火墙">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzinyr890uj30j80cvai0.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/linux-13/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-运维进阶-13 iptables与firewalld防火墙 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/linux-13/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-运维进阶-13 iptables与firewalld防火墙
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-23 11:34:57" itemprop="dateCreated datePublished" datetime="2019-01-23T11:34:57+08:00">2019-01-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-23 21:28:31" itemprop="dateModified" datetime="2019-02-23T21:28:31+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-运维进阶/" itemprop="url" rel="index"><span itemprop="name">linux-运维进阶</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-运维进阶-13 iptables与firewalld防火墙</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-运维进阶-13-iptables与firewalld防火墙"><a href="#linux-运维进阶-13-iptables与firewalld防火墙" class="headerlink" title="linux-运维进阶-13 iptables与firewalld防火墙"></a>linux-运维进阶-13 iptables与firewalld防火墙</h1><h2 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h2><p>iptables是centos6以及之前版本的默认防火墙工具，在centos7中默认防火墙工具已经替换为firewalld。</p>
+<p>区别：</p>
+<p>iptables防火墙的底层是netfiter</p>
+<p>firewalld防火墙的底层是iptables</p>
+<p>注意：iptables和firewalld是冲突的，同时只能使用一个防火墙</p>
+<p>在centos7中开启iptables的使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 禁用firewalld防火墙</span><br><span class="line">[root@localhost ~]# systemctl stop firewalld.service </span><br><span class="line">[root@localhost ~]# systemctl mask firewalld.service </span><br><span class="line">Created symlink from /etc/systemd/system/firewalld.service to /dev/null.</span><br><span class="line"> </span><br><span class="line"># 安装iptables 服务</span><br><span class="line">[root@localhost ~]# yum install iptables-services -y</span><br><span class="line"> </span><br><span class="line"># 开启iptables服务</span><br><span class="line">[root@localhost ~]# systemctl start iptables</span><br></pre></td></tr></table></figure>
+<h2 id="iptables命令的基本参数"><a href="#iptables命令的基本参数" class="headerlink" title="iptables命令的基本参数"></a>iptables命令的基本参数</h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-P</td>
+<td>设置默认策略</td>
+</tr>
+<tr>
+<td>-F</td>
+<td>清空规则链</td>
+</tr>
+<tr>
+<td>-L</td>
+<td>查看规则链</td>
+</tr>
+<tr>
+<td>-A</td>
+<td>在规则链的末尾加入新规则</td>
+</tr>
+<tr>
+<td>-I num</td>
+<td>在规则链的头部加入新规则</td>
+</tr>
+<tr>
+<td>-D num</td>
+<td>删除某一条规则</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>匹配来源地址IP/MASK，加叹号“!”表示除这个IP外</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>匹配目标地址</td>
+</tr>
+<tr>
+<td>-i网卡名称</td>
+<td>匹配从这块网卡流入的数据</td>
+</tr>
+<tr>
+<td>-o网卡名称</td>
+<td>匹配从这块网卡流出的数据</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>匹配协议，如TCP、UDP、ICMP</td>
+</tr>
+<tr>
+<td>–dport num</td>
+<td>匹配目标端口号</td>
+</tr>
+</tbody>
+</table>
+<p>使用iptables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># 清除iptables中所有的规则</span><br><span class="line">[root@localhost ~]# iptables -F</span><br><span class="line"> </span><br><span class="line"># 查看iptables防火墙中所有的规则</span><br><span class="line">[root@localhost ~]# iptables -L</span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"> </span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"> </span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">[root@localhost ~]# iptables -P INPUT DROP</span><br><span class="line">    #默认INPUT全部允许</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">禁止所有人ping服务器</span><br><span class="line">[root@localhost ~]# iptables -I INPUT -p icmp -j DROP </span><br><span class="line">[root@localhost ~]# iptables -L</span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">DROP       icmp --  anywhere             anywhere            </span><br><span class="line"> </span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"> </span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"># 这个是服务器接收到icmp的包之后丢弃</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzinyr890uj30j80cvai0.jpg" alt=""></p>
+<p>接下来在宰门物理机上验证能否ping通虚拟机：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\zhong&gt;ping 192.168.141.12</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzio1bq4a4j30iv0br75j.jpg" alt=""></p>
+<p>结果是ping不通</p>
+<p>接下来咱们删掉丢失包的规则，也就是刚刚咱们创建的那条禁止ping的规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# iptables -D INPUT 1</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzio3g5559j30iz09ygmu.jpg" alt=""></p>
+<p>现在又可以ping通了</p>
+<p>接下来咱们创建一条拒绝ping的规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# iptables -I INPUT -p icmp -j REJECT </span><br><span class="line">[root@localhost ~]# iptables -L</span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">REJECT     icmp --  anywhere             anywhere             reject-with icmp-port-unreachable</span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzio6v8s52j30j70argrq.jpg" alt=""></p>
+<p>现在再用物理机来ping虚拟机：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\zhong&gt;ping 192.168.141.12</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzio88gie6j30j908ztcy.jpg" alt=""></p>
+<p>显示不可达。</p>
+<h3 id="查看iptables中的防火墙规则"><a href="#查看iptables中的防火墙规则" class="headerlink" title="查看iptables中的防火墙规则"></a>查看iptables中的防火墙规则</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# iptables -L -n --line-numbers </span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line">1    REJECT     icmp --  0.0.0.0/0            0.0.0.0/0            reject-with icmp-port-unreachable</span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>可以看到，拒绝ping的那条规则的规则号是1（ping是属于icmp协议的），待会咱们把这条规则删掉</p>
+<h2 id="删除规则"><a href="#删除规则" class="headerlink" title="删除规则"></a>删除规则</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -D [INPUT | OUTPUT | FORWARD] 规则号</span><br></pre></td></tr></table></figure>
+<p>删除input表中的第一个规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# iptables -D INPUT 1</span><br><span class="line">[root@localhost ~]# iptables -L -n --line-numbers </span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>可以看到那条规则以及删除了</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fziogqhosmj30j00993yu.jpg" alt=""></p>
+<p>于是物理机又可以ping通虚拟机了</p>
+<h3 id="添加规则"><a href="#添加规则" class="headerlink" title="添加规则"></a>添加规则</h3><p>iptables -I 插入一条规则，默认加在最前面（注意别看错了，这是字母i的大写）</p>
+<p>iptables -A增加一条规则，默认增加在最后</p>
+<p>举例：注意下面我的虚拟机和物理机的VM网卡是192.168.141网段的，不同电脑网段可能不同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# iptables -L</span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">[root@localhost ~]# iptables -A INPUT -s 192.168.141.0/24 -p tcp --dport 22 -j ACCEPT</span><br><span class="line">[root@localhost ~]# iptables -A INPUT -p tcp --dport 22 -j REJECT </span><br><span class="line">[root@localhost ~]# iptables -L</span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">ACCEPT     tcp  --  192.168.141.0/24     anywhere             tcp dpt:ssh</span><br><span class="line">REJECT     tcp  --  anywhere             anywhere             tcp dpt:ssh reject-with icmp-port-unreachable</span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination         </span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>如果现在要增加一条规则，使172.25.0.0/24这个网段允许访问本机的22端口，那么不能使用-A参数增加，只能使用 -I 插入规则</p>
+<p>iptables -I INPUT 2 -s 172.25.0.0/24 -p tcp –dport 22 -j ACCEPT </p>
+<p>中，INPUT 2表示插入的是Chain INPUT 的规则号为2的规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# iptables -L -n --line-numbers </span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line">1    ACCEPT     tcp  --  192.168.141.0/24     0.0.0.0/0            tcp dpt:22</span><br><span class="line">2    REJECT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:22 reject-with icmp-port-unreachable</span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line">[root@localhost ~]# iptables -I INPUT 2 -s 172.25.0.0/24 -p tcp --dport 22 -j ACCEPT </span><br><span class="line">[root@localhost ~]# iptables -L -n --line-numbers </span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line">1    ACCEPT     tcp  --  192.168.141.0/24     0.0.0.0/0            tcp dpt:22</span><br><span class="line">2    ACCEPT     tcp  --  172.25.0.0/24        0.0.0.0/0            tcp dpt:22</span><br><span class="line">3    REJECT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:22 reject-with icmp-port-unreachable</span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">num  target     prot opt source               destination         </span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="保存防火墙状态"><a href="#保存防火墙状态" class="headerlink" title="保存防火墙状态"></a>保存防火墙状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# service iptables save</span><br><span class="line">iptables: Saving firewall rules to /etc/sysconfig/iptables:[  OK  ]</span><br><span class="line"></span><br><span class="line"># 防火墙保存了之后，在/etc/sysconfig/iptables文件中就会出现相应的规则</span><br><span class="line">[root@localhost ~]# cat /etc/sysconfig/iptables</span><br><span class="line"># Generated by iptables-save v1.4.21 on Thu Jan 24 23:42:17 2019</span><br><span class="line">*filter</span><br><span class="line">:INPUT ACCEPT [0:0]</span><br><span class="line">:FORWARD ACCEPT [0:0]</span><br><span class="line">:OUTPUT ACCEPT [30:3540]</span><br><span class="line">-A INPUT -s 192.168.141.0/24 -p tcp -m tcp --dport 22 -j ACCEPT</span><br><span class="line">-A INPUT -s 172.25.0.0/24 -p tcp -m tcp --dport 22 -j ACCEPT</span><br><span class="line">-A INPUT -p tcp -m tcp --dport 22 -j REJECT --reject-with icmp-port-unreachable</span><br><span class="line">COMMIT</span><br><span class="line"># Completed on Thu Jan 24 23:42:17 2019</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="保存出错时的解决方案"><a href="#保存出错时的解决方案" class="headerlink" title="保存出错时的解决方案"></a>保存出错时的解决方案</h3><p>如果保存命令执行失败报出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The service command supports only basic LSB actions (start, stop, restart, try-restart, reload, force-reload, status). For other actions, please try to use systemctl.</span><br></pre></td></tr></table></figure>
+<p>解决方案：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld 关闭防火墙</span><br><span class="line">yum install iptables-services 安装或更新服务</span><br><span class="line">再使用systemctl enable iptables 启动iptables</span><br><span class="line">最后 systemctl start iptables 打开iptables</span><br><span class="line">再执行service iptables save  </span><br><span class="line">重启iptables服务service iptables restart </span><br><span class="line">执行完毕之后/etc/syscofig/iptables文件就有规则了</span><br></pre></td></tr></table></figure>
+<h2 id="firewalld"><a href="#firewalld" class="headerlink" title="firewalld"></a>firewalld</h2><p>　　firewalls是centos7的默认防火墙，安装完centos7 默认开启，默认开放22端口（所以用xshell的ssh能连上）和dhcpv6-client端口</p>
+<p>开启firewalld防火墙</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl stop iptables.service </span><br><span class="line">[root@localhost ~]# systemctl mask iptables.service </span><br><span class="line">Created symlink from /etc/systemd/system/iptables.service to /dev/null.</span><br><span class="line">[root@localhost ~]# systemctl unmask firewalld.service </span><br><span class="line">Removed symlink /etc/systemd/system/firewalld.service.</span><br><span class="line">[root@localhost ~]# systemctl restart firewalld.service </span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>如果你之前没有启动iptables是不需要做上面的操作的，直接systemctl restart firewalld.service 即可。</p>
+<p>防火墙一般只关心进来的流量，不关心出去的流量。</p>
+<p>注意：出去之后再回来的流量定义为出去的流量</p>
+<h2 id="九大区域"><a href="#九大区域" class="headerlink" title="九大区域"></a>九大区域</h2><p>firewalld防火墙默认定义了9大区域：</p>
+<ul>
+<li>drop：<pre><code>除非与传出流量相关，否则拒绝所有传入流量（不产生包含ICMP的错误响应）
+</code></pre></li>
+<li>block：<pre><code>除非与传出流量相关，否则拒绝所有传入流量。
+</code></pre></li>
+<li>dmz：<pre><code>除非与传出流量相关或者与ssh预定义服务匹配，否则拒绝传入流量
+</code></pre></li>
+<li>external：<pre><code>除非与传出流量相关或者与ssh预定义服务匹配，否则拒绝传入流量。通过此区域转发的IPv4传出流量将进行伪装，使其看起来像传出网络接口的IPv4地址而不是主机的源IP
+</code></pre></li>
+<li>internel：<pre><code>初始状态与home相同
+</code></pre></li>
+<li>home：<pre><code>除非与传出流量相关或者与ssh、mdns、ipp-client、dhcpv6-client、samba-client预定义服务匹配，否则拒绝传入流量
+</code></pre></li>
+<li>work：<pre><code>除非与传出流量相关或者与ssh、ipp-client、dhcpv6-client预定义的服务匹配，否则拒绝传入流量。此区域为网络接口的默认区域
+</code></pre></li>
+<li>public：<pre><code>除非与传出流量相关或者与ssh、dhcpv6-client预定义的服务匹配，否则拒绝传入流量。此区域为网络接口的默认区域
+</code></pre></li>
+<li>trusted：<pre><code>允许所有流量传入
+</code></pre></li>
+</ul>
+<p>配置firewalld防火墙的三种方法：</p>
+<ul>
+<li>使用图形工具firwalld-config</li>
+<li>使用命令行工具firewalld-cmd</li>
+</ul>
+<h3 id="查看区域中的规则"><a href="#查看区域中的规则" class="headerlink" title="查看区域中的规则"></a>查看区域中的规则</h3><p>查看public区域中的所有信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# firewall-cmd --list-all --zone=public</span><br><span class="line">public (active)</span><br><span class="line">  target: default</span><br><span class="line">  icmp-block-inversion: no</span><br><span class="line">  interfaces: ens33 ens37</span><br><span class="line">  sources: </span><br><span class="line">  services: ssh dhcpv6-client	#可以看到这里默认只放行ssh和dhcpv6-client</span><br><span class="line">  ports: </span><br><span class="line">  protocols: </span><br><span class="line">  masquerade: no</span><br><span class="line">  forward-ports: </span><br><span class="line">  source-ports: </span><br><span class="line">  icmp-blocks: </span><br><span class="line">  rich rules: </span><br><span class="line">	</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="允许访问本机的http服务"><a href="#允许访问本机的http服务" class="headerlink" title="允许访问本机的http服务"></a>允许访问本机的http服务</h3><p>第一种方法：添加服务名允许访问，要求http服务使用默认端口80，不然规则无效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install httpd -y</span><br><span class="line">[root@localhost ~]# systemctl restart httpd</span><br><span class="line">[root@localhost ~]# firewall-cmd --add-service=http</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --list-all</span><br><span class="line">public (active)</span><br><span class="line">target: default</span><br><span class="line">icmp-block-inversion: no</span><br><span class="line">interfaces: ens33 ens37</span><br><span class="line">sources: </span><br><span class="line">services: ssh dhcpv6-client http #可以看到这里除了默认放行的ssh和dhcpv6-client，多了个http</span><br><span class="line">ports: </span><br><span class="line">protocols: </span><br><span class="line">masquerade: no</span><br><span class="line">forward-ports: </span><br><span class="line">source-ports: </span><br><span class="line">icmp-blocks: </span><br><span class="line">rich rules:</span><br></pre></td></tr></table></figure>
+<p>第二种方法：放行端口号80（http协议对应端口号为80）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# firewall-cmd --remove-service=http	#先把上面放行的http移除掉</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --list-all</span><br><span class="line">public (active)</span><br><span class="line">  target: default</span><br><span class="line">  icmp-block-inversion: no</span><br><span class="line">  interfaces: ens33 ens37</span><br><span class="line">  sources: </span><br><span class="line">  services: ssh dhcpv6-client</span><br><span class="line">  ports: 						#可以看到本来没有通过端口号放行的协议</span><br><span class="line">  protocols: </span><br><span class="line">  masquerade: no</span><br><span class="line">  forward-ports: </span><br><span class="line">  source-ports: </span><br><span class="line">  icmp-blocks: </span><br><span class="line">  rich rules: </span><br><span class="line">	</span><br><span class="line">[root@localhost ~]# firewall-cmd --add-port=80/tcp</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --list-all</span><br><span class="line">public (active)</span><br><span class="line">  target: default</span><br><span class="line">  icmp-block-inversion: no</span><br><span class="line">  interfaces: ens33 ens37</span><br><span class="line">  sources: </span><br><span class="line">  services: ssh dhcpv6-client</span><br><span class="line">  ports: 80/tcp						#可以看到现在多了个放行的使用80端口号的http协议</span><br><span class="line">  protocols: </span><br><span class="line">  masquerade: no</span><br><span class="line">  forward-ports: </span><br><span class="line">  source-ports: </span><br><span class="line">  icmp-blocks: </span><br><span class="line">  rich rules: </span><br><span class="line">	</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="保存已经设置的规则"><a href="#保存已经设置的规则" class="headerlink" title="保存已经设置的规则"></a>保存已经设置的规则</h3><p>　　防火墙使用firewall-cmd添加实时生效的规则之后，重启Linux系统或者重启防火墙服务之后，运行时修改的规则都会丢失，如果要保存规则，有以下几种方式：</p>
+<p>方式1.在规则后面添加 –permanent，这时这条命令不会实时生效，但会把规则号添加到配置文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# firewall-cmd --add-port=8080/tcp --permanent </span><br><span class="line">success</span><br></pre></td></tr></table></figure>
+<p>这条命令敲完后，我们查看防火墙规则，发现并没有实时生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# firewall-cmd --list-all</span><br><span class="line">public (active)</span><br><span class="line">  target: default</span><br><span class="line">  icmp-block-inversion: no</span><br><span class="line">  interfaces: ens33 ens37</span><br><span class="line">  sources: </span><br><span class="line">  services: ssh dhcpv6-client</span><br><span class="line">  ports: 80/tcp</span><br><span class="line">  protocols: </span><br><span class="line">  masquerade: no</span><br><span class="line">  forward-ports: </span><br><span class="line">  source-ports: </span><br><span class="line">  icmp-blocks: </span><br><span class="line">  rich rules: </span><br><span class="line">	</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>让其生效的三种方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# firewall-cmd --reload </span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# systemctl restart firewalld.service </span><br><span class="line">[root@localhost ~]# firewall-cmd --add-port=8080/tcp</span><br><span class="line"></span><br><span class="line">验证：</span><br><span class="line">[root@localhost ~]# firewall-cmd --list-all</span><br><span class="line">public (active)</span><br><span class="line">  target: default</span><br><span class="line">  icmp-block-inversion: no</span><br><span class="line">  interfaces: ens33 ens37</span><br><span class="line">  sources: </span><br><span class="line">  services: ssh dhcpv6-client</span><br><span class="line">  ports: 8080/tcp</span><br><span class="line">  protocols: </span><br><span class="line">  masquerade: no</span><br><span class="line">  forward-ports: </span><br><span class="line">  source-ports: </span><br><span class="line">  icmp-blocks: </span><br><span class="line">  rich rules: </span><br><span class="line">	</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>方式2.让runtime时配置的规则永久保存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# firewall-cmd --add-port=10000/tcp</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --add-port=10001/tcp</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --add-port=10086/tcp</span><br><span class="line">success</span><br><span class="line"></span><br><span class="line"># 下面的命令可以将上面的规则在运行时永久保存到防火墙配置中</span><br><span class="line">[root@localhost ~]# firewall-cmd --runtime-to-permanent</span><br><span class="line">success</span><br><span class="line"></span><br><span class="line">验证：</span><br><span class="line">[root@localhost ~]# firewall-cmd --list-all</span><br><span class="line">public (active)</span><br><span class="line">  target: default</span><br><span class="line">  icmp-block-inversion: no</span><br><span class="line">  interfaces: ens33 ens37</span><br><span class="line">  sources: </span><br><span class="line">  services: ssh dhcpv6-client</span><br><span class="line">  ports: 8080/tcp 10000/tcp 10001/tcp 10086/tcp</span><br><span class="line">  protocols: </span><br><span class="line">  masquerade: no</span><br><span class="line">  forward-ports: </span><br><span class="line">  source-ports: </span><br><span class="line">  icmp-blocks: </span><br><span class="line">  rich rules: </span><br><span class="line">	</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="富规则"><a href="#富规则" class="headerlink" title="富规则"></a>富规则</h3><p>拒绝所有172.25.0.0/24网段的ip访问本机的ssh服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# firewall-cmd --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;172.25.0.0/24&quot; service name=&quot;ssh&quot; reject&quot;</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --list-all</span><br><span class="line">public (active)</span><br><span class="line">  target: default</span><br><span class="line">  icmp-block-inversion: no</span><br><span class="line">  interfaces: ens33 ens37</span><br><span class="line">  sources: </span><br><span class="line">  services: ssh dhcpv6-client</span><br><span class="line">  ports: 8080/tcp 10000/tcp 10001/tcp 10086/tcp</span><br><span class="line">  protocols: </span><br><span class="line">  masquerade: no</span><br><span class="line">  forward-ports: </span><br><span class="line">  source-ports: </span><br><span class="line">  icmp-blocks: </span><br><span class="line">  rich rules: </span><br><span class="line">	rule family=&quot;ipv4&quot; source address=&quot;172.25.0.0/24&quot; service name=&quot;ssh&quot; reject</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h1 id="TCP-Wrapper"><a href="#TCP-Wrapper" class="headerlink" title="TCP Wrapper"></a>TCP Wrapper</h1><p>应用层流量控制工具</p>
+<p>　　TCP Wrappers是RHEL 7系统中默认启用的一款流量控制程序，它能够根据来访主机的地址与本机的目标服务程序作出允许或拒绝的操作。</p>
+<p>　　系统将会先检查允许控制列表文件（/etc/hosts.allow），如果匹配到相应的允许策略则放行流量；如果没有匹配，则去进一步匹配拒绝控制列表文件（/etc/hosts.deny），若找到匹配项则拒绝该流量。如果这两个文件全都没有匹配到，则默认放行流量。</p>
+<p>在配置TCP Wrappers服务时需要遵循两个原则：</p>
+<ul>
+<li>编写拒绝策略规则时，填写的是服务名称，而非协议名称；</li>
+<li>建议先编写拒绝策略规则，再编写允许策略规则，以便直观地看到相应的效果。 </li>
+</ul>
+<p>格式为：</p>
+<p>服务名:规则</p>
+<h2 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h2><table>
+<thead>
+<tr>
+<th>客户端类型</th>
+<th>示例</th>
+<th>满足示例的客户端列表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单一主机</td>
+<td>192.168.10.10</td>
+<td>IP地址为192.168.10.10的主机</td>
+</tr>
+<tr>
+<td>指定网段</td>
+<td>192.168.10.</td>
+<td>IP段为192.168.10.0/24的主机</td>
+</tr>
+<tr>
+<td>指定网段</td>
+<td>192.168.10.0/255.255.255.0</td>
+<td>IP段为192.168.10.0/24的主机</td>
+</tr>
+<tr>
+<td>指定DNS后缀</td>
+<td>.aaa.com</td>
+<td>所有DNS后缀为.aaa.com的主机</td>
+</tr>
+<tr>
+<td>指定主机名称</td>
+<td><a href="http://www.aaa.com" target="_blank" rel="noopener">www.aaa.com</a></td>
+<td>主机名称为<a href="http://www.aaa.com的主机" target="_blank" rel="noopener">www.aaa.com的主机</a></td>
+</tr>
+<tr>
+<td>指定所有客户端</td>
+<td>ALL</td>
+<td>所有主机全部包括在内</td>
+</tr>
+</tbody>
+</table>
+<p>利用tcp wrapper控制应用层数据的流量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl stop firewalld</span><br><span class="line">[root@localhost ~]# vim /etc/hosts.allow </span><br><span class="line">  1 #</span><br><span class="line">  2 # hosts.allow   This file contains access rules which are used to</span><br><span class="line">  3 #       allow or deny connections to network services that</span><br><span class="line">  4 #       either use the tcp_wrappers library or that have been</span><br><span class="line">  5 #       started through a tcp_wrappers-enabled xinetd.</span><br><span class="line">  6 #</span><br><span class="line">  7 #       See &apos;man 5 hosts_options&apos; and &apos;man 5 hosts_access&apos;</span><br><span class="line">  8 #       for information on rule syntax.</span><br><span class="line">  9 #       See &apos;man tcpd&apos; for information on tcp_wrappers</span><br><span class="line"> 10 #</span><br><span class="line"> 在最后一行添加：</span><br><span class="line"> 11 sshd:192.168.9.  172.25.0.1</span><br><span class="line"> 表示上述两个网段的用户使用本虚拟机的sshd服务</span><br><span class="line"> </span><br><span class="line">[root@localhost ~]# vim /etc/hosts.deny </span><br><span class="line">  1 #</span><br><span class="line">  2 # hosts.deny    This file contains access rules which are used to</span><br><span class="line">  3 #       deny connections to network services that either use</span><br><span class="line">  4 #       the tcp_wrappers library or that have been</span><br><span class="line">  5 #       started through a tcp_wrappers-enabled xinetd.</span><br><span class="line">  6 #</span><br><span class="line">  7 #       The rules in this file can also be set up in</span><br><span class="line">  8 #       /etc/hosts.allow with a &apos;deny&apos; option instead.</span><br><span class="line">  9 #</span><br><span class="line"> 10 #       See &apos;man 5 hosts_options&apos; and &apos;man 5 hosts_access&apos;</span><br><span class="line"> 11 #       for information on rule syntax.</span><br><span class="line"> 12 #       See &apos;man tcpd&apos; for information on tcp_wrappers</span><br><span class="line"> 13 #</span><br><span class="line">  在最后一行添加：</span><br><span class="line"> 14 sshd:ALL</span><br><span class="line"> 表示拒绝所有网段的用户使用sshd服务</span><br></pre></td></tr></table></figure>
+<p>本篇到此结束</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"># Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"># RedHat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-12/" rel="next" title="linux-运维进阶-12 RAID和LVM">
+                <i class="fa fa-chevron-left"></i> linux-运维进阶-12 RAID和LVM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-14/" rel="prev" title="linux-运维进阶-14 SSH远程访问服务">
+                linux-运维进阶-14 SSH远程访问服务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-13-iptables与firewalld防火墙"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-13 iptables与firewalld防火墙</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables"><span class="nav-number">1.1.</span> <span class="nav-text">iptables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables命令的基本参数"><span class="nav-number">1.2.</span> <span class="nav-text">iptables命令的基本参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看iptables中的防火墙规则"><span class="nav-number">1.2.1.</span> <span class="nav-text">查看iptables中的防火墙规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除规则"><span class="nav-number">1.3.</span> <span class="nav-text">删除规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加规则"><span class="nav-number">1.3.1.</span> <span class="nav-text">添加规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保存防火墙状态"><span class="nav-number">1.3.2.</span> <span class="nav-text">保存防火墙状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保存出错时的解决方案"><span class="nav-number">1.3.3.</span> <span class="nav-text">保存出错时的解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#firewalld"><span class="nav-number">1.4.</span> <span class="nav-text">firewalld</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#九大区域"><span class="nav-number">1.5.</span> <span class="nav-text">九大区域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看区域中的规则"><span class="nav-number">1.5.1.</span> <span class="nav-text">查看区域中的规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#允许访问本机的http服务"><span class="nav-number">1.5.2.</span> <span class="nav-text">允许访问本机的http服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保存已经设置的规则"><span class="nav-number">1.5.3.</span> <span class="nav-text">保存已经设置的规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#富规则"><span class="nav-number">1.5.4.</span> <span class="nav-text">富规则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-Wrapper"><span class="nav-number">2.</span> <span class="nav-text">TCP Wrapper</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#规则"><span class="nav-number">2.1.</span> <span class="nav-text">规则</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

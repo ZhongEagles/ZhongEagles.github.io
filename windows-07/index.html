@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="windows-运维-07 数组和哈希表">
+<meta name="keywords" content="windows,系统运维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows-运维-07 数组和哈希表">
+<meta property="og:url" content="http://yoursite.com/windows-07/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="windows-运维-07 数组和哈希表">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-24T08:43:20.529Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows-运维-07 数组和哈希表">
+<meta name="twitter:description" content="windows-运维-07 数组和哈希表">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/windows-07/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>windows-运维-07 数组和哈希表 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/windows-07/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">windows-运维-07 数组和哈希表
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-19 17:51:54" itemprop="dateCreated datePublished" datetime="2019-02-19T17:51:54+08:00">2019-02-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-24 16:43:20" itemprop="dateModified" datetime="2019-02-24T16:43:20+08:00">2019-02-24</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/windows/" itemprop="url" rel="index"><span itemprop="name">windows</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/windows/windows-系统运维/" itemprop="url" rel="index"><span itemprop="name">windows-系统运维</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">windows-运维-07 数组和哈希表</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="windows-运维-07-数组和哈希表"><a href="#windows-运维-07-数组和哈希表" class="headerlink" title="windows-运维-07 数组和哈希表"></a>windows-运维-07 数组和哈希表</h1><h2 id="命令返回数组"><a href="#命令返回数组" class="headerlink" title="命令返回数组"></a>命令返回数组</h2><p>当我们把一个命令的执行结果保存到一个变量中，可能会认为变量存放的是纯文本。<br>　　但是，事实上Powershell会把文本按每一行作为元素存为数组。如果一个命令的返回值不止一个结果时，Powershell也会自动把结果存储为数组。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $IPcfg=ipconfig</span><br><span class="line">PS C:Powershell&gt; $IPcfg</span><br><span class="line"></span><br><span class="line">Windows IP Configuration</span><br><span class="line">Ethernet adapter Local Area Connection:</span><br><span class="line">Connection-specific DNS Suffix  . : ***</span><br><span class="line">   Link-local IPv6 Address . . . . . : ***</span><br><span class="line">   IPv4 Address. . . . . . . . . . . : 192.168.140.128</span><br><span class="line">   Subnet Mask . . . . . . . . . . . : 255.255.252.0</span><br><span class="line">   Default Gateway . . . . . . . . . : 192.168.140.1</span><br><span class="line"></span><br><span class="line">Tunnel adapter isatap.eagleslab.com:</span><br><span class="line"></span><br><span class="line">   Connection-specific DNS Suffix  . : ***</span><br><span class="line">   Link-local IPv6 Address . . . . . : ***</span><br><span class="line">   Default Gateway . . . . . . . . . :***</span><br><span class="line"></span><br><span class="line">Tunnel adapter Teredo Tunneling Pseudo-Interface:</span><br><span class="line"></span><br><span class="line">   Media State . . . . . . . . . . . : Media disconnected</span><br><span class="line">   Connection-specific DNS Suffix  . :</span><br><span class="line">PS C:Powershell&gt; $IPcfg.Count</span><br><span class="line">22</span><br></pre></td></tr></table></figure>
+<h3 id="使用数组存储结果"><a href="#使用数组存储结果" class="headerlink" title="使用数组存储结果"></a>使用数组存储结果</h3><p>判断一个变量是否为数组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $ip=ipconfig</span><br><span class="line">PS C:Powershell&gt; $ip -is [array]</span><br><span class="line">True</span><br><span class="line">PS C:Powershell&gt; &quot;abac&quot; -is [array]</span><br><span class="line">False</span><br><span class="line">PS C:Powershell&gt; $str=&quot;字符串&quot;</span><br><span class="line">PS C:Powershell&gt; $str.ToCharArray() -is [array]</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<p>查看数组的元素个数用$array.Count属性。访问第x个元素，使用$array[x-1]，因为数组是以0开始索引的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; ipconfig | Select-String &quot;IP&quot;</span><br><span class="line"></span><br><span class="line">Windows IP Configuration</span><br><span class="line">   Link-local IPv6 Address . . . . . : ***</span><br><span class="line">   IPv4 Address. . . . . . . . . . . : ***</span><br><span class="line">   Link-local IPv6 Address . . . . . : ***</span><br></pre></td></tr></table></figure>
+<h3 id="使用真实的对象操作"><a href="#使用真实的对象操作" class="headerlink" title="使用真实的对象操作"></a>使用真实的对象操作</h3><p>　　为什么不愿把IPconfig返回的结果称为对象，因为它不是真正Cmdlet命令，真正的Powershell命令返回的数组元素可不止一个字符串，它是一个内容丰富的对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; ls</span><br><span class="line"></span><br><span class="line">    Directory: C:Powershell</span><br><span class="line"></span><br><span class="line">Mode                LastWriteTime     Length Name</span><br><span class="line">----                -------------     ------ ----</span><br><span class="line">d----        2011/11/23     17:25            ABC</span><br><span class="line">d----        2011/11/29     18:21            myscript</span><br><span class="line">-a---        2011/11/24     18:30      67580 a.html</span><br><span class="line">-a---        2011/11/24     20:04      26384 a.txt</span><br><span class="line">-a---        2011/11/24     20:26      12060 alias</span><br><span class="line">-a---        2011/11/24     20:27      12060 alias.ps1</span><br><span class="line">-a---        2011/11/23     17:25          0 b.txt</span><br><span class="line">-a---        2011/11/23     17:25          0 c.txt</span><br><span class="line">-a---        2011/11/23     17:25          0 d.txt</span><br><span class="line">-a---        2011/11/25     11:20        556 employee.xml</span><br><span class="line">-a---        2011/11/29     19:23      21466 function.ps1</span><br><span class="line">-a---        2011/11/28     11:12        186 LogoTestConfig.xml</span><br><span class="line">-a---        2011/11/24     17:37       7420 name.html</span><br><span class="line">-a---        2011/11/28     15:30         63 ping.bat</span><br><span class="line">-a---        2011/11/24     17:44     735892 Powershell_Cmdlets.html</span><br><span class="line">-a---        2011/11/30     16:04       2556 psdrive.html</span><br><span class="line">-a---         2011/12/2     18:47        140 test.ps1</span><br><span class="line">-a---        2011/11/23     17:37        242 test.txt</span><br><span class="line">-a---        2011/11/28     16:42        170 test.vbs</span><br><span class="line">PS C:Powershell&gt; $result=ls</span><br><span class="line">PS C:Powershell&gt; $result.Count</span><br><span class="line">20</span><br></pre></td></tr></table></figure>
+<p>　　数组的每一个元素存放的是一个System.IO.DirectoryInfo对象。当我们输出这些对象时，Powershell会自动帮我们把它转换成友好的文本格式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $result[0].gettype().fullname</span><br><span class="line">System.IO.DirectoryInfo</span><br><span class="line">PS C:Powershell&gt; $result[0]</span><br><span class="line">    Directory: C:Powershell</span><br><span class="line">Mode                LastWriteTime     Length Name</span><br><span class="line">----                -------------     ------ ----</span><br><span class="line">d----        2011/11/23     17:25            ABC</span><br></pre></td></tr></table></figure>
+<p>对于任何一个对象都可以使用Format-List * 查看它所有的属性和方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $result[0] | fl *</span><br><span class="line"></span><br><span class="line">PSPath            : Microsoft.PowerShell.CoreFileSystem::C:PowershellABC</span><br><span class="line">PSParentPath      : Microsoft.PowerShell.CoreFileSystem::C:Powershell</span><br><span class="line">PSChildName       : ABC</span><br><span class="line">PSDrive           : C</span><br><span class="line">PSProvider        : Microsoft.PowerShell.CoreFileSystem</span><br><span class="line">PSIsContainer     : True</span><br><span class="line">BaseName          : ABC</span><br><span class="line">Mode              : d----</span><br><span class="line">Name              : ABC</span><br><span class="line">Parent            : Powershell</span><br><span class="line">Exists            : True</span><br><span class="line">Root              : C:</span><br><span class="line">FullName          : C:PowershellABC</span><br><span class="line">Extension         :</span><br><span class="line">CreationTime      : 2011/11/23 17:25:53</span><br><span class="line">CreationTimeUtc   : 2011/11/23 9:25:53</span><br><span class="line">LastAccessTime    : 2011/11/23 17:25:53</span><br><span class="line">LastAccessTimeUtc : 2011/11/23 9:25:53</span><br><span class="line">LastWriteTime     : 2011/11/23 17:25:53</span><br><span class="line">LastWriteTimeUtc  : 2011/11/23 9:25:53</span><br><span class="line">Attributes        : Directory</span><br></pre></td></tr></table></figure>
+<h2 id="创建数组"><a href="#创建数组" class="headerlink" title="创建数组"></a>创建数组</h2><p>在Powershell中创建数组可以使用逗号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $nums=2,0,1,2</span><br><span class="line">PS C:Powershell&gt; $nums</span><br><span class="line">2</span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+<p> 对于连续的数字数组可以使用一个更快捷的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $nums=1..5</span><br><span class="line">PS C:Powershell&gt; $nums</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+<h2 id="数组的多态"><a href="#数组的多态" class="headerlink" title="数组的多态"></a>数组的多态</h2><p>像变量一样如果数组中元素的类型为弱类型，默认可以存储不同类型的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $array=1,&quot;2012世界末日&quot;,([System.Guid]::NewGuid()),(get-date)</span><br><span class="line">PS C:Powershell&gt; $array</span><br><span class="line">1</span><br><span class="line">2012世界末日</span><br><span class="line"></span><br><span class="line">Guid</span><br><span class="line">----</span><br><span class="line">06a88783-a181-4511-9e41-2780ecbd7924</span><br><span class="line"></span><br><span class="line">DisplayHint : DateTime</span><br><span class="line">Date        : 2011/12/9 0:00:00</span><br><span class="line">Day         : 9</span><br><span class="line">DayOfWeek   : Friday</span><br><span class="line">DayOfYear   : 343</span><br><span class="line">Hour        : 14</span><br><span class="line">Kind        : Local</span><br><span class="line">Millisecond : 910</span><br><span class="line">Minute      : 15</span><br><span class="line">Month       : 12</span><br><span class="line">Second      : 45</span><br><span class="line">Ticks       : 634590369459101334</span><br><span class="line">TimeOfDay   : 14:15:45.9101334</span><br><span class="line">Year        : 2011</span><br><span class="line">DateTime    : 2011年12月9日 14:15:45</span><br></pre></td></tr></table></figure>
+<h2 id="空数组和单元素数组"><a href="#空数组和单元素数组" class="headerlink" title="空数组和单元素数组"></a>空数组和单元素数组</h2><p>空数组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $a=@()</span><br><span class="line">PS C:Powershell&gt; $a -is [array]</span><br><span class="line">True</span><br><span class="line">PS C:Powershell&gt; $a.Count</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+<p> 1个元素的数组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $a=,&quot;moss&quot;</span><br><span class="line">PS C:Powershell&gt; $a -is [array]</span><br><span class="line">True</span><br><span class="line">PS C:Powershell&gt; $a.Count</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<h2 id="访问数组"><a href="#访问数组" class="headerlink" title="访问数组"></a>访问数组</h2><p>　　数组的元素可以使用索引寻址，第一个元素的索引为0，第i个元素的索引为i-1，最后一个元素的索引为Count-1，但是Powershell为了使用方便，直接可以将 -1 作为最后的一个元素的索引。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $books=&quot;元素1&quot;,&quot;元素2&quot;,&quot;元素3&quot;</span><br><span class="line">PS C:Powershell&gt; $books[0]</span><br><span class="line">元素1</span><br><span class="line">PS C:Powershell&gt; $books[1]</span><br><span class="line">元素2</span><br><span class="line">PS C:Powershell&gt; $books[($book.Count-1)]</span><br><span class="line">元素3</span><br><span class="line">PS C:Powershell&gt; $books[-1]</span><br><span class="line">元素3</span><br></pre></td></tr></table></figure>
+<h3 id="从数组中选择多个元素"><a href="#从数组中选择多个元素" class="headerlink" title="从数组中选择多个元素"></a>从数组中选择多个元素</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $result=ls</span><br><span class="line">PS C:Powershell&gt; $result[0,3,5,12]</span><br><span class="line">    Directory: C:Powershell</span><br><span class="line"></span><br><span class="line">Mode                LastWriteTime     Length Name</span><br><span class="line">----                -------------     ------ ----</span><br><span class="line">d----        2011/11/23     17:25            ABC</span><br><span class="line">-a---        2011/11/24     20:04      26384 a.txt</span><br><span class="line">-a---        2011/11/24     20:27      12060 alias.ps1</span><br><span class="line">-a---        2011/11/24     17:37       7420 name.html</span><br></pre></td></tr></table></figure>
+<p> 将数组逆序输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $books=&quot;元素1&quot;,&quot;元素2&quot;,&quot;元素3&quot;</span><br><span class="line">PS C:Powershell&gt; $books[($books.Count)..0]</span><br><span class="line">元素3</span><br><span class="line">元素2</span><br><span class="line">元素1</span><br></pre></td></tr></table></figure>
+<h3 id="给数组添加和删除元素"><a href="#给数组添加和删除元素" class="headerlink" title="给数组添加和删除元素"></a>给数组添加和删除元素</h3><p>　　因为Powershell数组在内存中是顺序存储的，所以数组的大小必须是确定的，这样才方便分配存储空间，所以给数组增加元素其实相当于创建一个新的数组，只不过之后会把原来的副本删除。在当前数组追加元素可以使用“+=”操作符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $books=&quot;元素1&quot;,&quot;元素2&quot;,&quot;元素3&quot;</span><br><span class="line">PS C:Powershell&gt; $books+=&quot;元素4&quot;</span><br><span class="line">PS C:Powershell&gt; $books</span><br><span class="line">元素1</span><br><span class="line">元素2</span><br><span class="line">元素3</span><br><span class="line">元素4</span><br></pre></td></tr></table></figure>
+<p>要删除第三个元素可以使用以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $num=1..4</span><br><span class="line">PS C:Powershell&gt; $num</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">PS C:Powershell&gt; $num=$num[0..1]+$num[3]</span><br><span class="line">PS C:Powershell&gt; $num</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<h2 id="复制数组"><a href="#复制数组" class="headerlink" title="复制数组"></a>复制数组</h2><p>　　数组属于引用类型，使用默认的的赋值运算符在两个变量之间赋值只是复制了一个引用，两个变量共享同一份数据。这样的模式有一个弊病如果其中一个改变也会株连到另外一个。所以复制数组最好使用Clone()方法，除非有特殊需求。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $chs=@(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;)</span><br><span class="line">PS C:Powershell&gt; $chsBak=$chs</span><br><span class="line">PS C:Powershell&gt; $chsBak[1]=&quot;H&quot;</span><br><span class="line">PS C:Powershell&gt; $chs</span><br><span class="line">A</span><br><span class="line">H</span><br><span class="line">C</span><br><span class="line">PS C:Powershell&gt; $chs.Equals($chsBak)</span><br><span class="line">True</span><br><span class="line">PS C:Powershell&gt; $chsNew=$chs.Clone()</span><br><span class="line">PS C:Powershell&gt; $chsNew[1]=&quot;Good&quot;</span><br><span class="line">PS C:Powershell&gt; $chs.Equals($chsNew)</span><br><span class="line">False</span><br><span class="line">PS C:Powershell&gt; $chs</span><br><span class="line">A</span><br><span class="line">H</span><br><span class="line">C</span><br></pre></td></tr></table></figure>
+<h2 id="强类型数组"><a href="#强类型数组" class="headerlink" title="强类型数组"></a>强类型数组</h2><p>　　Powershell数组一般具有多态性，如果你不指定元素的具体类型，解释器会自动选择合适的类型存储每个元素。如果要统一限制所有元素的类型，可是使用类型名和一对方括号作为数组变量的类型。这样每当赋值时，会自动类型检查。如果目标数据类型不能转换成功，就会抛出一个异常。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; [int[]] $nums=@()</span><br><span class="line">PS C:Powershell&gt; $nums+=2012</span><br><span class="line">PS C:Powershell&gt; $nums+=12.3</span><br><span class="line">PS C:Powershell&gt; $nums+=&quot;999&quot;</span><br><span class="line">PS C:Powershell&gt; $nums+=&quot;can not convert&quot;</span><br><span class="line">Cannot convert value &quot;can not convert&quot; to type &quot;System.Int32&quot;. Error: &quot;Input string was not in a correct format.&quot;</span><br><span class="line">At line:1 char:6</span><br><span class="line">+ $nums &lt;&lt;&lt;&lt; +=&quot;can not convert&quot;</span><br><span class="line">    + CategoryInfo          : MetadataError: (:) [], ArgumentTransformationMetadataException</span><br><span class="line">    + FullyQualifiedErrorId : RuntimeException</span><br></pre></td></tr></table></figure>
+<h2 id="使用哈希表"><a href="#使用哈希表" class="headerlink" title="使用哈希表"></a>使用哈希表</h2><p>　　哈希表存放的是对，在哈希表中不再仅仅限制使用数字寻址，可以使用任意类型的数据类型寻址。<br>创建哈希表<br>　　之前使用@()创建数组，现在使用@{}创建哈希表，使用哈希表的键访问对应的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $stu=@&#123; Name = &quot;小明&quot;;Age=&quot;12&quot;;sex=&quot;男&quot; &#125;</span><br><span class="line">PS C:Powershell&gt; $stu</span><br><span class="line"></span><br><span class="line">Name                           Value</span><br><span class="line">----                           -----</span><br><span class="line">Name                           小明</span><br><span class="line">Age                            12</span><br><span class="line">sex                            男</span><br><span class="line"></span><br><span class="line">PS C:Powershell&gt; $stu[&quot;Name&quot;]</span><br><span class="line">小明</span><br><span class="line">PS C:Powershell&gt; $stu[&quot;age&quot;]</span><br><span class="line">12</span><br><span class="line">PS C:Powershell&gt; $stu.Count</span><br><span class="line">3</span><br><span class="line">PS C:Powershell&gt; $stu.Keys</span><br><span class="line">Name</span><br><span class="line">Age</span><br><span class="line">sex</span><br><span class="line">PS C:Powershell&gt; $stu.Values</span><br><span class="line">小明</span><br><span class="line">12</span><br><span class="line">男</span><br></pre></td></tr></table></figure>
+<h3 id="在哈希表中存储数组"><a href="#在哈希表中存储数组" class="headerlink" title="在哈希表中存储数组"></a>在哈希表中存储数组</h3><p>可以在创建哈希表时就使用数组，因为创建数组和哈希表的的元素关键字不冲突。一个是逗号，一个是分号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt;  $stu=@&#123; Name = &quot;小明&quot;;Age=&quot;12&quot;;sex=&quot;男&quot;;Books=&quot;三国演义&quot;,&quot;围城&quot;,&quot;哈姆雷特&quot; &#125;</span><br><span class="line">PS C:Powershell&gt; $stu</span><br><span class="line"></span><br><span class="line">Name                           Value</span><br><span class="line">----                           -----</span><br><span class="line">Books                          &#123;三国演义, 围城, 哈姆雷特&#125;</span><br><span class="line">Name                           小明</span><br><span class="line">Age                            12</span><br><span class="line">sex                            男</span><br></pre></td></tr></table></figure>
+<h3 id="在哈希表中插入新的键值"><a href="#在哈希表中插入新的键值" class="headerlink" title="在哈希表中插入新的键值"></a>在哈希表中插入新的键值</h3><p>在哈希表中插入新的键值很方便，象定义变量一样，可以直接拿来使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $Student=@&#123;&#125;</span><br><span class="line">PS C:Powershell&gt; $Student.Name=&quot;令狐冲&quot;</span><br><span class="line">PS C:Powershell&gt; $Student.School=&quot;华山派&quot;</span><br><span class="line">PS C:Powershell&gt; $Student</span><br><span class="line"> </span><br><span class="line">Name                           Value</span><br><span class="line">----                           -----</span><br><span class="line">Name                           令狐冲﻿</span><br><span class="line">School                         华山派</span><br></pre></td></tr></table></figure>
+<h3 id="哈希表值的更新和删除"><a href="#哈希表值的更新和删除" class="headerlink" title="哈希表值的更新和删除"></a>哈希表值的更新和删除</h3><p>如果要更新键的值，可以直接重写。如果要删除这个键值对，可以使用Remove方法，参数为Key</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $stu</span><br><span class="line"></span><br><span class="line">Name                           Value</span><br><span class="line">----                           -----</span><br><span class="line">Books                          &#123;三国演义, 围城, 哈姆雷特&#125;</span><br><span class="line">Name                           小明</span><br><span class="line">Age                            12</span><br><span class="line">sex                            男</span><br><span class="line"></span><br><span class="line">PS C:Powershell&gt; $stu.Name=&quot;赵强&quot;</span><br><span class="line">PS C:Powershell&gt; $stu.Name</span><br><span class="line">赵强</span><br><span class="line">PS C:Powershell&gt; $stu.Remove(&quot;Name&quot;)</span><br><span class="line">PS C:Powershell&gt; $stu</span><br><span class="line"></span><br><span class="line">Name                           Value</span><br><span class="line">----                           -----</span><br><span class="line">Books                          &#123;三国演义, 围城, 哈姆雷特&#125;</span><br><span class="line">Age                            12</span><br><span class="line">sex                            男</span><br></pre></td></tr></table></figure>
+<h3 id="使用哈希表格式化输出"><a href="#使用哈希表格式化输出" class="headerlink" title="使用哈希表格式化输出"></a>使用哈希表格式化输出</h3><p>　　在Powershell中哈希表的一个有趣的应用可以用来格式化文本输出。Powershell许多命令的输出结果都是以表格的形式，当然可以使用Format-Table自定义表格格式，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; Dir | Format-Table</span><br><span class="line"></span><br><span class="line">    Directory: C:Powershell</span><br><span class="line"></span><br><span class="line">Mode                LastWriteTime     Length Name</span><br><span class="line">----                -------------     ------ ----</span><br><span class="line">d----        2011/11/23     17:25            ABC</span><br><span class="line">d----        2011/11/29     18:21            myscript</span><br><span class="line"></span><br><span class="line">PS C:Powershell&gt; Dir | Format-Table FullName,Mode</span><br><span class="line"></span><br><span class="line">FullName                                                    Mode</span><br><span class="line">--------                                                    ----</span><br><span class="line">C:PowershellABC                                           d----</span><br><span class="line">C:Powershellmyscript                                      d----</span><br><span class="line">C:Powershella.html</span><br></pre></td></tr></table></figure>
+<p>　　上述的命令只能限制表格输出那些列，隐藏那些列。但是对于列的宽度，列标题无能为力，但是有了哈希表就可以实现更多自定义了。</p>
+<p>表格的每一个列包含四个属性：<br><strong>Expression</strong>:绑定的表达式<br><strong>Width</strong>:列宽度<br><strong>Label:</strong>列标题<br><strong>Alignment:</strong>列的对齐方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PS C:Powershell&gt; $column1 = @&#123;expression=&quot;Name&quot;; width=30;label=&quot;filename&quot;; alignment=&quot;left&quot;&#125;</span><br><span class="line">PS C:Powershell&gt; $column2 = @&#123;expression=&quot;LastWriteTime&quot;; width=40;label=&quot;last modification&quot;; alignment=&quot;right&quot;&#125;</span><br><span class="line">PS C:Powershell&gt; ls | Format-Table $column1, $column2</span><br><span class="line"></span><br><span class="line">filename                                              last modification</span><br><span class="line">--------                                              -----------------</span><br><span class="line">ABC                                                 2011/11/23 17:25:53</span><br><span class="line">myscript                                            2011/11/29 18:21:28</span><br><span class="line">a.html                                              2011/11/24 18:30:13</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windows/" rel="tag"># windows</a>
+          
+            <a href="/tags/系统运维/" rel="tag"># 系统运维</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/windows-06/" rel="next" title="windows-运维-06 PowerShell别名">
+                <i class="fa fa-chevron-left"></i> windows-运维-06 PowerShell别名
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/windows-08/" rel="prev" title="windows-运维-08 执行文件和脚本">
+                windows-运维-08 执行文件和脚本 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#windows-运维-07-数组和哈希表"><span class="nav-number">1.</span> <span class="nav-text">windows-运维-07 数组和哈希表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令返回数组"><span class="nav-number">1.1.</span> <span class="nav-text">命令返回数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用数组存储结果"><span class="nav-number">1.1.1.</span> <span class="nav-text">使用数组存储结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用真实的对象操作"><span class="nav-number">1.1.2.</span> <span class="nav-text">使用真实的对象操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建数组"><span class="nav-number">1.2.</span> <span class="nav-text">创建数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组的多态"><span class="nav-number">1.3.</span> <span class="nav-text">数组的多态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空数组和单元素数组"><span class="nav-number">1.4.</span> <span class="nav-text">空数组和单元素数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问数组"><span class="nav-number">1.5.</span> <span class="nav-text">访问数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从数组中选择多个元素"><span class="nav-number">1.5.1.</span> <span class="nav-text">从数组中选择多个元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给数组添加和删除元素"><span class="nav-number">1.5.2.</span> <span class="nav-text">给数组添加和删除元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制数组"><span class="nav-number">1.6.</span> <span class="nav-text">复制数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强类型数组"><span class="nav-number">1.7.</span> <span class="nav-text">强类型数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用哈希表"><span class="nav-number">1.8.</span> <span class="nav-text">使用哈希表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在哈希表中存储数组"><span class="nav-number">1.8.1.</span> <span class="nav-text">在哈希表中存储数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在哈希表中插入新的键值"><span class="nav-number">1.8.2.</span> <span class="nav-text">在哈希表中插入新的键值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希表值的更新和删除"><span class="nav-number">1.8.3.</span> <span class="nav-text">哈希表值的更新和删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用哈希表格式化输出"><span class="nav-number">1.8.4.</span> <span class="nav-text">使用哈希表格式化输出</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

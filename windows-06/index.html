@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="windows-运维-06 PowerShell别名">
+<meta name="keywords" content="windows,系统运维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows-运维-06 PowerShell别名">
+<meta property="og:url" content="http://yoursite.com/windows-06/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="windows-运维-06 PowerShell别名">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-24T08:42:00.783Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows-运维-06 PowerShell别名">
+<meta name="twitter:description" content="windows-运维-06 PowerShell别名">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/windows-06/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>windows-运维-06 PowerShell别名 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/windows-06/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">windows-运维-06 PowerShell别名
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-19 17:51:47" itemprop="dateCreated datePublished" datetime="2019-02-19T17:51:47+08:00">2019-02-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-24 16:42:00" itemprop="dateModified" datetime="2019-02-24T16:42:00+08:00">2019-02-24</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/windows/" itemprop="url" rel="index"><span itemprop="name">windows</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/windows/windows-系统运维/" itemprop="url" rel="index"><span itemprop="name">windows-系统运维</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">windows-运维-06 PowerShell别名</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="windows-运维-06-PowerShell别名"><a href="#windows-运维-06-PowerShell别名" class="headerlink" title="windows-运维-06 PowerShell别名"></a>windows-运维-06 PowerShell别名</h1><h2 id="PowerShell别名"><a href="#PowerShell别名" class="headerlink" title="PowerShell别名"></a>PowerShell别名</h2><p>　　cmdlet 的名称由一个动词和一个名词组成，其功能对用户来讲一目了然。但是对于一个经常使用powershell命令的人每天敲那么多命令也很麻烦啊。能不能把命令缩短一点呢？于是“别名”就应运而生了。Powershell内部也实现了很多常用命令的别名。例如Get-ChildItem，列出当前的子文件或目录。它有两个别名：ls 和 dir，这两个别名来源于unix 的shell和windows的cmd。<br>因此别名有两个作用：</p>
+<ul>
+<li><strong>继承</strong>：继承unix-shell和windows-cmd。</li>
+<li><strong>方便</strong>：方便用户使用。</li>
+</ul>
+<h3 id="处理别名："><a href="#处理别名：" class="headerlink" title="处理别名："></a>处理别名：</h3><p><strong>查询别名所指的真实cmdlet命令。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">PS C:\&gt; Get-Alias -name dir </span><br><span class="line"> </span><br><span class="line">CommandType Name Version Source </span><br><span class="line">----------- ---- ------- ------ </span><br><span class="line">Alias dir -&gt; Get-ChildItem </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">PS C:\&gt; Get-Alias -name ls </span><br><span class="line"> </span><br><span class="line">CommandType Name Version Source </span><br><span class="line">----------- ---- ------- ------ </span><br><span class="line">Alias ls -&gt; Get-ChildItem </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">PS C:\&gt; Get-Alias -name ft </span><br><span class="line"> </span><br><span class="line">CommandType Name Version Source </span><br><span class="line">----------- ---- ------- ------ </span><br><span class="line">Alias ft -&gt; Format-Table </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">PS C:\&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="查看可用的别名"><a href="#查看可用的别名" class="headerlink" title="查看可用的别名"></a>查看可用的别名</h3><p>查看可用的别名，可以通过” ls alias:” 或者 ”Get-Alias“<br>如何查看所有以Remove打头的cmdlet的命令的别名呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">PS C:\PS&gt; dir alias: | where &#123;$_.Definition.Startswith(&quot;Remove&quot;)&#125;</span><br><span class="line"></span><br><span class="line">CommandType     Name                                                Definition</span><br><span class="line">-----------     ----                                                ----------</span><br><span class="line">Alias           del                                                 Remove-Item</span><br><span class="line">Alias           erase                                               Remove-Item</span><br><span class="line">Alias           rbp                                                 Remove-PSBreakpoint</span><br><span class="line">Alias           rd                                                  Remove-Item</span><br><span class="line">Alias           rdr                                                 Remove-PSDrive</span><br><span class="line">Alias           ri                                                  Remove-Item</span><br><span class="line">Alias           rjb                                                 Remove-Job</span><br><span class="line">Alias           rm                                                  Remove-Item</span><br><span class="line">Alias           rmdir                                               Remove-Item</span><br><span class="line">Alias           rmo                                                 Remove-Module</span><br><span class="line">Alias           rp                                                  Remove-ItemProperty</span><br><span class="line">Alias           rsn                                                 Remove-PSSession</span><br><span class="line">Alias           rsnp                                                Remove-PSSnapin</span><br><span class="line">Alias           rv                                                  Remove-Variable</span><br><span class="line">Alias           rwmi                                                Remove-WMIObject</span><br></pre></td></tr></table></figure>
+<p>　　<strong>说明</strong>：dir alias:获取的是别名的数组，通过where对数组元素进行遍历，$_代表当前元素，alias的Definition为String类型，因为powershell支持.net，.net中的string类有一个方法Startswith。通过where过滤集合在powershell中使用非常广泛。</p>
+<p>　　有的cmdlet命令可能有2-3个别名，我们可以通过下面的命令查看所有别名和指向cmdlet的别名的个数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line">PS C:\PS&gt; ls alias: | Group-Object definition | sort -Descending Count</span><br><span class="line"></span><br><span class="line">Count Name                      Group</span><br><span class="line">----- ----                      -----</span><br><span class="line">    6 Remove-Item               &#123;del, erase, rd, ri...&#125;</span><br><span class="line">    3 Set-Location              &#123;cd, chdir, sl&#125;</span><br><span class="line">    3 Get-History               &#123;ghy, h, history&#125;</span><br><span class="line">    3 Get-ChildItem             &#123;dir, gci, ls&#125;</span><br><span class="line">    3 Get-Content               &#123;cat, gc, type&#125;</span><br><span class="line">    3 Move-Item                 &#123;mi, move, mv&#125;</span><br><span class="line">    3 Copy-Item                 &#123;copy, cp, cpi&#125;</span><br><span class="line">    2 Start-Process             &#123;saps, start&#125;</span><br><span class="line">    2 Set-Variable              &#123;set, sv&#125;</span><br><span class="line">    2 Write-Output              &#123;echo, write&#125;</span><br><span class="line">    2 Get-Process               &#123;gps, ps&#125;</span><br><span class="line">    2 Invoke-History            &#123;ihy, r&#125;</span><br><span class="line">    2 New-PSDrive               &#123;mount, ndr&#125;</span><br><span class="line">    2 Stop-Process              &#123;kill, spps&#125;</span><br><span class="line">    2 Rename-Item               &#123;ren, rni&#125;</span><br><span class="line">    2 Get-Location              &#123;gl, pwd&#125;</span><br><span class="line">    2 Compare-Object            &#123;compare, diff&#125;</span><br><span class="line">    2 Where-Object              &#123;?, where&#125;</span><br><span class="line">    2 ForEach-Object            &#123;%, foreach&#125;</span><br><span class="line">    2 Clear-Host                &#123;clear, cls&#125;</span><br><span class="line">    1 Out-Host                  &#123;oh&#125;</span><br><span class="line">    1 New-PSSession             &#123;nsn&#125;</span><br><span class="line">    1 New-Variable              &#123;nv&#125;</span><br><span class="line">    1 Out-GridView              &#123;ogv&#125;</span><br><span class="line">    1 Pop-Location              &#123;popd&#125;</span><br><span class="line">    1 Tee-Object                &#123;tee&#125;</span><br><span class="line">    1 Remove-PSBreakpoint       &#123;rbp&#125;</span><br><span class="line">    1 Receive-Job               &#123;rcjb&#125;</span><br><span class="line">    1 Push-Location             &#123;pushd&#125;</span><br><span class="line">    1 mkdir                     &#123;md&#125;</span><br><span class="line">    1 Measure-Object            &#123;measure&#125;</span><br><span class="line">    1 help                      &#123;man&#125;</span><br><span class="line">    1 Remove-PSSnapin           &#123;rsnp&#125;</span><br><span class="line">    1 Out-Printer               &#123;lp&#125;</span><br><span class="line">    1 New-Item                  &#123;ni&#125;</span><br><span class="line">    1 New-Module                &#123;nmo&#125;</span><br><span class="line">    1 New-Alias                 &#123;nal&#125;</span><br><span class="line">    1 Move-ItemProperty         &#123;mp&#125;</span><br><span class="line">    1 Wait-Job                  &#123;wjb&#125;</span><br><span class="line">    1 Remove-PSDrive            &#123;rdr&#125;</span><br><span class="line">    1 Start-Service             &#123;sasv&#125;</span><br><span class="line">    1 Set-PSBreakpoint          &#123;sbp&#125;</span><br><span class="line">    1 Set-ItemProperty          &#123;sp&#125;</span><br><span class="line">    1 Start-Job                 &#123;sajb&#125;</span><br><span class="line">    1 Set-Alias                 &#123;sal&#125;</span><br><span class="line">    1 Start-Sleep               &#123;sleep&#125;</span><br><span class="line">    1 Set-Item                  &#123;si&#125;</span><br><span class="line">    1 Select-Object             &#123;select&#125;</span><br><span class="line">    1 Set-Content               &#123;sc&#125;</span><br><span class="line">    1 Sort-Object               &#123;sort&#125;</span><br><span class="line">    1 Remove-WMIObject          &#123;rwmi&#125;</span><br><span class="line">    1 Remove-Module             &#123;rmo&#125;</span><br><span class="line">    1 Rename-ItemProperty       &#123;rnp&#125;</span><br><span class="line">    1 Stop-Service              &#123;spsv&#125;</span><br><span class="line">    1 Set-WMIInstance           &#123;swmi&#125;</span><br><span class="line">    1 Remove-Job                &#123;rjb&#125;</span><br><span class="line">    1 Remove-Variable           &#123;rv&#125;</span><br><span class="line">    1 Resolve-Path              &#123;rvpa&#125;</span><br><span class="line">    1 Stop-Job                  &#123;spjb&#125;</span><br><span class="line">    1 Remove-ItemProperty       &#123;rp&#125;</span><br><span class="line">    1 Remove-PSSession          &#123;rsn&#125;</span><br><span class="line">    1 Exit-PSSession            &#123;exsn&#125;</span><br><span class="line">    1 Format-Custom             &#123;fc&#125;</span><br><span class="line">    1 Enter-PSSession           &#123;etsn&#125;</span><br><span class="line">    1 Export-Csv                &#123;epcsv&#125;</span><br><span class="line">    1 Export-PSSession          &#123;epsn&#125;</span><br><span class="line">    1 Format-List               &#123;fl&#125;</span><br><span class="line">    1 Get-PSBreakpoint          &#123;gbp&#125;</span><br><span class="line">    1 Get-Command               &#123;gcm&#125;</span><br><span class="line">    1 Get-Alias                 &#123;gal&#125;</span><br><span class="line">    1 Format-Table              &#123;ft&#125;</span><br><span class="line">    1 Format-Wide               &#123;fw&#125;</span><br><span class="line">    1 Export-Alias              &#123;epal&#125;</span><br><span class="line">    1 Clear-History             &#123;clhy&#125;</span><br><span class="line">    1 Clear-Item                &#123;cli&#125;</span><br><span class="line">    1 Clear-Content             &#123;clc&#125;</span><br><span class="line">    1 Add-Content               &#123;ac&#125;</span><br><span class="line">    1 Add-PSSnapIn              &#123;asnp&#125;</span><br><span class="line">    1 Clear-ItemProperty        &#123;clp&#125;</span><br><span class="line">    1 Disable-PSBreakpoint      &#123;dbp&#125;</span><br><span class="line">    1 Enable-PSBreakpoint       &#123;ebp&#125;</span><br><span class="line">    1 Convert-Path              &#123;cvpa&#125;</span><br><span class="line">    1 Clear-Variable            &#123;clv&#125;</span><br><span class="line">    1 Copy-ItemProperty         &#123;cpp&#125;</span><br><span class="line">    1 Invoke-Expression         &#123;iex&#125;</span><br><span class="line">    1 Invoke-Item               &#123;ii&#125;</span><br><span class="line">    1 Invoke-Command            &#123;icm&#125;</span><br><span class="line">    1 Get-Variable              &#123;gv&#125;</span><br><span class="line">    1 Get-WmiObject             &#123;gwmi&#125;</span><br><span class="line">    1 Import-Alias              &#123;ipal&#125;</span><br><span class="line">    1 powershell_ise.exe        &#123;ise&#125;</span><br><span class="line">    1 Invoke-WMIMethod          &#123;iwmi&#125;</span><br><span class="line">    1 Import-PSSession          &#123;ipsn&#125;</span><br><span class="line">    1 Import-Csv                &#123;ipcsv&#125;</span><br><span class="line">    1 Import-Module             &#123;ipmo&#125;</span><br><span class="line">    1 Get-Unique                &#123;gu&#125;</span><br><span class="line">    1 Get-Job                   &#123;gjb&#125;</span><br><span class="line">    1 Get-Member                &#123;gm&#125;</span><br><span class="line">    1 Get-Item                  &#123;gi&#125;</span><br><span class="line">    1 Get-PSCallStack           &#123;gcs&#125;</span><br><span class="line">    1 Get-PSDrive               &#123;gdr&#125;</span><br><span class="line">    1 Get-Module                &#123;gmo&#125;</span><br><span class="line">    1 Get-PSSnapIn              &#123;gsnp&#125;</span><br><span class="line">    1 Get-Service               &#123;gsv&#125;</span><br><span class="line">    1 Get-PSSession             &#123;gsn&#125;</span><br><span class="line">    1 Get-ItemProperty          &#123;gp&#125;</span><br><span class="line">    1 Group-Object              &#123;group&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="创建自己的别名"><a href="#创建自己的别名" class="headerlink" title="创建自己的别名"></a><strong>创建自己的别名</strong></h3><p>给记事本创建一个别名，并查看该别名；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PS C:\PS&gt; Set-Alias -Name Edit -Value notepad</span><br><span class="line">PS C:\PS&gt; Edit</span><br><span class="line">PS C:\PS&gt; $alias:Edit</span><br><span class="line">notepad</span><br></pre></td></tr></table></figure>
+<h3 id="删除自己的别名"><a href="#删除自己的别名" class="headerlink" title="删除自己的别名"></a><strong>删除自己的别名</strong></h3><p>　　别名不用删除，自定义的别名在powershell退出时会自动清除。但是请放心，powershell内置别名（诸如ls,dir,fl等）不会清除。如果你非得手工删除别名。请使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS C:\PS&gt; del alias:Edit</span><br></pre></td></tr></table></figure>
+<h3 id="保存自己的别名"><a href="#保存自己的别名" class="headerlink" title="保存自己的别名"></a><strong>保存自己的别名</strong></h3><p>　　可以使用Export-Alias将别名导出到文件，需要时再通过Import-Alias导入。但是导入时可能会有异常，提示别名已经存在无法导入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PS C:\PS&gt; Import-Alias alias.ps1</span><br><span class="line">Import-Alias : Alias not allowed because an alias with the name &apos;ac&apos; already exists.</span><br><span class="line">At line:1 char:13</span><br><span class="line">+ Import-Alias &lt;&lt;&lt;&lt;  alias.ps1</span><br><span class="line">    + CategoryInfo          : ResourceExists: (ac:String) [Import-Alias], </span><br><span class="line">SessionStateException</span><br><span class="line">    + FullyQualifiedErrorId : </span><br><span class="line">AliasAlreadyExists,Microsoft.PowerShell.Commands.ImportAliasCommand</span><br></pre></td></tr></table></figure>
+<p>这时可以使用Force强制导入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS C:\PS&gt; Export-Alias alias.ps1</span><br><span class="line">PS C:\PS&gt; Import-Alias -Force alias.ps1</span><br></pre></td></tr></table></figure>
+<h3 id="通过函数扩展别名"><a href="#通过函数扩展别名" class="headerlink" title="通过函数扩展别名"></a>通过函数扩展别名</h3><p>　　在Powershell中设置别名的确方便快捷，但是在设置别名的过程中并设置参数的相关信息。尽管别名会自动识别参数，但是如何把经常使用的参数默认设定在别名里面呢？例如Test-Connection -Count 2 -ComputerName，让-“-Count 2” 固化在别名中。<br>　　这时简单的别名无法完成上述需求，可以通过函数来完成它，并且一旦把函数拉过来，定义别名会变得更加灵活。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PS C:\PS&gt; function test-conn &#123; Test-Connection  -Count 2 -ComputerName $args&#125;</span><br><span class="line">PS C:\PS&gt; Set-Alias tc test-conn</span><br><span class="line">PS C:\PS&gt; tc localhost</span><br><span class="line"></span><br><span class="line">Source        Destination     IPV4Address      IPV6Address                              Bytes    Time(ms)</span><br><span class="line">------        -----------     -----------      -----------                              -----    --------</span><br><span class="line">test-me-01   localhost       127.0.0.1        ::1                                      32       0</span><br><span class="line">test-me-01   localhost       127.0.0.1        ::1                                      32       0</span><br></pre></td></tr></table></figure>
+<p>有了函数牵线，别名可以完成更高级更强大的功能，其中$args为参数的占位符。</p>
+<p>本篇到此结束</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windows/" rel="tag"># windows</a>
+          
+            <a href="/tags/系统运维/" rel="tag"># 系统运维</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/windows-05/" rel="next" title="windows-运维-05 初识PowerShell">
+                <i class="fa fa-chevron-left"></i> windows-运维-05 初识PowerShell
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/windows-07/" rel="prev" title="windows-运维-07 数组和哈希表">
+                windows-运维-07 数组和哈希表 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#windows-运维-06-PowerShell别名"><span class="nav-number">1.</span> <span class="nav-text">windows-运维-06 PowerShell别名</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PowerShell别名"><span class="nav-number">1.1.</span> <span class="nav-text">PowerShell别名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#处理别名："><span class="nav-number">1.1.1.</span> <span class="nav-text">处理别名：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看可用的别名"><span class="nav-number">1.1.2.</span> <span class="nav-text">查看可用的别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建自己的别名"><span class="nav-number">1.1.3.</span> <span class="nav-text">创建自己的别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除自己的别名"><span class="nav-number">1.1.4.</span> <span class="nav-text">删除自己的别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保存自己的别名"><span class="nav-number">1.1.5.</span> <span class="nav-text">保存自己的别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过函数扩展别名"><span class="nav-number">1.1.6.</span> <span class="nav-text">通过函数扩展别名</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

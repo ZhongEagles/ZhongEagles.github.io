@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-运维进阶-30 KVM">
+<meta name="keywords" content="linux,Centos,RedHat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-运维进阶-30 KVM">
+<meta property="og:url" content="http://yoursite.com/linux-30/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-运维进阶-30 KVM">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g02o72cozmj30j80dlwga.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g02ofj9n0oj30j80gnn0j.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g02kmbf310j30j80es1aq.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0667t1kbvj30j80dk16g.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g066j2t8ovj30n00g2156.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g066okrvuyj30lv0fy4aq.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g066pr5yphj30lq0gb7h0.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g068z0r7h2j30je0gd10f.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g068zij7z2j30m80g9qbg.jpg">
+<meta property="og:image" content="c:/Users/zhong/AppData/Roaming/Typora/typora-user-images/1550149189258.png">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0693hpf9sj30mj0fvakn.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g06945u89aj30kc0fn10t.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0694wimvsj30i30fbjx4.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g069642nqwj30l20g947k.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g06971g3t2j30nn0g4drj.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g077oowodwj30n60fcwq9.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g069kl7k8lj30nl0fjk1z.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g069qwm1pqj30h70boq9k.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g02ki3yymjj30qr0amaah.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g02kj4msklj30j804974x.jpg">
+<meta property="og:image" content="c:/Users/zhong/AppData/Roaming/Typora/typora-user-images/1549874068549.png">
+<meta property="og:updated_time" content="2019-02-23T13:44:22.423Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-运维进阶-30 KVM">
+<meta name="twitter:description" content="linux-运维进阶-30 KVM">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g02o72cozmj30j80dlwga.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/linux-30/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-运维进阶-30 KVM | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/linux-30/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-运维进阶-30 KVM
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-04 08:52:50" itemprop="dateCreated datePublished" datetime="2019-02-04T08:52:50+08:00">2019-02-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-23 21:44:22" itemprop="dateModified" datetime="2019-02-23T21:44:22+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-运维进阶/" itemprop="url" rel="index"><span itemprop="name">linux-运维进阶</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-运维进阶-30 KVM</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-运维进阶-30-KVM"><a href="#linux-运维进阶-30-KVM" class="headerlink" title="linux-运维进阶-30 KVM"></a>linux-运维进阶-30 KVM</h1><h2 id="KVM"><a href="#KVM" class="headerlink" title="KVM"></a>KVM</h2><h3 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h3><p>　　Kernel-based Virtual Machine的简称，是一个开源的系统虚拟化模块，自Linux 2.6.20之后集成在Linux的各个主要发行版本中。它使用Linux自身的调度器进行管理，所以相对于Xen，其核心源码很少。KVM目前已成为学术界的主流VMM（ Virtual Machine Monitor,虚拟机监控器）之一。</p>
+<h3 id="检测虚拟化功能"><a href="#检测虚拟化功能" class="headerlink" title="检测虚拟化功能"></a>检测虚拟化功能</h3><p>　　如下图，把这个勾勾上，另外，做实验用的Server处理器和内存调大一些，因为接下来咱们要在虚拟机Server里新建虚拟机，也就是所谓的“虚拟机里的虚拟机”。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g02o72cozmj30j80dlwga.jpg" alt=""></p>
+<p>​    </p>
+<p>加一张桥接模式的网卡</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g02ofj9n0oj30j80gnn0j.jpg" alt=""></p>
+<p>　　KVM 是基于 x86 虚拟化扩展(Intel VT 或者 AMD-V) 技术的虚拟机软件，所以查看 CPU 是否支持 VT 技术，就可以判断是否支持KVM。有返回结果，如果结果中有vmx（Intel）或svm(AMD)字样，就说明CPU的支持的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cat /proc/cpuinfo | egrep &apos;vmx|svm&apos;</span><br><span class="line"></span><br><span class="line">请看下图：</span><br></pre></td></tr></table></figure>
+<p>​    <img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g02kmbf310j30j80es1aq.jpg" alt=""></p>
+<p>　　关掉防火墙，关闭SELinux，将 /etc/sysconfig/selinux 中的 SELinux=enforcing 修改为 SELinux=disabled，这里注意，改了重启后才生效。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl stop firewalld</span><br><span class="line">[root@localhost ~]# systemctl disable firewalld</span><br><span class="line">Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.</span><br><span class="line">Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# vim /etc/sysconfig/selinux</span><br><span class="line">SELINUX=disabled</span><br><span class="line"></span><br><span class="line">保存退出</span><br><span class="line">[root@localhost ~]# getenforce </span><br><span class="line">Enforcing</span><br><span class="line">[root@localhost ~]# reboot</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">重启后再次查看：</span><br><span class="line">[root@localhost ~]# getenforce </span><br><span class="line">Disabled</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">说明已经关闭了selinux</span><br></pre></td></tr></table></figure>
+<h2 id="安装kvm环境"><a href="#安装kvm环境" class="headerlink" title="安装kvm环境"></a>安装kvm环境</h2><p>通过 yum 安装 kvm 基础包和管理工具</p>
+<p>kvm相关安装包及其作用:</p>
+<ul>
+<li>qemu-kvm 主要的KVM程序包</li>
+<li>python-virtinst 创建虚拟机所需要的命令行工具和程序库</li>
+<li>virt-manager GUI虚拟机管理工具</li>
+<li>virt-top 虚拟机统计命令</li>
+<li>virt-viewer GUI连接程序，连接到已配置好的虚拟机</li>
+<li>libvirt C语言工具包，提供libvirt服务</li>
+<li>libvirt-client 为虚拟客户机提供的C语言工具包</li>
+<li>virt-install 基于libvirt服务的虚拟机创建命令</li>
+<li>bridge-utils 创建和管理桥接设备的工具 </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">安装kvm基础包和管理工具</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# yum -y install qemu-kvm python-virtinst libvirt libvirt-python virt-manager libguestfs-tools bridge-utils virt-install python-virtualenv</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	其中有一个安装包python-virtinst特别坑，以前是可以直接用yum安装成功的，但是现在yum软件仓库里已经没有这个包了，即使是用命令：yum install epel-release安装并启用EPEL源后，也依然会提示没有可用包python-virtinst。yum软件仓库里没有，rpm软件仓库里倒是有，但是我尝试了n个版本，不是与这个冲突就是和那个矛盾，能把人气死，最后利用github开源出来的python-virtinst包安装终于成功了，实验才得以继续下去。</span><br><span class="line">	另外，如果你的python-virtinst包没有安装成功的话，后面虚拟机里安装虚拟机的时候，会总是报错：Kernel panic - not syncing: Fatal exception in inter，无论怎么也装不好。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">关机，保存快照，以防后面实验手滑敲错。</span><br><span class="line">[root@localhost ~]# poweroff</span><br><span class="line"></span><br><span class="line">开机，查看KVM模块是否被正确加载</span><br><span class="line">[root@localhost ~]#  lsmod | grep kvm</span><br><span class="line">kvm_intel             174841  0 </span><br><span class="line">kvm                   578518  1 kvm_intel</span><br><span class="line">irqbypass              13503  1 kvm</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>如下图，将上述yum命令再次执行，可以发现其他包都装好了，就python-virtinst最坑，我们后面再来安装它。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0667t1kbvj30j80dk16g.jpg" alt=""></p>
+<p>开启kvm服务，并且设置其开机自动启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl restart libvirtd</span><br><span class="line">[root@localhost ~]# systemctl enable libvirtd</span><br></pre></td></tr></table></figure>
+<h2 id="安装Linux虚拟机"><a href="#安装Linux虚拟机" class="headerlink" title="安装Linux虚拟机"></a>安装Linux虚拟机</h2><p>　　安装前要设置环境语言为英文LANG=”en_US.UTF-8”，如果是中文的话某些版本可能会报错。CentOS 7 在这里修改 /etc/locale.conf。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/locale.conf </span><br><span class="line">LANG=&quot;en_US.UTF-8&quot;</span><br></pre></td></tr></table></figure>
+<p>准备安装目录和系统镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mkdir /kvm/</span><br><span class="line">[root@localhost ~]# mkdir /kvm/vms</span><br><span class="line">[root@localhost ~]# mkdir /kvm/iso</span><br></pre></td></tr></table></figure>
+<p> 下载centos镜像的网站：</p>
+<p><a href="https://www.centos.org/download/" target="_blank" rel="noopener">https://www.centos.org/download/</a></p>
+<p>下载个Minimal的就行，迷你版比较小，下载起来比较快嘛！我这里用的是1804版本的。</p>
+<p>安装上传下载工具lrzsz，然后上传系统镜像到/kvm/iso目录中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install lrzsz -y</span><br><span class="line">[root@localhost ~]# cd /kvm/iso/</span><br><span class="line">[root@localhost iso]# ls</span><br><span class="line">[root@localhost iso]# rz</span><br><span class="line"></span><br><span class="line">[root@localhost iso]# ls</span><br><span class="line">CentOS-7-x86_64-Minimal-1810.iso</span><br><span class="line">[root@localhost iso]#</span><br></pre></td></tr></table></figure>
+<p>定义一个储存池，绑定目录，建立并激活存储池，后面会用这个存储池创建虚拟机</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost iso]# virsh pool-define-as vmspool --type dir --target /kvm/vms</span><br><span class="line">Pool vmspool defined</span><br><span class="line"></span><br><span class="line">[root@localhost iso]# virsh pool-build vmspool</span><br><span class="line">Pool vmspool built</span><br><span class="line"></span><br><span class="line">[root@localhost iso]# virsh pool-start vmspool</span><br><span class="line">Pool vmspool started</span><br></pre></td></tr></table></figure>
+<p>现在来安装python-virtinst</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install git -y</span><br><span class="line">[root@localhost ~]# git clone https://github.com/palli/python-virtinst.git</span><br><span class="line">[root@localhost ~]# ls</span><br><span class="line">anaconda-ks.cfg  python-virtinst</span><br><span class="line">[root@localhost ~]# cd python-virtinst/</span><br><span class="line">[root@localhost python-virtinst]# python setup.py install</span><br><span class="line">[root@localhost python-virtinst]# cd</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>如果嫌弃下载太慢，可以物理机下载这个再上传到虚拟机里：</p>
+<p>浏览器打开下面这个网址即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZhongEagles.github.io/python-virtinst/python-virtinst.zip</span><br></pre></td></tr></table></figure>
+<p>先安装ntp服务，下面虚拟机里安装虚拟机的时候才方便，不用再另外添加ntp服务器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install ntp -y</span><br></pre></td></tr></table></figure>
+<p>接下来关机保存快照，以防下面实验手滑</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# poweroff</span><br></pre></td></tr></table></figure>
+<p>安装linux虚拟机，名字就叫centos7_01吧：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# virt-install --virt-type=kvm --name=centos7_01 --vcpus=2 --ram=512 --location=/kvm/iso/CentOS-7-x86_64-Minimal-1804.iso --disk  path=/kvm/vms/centos7_01.qcow2,device=disk,format=qcow2,bus=virtio,cache=writeback,size=100 --network bridge=virbr0 --graphics none --extra-args=&apos;console=ttyS0&apos; --force</span><br></pre></td></tr></table></figure>
+<p> 命令说明：</p>
+<ul>
+<li>–name 指定虚拟机的名称</li>
+<li>–ram 指定分配给虚拟机的内存资源大小</li>
+<li>maxmemory 指定可调节的最大内存资源大小，因为KVM支持热调整虚拟机的资源</li>
+<li>–vcpus 指定分配给虚拟机的CPU核心数量</li>
+<li>maxvcpus 指定可调节的最大CPU核心数量</li>
+<li>–os-type 指定虚拟机安装的操作系统类型</li>
+<li>–os-variant 指定系统的发行版本</li>
+<li>–location 指定ISO镜像文件所在的路径，支持使用网络资源路径，也就是说可以使用URL</li>
+<li>–disk path 指定虚拟硬盘所存放的路径及名称，size 则是指定该硬盘的可用大小，单位是G</li>
+<li>–bridge 指定使用哪一个桥接网卡，也就是说使用桥接的网络模式</li>
+<li>–graphics 指定是否开启图形</li>
+<li>–console 定义终端的属性，target_type 则是定义终端的类型</li>
+<li>–extra-args 定义终端额外的参数</li>
+</ul>
+<p>系统配置</p>
+<p>　　带 [!] 基本都是要配置的，按照顺序往下配置，按对用的数字以此进行设置。配置一下时间时区，第三第四第五第六项会自动检测好，接下来配置一下第八项的密码即可。</p>
+<p>　　此处配置截图太多，可参考这个教程里的截图：<a href="http://blog.51cto.com/zero01/2083896" target="_blank" rel="noopener">http://blog.51cto.com/zero01/2083896</a></p>
+<p>详细步骤：</p>
+<p>1.首先，一开始我们看到的是：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g066j2t8ovj30n00g2156.jpg" alt=""></p>
+<p>这里设置语言建议设置成英文的，不然后面玩虚拟机的时候会有乱码。</p>
+<p>2.设置语言，按数字1，回车进入以下界面，例如我要选Chinese就按数字68并回车即可，回车之后会让你选择是中文简体还是繁体，也是按下相应的数字并回车即可：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g066okrvuyj30lv0fy4aq.jpg" alt=""></p>
+<p>3.配置完成之后又会再次回到配置界面，这次我们来设置时区：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g066pr5yphj30lq0gb7h0.jpg" alt=""></p>
+<p>4.设置成亚洲上海的时区即可。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g068z0r7h2j30je0gd10f.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g068zij7z2j30m80g9qbg.jpg" alt=""></p>
+<p>5.设置系统安装盘：</p>
+<p><img src="C:\Users\zhong\AppData\Roaming\Typora\typora-user-images\1550149189258.png" alt="1550149189258"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0693hpf9sj30mj0fvakn.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g06945u89aj30kc0fn10t.jpg" alt=""></p>
+<p>选择标准分区</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0694wimvsj30i30fbjx4.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g069642nqwj30l20g947k.jpg" alt=""></p>
+<p>6.设置root用户的密码：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g06971g3t2j30nn0g4drj.jpg" alt=""></p>
+<p>7.设置完root密码后，可以看到1到9所有选项都没有感叹号了，这表是要求你设置的选项你都设置完毕了，敲b开始安装系统：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g077oowodwj30n60fcwq9.jpg" alt=""></p>
+<p>8.安装完成之后就会停止在以下这个界面，按一下回车即可，这时就会重启安装完的系统：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g069kl7k8lj30nl0fjk1z.jpg" alt=""></p>
+<p>重启成功之后就会入到登录界面，可以看到我这里是成功登录的，登录上去，将它改名为centos。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g069qwm1pqj30h70boq9k.jpg" alt=""></p>
+<p>　　这时我们是处于一个虚拟终端的，因为安装了虚拟机，如果要退出来的话，应该说是切出来，按 <code>Ctrl + ]</code>即可。然后再次登录，如下图：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# 	#这里按Ctrl + ]，然后回车，就退出了虚拟终端</span><br><span class="line">[root@localhost ~]# virsh console --domain centos7_01	#再次连接虚拟终端</span><br><span class="line">Connected to domain centos7_01</span><br><span class="line">Escape character is ^]</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# hostname		#在虚拟终端里查看主机名称</span><br><span class="line">centos</span><br><span class="line">[root@localhost ~]# 				#这里再次按Ctrl + ]，然后回车，就退出了虚拟终端</span><br><span class="line">[root@localhost ~]# hostname		#现在查看咱们虚拟机的主机名称</span><br><span class="line">localhost.localdomain</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>现在关机保存快照（给宿主机保存快照）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# poweroff</span><br></pre></td></tr></table></figure>
+<p>使用以下命令可以列出当前有多少个虚拟机，以及其状态，但是无法列出关机状态的虚拟机：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# virsh list</span><br><span class="line"> Id    Name                           State</span><br><span class="line">----------------------------------------------------</span><br><span class="line"> 2     centos7_01                     running</span><br><span class="line"></span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>需要列出关机状态的虚拟机需要加多一个–all参数</p>
+<p>查看所有虚拟机和进入控制台</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# virsh list --all</span><br><span class="line"> Id    Name                           State</span><br><span class="line">----------------------------------------------------</span><br><span class="line"> 6     centos7_01                      running</span><br><span class="line">[root@localhost ~]# virsh console --domain centos7_01</span><br><span class="line">Connected to domain centos7_01</span><br><span class="line">Escape character is ^]</span><br><span class="line"></span><br><span class="line">CentOS Linux 7 (Core)</span><br><span class="line">Kernel 3.10.0-862.el7.x86_64 on an x86_64</span><br><span class="line"></span><br><span class="line">localhost login: root</span><br><span class="line">Password: </span><br><span class="line">Last login: Sun Sep  2 10:34:40 on ttyS0</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>以下介绍一下管理虚拟机的一些常用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># virsh console centos7_01 # 进入指定的虚拟机，进入的时候还需要按一下回车</span></span><br><span class="line">[root@localhost ~]<span class="comment"># virsh start centos7_01  # 启动虚拟机</span></span><br><span class="line">[root@localhost ~]<span class="comment"># virsh shutdown centos7_01  # 关闭虚拟机</span></span><br><span class="line">[root@localhost ~]<span class="comment"># virsh destroy centos7_01 # 强制停止虚拟机</span></span><br><span class="line">[root@localhost ~]<span class="comment"># virsh undefine centos7_01  # 彻底销毁虚拟机，会删除虚拟机配置文件，但不会删除虚拟磁盘</span></span><br><span class="line">[root@localhost ~]<span class="comment"># virsh autostart centos7_01  # 设置宿主机开机时该虚拟机也开机</span></span><br><span class="line">[root@localhost ~]<span class="comment"># virsh autostart --disable centos7_01  # 解除开机启动</span></span><br><span class="line">[root@localhost ~]<span class="comment"># virsh suspend centos7_01 # 挂起虚拟机</span></span><br><span class="line">[root@localhost ~]<span class="comment"># virsh resume centos7_01 # 恢复挂起的虚拟机</span></span><br></pre></td></tr></table></figure>
+<p>以下实验很乱，可以不做</p>
+<h2 id="配置宿主机网络"><a href="#配置宿主机网络" class="headerlink" title="配置宿主机网络"></a>配置宿主机网络</h2><p>1.KVM 虚拟机是基于 NAT 的网络配置；</p>
+<p>2.只有同一宿主机的虚拟机之间可以互相访问，跨宿主机是不能访问；</p>
+<p>3.虚拟机需要和宿主机配置成桥接模式，以便虚拟机可以在局域网内可见； </p>
+<p>4.宿主机指的是我们用VMware Workstation Pro安装的虚拟机，它相对于虚拟机里面的虚拟机就是宿主。</p>
+<p>5.我们之前virt install 的时候，有个参数是bridge=virbr0，用的桥接网卡已经指定为virbr0了。</p>
+<p>Bridge模式配置</p>
+<p>　　Bridge方式即虚拟网桥的网络连接方式，是客户机和子网里面的机器能够互相通信。可以使虚拟机成为网络中具有独立IP的主机。桥接网络（也叫 物理设备共享）被用作把一个物理设备复制到一台虚拟机。网桥多用作高级设置，特别是主机多个网络接口的情况。</p>
+<p> <img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g02ki3yymjj30qr0amaah.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install -y net-tools	#装了网络工具才能用命令：ifconfig</span><br><span class="line">[root@localhost ~]# systemctl restart libvirtd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@localhost ~]# virsh iface-bridge ens33 br0</span><br><span class="line">[root@localhost ~]# ifconfig</span><br></pre></td></tr></table></figure>
+<p>修改宿主机物理网卡配置（UUID不用改，它是设备标识号）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br><span class="line"></span><br><span class="line">删掉其他无用的行，保留下列4行，另外加一行BRIDGE=“virbr0&quot;，保存退出即可</span><br><span class="line"></span><br><span class="line">TYPE=Ethernet</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">NAME=&quot;ens33&quot;</span><br><span class="line">UUID=&quot;005e11a3-2859-4497-adc1-d531ddc2675f&quot;</span><br><span class="line">DEVICE=&quot;ens33&quot;</span><br><span class="line">ONBOOT=&quot;yes&quot;</span><br><span class="line">BRIDGE=“virbr0&quot;</span><br><span class="line">NM_CONTROLLED=&quot;no&quot;</span><br></pre></td></tr></table></figure>
+<p>　　修改宿主机网桥配置(宿主机里面的虚拟机与宿主机是桥接关系，我的ens33网卡之前是192.168.141.72，这里将virbr0改为这个ip之后，ens33网卡就没有ip了，重启网络后Xshell也会断开，接下来在vmware workstation里继续实验)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-virbr0</span><br><span class="line"></span><br><span class="line">TYPE=&quot;Bridge&quot;</span><br><span class="line">BOOTPROTO=&quot;static&quot;</span><br><span class="line">DEFROUTE=&quot;yes&quot;</span><br><span class="line">PEERDNS=&quot;yes&quot;</span><br><span class="line">PEERROUTES=&quot;yes&quot;</span><br><span class="line">IPV4_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6INIT=&quot;yes&quot;</span><br><span class="line">IPV6_AUTOCONF=&quot;yes&quot;</span><br><span class="line">IPV6_DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV6_PEERDNS=&quot;yes&quot;</span><br><span class="line">IPV6_PEERROUTES=&quot;yes&quot;</span><br><span class="line">IPV6_PRIVACY=&quot;no&quot;</span><br><span class="line">IPV6_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">UUID=&quot;005e11a3-2859-4497-adc1-d531ddc2675f&quot;</span><br><span class="line">STP=&quot;yes&quot;</span><br><span class="line">DELAY=&quot;0&quot;</span><br><span class="line">NAME=&quot;virbr0&quot;</span><br><span class="line">DEVICE=&quot;virbr0&quot;</span><br><span class="line">ONBOOT=&quot;yes&quot;</span><br><span class="line">IPADDR=&quot;192.168.141.72&quot;</span><br><span class="line">PREFIX=&quot;24&quot;</span><br><span class="line">GATEWAY=&quot;192.168.141.2&quot;</span><br></pre></td></tr></table></figure>
+<p>两个网卡都修改完成后重启网络</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@localhost ~]# systemctl restart network</span><br><span class="line"></span><br><span class="line">现在Xshell断开，我们接下来在vmware workstation里继续实验</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# ifconfig </span><br><span class="line">ens33: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        ether 00:0c:29:d3:48:93  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 7606  bytes 649199 (633.9 KiB)</span><br><span class="line">        RX errors 0  dropped 2  overruns 0  frame 0</span><br><span class="line">        TX packets 7392  bytes 1114718 (1.0 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">virbr0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 192.168.141.72  netmask 255.255.255.0  broadcast 192.168.9.255</span><br><span class="line">        ether 00:0c:29:d3:48:93  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 2157  bytes 153841 (150.2 KiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 1109  bytes 146573 (143.1 KiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# brctl show</span><br><span class="line">bridge name	bridge id		STP enabled	interfaces</span><br><span class="line">virbr0		8000.000c29d34893	yes		ens33</span><br><span class="line">										virbr0-nic</span><br><span class="line">										vnet1</span><br></pre></td></tr></table></figure>
+<p>可以看到ens33网卡已经没有ip了，也可以看到virbr0的接口变成ens33了</p>
+<p>进入虚拟机centos7_01测试（如果它关机了的话，virsh start centos7_01  # 启动虚拟机）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# virsh console centos7_01</span><br><span class="line">Connected to domain centos7_01</span><br><span class="line">Escape character is ^]</span><br><span class="line"></span><br><span class="line">CentOS Linux 7 (Core)</span><br><span class="line">Kernel 3.10.0-862.el7.x86_64 on an x86_64</span><br><span class="line"></span><br><span class="line">localhost login: root</span><br><span class="line">Password: </span><br><span class="line">Last login: Sun Sep  2 10:35:29 on ttyS0</span><br><span class="line">[root@localhost ~]# ping 192.168.141.72</span><br><span class="line">PING 192.168.141.72 (192.168.141.72) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.141.72: icmp_seq=1 ttl=64 time=0.310 ms</span><br><span class="line">64 bytes from 192.168.141.72: icmp_seq=2 ttl=64 time=0.231 ms</span><br></pre></td></tr></table></figure>
+<p>如果之前装系统选的是中文简体，这里改回英文，重启虚拟机，注意宿主机不用重启。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/locale.conf </span><br><span class="line">LANG=&quot;en_US.UTF-8&quot;</span><br></pre></td></tr></table></figure>
+<p>配置宿主机网络-NAT模式</p>
+<p>　　NAT(Network Address Translation网络地址翻译)，NAT方式是kvm安装后的默认方式。它支持主机与虚拟机的互访，同时也支持虚拟机访问互联网，但不支持外界访问虚拟机。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g02kj4msklj30j804974x.jpg" alt=""></p>
+<p>　　其中virbr0是由宿主机虚拟机支持模块安装时产生的虚拟网络接口，也是一个switch和bridge，负责把内容分发到各虚拟机。几个虚拟机管理模块产生的接口关系如下图:</p>
+<p><img src="C:\Users\zhong\AppData\Roaming\Typora\typora-user-images\1549874068549.png" alt="1549874068549"></p>
+<p>　　从图上可以看出，虚拟接口和物理接口之间没有连接关系，所以虚拟机只能在通过虚拟的网络访问外部世界，无法从网络上定位和访问虚拟主机。</p>
+<p>virbr0是一个桥接器，接收所有到网络192.168.122.*的内容。从下面命令可以验证：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~] brctl show</span><br><span class="line"># 输出结果</span><br><span class="line"># ---------------------</span><br><span class="line"># bridge name bridge id   STP enabled interfaces</span><br><span class="line"># br0   8000.3863bb44cf6c no    		eno1</span><br><span class="line">#               						vnet0</span><br><span class="line"># virbr0    8000.525400193f0f yes   virbr0-nic</span><br><span class="line">ip route</span><br><span class="line"># default via 192.168.188.1 dev br0</span><br><span class="line"># 169.254.0.0/16 dev br0  scope link  metric 1012</span><br><span class="line"># 192.168.122.0/24 dev virbr0  proto kernel  scope link  src 192.168.122.1</span><br><span class="line"># 192.168.188.0/24 dev br0  proto kernel  scope link  src 192.168.188.132</span><br></pre></td></tr></table></figure>
+<p>同时，虚拟机支持模块会自动修改iptables规则，通过命令可以查看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~] iptables -t nat -L -nv</span><br><span class="line">[root@localhost ~] iptables -t filter -L -nv</span><br></pre></td></tr></table></figure>
+<p>创建名为management的NAT网络，vi /usr/share/libvirt/networks/management.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;network&gt;</span><br><span class="line">  &lt;name&gt;management&lt;/name&gt;</span><br><span class="line">  &lt;bridge name=&quot;virbr1&quot;/&gt;</span><br><span class="line">  &lt;forward/&gt;</span><br><span class="line">  &lt;ip address=&quot;192.168.123.1&quot; netmask=&quot;255.255.255.0&quot;&gt;</span><br><span class="line">    &lt;dhcp&gt;</span><br><span class="line">      &lt;range start=&quot;192.168.123.2&quot; end=&quot;192.168.123.254&quot;/&gt;</span><br><span class="line">    &lt;/dhcp&gt;</span><br><span class="line">  &lt;/ip&gt;</span><br><span class="line">&lt;/network&gt;</span><br></pre></td></tr></table></figure>
+<p>启用新建的NAT网络</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~] virsh net-define /usr/share/libvirt/networks/management.xml</span><br><span class="line">[root@localhost ~] virsh net-start management</span><br><span class="line">[root@localhost ~] virsh net-autostart management</span><br></pre></td></tr></table></figure>
+<h2 id="安装windows虚拟机"><a href="#安装windows虚拟机" class="headerlink" title="安装windows虚拟机"></a>安装windows虚拟机</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost vms]# virt-install -n windowsxp -r 512 --disk /kvm/vms/winxp.img,format=qcow2,size=5 --network bridge=virbr1 --os-type=windows --os-variant=winxp --cdrom /kvm/iso/winxp.iso --vnc --vncport=5900 --vnclisten=0.0.0.0</span><br></pre></td></tr></table></figure>
+<p>windows用vnc远程屏幕</p>
+<h2 id="克隆虚拟机"><a href="#克隆虚拟机" class="headerlink" title="克隆虚拟机"></a>克隆虚拟机</h2><ul>
+<li>virt-clone 参数介绍</li>
+<li>–version 查看版本。</li>
+<li>-h，–help 查看帮助信息。</li>
+<li>–connect=URI 连接到虚拟机管理程序 libvirt 的URI。</li>
+<li>-o 原始虚拟机名称 原始虚拟机名称，必须为关闭或者暂停状态。</li>
+<li>-n 新虚拟机名称 –name 新虚拟机名称。</li>
+<li>–auto-clone 从原来的虚拟机配置自动生成克隆名称和存储路径。</li>
+<li>-u NEW_UUID, –uuid=NEW_UUID 克隆虚拟机的新的UUID，默认值是一个随机生成的</li>
+<li>UUID。</li>
+<li>-m NEW_MAC, –mac=NEW_MAC 设置一个新的mac地址，默认为随机生成 MAC。</li>
+<li>-f NEW_DISKFILE, –file=NEW_DISKFILE 为新客户机使用新的磁盘镜像文件地址。</li>
+<li>–force-copy=TARGET 强制复制设备。</li>
+<li>–nonsparse 不使用稀疏文件复制磁盘映像。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 暂停原始虚拟机</span><br><span class="line">[root@localhost ~] virsh shutdown centos7_01</span><br><span class="line">[root@localhost ~] virt-clone -o centos7_01 -n centos7_02 -f /kvm/vms/centos7_02.qcow2 -m 00:00:00:00:00:01</span><br><span class="line">[root@localhost ~] virt-clone -o centos7_01 -n centos7_03 --file /kvm/vms/centos7_03.qcow2 --nonsparse</span><br></pre></td></tr></table></figure>
+<h2 id="通过镜像创建虚拟机"><a href="#通过镜像创建虚拟机" class="headerlink" title="通过镜像创建虚拟机"></a>通过镜像创建虚拟机</h2><p>创建虚拟机镜像文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 复制第一次安装的干净系统镜像，作为基础镜像文件，</span><br><span class="line"># 后面创建虚拟机使用这个基础镜像</span><br><span class="line">[root@localhost ~]# mkdir /kvm/img</span><br><span class="line">[root@localhost ~]# cp /kvm/vms/centos7_01.qcow2 /kvm/img/centos7_base.qcow2</span><br><span class="line"># 使用基础镜像文件，创建新的虚拟机镜像</span><br><span class="line">[root@localhost ~]# cp /kvm/img/centos7_base.qcow2 /kvm/vms/centos7_05.qcow2</span><br></pre></td></tr></table></figure>
+<p>创建虚拟机配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 复制第一次安装的干净系统镜像，作为基础配置文件。</span><br><span class="line">[root@localhost ~] virsh dumpxml centos7_01 &gt; /kvm/img/centos7_base.xml</span><br><span class="line"></span><br><span class="line"># 使用基础虚拟机镜像配置文件，创建新的虚拟机配置文件</span><br><span class="line">[root@localhost ~] cp /kvm/img/centos7_base.xml /kvm/vms/centos7_05.xml</span><br><span class="line"></span><br><span class="line"># 编辑新虚拟机配置文件</span><br><span class="line">[root@localhost ~] vi /kvm/vms/centos7_05.xml</span><br></pre></td></tr></table></figure>
+<p>主要是修改虚拟机文件名，UUID，镜像地址和网卡地址，其中 UUID 在 Linux 下可以使用 uuidgen 命令生成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;domain type=&apos;kvm&apos;&gt;</span><br><span class="line">  &lt;name&gt;centos7_05&lt;/name&gt;</span><br><span class="line">  &lt;uuid&gt;1e86167a-33a9-4ce8-929e-58013fbf9122&lt;/uuid&gt;</span><br><span class="line">  &lt;devices&gt;</span><br><span class="line">    &lt;disk type=&apos;file&apos; device=&apos;disk&apos;&gt;</span><br><span class="line">      &lt;source file=&apos;/kvm/vms/centos7_05.img&apos;/&gt;</span><br><span class="line">    &lt;/disk&gt;</span><br><span class="line">    &lt;interface type=&apos;bridge&apos;&gt;</span><br><span class="line">      &lt;mac address=&apos;00:00:00:00:00:04&apos;/&gt;</span><br><span class="line">    &lt;/interface&gt;    </span><br><span class="line">    &lt;/devices&gt;</span><br><span class="line">&lt;/domain&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~] virsh define /kvm/vms/centos7_05.xml</span><br><span class="line"># Domain centos7_05 defined from /kvm/vms/centos7_05.xml</span><br></pre></td></tr></table></figure>
+<h2 id="挂载磁盘"><a href="#挂载磁盘" class="headerlink" title="挂载磁盘"></a>挂载磁盘</h2><p>创建镜像文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~] qemu-img create /kvm/vms/centos7_01_1.img 5G</span><br></pre></td></tr></table></figure>
+<p>创建普通的qcow2格式镜像文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 创建 centos7_01_1 所需的磁盘</span><br><span class="line"># create 表示创建，-f qcow2 表示创建一个格式为 qcow2 的磁盘， </span><br><span class="line"># /kvm/vms/centos7_05.qcow2 表示创建的磁盘名称及磁盘文件，10G 表示该磁盘可用大小。</span><br><span class="line">qemu-img create -f qcow2 -o preallocation=metadata /kvm/vms/centos7_05_1.qcow2 5G</span><br></pre></td></tr></table></figure>
+<p>挂载方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~] virsh attach-disk centos7_05 /kvm/vms/centos7_05_1.qcow2 vdb  --cache none</span><br></pre></td></tr></table></figure>
+<h2 id="常用命令说明"><a href="#常用命令说明" class="headerlink" title="常用命令说明"></a>常用命令说明</h2><p>virt-install</p>
+<p>常用参数说明1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">–name指定虚拟机名称</span><br><span class="line">–memory分配内存大小。</span><br><span class="line">–vcpus分配CPU核心数，最大与实体机CPU核心数相同</span><br><span class="line">–disk指定虚拟机镜像，size指定分配大小单位为G。</span><br><span class="line">–network网络类型，此处用的是默认，一般用的应该是bridge桥接。</span><br><span class="line">–accelerate加速</span><br><span class="line">–cdrom指定安装镜像iso</span><br><span class="line">–vnc启用VNC远程管理，一般安装系统都要启用。</span><br><span class="line">–vncport指定VNC监控端口，默认端口为5900，端口不能重复。</span><br><span class="line">–vnclisten指定VNC绑定IP，默认绑定127.0.0.1，这里改为0.0.0.0。</span><br><span class="line">–os-type=linux,windows</span><br><span class="line">–os-variant=rhel6</span><br></pre></td></tr></table></figure>
+<p>virt-install</p>
+<p>常用参数说明2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">--name      指定虚拟机名称</span><br><span class="line">--ram       虚拟机内存大小，以 MB 为单位</span><br><span class="line">--vcpus     分配CPU核心数，最大与实体机CPU核心数相同</span><br><span class="line">–-vnc       启用VNC远程管理，一般安装系统都要启用。</span><br><span class="line">–-vncport   指定VNC监控端口，默认端口为5900，端口不能重复。</span><br><span class="line">–-vnclisten  指定VNC绑定IP，默认绑定127.0.0.1，这里改为0.0.0.0。</span><br><span class="line">--network   虚拟机网络配置</span><br><span class="line">  # 其中子选项，bridge=br0 指定桥接网卡的名称。</span><br><span class="line"></span><br><span class="line">–os-type=linux,windows</span><br><span class="line">–os-variant=rhel7.2</span><br><span class="line"></span><br><span class="line">--disk 指定虚拟机的磁盘存储位置</span><br><span class="line">  # size，初始磁盘大小，以 GB 为单位。</span><br><span class="line"></span><br><span class="line">--location 指定安装介质路径，如光盘镜像的文件路径。</span><br><span class="line">--graphics 图形化显示配置</span><br><span class="line">  # 全新安装虚拟机过程中可能会有很多交互操作，比如设置语言，初始化 root 密码等等。</span><br><span class="line">  # graphics 选项的作用就是配置图形化的交互方式，可以使用 vnc（一种远程桌面软件）进行链接。</span><br><span class="line">  # 我们这列使用命令行的方式安装，所以这里要设置为 none，但要通过 --extra-args 选项指定终端信息，</span><br><span class="line">  # 这样才能将安装过程中的交互信息输出到当前控制台。</span><br><span class="line">--extra-args 根据不同的安装方式设置不同的额外选项</span><br></pre></td></tr></table></figure>
+<p>virsh</p>
+<p>基础命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">virsh list                 # 查看在运行的虚拟机</span><br><span class="line">virsh dumpxml vm-name      # 查看kvm虚拟机配置文件</span><br><span class="line">virsh start vm-name        # 启动kvm虚拟机</span><br><span class="line">virsh shutdown vm-name     # 正常关机</span><br><span class="line"></span><br><span class="line">virsh destroy vm-name      # 非正常关机，强制关闭虚拟机（相当于物理机直接拔掉电源）</span><br><span class="line">virsh undefine vm-name     # 删除vm的配置文件</span><br><span class="line"></span><br><span class="line">ls  /etc/libvirt/qemu</span><br><span class="line"># 查看删除结果，Centos的配置文件被删除，但磁盘文件不会被删除</span><br><span class="line"></span><br><span class="line">virsh define file-name.xml # 根据配置文件定义虚拟机</span><br><span class="line">virsh suspend vm-name      # 挂起，终止</span><br><span class="line">virsh resumed vm-name      # 恢复被挂起的虚拟机</span><br><span class="line">virsh autostart vm-name    # 开机自启动vm</span><br><span class="line">virsh console &lt;虚拟机名称&gt;   # 连接虚拟机</span><br></pre></td></tr></table></figure>
+<h2 id="错误解决"><a href="#错误解决" class="headerlink" title="错误解决"></a>错误解决</h2><p>如果出现以下字符串使用 CTRL+Shift+5或者CTRL+Shift+]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">console test</span><br><span class="line">Connected to domain test</span><br><span class="line">Escape character is ^]</span><br></pre></td></tr></table></figure>
+<p>彻底删除一个虚拟机（以centos7_01为例）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# virsh</span><br><span class="line">Welcome to virsh, the virtualization interactive terminal.</span><br><span class="line"></span><br><span class="line">Type:  &apos;help&apos; for help with commands</span><br><span class="line">       &apos;quit&apos; to quit</span><br><span class="line"></span><br><span class="line">virsh # list</span><br><span class="line"> Id    Name                           State</span><br><span class="line">----------------------------------------------------</span><br><span class="line"> 7     windowsxp                      running</span><br><span class="line"> 12    centos7_01                     running</span><br><span class="line"></span><br><span class="line">virsh # shutdown centos7_01</span><br><span class="line">Domain centos7_01 is being shutdown</span><br><span class="line"></span><br><span class="line">virsh # destroy centos7_01</span><br><span class="line">Domain centos7_01 destroyed</span><br><span class="line"></span><br><span class="line">virsh # undefine centos7_01</span><br><span class="line">Domain centos7_01 has been undefined</span><br><span class="line"></span><br><span class="line">virsh # exit</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# rm -rf /kvm/vms/centos7_01.qcow2 </span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>本篇到此结束。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"># Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"># RedHat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-29/" rel="next" title="linux-运维进阶-29 负载均衡">
+                <i class="fa fa-chevron-left"></i> linux-运维进阶-29 负载均衡
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-31/" rel="prev" title="linux-运维进阶-31 OpenSSL实现CA证书">
+                linux-运维进阶-31 OpenSSL实现CA证书 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-30-KVM"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-30 KVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#KVM"><span class="nav-number">1.1.</span> <span class="nav-text">KVM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念解析"><span class="nav-number">1.1.1.</span> <span class="nav-text">概念解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检测虚拟化功能"><span class="nav-number">1.1.2.</span> <span class="nav-text">检测虚拟化功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装kvm环境"><span class="nav-number">1.2.</span> <span class="nav-text">安装kvm环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Linux虚拟机"><span class="nav-number">1.3.</span> <span class="nav-text">安装Linux虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置宿主机网络"><span class="nav-number">1.4.</span> <span class="nav-text">配置宿主机网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装windows虚拟机"><span class="nav-number">1.5.</span> <span class="nav-text">安装windows虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#克隆虚拟机"><span class="nav-number">1.6.</span> <span class="nav-text">克隆虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过镜像创建虚拟机"><span class="nav-number">1.7.</span> <span class="nav-text">通过镜像创建虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载磁盘"><span class="nav-number">1.8.</span> <span class="nav-text">挂载磁盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令说明"><span class="nav-number">1.9.</span> <span class="nav-text">常用命令说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误解决"><span class="nav-number">1.10.</span> <span class="nav-text">错误解决</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

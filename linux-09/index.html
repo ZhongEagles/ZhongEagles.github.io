@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-运维进阶-09 编写Shell脚本">
+<meta name="keywords" content="linux,Centos,RedHat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-运维进阶-09 编写Shell脚本">
+<meta property="og:url" content="http://yoursite.com/linux-09/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-运维进阶-09 编写Shell脚本">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzayrsg8jyj30j808d433.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzayy5ivdyj30j805qtb4.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzazphmxe4j30fm059mz2.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzb1ayxndxj30hc04n42u.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzb2am7yuvj30j80d6dq7.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzb2i28ggkj30j80fhgxd.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzb2plknzkj30j80hn786.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzb2tiyz00j30bx05uwee.jpg">
+<meta property="og:updated_time" content="2019-02-23T13:24:50.341Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-运维进阶-09 编写Shell脚本">
+<meta name="twitter:description" content="linux-运维进阶-09 编写Shell脚本">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzayrsg8jyj30j808d433.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/linux-09/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-运维进阶-09 编写Shell脚本 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/linux-09/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-运维进阶-09 编写Shell脚本
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-18 11:13:21" itemprop="dateCreated datePublished" datetime="2019-01-18T11:13:21+08:00">2019-01-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-23 21:24:50" itemprop="dateModified" datetime="2019-02-23T21:24:50+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-运维进阶/" itemprop="url" rel="index"><span itemprop="name">linux-运维进阶</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-运维进阶-09 编写Shell脚本</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-运维进阶-09-编写Shell脚本"><a href="#linux-运维进阶-09-编写Shell脚本" class="headerlink" title="linux-运维进阶-09 编写Shell脚本"></a>linux-运维进阶-09 编写Shell脚本</h1><p>　　可以将Shell终端解释器当作人与计算机硬件之间的“翻译官”，它作为用户与Linux系统内部的通信媒介，除了能够支持各种变量与参数外，还提供了诸如循环、分支等高级编程语言才有的控制结构特性。</p>
+<ul>
+<li>交互式（Interactive）：用户每输入一条命令就立即执行。</li>
+<li>批处理（Batch）：由用户事先编写好一个完整的Shell脚本，Shell会一次性执行脚本中诸多的命令。</li>
+</ul>
+<h2 id="指定解释器"><a href="#指定解释器" class="headerlink" title="指定解释器"></a>指定解释器</h2><h3 id="脚本的第一行"><a href="#脚本的第一行" class="headerlink" title="脚本的第一行"></a>脚本的第一行</h3><p>用于指定脚本使用哪个shell程序做为脚本中命令的解释器</p>
+<p>使用bash做为脚本命令的解释器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br></pre></td></tr></table></figure>
+<p>使用zsh做为脚本的命令解释器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/zsh</span><br></pre></td></tr></table></figure>
+<h2 id="创建一个脚本"><a href="#创建一个脚本" class="headerlink" title="创建一个脚本"></a>创建一个脚本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim hello.sh</span><br><span class="line"></span><br><span class="line">里面输入：</span><br><span class="line">#!/bin/bash</span><br><span class="line">echo &quot;helloworld&quot;</span><br><span class="line">保存退出</span><br></pre></td></tr></table></figure>
+<h2 id="执行一个脚本"><a href="#执行一个脚本" class="headerlink" title="执行一个脚本"></a>执行一个脚本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ./hello.sh</span><br><span class="line">-bash: ./hello.sh: Permission denied	#发现你的权限不够</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="添加执行权限"><a href="#添加执行权限" class="headerlink" title="添加执行权限"></a>添加执行权限</h3><p>　　脚本写完后运行，利用./执行发现权限不够。Linux文件创建之后默认是没有可执行权限的，可以用chmod给文件或目录添加上可执行权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ll</span><br><span class="line">[root@localhost ~]# chmod +x hello.sh </span><br><span class="line">[root@localhost ~]# ll</span><br><span class="line">[root@localhost ~]# ./hello.sh </span><br><span class="line">helloworld</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>上面两次ll出来的文件列表，是为了对比出添加权限前后文件权限的变化，x表示可执行。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzayrsg8jyj30j808d433.jpg" alt=""></p>
+<h2 id="没有执行权限情况下想要执行脚本的两种方式"><a href="#没有执行权限情况下想要执行脚本的两种方式" class="headerlink" title="没有执行权限情况下想要执行脚本的两种方式"></a>没有执行权限情况下想要执行脚本的两种方式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">首先咱们在新建一个脚本</span><br><span class="line">[root@localhost ~]# vim aaa.sh</span><br><span class="line">里面输入：</span><br><span class="line">#!/bin/bash</span><br><span class="line">echo &quot;hello aaa&quot;</span><br><span class="line">保存退出</span><br><span class="line"></span><br><span class="line">验证它无权限被执行</span><br><span class="line">[root@localhost ~]# ./aaa.sh</span><br><span class="line">-bash: ./aaa.sh: Permission denied</span><br></pre></td></tr></table></figure>
+<h3 id="解释器后面跟上脚本"><a href="#解释器后面跟上脚本" class="headerlink" title="解释器后面跟上脚本"></a>解释器后面跟上脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash aaa.sh </span><br><span class="line">hello aaa</span><br></pre></td></tr></table></figure>
+<h3 id="点加空格后面跟上脚本或者脚本的全路径"><a href="#点加空格后面跟上脚本或者脚本的全路径" class="headerlink" title="点加空格后面跟上脚本或者脚本的全路径"></a>点加空格后面跟上脚本或者脚本的全路径</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# . aaa.sh </span><br><span class="line">hello aaa</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzayy5ivdyj30j805qtb4.jpg" alt=""></p>
+<h2 id="Shell脚本执行的几种方法"><a href="#Shell脚本执行的几种方法" class="headerlink" title="Shell脚本执行的几种方法"></a>Shell脚本执行的几种方法</h2><p>　　在脚本拥有可执行权限之后，我们就可以去执行脚本，执行脚本有以下几种方式：</p>
+<p> 在脚本所在目录下时</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ./hello.sh </span><br><span class="line">helloworld</span><br><span class="line">[root@localhost ~]# . hello.sh </span><br><span class="line">helloworld</span><br><span class="line">[root@localhost ~]# bash hello.sh </span><br><span class="line">helloworld</span><br><span class="line">[root@localhost ~]# sh hello.sh </span><br><span class="line">helloworld</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p> 不在脚本所在目录下时</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mkdir -p a/b/c/d</span><br><span class="line">[root@localhost ~]# cd a</span><br><span class="line">[root@localhost a]# bash /root/hello.sh </span><br><span class="line">helloworld</span><br><span class="line">[root@localhost a]# cd b/c/d</span><br><span class="line">[root@localhost d]# pwd</span><br><span class="line">/root/a/b/c/d</span><br><span class="line">[root@localhost d]# ./../../../../hello.sh </span><br><span class="line">helloworld</span><br><span class="line">[root@localhost d]#</span><br></pre></td></tr></table></figure>
+<h2 id="接受用户的参数"><a href="#接受用户的参数" class="headerlink" title="接受用户的参数"></a>接受用户的参数</h2><p>脚本的参数就是脚本后面跟的用户输入的选项或者是变量</p>
+<p>在脚本中</p>
+<ul>
+<li>脚本的名字使用$0来表示</li>
+<li>脚本的参数个数使用$#表示</li>
+<li>脚本的第N个参数使用$N表示（例如脚本第三个参数$3）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim hello.sh </span><br><span class="line">输入：</span><br><span class="line">#!/bin/bash</span><br><span class="line">echo &quot;脚本名称：$0&quot;</span><br><span class="line">echo &quot;参数个数：$#&quot;</span><br><span class="line">echo &quot;第一个参数：$1&quot;</span><br><span class="line">echo &quot;第二个参数：$2&quot;</span><br><span class="line">echo &quot;第三个参数：$3&quot;</span><br><span class="line">echo &quot;第四个参数：$4&quot;</span><br><span class="line">echo &quot;第五个参数：$5&quot;</span><br></pre></td></tr></table></figure>
+<p>执行该脚本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash hello.sh 1 2 3 4 5</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzazphmxe4j30fm059mz2.jpg" alt=""></p>
+<h2 id="判断用户参数（下面两种写法）"><a href="#判断用户参数（下面两种写法）" class="headerlink" title="判断用户参数（下面两种写法）"></a>判断用户参数（下面两种写法）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim isroot.sh</span><br><span class="line">输入：</span><br><span class="line"></span><br><span class="line">#!/bin/bash</span><br><span class="line">if [ $USER == root ];</span><br><span class="line">then</span><br><span class="line">    echo &quot;当前用户是管理员&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;当前用户不是管理员&quot;    </span><br><span class="line">fi</span><br><span class="line">[ $USER = root ] &amp;&amp; echo &quot;当前用户是管理员&quot; || echo &quot;当前用户不是管理员&quot;</span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+<p>执行该脚本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash isroot.sh </span><br><span class="line">当前用户是管理员</span><br><span class="line">当前用户是管理员</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="可用的整数比较运算符"><a href="#可用的整数比较运算符" class="headerlink" title="可用的整数比较运算符"></a>可用的整数比较运算符</h2><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-eq</td>
+<td>是否等于</td>
+</tr>
+<tr>
+<td>-ne</td>
+<td>是否不等于</td>
+</tr>
+<tr>
+<td>-gt</td>
+<td>是否大于</td>
+</tr>
+<tr>
+<td>-lt</td>
+<td>是否小于</td>
+</tr>
+<tr>
+<td>-le</td>
+<td>是否等于或小于</td>
+</tr>
+<tr>
+<td>-ge</td>
+<td>是否大于或等于</td>
+</tr>
+</tbody>
+</table>
+<h2 id="常见的字符串比较运算符"><a href="#常见的字符串比较运算符" class="headerlink" title="常见的字符串比较运算符"></a>常见的字符串比较运算符</h2><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>=</td>
+<td>比较字符串内容是否相同</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>比较字符串内容是否不同</td>
+</tr>
+<tr>
+<td>-z</td>
+<td>判断字符串内容是否为空</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> [root@localhost ~]# [ $LANG=&quot;EN.US.UTF-8&quot; ]&amp;&amp;echo &quot;is English&quot;</span><br><span class="line">is English</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="Shell中的四则运算"><a href="#Shell中的四则运算" class="headerlink" title="Shell中的四则运算"></a>Shell中的四则运算</h2><p>注意：方括号外取值符号$不能少，方括号内一定要用空格把方括号和里面的命令隔开</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# i=$[10 * 10]</span><br><span class="line">[root@localhost ~]# echo $i</span><br><span class="line">100</span><br><span class="line">[root@localhost ~]# echo $[999 + 999]</span><br><span class="line">1998</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>写一个判断内存是否够用的脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim isfree.sh</span><br></pre></td></tr></table></figure>
+<p>输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># 此脚本用于判断内存是否够用，标准为空闲内存大于总内存的20%（说明脚本功能）</span><br><span class="line"># bash isfree.sh （说明脚本的用法）</span><br><span class="line"># 作者：feng（说明脚本作者）</span><br><span class="line"># qq:略（说明作者的联系方式）</span><br><span class="line"> </span><br><span class="line"># 可能有些脚本里有复杂参数或者函数，请在最下面进行说明</span><br><span class="line"> </span><br><span class="line">Totalmem=`free -m | grep Mem | awk &apos;&#123;print $2&#125;&apos;`</span><br><span class="line">Freemem=`free -m | grep Mem | awk &apos;&#123;print $4&#125;&apos;`</span><br><span class="line">i=$[ $Totalmem/5 ]</span><br><span class="line">[ $Freemem -gt $i ] &amp;&amp; echo &quot;内存够用&quot; || echo &quot;内存紧缺，请抓紧清理内存&quot;</span><br></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash isfree.sh </span><br><span class="line">内存够用</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="if流程控制语句"><a href="#if流程控制语句" class="headerlink" title="if流程控制语句"></a>if流程控制语句</h2><p>上面判断用户参数时，我们已经使用过了if语句</p>
+<p>现在再来一次</p>
+<h3 id="linux-shell-中判断文件、目录是否存在"><a href="#linux-shell-中判断文件、目录是否存在" class="headerlink" title="linux shell 中判断文件、目录是否存在"></a>linux shell 中判断文件、目录是否存在</h3><p>-e filename 如果 filename存在，则为真<br>-d filename 如果 filename为目录，则为真<br>-f filename 如果 filename为常规文件，则为真<br>-L filename 如果 filename为符号链接，则为真<br>-r filename 如果 filename可读，则为真<br>-w filename 如果 filename可写，则为真<br>-x filename 如果 filename可执行，则为真<br>-s filename 如果文件长度不为0，则为真 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim 1.sh</span><br></pre></td></tr></table></figure>
+<p>输入:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">DIR=&quot;/root/test&quot;</span><br><span class="line">if [ ! -d $DIR ]</span><br><span class="line">then</span><br><span class="line">	echo &quot;目录不存在&quot; </span><br><span class="line">	mkdir /root/test</span><br><span class="line">else</span><br><span class="line">	echo &quot;目录已经存在&quot;</span><br><span class="line">fi</span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash 1.sh </span><br><span class="line">目录不存在</span><br><span class="line">[root@localhost ~]# bash 1.sh </span><br><span class="line">目录已经存在</span><br></pre></td></tr></table></figure>
+<p>结果如下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzb1ayxndxj30hc04n42u.jpg" alt=""></p>
+<h2 id="判断主机是否能正常访问百度的脚本"><a href="#判断主机是否能正常访问百度的脚本" class="headerlink" title="判断主机是否能正常访问百度的脚本"></a>判断主机是否能正常访问百度的脚本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim baidu.sh</span><br></pre></td></tr></table></figure>
+<p>输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># example： ./testhost.sh www.baidu.com</span><br><span class="line">if [ $# -eq 1 ] </span><br><span class="line">then</span><br><span class="line">    ping -c 4 -i 0.2 -W 3 $1 &amp;&gt; /dev/null</span><br><span class="line">else </span><br><span class="line">    echo &quot;example:  $0 www.baidu.com&quot;</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [ $? -eq 0 ] </span><br><span class="line">then</span><br><span class="line">    echo &quot;主机$1能正常访问&quot;</span><br><span class="line">    exit 0</span><br><span class="line">else</span><br><span class="line">    echo &quot;主机$1无法访问&quot;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash baidu.sh </span><br><span class="line">example:  baidu.sh www.baidu.com</span><br><span class="line">主机能正常访问</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="判断成绩的脚本"><a href="#判断成绩的脚本" class="headerlink" title="判断成绩的脚本"></a>判断成绩的脚本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim result.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> #!/bin/bash</span><br><span class="line">read -p &quot;Enter your score(0-100): &quot; sc</span><br><span class="line">if [ $sc -gt 100 ] || [ $sc -lt 0 ] ; then</span><br><span class="line">    echo &quot;Error,Please input score 0~100!&quot;</span><br><span class="line">    exit 2</span><br><span class="line">elif [ $sc -ge 85 ] &amp;&amp; [ $sc -le 100 ]; then</span><br><span class="line">    echo &quot;$sc is Excellent&quot;</span><br><span class="line">elif [ $sc -ge 60 ] &amp;&amp; [ $sc -le 84 ]; then</span><br><span class="line">    echo &quot;$sc is Pass&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;$sc is Fail&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash result.sh </span><br><span class="line">Enter your score(0-100): 90</span><br><span class="line">90 is Excellent</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h2><p>　　题目：在linux上创建一个脚本，名为/root/makeusers，此脚本能实现为系统创建本地用户，并且这些用户的用户名来自一个包含用户名列表的文件。</p>
+<p>同时满足下列要求：<br>　　此脚本要求提供一个参数，此参数就是包含用户列表的文件<br>　　如果没有提供参数，此脚本应该给出下面的提示信息 Usage:/root/makeusers <userfile>，然后退出并返回相应的值</userfile></p>
+<p>　　如果提供一个不存在的文件名，此脚本应该给出下面的提示信息 Input file not found 然后退<br>出并返回相应的值</p>
+<p>　　创建的用户登录 shell 为/bin/false，此脚本不需要为用户设置密码</p>
+<p>首先，了解一下新建用户的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# useradd -s /bin/fasle &quot;testuser&quot;</span><br><span class="line">[root@localhost ~]# cat /etc/passwd</span><br></pre></td></tr></table></figure>
+<p>通过cat命令查看所有用户信息，可以看到如下图，用户testuser已经成功创建出来了</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzb2am7yuvj30j80d6dq7.jpg" alt=""></p>
+<p>现在开始写脚本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim foruser.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">if [ $# -ne 1 ];then</span><br><span class="line">    echo &apos;Usage: $0 &lt;userfile&gt;&lt;&gt;&apos;</span><br><span class="line">    exit 1</span><br><span class="line">elif [ ! -f &quot;$1&quot; ];then</span><br><span class="line">    echo &quot;input file not found&quot;</span><br><span class="line">    exit 2</span><br><span class="line">else</span><br><span class="line">    for USER in $(cat &quot;$1&quot;);do</span><br><span class="line">        useradd -s /bin/false $USER</span><br><span class="line">    done</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>新建一个包含用户名的文件，里面随便设置几个用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim user.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aaa</span><br><span class="line">bbb</span><br><span class="line">ccc</span><br><span class="line">ddd</span><br></pre></td></tr></table></figure>
+<p>执行脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash foruser.sh user.txt </span><br><span class="line">[root@localhost ~]# cat /etc/passwd</span><br></pre></td></tr></table></figure>
+<p>如下图，几个用户已经被成功添加了！</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzb2i28ggkj30j80fhgxd.jpg" alt=""></p>
+<p>把for循环改成wheel循环的写法</p>
+<p>另外再写一个脚本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim wheeluser.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">if [ $# -eq 1 ];then</span><br><span class="line">    if [ -f &quot;$1&quot; ];then</span><br><span class="line">        while read username;do</span><br><span class="line">            useradd -s /bin/false $username &amp;&gt;/dev/null</span><br><span class="line">        done&lt;$1 #跳出循环</span><br><span class="line">    else</span><br><span class="line">        echo &quot;Input file not found&quot;</span><br><span class="line">    fi  </span><br><span class="line">else</span><br><span class="line">    echo &quot;Usage: $0 &lt;userfile&gt;&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>重新编辑一下user.txt </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim user.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aaawww</span><br><span class="line">bbbwww</span><br><span class="line">cccwww</span><br><span class="line">dddwww</span><br></pre></td></tr></table></figure>
+<p>执行脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash wheeluser.sh user.txt </span><br><span class="line">[root@localhost ~]# cat /etc/passwd</span><br></pre></td></tr></table></figure>
+<p>如下图，几个用户已经被成功添加了！</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzb2plknzkj30j80hn786.jpg" alt=""></p>
+<h2 id="case语句"><a href="#case语句" class="headerlink" title="case语句"></a>case语句</h2><p>在 linux上创建一个名为/root/script.sh 的脚本，让其提供下列特性：<br>　　当运行/root/script.sh all，输出为 none<br>　　当运行/root/script.sh none，输出为 all<br>　　当没有任何参数或参数不是 all 或者 none 时，其错误输出产生以下的信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/root/script.sh all|none</span><br></pre></td></tr></table></figure>
+<p>开始写脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim script.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">case $1 in</span><br><span class="line">    all)</span><br><span class="line">    echo &quot;none&quot;</span><br><span class="line">    ;;  </span><br><span class="line">    none)</span><br><span class="line">    echo &quot;all&quot;</span><br><span class="line">    ;;  </span><br><span class="line">    *)  </span><br><span class="line">    echo &quot;Usage: $0 all|none&quot;</span><br><span class="line">    ;;  </span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+<p>执行脚本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash script.sh all</span><br><span class="line">none</span><br><span class="line">[root@localhost ~]# bash script.sh none</span><br><span class="line">all</span><br><span class="line">[root@localhost ~]# bash script.sh abc</span><br><span class="line">Usage: script.sh all|none</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>如下图</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzb2tiyz00j30bx05uwee.jpg" alt=""></p>
+<p>本篇到此结束</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"># Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"># RedHat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-08/" rel="next" title="linux-基础学习-08 管道符、重定向与环境变量">
+                <i class="fa fa-chevron-left"></i> linux-基础学习-08 管道符、重定向与环境变量
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-10/" rel="prev" title="linux-运维进阶-10 用户权限与文件权限">
+                linux-运维进阶-10 用户权限与文件权限 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-09-编写Shell脚本"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-09 编写Shell脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#指定解释器"><span class="nav-number">1.1.</span> <span class="nav-text">指定解释器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#脚本的第一行"><span class="nav-number">1.1.1.</span> <span class="nav-text">脚本的第一行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个脚本"><span class="nav-number">1.2.</span> <span class="nav-text">创建一个脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行一个脚本"><span class="nav-number">1.3.</span> <span class="nav-text">执行一个脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加执行权限"><span class="nav-number">1.3.1.</span> <span class="nav-text">添加执行权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#没有执行权限情况下想要执行脚本的两种方式"><span class="nav-number">1.4.</span> <span class="nav-text">没有执行权限情况下想要执行脚本的两种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解释器后面跟上脚本"><span class="nav-number">1.4.1.</span> <span class="nav-text">解释器后面跟上脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#点加空格后面跟上脚本或者脚本的全路径"><span class="nav-number">1.4.2.</span> <span class="nav-text">点加空格后面跟上脚本或者脚本的全路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell脚本执行的几种方法"><span class="nav-number">1.5.</span> <span class="nav-text">Shell脚本执行的几种方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接受用户的参数"><span class="nav-number">1.6.</span> <span class="nav-text">接受用户的参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断用户参数（下面两种写法）"><span class="nav-number">1.7.</span> <span class="nav-text">判断用户参数（下面两种写法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可用的整数比较运算符"><span class="nav-number">1.8.</span> <span class="nav-text">可用的整数比较运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的字符串比较运算符"><span class="nav-number">1.9.</span> <span class="nav-text">常见的字符串比较运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell中的四则运算"><span class="nav-number">1.10.</span> <span class="nav-text">Shell中的四则运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#if流程控制语句"><span class="nav-number">1.11.</span> <span class="nav-text">if流程控制语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux-shell-中判断文件、目录是否存在"><span class="nav-number">1.11.1.</span> <span class="nav-text">linux shell 中判断文件、目录是否存在</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断主机是否能正常访问百度的脚本"><span class="nav-number">1.12.</span> <span class="nav-text">判断主机是否能正常访问百度的脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断成绩的脚本"><span class="nav-number">1.13.</span> <span class="nav-text">判断成绩的脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for循环"><span class="nav-number">1.14.</span> <span class="nav-text">for循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case语句"><span class="nav-number">1.15.</span> <span class="nav-text">case语句</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

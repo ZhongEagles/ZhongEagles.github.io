@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-运维进阶-22 iSCSI网络存储服务">
+<meta name="keywords" content="linux,Centos,RedHat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-运维进阶-22 iSCSI网络存储服务">
+<meta property="og:url" content="http://yoursite.com/linux-22/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-运维进阶-22 iSCSI网络存储服务">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy48e8sr2j30hd0gz3zm.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy7vh7xukj30lj0l07fl.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy8fy7qkaj30lr0m91kx.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypgdz6pgj30j80gfq49.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypgndzzvj30j80fjn1v.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy8icgwxzj30sw0o6773.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy8mcx9e8j30sb0nfguw.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypb6xihbj30j70dhahx.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypd5nfdtj30ib0q6dnj.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypdi12uuj30ik0r0aia.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypgdz6pgj30j80gfq49.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypj6706lj30q10kfgq2.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypkmia3pj31hc0u079a.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypog3s38j30uz0opdia.jpg">
+<meta property="og:updated_time" content="2019-02-23T13:39:20.485Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-运维进阶-22 iSCSI网络存储服务">
+<meta name="twitter:description" content="linux-运维进阶-22 iSCSI网络存储服务">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy48e8sr2j30hd0gz3zm.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/linux-22/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-运维进阶-22 iSCSI网络存储服务 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/linux-22/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-运维进阶-22 iSCSI网络存储服务
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-04 08:20:32" itemprop="dateCreated datePublished" datetime="2019-02-04T08:20:32+08:00">2019-02-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-23 21:39:20" itemprop="dateModified" datetime="2019-02-23T21:39:20+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-运维进阶/" itemprop="url" rel="index"><span itemprop="name">linux-运维进阶</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-运维进阶-22 iSCSI网络存储服务</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-运维进阶-22-iSCSI网络存储服务"><a href="#linux-运维进阶-22-iSCSI网络存储服务" class="headerlink" title="linux-运维进阶-22 iSCSI网络存储服务"></a>linux-运维进阶-22 iSCSI网络存储服务</h1><h2 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h2><p>　　iSCSI（Internet Small Computer System Interface，发音为/ˈаɪskʌzi/），Internet小型计算机系统接口，又称为IP-SAN，是一种基于因特网及SCSI-3协议下的存储技术，由IETF提出，并于2003年2月11日成为正式的标准。</p>
+<p>​    iSCSI利用了TCP/IP的port 860 和 3260 作为沟通的渠道。透过两部计算机之间利用iSCSI的协议来交换SCSI命令，让计算机可以透过高速的局域网集线来把SAN模拟成为本地的储存装置。</p>
+<p>　　iSCSI使用 TCP/IP 协议（一般使用TCP端口860和3260）。 本质上，iSCSI 让两个主机通过 IP 网络相互协商然后交换SCSI命令。这样一来，iSCSI 就是用广域网仿真了一个常用的高性能本地存储总线，从而创建了一个存储局域网（SAN）。</p>
+<p>​    </p>
+<p>SCSI</p>
+<p>　　小型计算机系统<a href="https://baike.baidu.com/item/%E6%8E%A5%E5%8F%A3" target="_blank" rel="noopener">接口</a>（英语：Small Computer System Interface; 简写：SCSI），一种用于计算机和智能设备之间的系统级接口的独立处理器标准。 SCSI是一种智能的通用接口标准。</p>
+<p>　　为了进一步提升硬盘存储设备的读写速度和性能，人们一直在努力改进物理硬盘设备的接口协议。当前的硬盘接口类型主要有IDE、SCSI和SATA这3种。</p>
+<p>IDE是一种成熟稳定、价格便宜的并行传输接口。</p>
+<p>SATA是一种传输速度更快、数据校验更完整的串行传输接口。</p>
+<p>SCSI是一种用于计算机和硬盘、光驱等设备之间系统级接口的通用标准，具有系统资源占用率低、转速高、传输速度快等优点。</p>
+<p>　　不论使用什么类型的硬盘接口，硬盘上的数据总是要通过计算机主板上的总线与CPU、内存设备进行数据交换，这种物理环境上的限制给硬盘资源的共享带来了各种不便。后来，IBM公司开始动手研发基于TCP/IP协议和SCSI接口协议的新型存储技术，这也就是我们目前能看到的互联网小型计算机系统接口（iSCSI，Internet Small Computer System Interface）。这是一种将SCSI接口与以太网技术相结合的新型存储技术，可以用来在网络中传输SCSI接口的命令和数据。这样，不仅克服了传统SCSI接口设备的物理局限性，实现了跨区域的存储资源共享，还可以在不停机的状态下扩展存储容量。</p>
+<p>　　为了让各位读者做到知其然，知其所以然，以便在工作中灵活使用这项技术，下面将讲解一下iSCSI技术在生产环境中的优势和劣势。首先，iSCSI存储技术非常便捷，在访问存储资源的形式上发生了很大变化，摆脱了物理环境的限制，同时还可以把存储资源分给多个服务器共同使用，因此是一种非常推荐使用的存储技术。但是，iSCSI存储技术受到了网速的制约。以往，硬盘设备直接通过主板上的总线进行数据传输，现在则需要让互联网作为数据传输的载体和通道，因此传输速率和稳定性是iSCSI技术的瓶颈。随着网络技术的持续发展，相信iSCSI技术也会随之得以改善。</p>
+<p>　　既然要通过以太网来传输硬盘设备上的数据，那么数据是通过网卡传入到计算机中的么？这就有必要向大家介绍iSCSI-HBA卡了（见图17-1）。与一般的网卡不同（连接网络总线和内存，供计算机上网使用），iSCSI-HBA卡连接的则是SCSI接口或FC（光纤通道）总线和内存，专门用于在主机之间交换存储数据，其使用的协议也与一般网卡有本质的不同。运行Linux系统的服务器会基于iSCSI协议把硬盘设备命令与数据打包成标准的TCP/IP数据包，然后通过以太网传输到目标存储设备，而当目标存储设备接收到这些数据包后，还需要基于iSCSI协议把TCP/IP数据包解压成硬盘设备命令与数据。</p>
+<h2 id="iSCSI网络存储服务"><a href="#iSCSI网络存储服务" class="headerlink" title="iSCSI网络存储服务"></a>iSCSI网络存储服务</h2><h3 id="创建一个raid磁盘阵列"><a href="#创建一个raid磁盘阵列" class="headerlink" title="创建一个raid磁盘阵列"></a>创建一个raid磁盘阵列</h3><p>添加4个硬盘</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy48e8sr2j30hd0gz3zm.jpg" alt=""></p>
+<p>开机，检查硬盘是否添加成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ll /dev/sd?</span><br><span class="line">brw-rw----. 1 root disk 8,  0 Feb  7 07:08 /dev/sda</span><br><span class="line">brw-rw----. 1 root disk 8, 16 Feb  7 07:08 /dev/sdb</span><br><span class="line">brw-rw----. 1 root disk 8, 32 Feb  7 07:08 /dev/sdc</span><br><span class="line">brw-rw----. 1 root disk 8, 48 Feb  7 07:08 /dev/sdd</span><br><span class="line">brw-rw----. 1 root disk 8, 64 Feb  7 07:08 /dev/sde</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>创建raid阵列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install mdadm.x86_64 -y</span><br><span class="line">[root@localhost ~]# mdadm -Cv /dev/md0 -n 3 -l 5 -x 1 /dev/sd&#123;b,c,d,e&#125;</span><br><span class="line">[root@localhost ~]# mdadm -D /dev/md0 </span><br><span class="line">/dev/md0:</span><br><span class="line">           Version : 1.2</span><br><span class="line">     Creation Time : Sat Sep 22 14:06:23 2018</span><br><span class="line">        Raid Level : raid5</span><br><span class="line">        Array Size : 41908224 (39.97 GiB 42.91 GB)</span><br><span class="line">     Used Dev Size : 20954112 (19.98 GiB 21.46 GB)</span><br><span class="line">      Raid Devices : 3</span><br><span class="line">     Total Devices : 4</span><br><span class="line">       Persistence : Superblock is persistent</span><br><span class="line">       ……………………………………………………………………………………………………略</span><br></pre></td></tr></table></figure>
+<h2 id="配置ISCSI服务"><a href="#配置ISCSI服务" class="headerlink" title="配置ISCSI服务"></a>配置ISCSI服务</h2><p>安装iscsi服务端、iscsi初始化和配置服务所需的工具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum -y install targetd targetcli iscsi-initiator-utils</span><br></pre></td></tr></table></figure>
+<p>开启并设置iscsi服务开机启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl start targetd</span><br><span class="line">[root@localhost ~]# systemctl enable targetd</span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/targetd.service to /usr/lib/systemd/system/targetd.service.</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>进入交互式iSCSI子系统配置iSCSI服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# targetcli</span><br><span class="line">Warning: Could not load preferences file /root/.targetcli/prefs.bin.</span><br><span class="line">targetcli shell version 2.1.fb46</span><br><span class="line">Copyright 2011-2013 by Datera, Inc and others.</span><br><span class="line">For help on commands, type &apos;help&apos;.</span><br><span class="line"></span><br><span class="line">/&gt; ls</span><br><span class="line">o- / ............................................................................. [...]</span><br><span class="line">  o- backstores .................................................................. [...]</span><br><span class="line">  | o- block ...................................................... [Storage Objects: 0]</span><br><span class="line">  | o- fileio ..................................................... [Storage Objects: 0]</span><br><span class="line">  | o- pscsi ...................................................... [Storage Objects: 0]</span><br><span class="line">  | o- ramdisk .................................................... [Storage Objects: 0]</span><br><span class="line">  o- iscsi ................................................................ [Targets: 0]</span><br><span class="line">  o- loopback ............................................................. [Targets: 0]</span><br><span class="line">  </span><br><span class="line">  # 为ISCSI服务提供资源池</span><br><span class="line">  </span><br><span class="line">/&gt; cd /backstores/block </span><br><span class="line">/backstores/block&gt; create disk0 /dev/md0</span><br><span class="line">Created block storage object disk0 using /dev/md0.</span><br><span class="line">/backstores/block&gt; cd /</span><br><span class="line">/&gt; ls</span><br><span class="line">o- / ............................................................................. [...]</span><br><span class="line">  o- backstores .................................................................. [...]</span><br><span class="line">  | o- block ...................................................... [Storage Objects: 1]</span><br><span class="line">  | | o- disk0 ............................. [/dev/md0 (40.0GiB) write-thru deactivated]</span><br><span class="line">  | |   o- alua ....................................................... [ALUA Groups: 1]</span><br><span class="line">  | |     o- default_tg_pt_gp ........................... [ALUA state: Active/optimized]</span><br><span class="line">  | o- fileio ..................................................... [Storage Objects: 0]</span><br><span class="line">  | o- pscsi ...................................................... [Storage Objects: 0]</span><br><span class="line">  | o- ramdisk .................................................... [Storage Objects: 0]</span><br><span class="line">  o- iscsi ................................................................ [Targets: 0]</span><br><span class="line">  o- loopback ............................................................. [Targets: 0]</span><br><span class="line">  </span><br><span class="line">  # 为iSCSI服务提供主机提供一个主机名，敲完create后将下面的iqn复制下来</span><br><span class="line">/&gt; cd iscsi</span><br><span class="line">/iscsi&gt; create</span><br><span class="line">Created target iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.70683bd3ee6d.</span><br><span class="line">Created TPG 1.</span><br><span class="line">Global pref auto_add_default_portal=true</span><br><span class="line">Created default portal listening on all IPs (0.0.0.0), port 3260.</span><br><span class="line"></span><br><span class="line">这里cd的就是上面复制下来的iqn</span><br><span class="line">/iscsi&gt; cd iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.70683bd3ee6d</span><br><span class="line"></span><br><span class="line"># 为客户机划分出lun提供存储资源</span><br><span class="line">/iscsi/iqn.20....70683bd3ee6d&gt; cd tpg1/luns </span><br><span class="line">/iscsi/iqn.20...e6d/tpg1/luns&gt; create /backstores/block/disk0 </span><br><span class="line">Created LUN 0.</span><br><span class="line">/iscsi/iqn.20...e6d/tpg1/luns&gt; cd ..</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 设置允许访问服务器控制访问列表，这里的iqn是linux客户端装完iscsi-initiator-utils之后在/etc/iscsi/initiatorname.iscsi 文件中得到的客户机iqn，注意不是上面用过的iqn，为了与之前那个iqn区分，咱们称呼它为iqn2吧。如下图：</span><br><span class="line"></span><br><span class="line">/iscsi/iqn.20...3bd3ee6d/tpg1&gt; cd acls</span><br><span class="line">/iscsi/iqn.20...e6d/tpg1/acls&gt; create iqn.1994-05.com.redhat:0191b6bea67</span><br><span class="line">Created Node ACL for iqn.1994-05.com.redhat:0191b6bea67</span><br><span class="line">Created mapped LUN 0.</span><br><span class="line">/iscsi/iqn.20...e6d/tpg1/acls&gt; exit</span><br><span class="line">Global pref auto_save_on_exit=true</span><br><span class="line">Configuration saved to /etc/target/saveconfig.json</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>咱们在XShell那里复制一个会话，在新的窗口复制下来新的iqn作为iqn2，然后回到原来那个窗口即可粘贴使用。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy7vh7xukj30lj0l07fl.jpg" alt=""></p>
+<p>防火墙放行服务端的3260端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# firewall-cmd --add-port=3260/tcp --permanent</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --reload</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>现在再开一台linux虚拟机作为测试用的客户机，这里以client2为例：</p>
+<p>Linux客户机挂载服务端上的ISCSI硬盘</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum -y install iscsi-initiator-utils</span><br><span class="line">[root@localhost ~]# vi /etc/iscsi/initiatorname.iscsi </span><br><span class="line"></span><br><span class="line">这里将其iqn修改为咱们刚刚复制的iqn2</span><br><span class="line">InitiatorName=iqn.1994-05.com.redhat:0191b6bea67</span><br><span class="line">保存退出，重启iscsid服务</span><br><span class="line">[root@localhost ~]# systemctl restart iscsid</span><br><span class="line">[root@localhost ~]# systemctl enable iscsid</span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/iscsid.service to /usr/lib/systemd/system/iscsid.service.</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"> </span><br><span class="line"># 没有挂载之前我们只有一块硬盘</span><br><span class="line">[root@localhost ~]# ll /dev/sd?</span><br><span class="line">brw-rw----. 1 root disk 8, 0 2月   7 22:18 /dev/sda</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	挂载，再次检查，发现多出来一块硬盘，第二块就是我们挂载上来的iscsi硬盘（这里192.168.141.12是iscsi服务器的ip）</span><br><span class="line">[root@localhost ~]# iscsiadm -m discovery -t st -p 192.168.141.12 --login</span><br><span class="line">192.168.141.12:3260,1 iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.70683bd3ee6d</span><br><span class="line">Logging in to [iface: default, target: iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.70683bd3ee6d, portal: 192.168.141.12,3260] (multiple)</span><br><span class="line">Login to [iface: default, target: iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.70683bd3ee6d, portal: 192.168.141.12,3260] successful.</span><br><span class="line">[root@localhost ~]# ll /dev/sd?</span><br><span class="line">brw-rw----. 1 root disk 8,  0 2月   7 22:18 /dev/sda</span><br><span class="line">brw-rw----. 1 root disk 8, 16 2月   7 22:31 /dev/sdb</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy8fy7qkaj30lr0m91kx.jpg" alt=""></p>
+<h2 id="windows客户机挂载iSCSI"><a href="#windows客户机挂载iSCSI" class="headerlink" title="windows客户机挂载iSCSI"></a>windows客户机挂载iSCSI</h2><p>首先，先看看我电脑本来有几个硬盘：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypgdz6pgj30j80gfq49.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypgndzzvj30j80fjn1v.jpg" alt=""></p>
+<p>可以看到，本来我的电脑只有俩硬盘，一会咱们挂载成功后，理论上会多出一个硬盘来。</p>
+<h3 id="打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索"><a href="#打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索" class="headerlink" title="打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索"></a>打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy8icgwxzj30sw0o6773.jpg" alt=""></p>
+<h3 id="目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）"><a href="#目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）" class="headerlink" title="目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）"></a>目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy8mcx9e8j30sb0nfguw.jpg" alt=""></p>
+<h3 id="为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2"><a href="#为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2" class="headerlink" title="为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2"></a>为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypb6xihbj30j70dhahx.jpg" alt=""></p>
+<h3 id="改完以后选择连接"><a href="#改完以后选择连接" class="headerlink" title="改完以后选择连接"></a>改完以后选择连接</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypd5nfdtj30ib0q6dnj.jpg" alt=""></p>
+<h3 id="显示已连接"><a href="#显示已连接" class="headerlink" title="显示已连接"></a>显示已连接</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypdi12uuj30ik0r0aia.jpg" alt=""></p>
+<p>现在再次看看我电脑上有几个硬盘：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypgdz6pgj30j80gfq49.jpg" alt=""></p>
+<p>我刚打开，就跳出个消息，说是要让我初始化磁盘2，点击确定即可，如下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypj6706lj30q10kfgq2.jpg" alt=""></p>
+<p>现在将磁盘管理全屏显示（太小了磁盘2就被遮住了），如下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypkmia3pj31hc0u079a.jpg" alt=""></p>
+<p>如上图，多出来的磁盘2就是咱们挂载上去的磁盘了。</p>
+<p>右键磁盘2，新建简单卷，然后一直点击下一步即可建成。</p>
+<p>接下来我们打开文件资源管理器，如下图，可以看到一个新加卷：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypog3s38j30uz0opdia.jpg" alt=""></p>
+<p>本篇到此结束</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"># Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"># RedHat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-21/" rel="next" title="linux-运维进阶-21 Squid部署代理缓存服务">
+                <i class="fa fa-chevron-left"></i> linux-运维进阶-21 Squid部署代理缓存服务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-23/" rel="prev" title="linux-运维进阶-23 MariaDB数据库管理系统">
+                linux-运维进阶-23 MariaDB数据库管理系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-22-iSCSI网络存储服务"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-22 iSCSI网络存储服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念解析"><span class="nav-number">1.1.</span> <span class="nav-text">概念解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iSCSI网络存储服务"><span class="nav-number">1.2.</span> <span class="nav-text">iSCSI网络存储服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个raid磁盘阵列"><span class="nav-number">1.2.1.</span> <span class="nav-text">创建一个raid磁盘阵列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置ISCSI服务"><span class="nav-number">1.3.</span> <span class="nav-text">配置ISCSI服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#windows客户机挂载iSCSI"><span class="nav-number">1.4.</span> <span class="nav-text">windows客户机挂载iSCSI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索"><span class="nav-number">1.4.1.</span> <span class="nav-text">打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）"><span class="nav-number">1.4.2.</span> <span class="nav-text">目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2"><span class="nav-number">1.4.3.</span> <span class="nav-text">为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改完以后选择连接"><span class="nav-number">1.4.4.</span> <span class="nav-text">改完以后选择连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示已连接"><span class="nav-number">1.4.5.</span> <span class="nav-text">显示已连接</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

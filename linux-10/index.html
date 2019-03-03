@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-运维进阶-10 用户权限与文件权限">
+<meta name="keywords" content="linux,Centos,RedHat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-运维进阶-10 用户权限与文件权限">
+<meta property="og:url" content="http://yoursite.com/linux-10/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-运维进阶-10 用户权限与文件权限">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzboz8s4udj30j80cpqf8.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzblg8ydxrj30hw07mdja.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzbnj59fxoj30j90gxqeo.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzbpliz554j30j808pq8y.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzbpm4swc1j30hb05n776.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzgn5zcj4aj30gp0e3jzn.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzgo4pmkylj30j808h449.jpg">
+<meta property="og:updated_time" content="2019-02-23T13:25:36.673Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-运维进阶-10 用户权限与文件权限">
+<meta name="twitter:description" content="linux-运维进阶-10 用户权限与文件权限">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzboz8s4udj30j80cpqf8.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/linux-10/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-运维进阶-10 用户权限与文件权限 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/linux-10/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-运维进阶-10 用户权限与文件权限
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-18 11:13:32" itemprop="dateCreated datePublished" datetime="2019-01-18T11:13:32+08:00">2019-01-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-23 21:25:36" itemprop="dateModified" datetime="2019-02-23T21:25:36+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-运维进阶/" itemprop="url" rel="index"><span itemprop="name">linux-运维进阶</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-运维进阶-10 用户权限与文件权限</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-运维进阶-10-用户权限与文件权限"><a href="#linux-运维进阶-10-用户权限与文件权限" class="headerlink" title="linux-运维进阶-10 用户权限与文件权限"></a>linux-运维进阶-10 用户权限与文件权限</h1><h2 id="用户权限"><a href="#用户权限" class="headerlink" title="用户权限"></a>用户权限</h2><h3 id="uid（user-id）和gid-group-id"><a href="#uid（user-id）和gid-group-id" class="headerlink" title="uid（user id）和gid(group id)"></a>uid（user id）和gid(group id)</h3><p>root用户的uid和gid都是0</p>
+<p>系统用户uid为1-999</p>
+<p>普通用户的uid从1000开始：由管理员创建的日常使用的用户</p>
+<p>（UID和GID不需要一一对应）</p>
+<p>将普通用户的UID设置为0 ，那这个用户也就是root用户了</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzboz8s4udj30j80cpqf8.jpg" alt=""></p>
+<h2 id="用户操作"><a href="#用户操作" class="headerlink" title="用户操作"></a>用户操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd [username]</span><br></pre></td></tr></table></figure>
+<p>新建一个用户zhangsan</p>
+<p>新建一个用户lisi，指定其家目录为/home/userlisi，指定他的登录shell为zsh</p>
+<p>从passwd文件中查看出上述两个用户的uid、git、家目录、登录sshell信息</p>
+<p>用id命令可以查看用户的基本信息</p>
+<p>使用usermod命令修改已有用户的信息（其参数和useradd几乎一样），例如将李四的登录shell改为bash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# useradd zhangsan</span><br><span class="line">[root@localhost ~]# grep zhangsan /etc/passwd</span><br><span class="line">zhangsan:x1009:1009::/home/zhangsan:/bin/bash</span><br><span class="line">[root@localhost ~]# useradd lisi -d /home/userlisi -s /bin/zsh</span><br><span class="line">[root@localhost ~]# grep lisi  /etc/passwd</span><br><span class="line">lisi:x1010:1010::/home/userlisi:/bin/zsh</span><br><span class="line">[root@localhost ~]# id zhangsan</span><br><span class="line">uid=1009(zhangsan) gid=1009(zhangsan) groups=1009(zhangsan)</span><br><span class="line">[root@localhost ~]# id lisi</span><br><span class="line">uid=1010(lisi) gid=1010(lisi) groups=1010(lisi)</span><br><span class="line">[root@localhost ~]# usermod lisi -d /home/userlisi -s /bin/bash</span><br><span class="line">[root@localhost ~]# grep lisi  /etc/passwd</span><br><span class="line">lisi:x:1010:1010::/home/userlisi:/bin/bash</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzblg8ydxrj30hw07mdja.jpg" alt=""></p>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><table>
+<thead>
+<tr>
+<th>useradd 参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-d</td>
+<td>指定用户的家目录（默认为/home/username）</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>账户的到期时间，格式为YYYY-MM-DD.</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>指定该用户的默认UID</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>指定一个初始的用户基本组（必须已存在）</td>
+</tr>
+<tr>
+<td>-G</td>
+<td>指定一个或多个扩展用户组</td>
+</tr>
+<tr>
+<td>-N</td>
+<td>不创建与用户同名的基本用户组</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>指定该用户的默认Shell解释器</td>
+</tr>
+</tbody>
+</table>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><h3 id="目录-、-home目录-、-目录的区别"><a href="#目录-、-home目录-、-目录的区别" class="headerlink" title="/目录 、/home目录 、~目录的区别"></a>/目录 、/home目录 、~目录的区别</h3><p>/ ：根目录</p>
+<p>/home ：家目录（可以理解为用户列表目录），你创建的所有用户的家目录默认会在/home目录下</p>
+<p>~ ：当前用户的家目录</p>
+<h4 id="查看这台虚拟机有哪些用户，到家目录-home下即可"><a href="#查看这台虚拟机有哪些用户，到家目录-home下即可" class="headerlink" title="查看这台虚拟机有哪些用户，到家目录/home下即可"></a>查看这台虚拟机有哪些用户，到家目录/home下即可</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /home</span><br><span class="line">[root@localhost home]# ls</span><br><span class="line">aaa  aaawww  bbb  bbbwww  ccc  cccwww  ddd  dddwww  testuser  userlisi  zhangsan</span><br><span class="line">[root@localhost home]#</span><br></pre></td></tr></table></figure>
+<h2 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h2><p>　　注意：不要小看删除用户，很多时候咱们都会忘了敲参数-r，以导致该用户的其他信息未能被一起彻底删除，于是再次添加该用户的时候就无法添加上去了，所以两种删用户的方式都要掌握！</p>
+<h3 id="完全删除用户账号（也就是删除所有与该用户相关的文件）"><a href="#完全删除用户账号（也就是删除所有与该用户相关的文件）" class="headerlink" title="完全删除用户账号（也就是删除所有与该用户相关的文件）"></a>完全删除用户账号（也就是删除所有与该用户相关的文件）</h3><p>　　注意：判断你删除是否彻底是否成功的标准是，如果你删除了还能给它加回来那就是成功的，加不回来的话那你的删除就是失败的或者说不彻底的！</p>
+<p> 方式一：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">userdel -r 用户名</span><br></pre></td></tr></table></figure>
+<p>以用户zzz为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /home/</span><br><span class="line">[root@localhost home]# ls</span><br><span class="line">[root@localhost home]# useradd zzz</span><br><span class="line">[root@localhost home]# ls</span><br><span class="line">zzz</span><br><span class="line">[root@localhost home]# userdel -r zzz</span><br><span class="line">[root@localhost home]# ls</span><br><span class="line">[root@localhost home]# useradd zzz</span><br><span class="line">[root@localhost home]# ls</span><br><span class="line">zzz</span><br><span class="line"></span><br><span class="line">你看，删掉了用户zzz，还能加回来，这次删除就是成功的！</span><br></pre></td></tr></table></figure>
+<p>方式二：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">userdel 用户名							#删除账户和组的信息，但是/home下还能看到该用户的家目录</span><br><span class="line">find / -name &quot;*用户名*&quot; | xargs rm -rf	#彻底删除用户其他信息</span><br></pre></td></tr></table></figure>
+<p>接着上面的命令继续以用户zzz为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# userdel zzz</span><br><span class="line">[root@localhost home]# ls</span><br><span class="line">zzz</span><br><span class="line">[root@localhost home]# find / -name &quot;*zzz*&quot; | xargs rm -rf</span><br><span class="line">[root@localhost home]# ls</span><br><span class="line">[root@localhost home]# useradd zzz</span><br><span class="line">[root@localhost home]# ls</span><br><span class="line">zzz</span><br><span class="line">[root@localhost home]# </span><br><span class="line"></span><br><span class="line">你看，删掉了用户zzz，还能加回来，这次删除就是成功的！</span><br></pre></td></tr></table></figure>
+<p>失败案例（删除不彻底导致删除后无法再加回来）</p>
+<p>接着上面的命令以用户qqq为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# useradd qqq</span><br><span class="line">[root@localhost home]# userdel qqq</span><br><span class="line">[root@localhost home]# useradd qqq</span><br><span class="line">useradd: warning: the home directory already exists.</span><br><span class="line">Not copying any file from skel directory into it.</span><br><span class="line">Creating mailbox file: File exists</span><br><span class="line">[root@localhost home]# find / -name &quot;*qqq*&quot; | xargs rm -rf</span><br><span class="line">[root@localhost home]# ls</span><br><span class="line">zzz</span><br><span class="line">[root@localhost home]# useradd qqq</span><br><span class="line">useradd: user &apos;qqq&apos; already exists</span><br><span class="line"></span><br><span class="line">注意：失败了之后，那你可以参考下述命令补救，然后彻底将该用户删除。</span><br><span class="line">[root@localhost home]# userdel qqq</span><br><span class="line">[root@localhost home]# find / -name &quot;*qqq*&quot; | xargs rm -rf</span><br><span class="line">[root@localhost home]# useradd qqq</span><br><span class="line">[root@localhost home]# ls</span><br><span class="line">qqq  zzz</span><br><span class="line">[root@localhost home]# </span><br><span class="line"></span><br><span class="line">补救成功！</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzbnj59fxoj30j90gxqeo.jpg" alt=""></p>
+<h2 id="用户组"><a href="#用户组" class="headerlink" title="用户组"></a>用户组</h2><h3 id="主组"><a href="#主组" class="headerlink" title="主组"></a>主组</h3><p>创建用户的时候系统会同时创建一个和这个用户名同名的组，这个组就是主组，不可以把用户从主组中删除。</p>
+<p>当然，在创建用户的时候如果你使用使用了-g参数，该用户就可加入和用户不同名的用户组作为该用户的主组。</p>
+<p>也可以创建用户之后，再使用usermod -g来改变用户的主组，然鹅这样和用户同名的组依然会存在，并不会被删除。</p>
+<h3 id="附属组"><a href="#附属组" class="headerlink" title="附属组"></a>附属组</h3><p>除了主组之外，用户所在的其他组，都是附属组。用户是可以从附属组中被删除的。</p>
+<p>用户的从属组，并不会影响主组，useradd时用-G参数来加入，同时用户主组默认是那个和用户同名的组。</p>
+<p>创建用户之后，可以用usermod -G加入其他的附属组，而且之前加入的组不会退掉。</p>
+<h3 id="主组与附属组的区别与联系"><a href="#主组与附属组的区别与联系" class="headerlink" title="主组与附属组的区别与联系"></a>主组与附属组的区别与联系</h3><p>一个用户可以属于多个附属组。但是一个用户只能有一个主组。</p>
+<p>创建一个用户组feng，在/etc/group下可看到该组，然后把它删除掉，然后再加回来。可以看到删组可以不用加参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# groupadd feng</span><br><span class="line">[root@localhost ~]# [root@localhost ~]# groupadd feng</span><br><span class="line">[root@localhost ~]# grep feng /etc/group</span><br><span class="line">feng:x:1000:</span><br><span class="line">[root@localhost ~]# groupdel feng</span><br><span class="line">[root@localhost ~]# grep feng /etc/group</span><br><span class="line">[root@localhost ~]# groupadd feng</span><br><span class="line">[root@localhost ~]# grep feng /etc/group</span><br><span class="line">feng:x:1000:</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">grep feng /etc/group</span><br><span class="line">feng:x:1000:</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>创建用户组afeng，bfeng，cfeng</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# groupadd afeng</span><br><span class="line">[root@localhost ~]# groupadd bfeng</span><br><span class="line">[root@localhost ~]# groupadd cfeng</span><br></pre></td></tr></table></figure>
+<p>创建用户aaa，并且其主组设置为afeng</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# useradd aaa -g afeng</span><br><span class="line">[root@localhost ~]# cat /etc/passwd | grep aaa</span><br><span class="line">aaa:x:1000:1001::/home/aaa:/bin/bash			#可以看到aaa的GID为1001，对应的组为afeng</span><br><span class="line">[root@localhost ~]# cat /etc/group | grep feng</span><br><span class="line">feng:x:1000:</span><br><span class="line">afeng:x:1001:</span><br><span class="line">bfeng:x:1002:</span><br><span class="line">cfeng:x:1003:</span><br></pre></td></tr></table></figure>
+<p>创建用户bbb，本来默认其主组是bbb，修改其主组为bfeng</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cat /etc/group | grep feng	#先看看各个附属组的GID</span><br><span class="line">feng:x:1000:</span><br><span class="line">afeng:x:1001:</span><br><span class="line">bfeng:x:1002:</span><br><span class="line">cfeng:x:1003:</span><br><span class="line">[root@localhost ~]# useradd bbb</span><br><span class="line">[root@localhost ~]# cat /etc/passwd | grep bbb</span><br><span class="line">bbb:x:1001:1004::/home/bbb:/bin/bash			#可以看到本来bbb的GID是1004，对应的组是bbb</span><br><span class="line">[root@localhost ~]# cat /etc/group | grep bbb</span><br><span class="line">bbb:x:1004:</span><br><span class="line">[root@localhost ~]# usermod bbb -g bfeng</span><br><span class="line">[root@localhost ~]# cat /etc/passwd | grep bbb</span><br><span class="line">bbb:x:1001:1002::/home/bbb:/bin/bash			#现在bbb的GID是1002，对应的组也就是bfeng</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>创建用户ccc，其主组设置为cfeng，其附属组有：afeng、bfeng</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# useradd ccc -g cfeng -G afeng,bfeng</span><br><span class="line">[root@localhost ~]# cat /etc/group | grep feng</span><br><span class="line">feng:x:1000:</span><br><span class="line">afeng:x:1001:ccc								#可以看到afeng、bfeng下附属有ccc</span><br><span class="line">bfeng:x:1002:ccc</span><br><span class="line">cfeng:x:1003:</span><br><span class="line">[root@localhost ~]# cat /etc/passwd | grep ccc</span><br><span class="line">ccc:x:1002:1003::/home/ccc:/bin/bash			#可以看到ccc的GID为1003，对应的组为cfeng</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>用户的主组在/etc/passwd文件中的gid字段体现，并不会在/etc/group文件中体现出来</p>
+<p>用户的附属组在/etc/group文件中体现，并不会在/etc/passwd文件中体现</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzbpliz554j30j808pq8y.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzbpm4swc1j30hb05n776.jpg" alt=""></p>
+<h2 id="设置用户密码"><a href="#设置用户密码" class="headerlink" title="设置用户密码"></a>设置用户密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">passwd 用户名</span><br><span class="line">交互式输入密码</span><br></pre></td></tr></table></figure>
+<p>为用户aaa设置密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# passwd aaa</span><br><span class="line">Changing password for user aaa.</span><br><span class="line">New password: </span><br><span class="line">BAD PASSWORD: The password is shorter than 8 characters</span><br><span class="line">Retype new password: </span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>　　上述密码设置已经成功，至于BAD PASSWORD:忽略掉即可，想要了解可以浏览我博客的另一篇文章：linux-基础学习-02 Linux系统介绍和安装，这篇文章详细讲解了设置密码时遇到的N种情况。</p>
+<h2 id="锁定用户密码"><a href="#锁定用户密码" class="headerlink" title="锁定用户密码"></a>锁定用户密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# passwd -l aaa</span><br><span class="line">Locking password for user aaa.</span><br><span class="line">passwd: Success</span><br><span class="line">[root@localhost ~]# passwd -S aaa			#查看密码状态</span><br><span class="line">aaa LK 2019-01-18 0 99999 7 -1 (Password locked.)</span><br><span class="line">[root@localhost ~]# passwd -u aaa			#解锁密码</span><br><span class="line">Unlocking password for user aaa.</span><br><span class="line">passwd: Success</span><br><span class="line">[root@localhost ~]# passwd -S aaa</span><br><span class="line">aaa PS 2019-01-18 0 99999 7 -1 (Password set, SHA512 crypt.)</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>使用非交互式（系统标准输入）设置用户密码（不安全）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# echo &quot;123456&quot; | passwd --stdin aaa</span><br><span class="line">Changing password for user aaa.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">[root@localhost ~]# history 5				#用history查看最近输入该的5条命令</span><br><span class="line">   81  passwd -S aaa</span><br><span class="line">   82  echo &quot;123456&quot; | passwd aaa</span><br><span class="line">   83  echo &quot;123456&quot; | passwd --stdin aaa	#完了，密码露馅了</span><br><span class="line">   84  history -5</span><br><span class="line">   85  history 5</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h2><h3 id="文件的分类"><a href="#文件的分类" class="headerlink" title="文件的分类"></a>文件的分类</h3><p> Linux系统使用了不同的字符来加以区分，常见的字符如下所示。</p>
+<ul>
+<li>-：普通文件。</li>
+<li>d：目录文件。</li>
+<li>l：链接文件。</li>
+<li>b：块设备文件。</li>
+<li>c：字符设备文件。</li>
+<li>p：管道文件。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>权限分配</th>
+<th>文件所有者</th>
+<th>文件所有者</th>
+<th>文件所有者</th>
+<th>文件所属组</th>
+<th>文件所属组</th>
+<th>文件所属组</th>
+<th>其他用户</th>
+<th>其他用户</th>
+<th>其他用户</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>权限项</td>
+<td>读</td>
+<td>执行</td>
+<td>写</td>
+<td>读</td>
+<td>写</td>
+<td>执行</td>
+<td>读</td>
+<td>写</td>
+<td>执行</td>
+</tr>
+<tr>
+<td>字符表示</td>
+<td>r</td>
+<td>x</td>
+<td>w</td>
+<td>r</td>
+<td>w</td>
+<td>x</td>
+<td>r</td>
+<td>w</td>
+<td>x</td>
+</tr>
+<tr>
+<td>数字表示</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h3><p>修改文件权限的命令</p>
+<p>用法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod [user]+[ r | w| x ] file            </span><br><span class="line">chmod [user] -[ r | w| x ] file</span><br></pre></td></tr></table></figure>
+<p>注意： 如果不加user的话，那么所有的用户的执行权限都会被加上，其他权限只对当前用户生效 </p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 file</span><br><span class="line">chmod 750 file</span><br></pre></td></tr></table></figure>
+<h3 id="更改一个文件的归属权"><a href="#更改一个文件的归属权" class="headerlink" title="更改一个文件的归属权"></a>更改一个文件的归属权</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown [user] file</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ll</span><br><span class="line">#一开始，hello.sh是root组下的root用户的文件</span><br><span class="line">-rw-r--r--. 1 root root    0 Jan 23 04:14 hello.sh</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# chown aaa hello.sh</span><br><span class="line">[root@localhost ~]# ll</span><br><span class="line">#改成aaa用户的文件</span><br><span class="line">-rw-r--r--. 1 aaa  root    0 Jan 23 04:14 hello.sh</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# chown bbb:bfeng hello.sh </span><br><span class="line">[root@localhost ~]# ll</span><br><span class="line">#改成bfeng组下的bbb用户的文件</span><br><span class="line">-rw-r--r--. 1 bbb  bfeng    0 Jan 23 04:14 hello.sh</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# chgrp afeng hello.sh</span><br><span class="line">[root@localhost ~]# ll</span><br><span class="line">#改成归属afeng组的文件</span><br><span class="line">-rw-r--r--. 1 bbb  afeng    0 Jan 23 04:14 hello.sh</span><br><span class="line"></span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzgn5zcj4aj30gp0e3jzn.jpg" alt=""></p>
+<h3 id="文件特殊权限"><a href="#文件特殊权限" class="headerlink" title="文件特殊权限"></a>文件特殊权限</h3><h4 id="SUID"><a href="#SUID" class="headerlink" title="SUID"></a>SUID</h4><p>让二进制程序的执行者临时拥有属主的权限（仅对拥有执行权限的二进制程序有效）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ll hello.sh </span><br><span class="line">-rw-r--r--. 1 bbb afeng 0 Jan 23 04:14 hello.sh</span><br><span class="line">[root@localhost ~]# chmod u+s hello.sh </span><br><span class="line">[root@localhost ~]# ll hello.sh </span><br><span class="line">-rwSr--r--. 1 bbb afeng 0 Jan 23 04:14 hello.sh</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>SGID和SUID同理</p>
+<h4 id="SBID"><a href="#SBID" class="headerlink" title="SBID"></a>SBID</h4><p>当对某个目录设置了SBIT粘滞位权限后，那么该目录中的文件就只能被其所有者执行删除操作。</p>
+<p>　　当目录被设置SBIT特殊权限位后，文件的其他人权限部分的x执行权限就会被替换成t或者T，原本有x执行权限则会写成t，原本没有x执行权限则会被写成T。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mkdir test</span><br><span class="line">[root@localhost ~]# cd test</span><br><span class="line">[root@localhost test]# touch hello.sh</span><br><span class="line">[root@localhost test]# ll</span><br><span class="line">total 0</span><br><span class="line">-rw-r--r--. 1 root root 0 Jan 23 04:33 hello.sh</span><br><span class="line">[root@localhost test]# chmod -R o+t hello.sh </span><br><span class="line">[root@localhost test]# ll</span><br><span class="line">total 0</span><br><span class="line">-rw-r--r-T. 1 root root 0 Jan 23 04:33 hello.sh</span><br><span class="line">[root@localhost test]# su aaa</span><br><span class="line">[aaa@localhost test]$ rm -f hello.sh</span><br><span class="line">rm: cannot remove ‘hello.sh’: Permission denied</span><br></pre></td></tr></table></figure>
+<h2 id="文件的隐藏属性"><a href="#文件的隐藏属性" class="headerlink" title="文件的隐藏属性"></a>文件的隐藏属性</h2><h3 id="chattr"><a href="#chattr" class="headerlink" title="chattr"></a>chattr</h3><p>chattr命令用于设置文件的隐藏权限，格式为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chattr [参数] 文件</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>i</td>
+<td>无法对文件进行修改；若对目录设置了该参数，则仅能修改其中的子文件内容而不能新建或删除文件</td>
+</tr>
+<tr>
+<td>a</td>
+<td>仅允许补充（追加）内容，无法覆盖/删除内容（Append Only）</td>
+</tr>
+<tr>
+<td>S</td>
+<td>文件内容在变更后立即同步到硬盘（sync）</td>
+</tr>
+<tr>
+<td>s</td>
+<td>彻底从硬盘中删除，不可恢复（用0填充原文件所在硬盘区域）</td>
+</tr>
+<tr>
+<td>b</td>
+<td>不再修改文件或目录的存取时间</td>
+</tr>
+<tr>
+<td>D</td>
+<td>检查压缩文件中的错误</td>
+</tr>
+<tr>
+<td>d</td>
+<td>使用dump命令备份时忽略本文件/目录</td>
+</tr>
+<tr>
+<td>c</td>
+<td>默认将文件或目录进行压缩</td>
+</tr>
+<tr>
+<td>u</td>
+<td>当删除该文件后依然保留其在硬盘中的数据，方便日后恢复</td>
+</tr>
+<tr>
+<td>t</td>
+<td>让文件系统支持尾部合并（tail-merging）</td>
+</tr>
+<tr>
+<td>X</td>
+<td>可以直接访问压缩文件中的内容</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lsattr"><a href="#lsattr" class="headerlink" title="lsattr"></a>lsattr</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# chattr +a hello.sh </span><br><span class="line">[root@localhost test]# lsattr hello.sh </span><br><span class="line">-----a---------- hello.sh</span><br><span class="line">[root@localhost test]# chattr -a hello.sh </span><br><span class="line">[root@localhost test]# lsattr hello.sh </span><br><span class="line">---------------- hello.sh</span><br><span class="line">[root@localhost test]#</span><br></pre></td></tr></table></figure>
+<h2 id="文件权限扩展权限设置"><a href="#文件权限扩展权限设置" class="headerlink" title="文件权限扩展权限设置"></a>文件权限扩展权限设置</h2><h3 id="setfacl"><a href="#setfacl" class="headerlink" title="setfacl"></a>setfacl</h3><p>题目：</p>
+<p>创建文件/root/testfacl，其文件所属者和组都是root</p>
+<p>系统中有aaa，bbb和ccc三个用户，</p>
+<p>root用户对testfacl有最高权限</p>
+<p>aaa用户对testfacl有可读可写可执行权限</p>
+<p>bbb用户对testfacl有可读可写权限</p>
+<p>ccc用户对testfacl有可读权限</p>
+<p>用户组中的用户对testfacl文件有可读可执行权限</p>
+<p>用户组cfeng对testfacl有可读权限</p>
+<p>其他用户对testfacl没有任何权限</p>
+<p>命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# touch testfacl</span><br><span class="line">[root@localhost ~]# ll testfacl </span><br><span class="line">-rw-r--r--. 1 root root 0 Jan 23 04:49 testfacl</span><br><span class="line">[root@localhost ~]# setfacl -m u:root:rwx,u:aaa:rwx,u:bbb:rw-,u:ccc:r--,g::r-x,g:cfeng:r--,o::--- testfacl </span><br><span class="line">[root@localhost ~]# ll testfacl </span><br><span class="line">-rw-rwx---+ 1 root root 0 Jan 23 04:49 testfacl</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="getfacl"><a href="#getfacl" class="headerlink" title="getfacl"></a>getfacl</h3><p>查看文件扩展属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# getfacl testfacl </span><br><span class="line"># file: testfacl</span><br><span class="line"># owner: root</span><br><span class="line"># group: root</span><br><span class="line">user::rw-</span><br><span class="line">user:root:rwx</span><br><span class="line">user:aaa:rwx</span><br><span class="line">user:bbb:rw-</span><br><span class="line">user:ccc:r--</span><br><span class="line">group::r-x</span><br><span class="line">group:cfeng:r--</span><br><span class="line">mask::rwx</span><br><span class="line">other::---</span><br><span class="line"></span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzgo4pmkylj30j808h449.jpg" alt=""></p>
+<h2 id="切换用户"><a href="#切换用户" class="headerlink" title="切换用户"></a>切换用户</h2><h3 id="su"><a href="#su" class="headerlink" title="su"></a>su</h3><p>​    su命令可以解决切换用户身份的需求，使得当前用户在不退出登录的情况下，顺畅地切换到其他用户。su命令与用户名之间有一个减号（-），这意味着完全切换到新的用户，即把环境变量信息也变更为新用户的相应信息，而不是保留原始的信息。强烈建议在切换用户身份时添加这个减号（-）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# su aaa</span><br><span class="line">[aaa@localhost root]$ id</span><br><span class="line">uid=1000(aaa) gid=1001(afeng) groups=1001(afeng) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023</span><br><span class="line">[aaa@localhost root]$ su root</span><br><span class="line">Password: </span><br><span class="line">[root@localhost ~]# su - aaa</span><br><span class="line">Last login: Wed Jan 23 04:56:46 EST 2019 on pts/0</span><br><span class="line">[aaa@localhost ~]$ id</span><br><span class="line">uid=1000(aaa) gid=1001(afeng) groups=1001(afeng) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023</span><br><span class="line">[aaa@localhost ~]$</span><br></pre></td></tr></table></figure>
+<p>尴尬的是，root和aaa恰好环境变量信息是一样的，唉算了就这样吧，加个减号也不费事</p>
+<h3 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h3><p>sudo命令用于给普通用户提供额外的权限来完成原本root管理员才能完成的任务，格式为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo [参数] 命令名称</span><br></pre></td></tr></table></figure>
+<h4 id="sudo命令具有如下功能："><a href="#sudo命令具有如下功能：" class="headerlink" title="sudo命令具有如下功能："></a>sudo命令具有如下功能：</h4><ul>
+<li>限制用户执行指定的命令：</li>
+<li>记录用户执行的每一条命令；</li>
+<li>配置文件（/etc/sudoers）提供集中的用户管理、权限与主机等参数；</li>
+<li>验证密码的后5分钟内（默认值）无须再让用户再次验证密码。 </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-h</td>
+<td>列出帮助信息</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>列出当前用户可执行的命令</td>
+</tr>
+<tr>
+<td>-u用户名或UID值</td>
+<td>以指定的用户身份执行命令</td>
+</tr>
+<tr>
+<td>-k</td>
+<td>清空密码的有效时间，下次执行sudo时需要再次进行密码验证</td>
+</tr>
+<tr>
+<td>-b</td>
+<td>在后台执行指定的命令</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>更改询问密码的提示语</td>
+</tr>
+</tbody>
+</table>
+<h3 id="visudo"><a href="#visudo" class="headerlink" title="visudo"></a>visudo</h3><p>举例：使用visudo命令配置sudo命令的配置文件</p>
+<pre><code>[root@localhost ~]# visudo
+
+ 98 ## Allows people in group wheel to run all commands
+ 99 %wheel  ALL=(ALL)       ALL
+100 root     ALL=(ALL)         ALL
+</code></pre>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"># Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"># RedHat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-09/" rel="next" title="linux-运维进阶-09 编写Shell脚本">
+                <i class="fa fa-chevron-left"></i> linux-运维进阶-09 编写Shell脚本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-11/" rel="prev" title="linux-运维进阶-11 存储结构与磁盘划分">
+                linux-运维进阶-11 存储结构与磁盘划分 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-10-用户权限与文件权限"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-10 用户权限与文件权限</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户权限"><span class="nav-number">1.1.</span> <span class="nav-text">用户权限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#uid（user-id）和gid-group-id"><span class="nav-number">1.1.1.</span> <span class="nav-text">uid（user id）和gid(group id)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户操作"><span class="nav-number">1.2.</span> <span class="nav-text">用户操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数"><span class="nav-number">1.3.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">1.4.</span> <span class="nav-text">目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#目录-、-home目录-、-目录的区别"><span class="nav-number">1.4.1.</span> <span class="nav-text">/目录 、/home目录 、~目录的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看这台虚拟机有哪些用户，到家目录-home下即可"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">查看这台虚拟机有哪些用户，到家目录/home下即可</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除用户"><span class="nav-number">1.5.</span> <span class="nav-text">删除用户</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#完全删除用户账号（也就是删除所有与该用户相关的文件）"><span class="nav-number">1.5.1.</span> <span class="nav-text">完全删除用户账号（也就是删除所有与该用户相关的文件）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户组"><span class="nav-number">1.6.</span> <span class="nav-text">用户组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主组"><span class="nav-number">1.6.1.</span> <span class="nav-text">主组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附属组"><span class="nav-number">1.6.2.</span> <span class="nav-text">附属组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主组与附属组的区别与联系"><span class="nav-number">1.6.3.</span> <span class="nav-text">主组与附属组的区别与联系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置用户密码"><span class="nav-number">1.7.</span> <span class="nav-text">设置用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁定用户密码"><span class="nav-number">1.8.</span> <span class="nav-text">锁定用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件权限"><span class="nav-number">1.9.</span> <span class="nav-text">文件权限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件的分类"><span class="nav-number">1.9.1.</span> <span class="nav-text">文件的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chmod"><span class="nav-number">1.9.2.</span> <span class="nav-text">chmod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改一个文件的归属权"><span class="nav-number">1.9.3.</span> <span class="nav-text">更改一个文件的归属权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件特殊权限"><span class="nav-number">1.9.4.</span> <span class="nav-text">文件特殊权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SUID"><span class="nav-number">1.9.4.1.</span> <span class="nav-text">SUID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SBID"><span class="nav-number">1.9.4.2.</span> <span class="nav-text">SBID</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件的隐藏属性"><span class="nav-number">1.10.</span> <span class="nav-text">文件的隐藏属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chattr"><span class="nav-number">1.10.1.</span> <span class="nav-text">chattr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsattr"><span class="nav-number">1.10.2.</span> <span class="nav-text">lsattr</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件权限扩展权限设置"><span class="nav-number">1.11.</span> <span class="nav-text">文件权限扩展权限设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setfacl"><span class="nav-number">1.11.1.</span> <span class="nav-text">setfacl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getfacl"><span class="nav-number">1.11.2.</span> <span class="nav-text">getfacl</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#切换用户"><span class="nav-number">1.12.</span> <span class="nav-text">切换用户</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#su"><span class="nav-number">1.12.1.</span> <span class="nav-text">su</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sudo"><span class="nav-number">1.12.2.</span> <span class="nav-text">sudo</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sudo命令具有如下功能："><span class="nav-number">1.12.2.1.</span> <span class="nav-text">sudo命令具有如下功能：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#visudo"><span class="nav-number">1.12.3.</span> <span class="nav-text">visudo</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

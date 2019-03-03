@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-运维进阶-19 bind提供域名解析服务">
+<meta name="keywords" content="linux,Centos,RedHat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-运维进阶-19 bind提供域名解析服务">
+<meta property="og:url" content="http://yoursite.com/linux-19/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-运维进阶-19 bind提供域名解析服务">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzruju5al9j30vk08rdgb.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrvidvhrxj30wk0es0zq.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrurhx84tj30pp0jdn0w.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzruwruhjtj30ef07lmyr.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxahp5thj30j90ezq4g.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxblg8fcj30j80f9jsz.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxchlp1cj30j80fpdic.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxd6xdfdj30j80glq6z.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxeaiacbj30j80lgaeq.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxh5vbu4j30j90ifqlk.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzszfee0w2j30j80fs45z.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzt1f8onqlj30j80dcjxm.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzt26qi6i0j30j80i0ndw.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzt350f75jj30j80dvmyl.jpg">
+<meta property="og:updated_time" content="2019-02-23T13:34:58.480Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-运维进阶-19 bind提供域名解析服务">
+<meta name="twitter:description" content="linux-运维进阶-19 bind提供域名解析服务">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzruju5al9j30vk08rdgb.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/linux-19/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-运维进阶-19 bind提供域名解析服务 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/linux-19/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-运维进阶-19 bind提供域名解析服务
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-23 11:35:53" itemprop="dateCreated datePublished" datetime="2019-01-23T11:35:53+08:00">2019-01-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-23 21:34:58" itemprop="dateModified" datetime="2019-02-23T21:34:58+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-运维进阶/" itemprop="url" rel="index"><span itemprop="name">linux-运维进阶</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-运维进阶-19 bind提供域名解析服务</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-运维进阶-19-bind提供域名解析服务"><a href="#linux-运维进阶-19-bind提供域名解析服务" class="headerlink" title="linux-运维进阶-19 bind提供域名解析服务"></a>linux-运维进阶-19 bind提供域名解析服务</h1><h2 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h2><h3 id="DNS域名解析服务"><a href="#DNS域名解析服务" class="headerlink" title="DNS域名解析服务"></a>DNS域名解析服务</h3><p>　　很早很早之前，人们通过ip地址来上网，后来，人们觉得，相较于由数字构成的IP地址，域名更容易被理解和记忆，所以我们通常更习惯通过域名的方式来访问网络中的资源。但是，网络中的计算机之间只能基于IP地址来相互识别对方的身份，而且要想在互联网中传输数据，也必须基于外网的IP地址来完成。</p>
+<p>　　为了降低用户访问网络资源的门槛，DNS（Domain Name System，域名系统）技术应运而生。这是一项用于管理和解析域名与IP地址对应关系的技术，简单来说，就是能够接受用户输入的域名或IP地址，然后自动查找与之匹配（或者说具有映射关系）的IP地址或域名，即将域名解析为IP地址（正向解析），或将IP地址解析为域名（反向解析）。这样一来，我们只需要在浏览器中输入域名就能打开想要访问的网站了。DNS域名解析技术的正向解析也是我们最常使用的一种工作模式。</p>
+<p>　　鉴于互联网中的域名和IP地址对应关系数据库太过庞大，DNS域名解析服务采用了类似目录树的层次结构来记录域名与IP地址之间的对应关系，从而形成了一个分布式的数据库系统，</p>
+<h3 id="DNS域名解析服务采用的层次目录结构"><a href="#DNS域名解析服务采用的层次目录结构" class="headerlink" title="DNS域名解析服务采用的层次目录结构"></a>DNS域名解析服务采用的层次目录结构</h3><p>　　如下图，DNS域名解析服务中，一级域名例如.com .net .org等，而二级域名有google taobao等，三级域名如www等。连起来就是<a href="http://www.google.com。" target="_blank" rel="noopener">www.google.com。</a></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzruju5al9j30vk08rdgb.jpg" alt=""></p>
+<p>　　域名后缀一般分为国际域名和国内域名。原则上来讲，域名后缀都有严格的定义，但在实际使用时可以不必严格遵守。目前最常见的域名后缀有.com（商业组织）、.org（非营利组织）、.gov（政府部门）、.net（网络服务商）、.edu（教研机构）、.pub（公共大众）、.cn（中国国家顶级域名）等。</p>
+<p>　　当今世界的信息化程度越来越高，大数据、云计算、物联网、人工智能等新技术不断涌现，全球网民的数量据说也超过了35亿，而且每年还在以10%的速度迅速增长。这些因素导致互联网中的域名数量进一步激增，被访问的频率也进一步加大。假设全球网民每人每天只访问一个网站域名，而且只访问一次，也会产生35亿次的查询请求，如此庞大的请求数量肯定无法被某一台服务器全部处理掉。DNS技术作为互联网基础设施中重要的一环，为了为网民提供不间断、稳定且快速的域名查询服务，保证互联网的正常运转，提供了下面三种类型的服务器。</p>
+<h4 id="主服务器"><a href="#主服务器" class="headerlink" title="主服务器"></a>主服务器</h4><p>　　在特定区域内具有唯一性，负责维护该区域内的域名与IP地址之间的对应关系。</p>
+<h4 id="从服务器"><a href="#从服务器" class="headerlink" title="从服务器"></a>从服务器</h4><p>　　从主服务器中获得域名与IP地址的对应关系并进行维护，以防主服务器宕机等情况。</p>
+<h4 id="缓存服务器"><a href="#缓存服务器" class="headerlink" title="缓存服务器"></a>缓存服务器</h4><p>　　通过向其他域名解析服务器查询获得域名与IP地址的对应关系，并将经常查询的域名信息保存到服务器本地，以此来提高重复查询时的效率。</p>
+<p>　　简单来说，主服务器是用于管理域名和IP地址对应关系的真正服务器，从服务器帮助主服务器“打下手”，分散部署在各个国家、省市或地区，以便让用户就近查询域名，从而减轻主服务器的负载压力。缓存服务器不太常用，一般部署在企业内网的网关位置，用于加速用户的域名查询请求。</p>
+<p>　　DNS域名解析服务采用分布式的数据结构来存放海量的“区域数据”信息，在执行用户发起的域名查询请求时，具有递归查询和迭代查询两种方式。所谓递归查询，是指DNS服务器在收到用户发起的请求时，必须向用户返回一个准确的查询结果。如果DNS服务器本地没有存储与之对应的信息，则该服务器需要询问其他服务器，并将返回的查询结果提交给用户。而迭代查询则是指，DNS服务器在收到用户发起的请求时，并不直接回复查询结果，而是告诉另一台DNS服务器的地址，用户再向这台DNS服务器提交请求，这样依次反复，直到返回查询结果。</p>
+<h4 id="用户向就近的一台DNS服务器发起对某个域名的查询大致流程"><a href="#用户向就近的一台DNS服务器发起对某个域名的查询大致流程" class="headerlink" title="用户向就近的一台DNS服务器发起对某个域名的查询大致流程"></a>用户向就近的一台DNS服务器发起对某个域名的查询大致流程</h4><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrvidvhrxj30wk0es0zq.jpg" alt=""></p>
+<p>　　当用户向网络指定的DNS服务器发起一个域名请求时，通常情况下会有本地由此DNS服务器向上级的DNS服务器发送迭代查询请求；如果该DNS服务器没有要查询的信息，则会进一步向上级DNS服务器发送迭代查询请求，直到获得准确的查询结果为止。其中最高级、最权威的根DNS服务器总共有13台，分布在世界各地。</p>
+<h3 id="根域名服务器"><a href="#根域名服务器" class="headerlink" title="根域名服务器"></a>根域名服务器</h3><p>　　根域名服务器是域名解析体系的核心，握有域名的最终解释权，简单来说，如果要查询域名，均需要从根域名服务器开始查询。域名服务器是提供域名解析的服务器，在有基本的知识下，任何人都可以搭建域名服务器，甚至是根域名服务器，有名的软件有：BIND。</p>
+<h3 id="全球只有13台根服务器的准确说法"><a href="#全球只有13台根服务器的准确说法" class="headerlink" title="全球只有13台根服务器的准确说法"></a>全球只有13台根服务器的准确说法</h3><p>​    域名服务器就像许多国际组织一样，是需要被承认的，当你的根域名服务器被全世界承认，你的服务器也可以成为这其中的一员。因为互联网起源于美国，域名体系也是诞生于美国，在互联网不断扩张和发展的过程中，逐渐形成了13台服务器为全球根服务器。这13台根服务器由ICANN管理，由12个机构具体运营。13台根服务器如下图所示：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrurhx84tj30pp0jdn0w.jpg" alt=""></p>
+<p>13台根域名服务器从a至m编号，分属12个运营机构运营。</p>
+<p>　　但是，网上新闻中有些说法并不准确，举个反例：“全世界只有13台根域名服务器，名字分别为A至M，其中一个主根服务器在美国，其余12个均为辅根服务器，其中9个在美国，欧洲两个，分别位于英国和瑞典，亚洲一个位于日本”</p>
+<p>　　个人认为比较正确的说法应该是这样：“13台根域名服务器不是一个物理概念，它是一个逻辑概念，根域名服务器可以由分布在全球的多个服务器组成，形成一个集群，对外统一为1台逻辑的根域名服务器。在root-servers网站上，我们能查到所有的真实服务器分布“。</p>
+<p>　　截至2018年9月11日，全球一共分布了937台根域名服务器，可以看到，包含港澳台，中国一共有17台根域名服务器。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzruwruhjtj30ef07lmyr.jpg" alt=""></p>
+<p>　　在上述反例中，还强调了主辅之分，然鹅，事实上，这几百台除了运营者不同，哪有什么区别，真正的根一直在幕后。我个人比较支持下面的一种说法：</p>
+<p>　　全世界只有13台逻辑根域名服务器，名字分别为A至M，由12个运营者运营，其中8个在美国，欧洲两个位于英国和瑞典，亚洲1个位于日本，而真正的主根服务器并未公开。</p>
+<h2 id="BIND"><a href="#BIND" class="headerlink" title="BIND"></a>BIND</h2><p>　　BIND（Berkeley Internet Name Domain，伯克利网络域名）服务是全球范围内使用最广泛、最安全可靠且高效的域名解析服务程序。DNS域名解析服务作为互联网基础设施服务，其责任之重可想而知，因此建议大家在生产环境中安装部署bind服务程序时加上chroot（俗称牢笼机制）扩展包，以便有效地限制bind服务程序仅能对自身的配置文件进行操作，以确保整个服务器的安全。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>CentOS7安装DNS服务软件包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install bind bind-chroot bind-utils -y</span><br></pre></td></tr></table></figure>
+<p>在bind服务程序中有下面这三个比较关键的文件。</p>
+<ul>
+<li>主配置文件（/etc/named.conf）：只有58行，而且在去除注释信息和空行之后，实际有效的参数仅有30行左右，这些参数用来定义bind服务程序的运行。</li>
+<li>区域配置文件（/etc/named.rfc1912.zones）：用来保存域名和IP地址对应关系的所在位置。类似于图书的目录，对应着每个域和相应IP地址所在的具体位置，当需要查看或修改时，可根据这个位置找到相关文件。</li>
+<li>数据配置文件目录（/var/named）：该目录用来保存域名和IP地址真实对应关系的数据配置文件。 </li>
+</ul>
+<p>修改主配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/named.conf</span><br><span class="line">将 listen-on port 53那行改为any，将listen-on-v6那行备注掉，将 allow-query 的由localhost改为any即可</span><br><span class="line"></span><br><span class="line">options &#123;</span><br><span class="line">        listen-on port 53 &#123; any; &#125;;</span><br><span class="line">#       listen-on-v6 port 53 &#123; ::1; &#125;;</span><br><span class="line">        directory       &quot;/var/named&quot;;</span><br><span class="line">        dump-file       &quot;/var/named/data/cache_dump.db&quot;;</span><br><span class="line">        statistics-file &quot;/var/named/data/named_stats.txt&quot;;</span><br><span class="line">        memstatistics-file &quot;/var/named/data/named_mem_stats.txt&quot;;</span><br><span class="line">        recursing-file  &quot;/var/named/data/named.recursing&quot;;</span><br><span class="line">        secroots-file   &quot;/var/named/data/named.secroots&quot;;</span><br><span class="line">        allow-query     &#123; any; &#125;;</span><br><span class="line">保存退出</span><br></pre></td></tr></table></figure>
+<h2 id="正向解析实验"><a href="#正向解析实验" class="headerlink" title="正向解析实验"></a>正向解析实验</h2><p>修改区域配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/named.rfc1912.zones </span><br><span class="line">在最后面加上一段：</span><br><span class="line">zone &quot;feng.io&quot; IN &#123;</span><br><span class="line">        type master;</span><br><span class="line">        file &quot;feng.io.zone&quot;;</span><br><span class="line">        allow-update &#123; none; &#125;;</span><br><span class="line">&#125;;</span><br><span class="line">保存退出</span><br></pre></td></tr></table></figure>
+<p>配置解析数据文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /var/named/</span><br><span class="line">[root@localhost named]# cp -a named.localhost feng.io.zone</span><br><span class="line">[root@localhost named]# vim feng.io.zone </span><br><span class="line"></span><br><span class="line">$TTL 1D</span><br><span class="line">@       IN SOA  feng.io. root.feng.io. (</span><br><span class="line">                                        0       ; serial</span><br><span class="line">                                        1D      ; refresh</span><br><span class="line">                                        1H      ; retry</span><br><span class="line">                                        1W      ; expire</span><br><span class="line">                                        3H )    ; minimum</span><br><span class="line">        NS      ns.feng.io.</span><br><span class="line">ns      IN A    192.168.141.12</span><br><span class="line">        A       192.168.141.12</span><br><span class="line">www     IN A    192.168.141.12</span><br><span class="line">IN      MX 10   mail.feng.io</span><br><span class="line">mail    IN A    192.168.141.12</span><br><span class="line"></span><br><span class="line">保存退出</span><br></pre></td></tr></table></figure>
+<p>启动named服务，防火墙放行服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost named]# systemctl restart named</span><br><span class="line">[root@localhost named]# firewall-cmd --add-service=dns --permanent </span><br><span class="line">success</span><br><span class="line">[root@localhost named]# firewall-cmd --reload </span><br><span class="line">success</span><br><span class="line">[root@localhost named]#</span><br></pre></td></tr></table></figure>
+<p>windows客户端测试，用咱们的电脑物理机测试</p>
+<p>如下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxahp5thj30j90ezq4g.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxblg8fcj30j80f9jsz.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxchlp1cj30j80fpdic.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxd6xdfdj30j80glq6z.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxeaiacbj30j80lgaeq.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxh5vbu4j30j90ifqlk.jpg" alt=""></p>
+<p>正向解析成功。</p>
+<h2 id="反向解析实验"><a href="#反向解析实验" class="headerlink" title="反向解析实验"></a>反向解析实验</h2><p>修改区域配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost named]# vim /etc/named.rfc1912.zones </span><br><span class="line"></span><br><span class="line">在尾部加入：</span><br><span class="line">zone &quot;141.168.192.in-addr.arpa&quot; IN &#123;</span><br><span class="line">        type master;</span><br><span class="line">        file &quot;192.168.141.arpa&quot;;</span><br><span class="line">        allow-update &#123; none; &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">保存退出</span><br></pre></td></tr></table></figure>
+<p>配置解析数据文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost named]# cp feng.io.zone 192.168.141.arpa</span><br><span class="line">[root@localhost named]# vim 192.168.141.arpa</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$TTL 1D</span><br><span class="line">@       IN SOA  feng.io. root.feng.io. (</span><br><span class="line">                                        0       ; serial</span><br><span class="line">                                        1D      ; refresh</span><br><span class="line">                                        1H      ; retry</span><br><span class="line">                                        1W      ; expire</span><br><span class="line">                                        3H )    ; minimum</span><br><span class="line">        NS      feng.io.</span><br><span class="line">ns      A       192.168.141.12</span><br><span class="line">12     PTR     ns.feng.io.</span><br><span class="line">38     PTR     www.feng.io.</span><br><span class="line">12     PTR     mail.feng.io.</span><br><span class="line"></span><br><span class="line">保存退出，重启named服务</span><br><span class="line">[root@localhost named]# systemctl restart named</span><br></pre></td></tr></table></figure>
+<p>注意：上述文件配置中，12 38 12 值得是192.168.141.12 192.168.141.38 192.168.141.12三个ip，意思是对这三个ip的反向解析的结果分别对应什么域名。下面测试就用的上述ip。</p>
+<p>用linux客户端测试dns</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/resolv.conf </span><br><span class="line"></span><br><span class="line"># Generated by NetworkManager</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 192.168.141.12</span><br><span class="line"></span><br><span class="line">保存退出</span><br><span class="line">[root@localhost ~]# yum install bind-utils -y</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# nslookup</span><br><span class="line">&gt; 192.168.141.12</span><br><span class="line">Server:		192.168.141.12</span><br><span class="line">Address:	192.168.141.12#53</span><br><span class="line"></span><br><span class="line">12.141.168.192.in-addr.arpa	name = mail.feng.io.</span><br><span class="line">12.141.168.192.in-addr.arpa	name = ns.feng.io.</span><br><span class="line">&gt; 192.168.141.38</span><br><span class="line">Server:		192.168.141.12</span><br><span class="line">Address:	192.168.141.12#53</span><br><span class="line"></span><br><span class="line">38.141.168.192.in-addr.arpa	name = www.feng.io.</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzszfee0w2j30j80fs45z.jpg" alt=""></p>
+<p>可以看到，反向解析成功了</p>
+<h2 id="部署dns的主从服务器"><a href="#部署dns的主从服务器" class="headerlink" title="部署dns的主从服务器"></a>部署dns的主从服务器</h2><p>做dns服务器的故障备份服务器，当主服务器故障，我们就可以用从服务器的地址继续进行解析</p>
+<h3 id="配置主服务器"><a href="#配置主服务器" class="headerlink" title="配置主服务器"></a>配置主服务器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">咱们上面配好的就是主服务器，但是这里为了与从服务器配合工作，咱们还需要添加一些配置：</span><br><span class="line">[root@localhost ~]# vim /etc/named.rfc1912.zones </span><br><span class="line">在文件尾部，将前面咱们添加的两个代码块修改为以下内容</span><br><span class="line">zone &quot;feng.io&quot; IN &#123;</span><br><span class="line">        type master;</span><br><span class="line">        file &quot;feng.io.zone&quot;;</span><br><span class="line">        allow-update &#123; 192.168.141.53; &#125;;</span><br><span class="line">&#125;;</span><br><span class="line">zone &quot;141.168.192.in-addr.arpa&quot; IN &#123;</span><br><span class="line">        type master;</span><br><span class="line">        file &quot;192.168.141.arpa&quot;;</span><br><span class="line">        allow-update &#123; 192.168.141.53; &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">其实也就是将原本的none改成了从服务器client2的ip而已</span><br><span class="line">保存退出，重启named服务</span><br><span class="line">[root@localhost named]# systemctl restart named</span><br></pre></td></tr></table></figure>
+<h3 id="配置从服务器"><a href="#配置从服务器" class="headerlink" title="配置从服务器"></a>配置从服务器</h3><p>现在我们新安装一台虚拟机client2作为咱们的从服务器。</p>
+<p>从服务器的主配置文件和主服务器一样，只要修改区域文件就可以</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install bind bind-chroot bind-utils -y</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# vi /etc/named.rfc1912.zones </span><br><span class="line">在文件尾部加入下列内容</span><br><span class="line">zone &quot;feng.io&quot; IN &#123;</span><br><span class="line">        type slave;</span><br><span class="line">        masters&#123; 192.168.141.12; &#125;;</span><br><span class="line">        file &quot;slaves/feng.io.zone&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">zone &quot;141.168.192.in-addr.arpa&quot; IN &#123;</span><br><span class="line">        type slave;</span><br><span class="line">        masters&#123; 192.168.141.12; &#125;;</span><br><span class="line">        file &quot;slaves/192.168.141.arpa&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">保存退出</span><br><span class="line">[root@localhost ~]# firewall-cmd --add-service=dns --permanent</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --reload</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>注意：上述参数中，slave（奴隶）指的是从服务，master（主人）指的是主服务</p>
+<p>从服务器的主配置文件和主服务器一样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/named.conf</span><br><span class="line">将 listen-on port 53那行改为any，将listen-on-v6那行备注掉，将 allow-query 的由localhost改为any即可</span><br><span class="line"></span><br><span class="line">options &#123;</span><br><span class="line">        listen-on port 53 &#123; any; &#125;;</span><br><span class="line">#       listen-on-v6 port 53 &#123; ::1; &#125;;</span><br><span class="line">        directory       &quot;/var/named&quot;;</span><br><span class="line">        dump-file       &quot;/var/named/data/cache_dump.db&quot;;</span><br><span class="line">        statistics-file &quot;/var/named/data/named_stats.txt&quot;;</span><br><span class="line">        memstatistics-file &quot;/var/named/data/named_mem_stats.txt&quot;;</span><br><span class="line">        recursing-file  &quot;/var/named/data/named.recursing&quot;;</span><br><span class="line">        secroots-file   &quot;/var/named/data/named.secroots&quot;;</span><br><span class="line">        allow-query     &#123; any; &#125;;</span><br><span class="line"></span><br><span class="line">保存退出</span><br><span class="line">[root@localhost ~]# cd /var/named/</span><br><span class="line">[root@localhost named]# cp -a named.localhost feng.io.zone</span><br><span class="line">[root@localhost named]# vim feng.io.zone </span><br><span class="line"></span><br><span class="line">$TTL 1D</span><br><span class="line">@       IN SOA  feng.io. root.feng.io. (</span><br><span class="line">                                        0       ; serial</span><br><span class="line">                                        1D      ; refresh</span><br><span class="line">                                        1H      ; retry</span><br><span class="line">                                        1W      ; expire</span><br><span class="line">                                        3H )    ; minimum</span><br><span class="line">        NS      ns.feng.io.</span><br><span class="line">ns      IN A    192.168.141.12</span><br><span class="line">        A       192.168.141.12</span><br><span class="line">www     IN A    192.168.141.12</span><br><span class="line">IN      MX 10   mail.feng.io</span><br><span class="line">mail    IN A    192.168.141.12</span><br><span class="line"></span><br><span class="line">保存退出</span><br><span class="line"></span><br><span class="line">[root@localhost named]# vim 192.168.141.arpa</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$TTL 1D</span><br><span class="line">@       IN SOA  feng.io. root.feng.io. (</span><br><span class="line">                                        0       ; serial</span><br><span class="line">                                        1D      ; refresh</span><br><span class="line">                                        1H      ; retry</span><br><span class="line">                                        1W      ; expire</span><br><span class="line">                                        3H )    ; minimum</span><br><span class="line">        NS      feng.io.</span><br><span class="line">ns      A       192.168.141.12</span><br><span class="line">12     PTR     ns.feng.io.</span><br><span class="line">38     PTR     www.feng.io.</span><br><span class="line">12     PTR     mail.feng.io.</span><br><span class="line"></span><br><span class="line">保存退出，重启named服务</span><br><span class="line">[root@localhost named]# systemctl restart named</span><br></pre></td></tr></table></figure>
+<h3 id="检查同步结果"><a href="#检查同步结果" class="headerlink" title="检查同步结果"></a>检查同步结果</h3><p>将客户机/etc/resolv.conf 的IP改为从服务器ip，用nslookup测试就可以了，此处仍然以client来测试</p>
+<p>从服务器client2上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ip add</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:fc:9f:8d brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.141.53/24 brd 192.168.141.255 scope global noprefixroute dynamic ens33</span><br><span class="line">       valid_lft 1618sec preferred_lft 1618sec</span><br><span class="line">    inet6 fe80::1440:45a7:228d:4942/64 scope link noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">记住ip：192.168.141.53</span><br></pre></td></tr></table></figure>
+<p>测试用的客户机client上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/resolv.conf </span><br><span class="line"></span><br><span class="line"># Generated by NetworkManager</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 192.168.141.53</span><br><span class="line">保存退出</span><br><span class="line"></span><br><span class="line">测试:</span><br><span class="line">[root@localhost ~]# nslookup</span><br><span class="line">&gt; mail.feng.io</span><br><span class="line">Server:		192.168.141.53</span><br><span class="line">Address:	192.168.141.53#53</span><br><span class="line"></span><br><span class="line">Name:	mail.feng.io</span><br><span class="line">Address: 192.168.141.12</span><br><span class="line">&gt; 192.168.141.12</span><br><span class="line">Server:		192.168.141.53</span><br><span class="line">Address:	192.168.141.53#53</span><br><span class="line"></span><br><span class="line">12.141.168.192.in-addr.arpa	name = ns.feng.io.</span><br><span class="line">12.141.168.192.in-addr.arpa	name = mail.feng.io.</span><br><span class="line">&gt; 192.168.141.38</span><br><span class="line">Server:		192.168.141.53</span><br><span class="line">Address:	192.168.141.53#53</span><br><span class="line"></span><br><span class="line">38.141.168.192.in-addr.arpa	name = www.feng.io.</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzt1f8onqlj30j80dcjxm.jpg" alt=""></p>
+<p>如上图，客户端通过从服务器的正反向解析都成功了</p>
+<h2 id="安全的加密传输同步主从服务器"><a href="#安全的加密传输同步主从服务器" class="headerlink" title="安全的加密传输同步主从服务器"></a>安全的加密传输同步主从服务器</h2><h3 id="主服务器配置"><a href="#主服务器配置" class="headerlink" title="主服务器配置"></a>主服务器配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">生成密钥文件</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# cd /var/named/chroot/etc/</span><br><span class="line">[root@localhost etc]# dnssec-keygen -a HMAC-MD5 -b 128 -n HOST master-slave</span><br><span class="line">Kmaster-slave.+157+61793</span><br><span class="line"></span><br><span class="line">复制上面弄出来的文件名Kmaster-slave.+157+61793，加上.private 就可以cat出来了：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">修改配置文件并且设置文件安全</span><br><span class="line"></span><br><span class="line">[root@localhost etc]# cat Kmaster-slave.+157+61793.private </span><br><span class="line">Private-key-format: v1.3</span><br><span class="line">Algorithm: 157 (HMAC_MD5)</span><br><span class="line">Key: 5U4NAMvTT0RfK2TvNu/jUw==</span><br><span class="line">Bits: AAA=</span><br><span class="line">Created: 20190203024817</span><br><span class="line">Publish: 20190203024817</span><br><span class="line">Activate: 20190203024817</span><br><span class="line"></span><br><span class="line">复制上面cat出来的Key的内容5U4NAMvTT0RfK2TvNu/jUw==，一会儿填入下面这个文件secret的里面</span><br><span class="line"></span><br><span class="line">[root@localhost etc]# vim transfer.key</span><br><span class="line">key &quot;master-slave&quot;&#123;</span><br><span class="line">        algorithm hmac-md5;</span><br><span class="line">        secret &quot;5U4NAMvTT0RfK2TvNu/jUw==&quot;;</span><br><span class="line">&#125;;</span><br><span class="line">保存退出 </span><br><span class="line"></span><br><span class="line">[root@localhost etc]# chown root:named transfer.key</span><br><span class="line">[root@localhost etc]# chmod 640 transfer.key </span><br><span class="line">[root@localhost etc]# ln transfer.key /etc/transfer.key</span><br><span class="line">[root@localhost etc]# </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">开启bind服务的密钥验证功能</span><br><span class="line">[root@localhost etc]# vim /etc/named.conf </span><br><span class="line">在文件第11行插入这一行：</span><br><span class="line">include &quot;/etc/transfer.key&quot;;</span><br><span class="line"></span><br><span class="line">在文件第22行左右插入这一行：</span><br><span class="line">allow-transfer  &#123; key master-slave; &#125;;</span><br><span class="line">保存退出，重启named服务</span><br><span class="line"></span><br><span class="line">[root@localhost etc]# setenforce 0</span><br><span class="line">[root@localhost etc]# systemctl restart named</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzt26qi6i0j30j80i0ndw.jpg" alt=""></p>
+<p>从服务器上观察：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">做到这步，现在由于从服务器尚未做相关配置，所以现在从服务器无法同步信息了</span><br><span class="line"></span><br><span class="line">[root@localhost slaves]# rm -rf /var/named/slaves/*</span><br><span class="line">[root@localhost slaves]# systemctl restart named</span><br><span class="line">[root@localhost slaves]# ls</span><br><span class="line">[root@localhost slaves]#</span><br></pre></td></tr></table></figure>
+<h3 id="配置从服务器-1"><a href="#配置从服务器-1" class="headerlink" title="配置从服务器"></a>配置从服务器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /var/named//chroot/etc/</span><br><span class="line"></span><br><span class="line">我们把上面主服务器transfer.key的内容一模一样地复制到这里：</span><br><span class="line">[root@localhost etc]#  vi transfer.key</span><br><span class="line"></span><br><span class="line">key &quot;master-slave&quot;&#123;</span><br><span class="line">        algorithm hmac-md5;</span><br><span class="line">        secret &quot;5U4NAMvTT0RfK2TvNu/jUw==&quot;;</span><br><span class="line">&#125;;</span><br><span class="line">保存退出</span><br><span class="line"></span><br><span class="line">[root@localhost etc]# chown root:named transfer.key</span><br><span class="line">[root@localhost etc]# chmod 640 transfer.key </span><br><span class="line">[root@localhost etc]# ln transfer.key /etc/transfer.key</span><br><span class="line">[root@localhost etc]# </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">修改主配置文件</span><br><span class="line">[root@localhost etc]# vi /etc/named.conf </span><br><span class="line">在文件尾部将原本的</span><br><span class="line">include &quot;/etc/named.rfc1912.zones&quot;;</span><br><span class="line">include &quot;/etc/named.root.key&quot;;</span><br><span class="line">改为下列内容：</span><br><span class="line">server 192.168.141.12&#123;</span><br><span class="line">keys &#123; master-slave; &#125;;</span><br><span class="line">&#125;;</span><br><span class="line">include &quot;/etc/named.rfc1912.zones&quot;;</span><br><span class="line">include &quot;/etc/named.root.key&quot;;</span><br><span class="line">include &quot;/etc/transfer.key&quot;;</span><br><span class="line"></span><br><span class="line">保存退出，重启named服务</span><br><span class="line">[root@localhost etc]# setenforce 0</span><br><span class="line">[root@localhost etc]# systemctl restart named</span><br><span class="line">[root@localhost etc]#</span><br></pre></td></tr></table></figure>
+<h3 id="检查结果"><a href="#检查结果" class="headerlink" title="检查结果"></a>检查结果</h3><p>检查同步，查看/var/named/slaves目录下有没有同步过来的区域数据文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost etc]# ls /var/named/slaves/</span><br><span class="line">192.168.141.arpa  feng.io.zone</span><br><span class="line">[root@localhost etc]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzt350f75jj30j80dvmyl.jpg" alt=""></p>
+<p>如上图，现在/var/named/slaves目录下又有文件了，说明从服务器和主服务器又可以同步信息了。</p>
+<p>本篇到此结束</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"># Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"># RedHat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-18/" rel="next" title="linux-运维进阶-18 DHCP动态管理主机地址">
+                <i class="fa fa-chevron-left"></i> linux-运维进阶-18 DHCP动态管理主机地址
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-20/" rel="prev" title="linux-运维进阶-20 Postfix与Dovecot部署邮件系统">
+                linux-运维进阶-20 Postfix与Dovecot部署邮件系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-19-bind提供域名解析服务"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-19 bind提供域名解析服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念解析"><span class="nav-number">1.1.</span> <span class="nav-text">概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS域名解析服务"><span class="nav-number">1.1.1.</span> <span class="nav-text">DNS域名解析服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS域名解析服务采用的层次目录结构"><span class="nav-number">1.1.2.</span> <span class="nav-text">DNS域名解析服务采用的层次目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主服务器"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">主服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从服务器"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">从服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存服务器"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">缓存服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户向就近的一台DNS服务器发起对某个域名的查询大致流程"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">用户向就近的一台DNS服务器发起对某个域名的查询大致流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根域名服务器"><span class="nav-number">1.1.3.</span> <span class="nav-text">根域名服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全球只有13台根服务器的准确说法"><span class="nav-number">1.1.4.</span> <span class="nav-text">全球只有13台根服务器的准确说法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BIND"><span class="nav-number">1.2.</span> <span class="nav-text">BIND</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.3.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正向解析实验"><span class="nav-number">1.4.</span> <span class="nav-text">正向解析实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向解析实验"><span class="nav-number">1.5.</span> <span class="nav-text">反向解析实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署dns的主从服务器"><span class="nav-number">1.6.</span> <span class="nav-text">部署dns的主从服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置主服务器"><span class="nav-number">1.6.1.</span> <span class="nav-text">配置主服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置从服务器"><span class="nav-number">1.6.2.</span> <span class="nav-text">配置从服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查同步结果"><span class="nav-number">1.6.3.</span> <span class="nav-text">检查同步结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全的加密传输同步主从服务器"><span class="nav-number">1.7.</span> <span class="nav-text">安全的加密传输同步主从服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主服务器配置"><span class="nav-number">1.7.1.</span> <span class="nav-text">主服务器配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置从服务器-1"><span class="nav-number">1.7.2.</span> <span class="nav-text">配置从服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查结果"><span class="nav-number">1.7.3.</span> <span class="nav-text">检查结果</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

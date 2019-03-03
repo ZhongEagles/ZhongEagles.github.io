@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-基础学习-02 Linux系统介绍和安装">
+<meta name="keywords" content="linux,Centos,RedHat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-基础学习-02 Linux系统介绍和安装">
+<meta property="og:url" content="http://yoursite.com/linux-02/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-基础学习-02 Linux系统介绍和安装">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0aq48yxi4j30x50nw10b.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8h5nkzv1j30n40knjsn.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8h6tqe50j30p80btgm4.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8h8024z5j30q60bbq53.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8h8x7st5j30oz0awwga.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8hnxsj0jj30cr040js4.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8j4x4n4yj30j80fm3zp.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8i7031f2j30j80hfjsr.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8j2cjz1kj30j80h2q4h.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8izt2unvj30j80dqq4u.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8i7hmmaoj30j80dnabj.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8oucl9ifj30j80azq5p.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8owviadhj30j80i0n2a.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8p1ewet0j30j80kvq8m.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8p3n0o0bj30z50ovagj.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8pdxclb6j30u00mlalw.jpg">
+<meta property="og:updated_time" content="2019-02-23T13:20:19.665Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-基础学习-02 Linux系统介绍和安装">
+<meta name="twitter:description" content="linux-基础学习-02 Linux系统介绍和安装">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0aq48yxi4j30x50nw10b.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/linux-02/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-基础学习-02 Linux系统介绍和安装 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/linux-02/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-基础学习-02 Linux系统介绍和安装
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-16 15:34:03" itemprop="dateCreated datePublished" datetime="2019-01-16T15:34:03+08:00">2019-01-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-23 21:20:19" itemprop="dateModified" datetime="2019-02-23T21:20:19+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-基础学习/" itemprop="url" rel="index"><span itemprop="name">linux-基础学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-基础学习-02 Linux系统介绍和安装</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-基础学习-02-Linux系统介绍和安装"><a href="#linux-基础学习-02-Linux系统介绍和安装" class="headerlink" title="linux-基础学习-02 Linux系统介绍和安装"></a>linux-基础学习-02 Linux系统介绍和安装</h1><h2 id="一、安装软件，新建虚拟机"><a href="#一、安装软件，新建虚拟机" class="headerlink" title="一、安装软件，新建虚拟机"></a>一、安装软件，新建虚拟机</h2><p>　　在360软件管家下载安装VMware Workstation Pro，点击创建新的虚拟机即可。现在最新版本的是VMware Workstation Pro 15版本，然而这玩意儿竟然要付费，很多人就望而却步。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0aq48yxi4j30x50nw10b.jpg" alt=""></p>
+<p>其实网上还是可以搜索到许多激活密钥的，如下，任选一个即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">YG5H2-ANZ0H-M8ERY-TXZZZ-YKRV8</span><br><span class="line"></span><br><span class="line">UG5J2-0ME12-M89WY-NPWXX-WQH88</span><br><span class="line"></span><br><span class="line">UA5DR-2ZD4H-089FY-6YQ5T-YPRX6</span><br><span class="line"></span><br><span class="line">GA590-86Y05-4806Y-X4PEE-ZV8E0</span><br><span class="line"></span><br><span class="line">ZF582-0NW5N-H8D2P-0XZEE-Z22VA</span><br><span class="line"></span><br><span class="line">YA18K-0WY8P-H85DY-L4NZG-X7RAD</span><br></pre></td></tr></table></figure>
+<p>​    创建新的虚拟机很简单，此处不再赘述，但是虚拟机处理器的内核总数必须≤物理机逻辑处理器总数。</p>
+<p>可以在任务管理器查看到自己的物理机逻辑处理器数量：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8h5nkzv1j30n40knjsn.jpg" alt=""></p>
+<h3 id="centos镜像下载地址"><a href="#centos镜像下载地址" class="headerlink" title="centos镜像下载地址"></a>centos镜像下载地址</h3><p><a href="https://www.centos.org/download/" target="_blank" rel="noopener">https://www.centos.org/download/</a></p>
+<h3 id="VMware-Workstation-Pro快捷键"><a href="#VMware-Workstation-Pro快捷键" class="headerlink" title="VMware Workstation Pro快捷键"></a>VMware Workstation Pro快捷键</h3><p>Ctrl+Alt+Enter：从物理机进入到全屏的虚拟机</p>
+<p>Ctrl+Alt：将鼠标光标从虚拟机释放出来</p>
+<h2 id="二、Centos开机密码破解（救援模式）"><a href="#二、Centos开机密码破解（救援模式）" class="headerlink" title="二、Centos开机密码破解（救援模式）"></a>二、Centos开机密码破解（救援模式）</h2><p>第一步：重启Linux，在系统boot引导界面迅速按键e键进入boot编辑模式</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8h6tqe50j30p80btgm4.jpg" alt=""></p>
+<p>第二步：找到linux16开头的行，将内容删除至ro（ro不要删），在ro后面添加空格和“rd.break”</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8h8024z5j30q60bbq53.jpg" alt=""></p>
+<p>修改为：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8h8x7st5j30oz0awwga.jpg" alt=""></p>
+<p>第三步：按ctrl+x键进入到救援模式</p>
+<p>键入以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">switch_root:/# mount -o remount,rw /sysroot</span><br><span class="line">switch_root:/# chroot /sysroot</span><br><span class="line">sh-4.2# passwd root          //在交互模式下输入两次密码（提示BAD PASSWORD不用管）</span><br><span class="line">sh-4.2# touch /.autorelabel  //初学linux时，特别多的人会忘了敲这条命令或者label写错！</span><br><span class="line">sh-4.2# exit</span><br><span class="line">switch_root:/# exit</span><br></pre></td></tr></table></figure>
+<p>　　注意：如果你的密码带有数字，登录系统的时候如果你敲的是小键盘，一定要注意小键盘有没有没被你NumLock掉！初学者容易被坑，说老是登录不上去。</p>
+<p>PS:</p>
+<p>意外情况1：</p>
+<p>​    有时候会出现乱码，用命令行改语言为english即可。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8hnxsj0jj30cr040js4.jpg" alt=""></p>
+<p>命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LANG=en</span><br></pre></td></tr></table></figure>
+<p>意外情况2：</p>
+<p>​    有时候会有提示密码长度不得小于8位，不过短密码也是可以使用的，不一定非得长于8位！</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8j4x4n4yj30j80fm3zp.jpg" alt=""></p>
+<p>意外情况3：</p>
+<p>​    有时候会有提示密码是一个回文数，不过其实回文数密码也是可以使用的。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8i7031f2j30j80hfjsr.jpg" alt=""></p>
+<p>意外情况4：</p>
+<p>​    如果你设置的密码不是回文数，不是短密码，比如设置为123456789，它还是提醒你BAD PASSWORD 因为它太简单了，但是同上，即使简单，也是不妨碍咱们使用的。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8j2cjz1kj30j80h2q4h.jpg" alt=""></p>
+<p>意外情况5：​    </p>
+<p>　　密码字典检查失败，密码字典内没有该词</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8izt2unvj30j80dqq4u.jpg" alt=""></p>
+<p>意外情况N：</p>
+<p>​    至于其他意外情况诸如此类，基本套路就是BAD PASSWORD可以用但是不安全。如下图，我把上述所有种类的所谓BAD PASSWORD均尝试了一遍，都可以登录上去！</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8i7hmmaoj30j80dnabj.jpg" alt=""></p>
+<h2 id="三、远程登录Linux"><a href="#三、远程登录Linux" class="headerlink" title="三、远程登录Linux"></a>三、远程登录Linux</h2><p>1.下载安装XShell或者SecureCRT，这里以XShell为例，在360软件管家就能下载到。然后根据自己的喜好设置一下XShell的颜色、字体、透明度等。</p>
+<p>2.查看虚拟机ip地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip address</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8oucl9ifj30j80azq5p.jpg" alt=""></p>
+<p>3.在windows上打开终端软件（推荐XShell或者SecureCRT）远程连接到Linux系统，输入root密码即可。</p>
+<p>命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@ip</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8owviadhj30j80i0n2a.jpg" alt=""></p>
+<p> 4.建议把会话保存起来，下次再打开的时候就不用再输入命令打开了,记住在用户登录验证那里输入密码。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8p1ewet0j30j80kvq8m.jpg" alt=""></p>
+<p>5.关键操作之后，一定要记得拍快照（关机之后快照）</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8p3n0o0bj30z50ovagj.jpg" alt=""></p>
+<p>6.意外情况：</p>
+<p>​    如果在虚拟机里发现有ip，但windows和虚拟机无法通信，ssh连接不上去，在虚拟机里ping一下当前的网关地址， 然后windows再ping虚拟机，就应该能通信，这时候ssh就没有问题了。</p>
+<h2 id="四、基本命令介绍"><a href="#四、基本命令介绍" class="headerlink" title="四、基本命令介绍"></a>四、基本命令介绍</h2><h3 id="RPM（redhat-package-managment）安装命令"><a href="#RPM（redhat-package-managment）安装命令" class="headerlink" title="RPM（redhat package managment）安装命令"></a>RPM（redhat package managment）安装命令</h3><p>rpm软件商店：<a href="http://rpmfind.net/linux/RPM/" target="_blank" rel="noopener">http://rpmfind.net/linux/RPM/</a></p>
+<p>　　安装rpm包，你需要到上述软件商店下载相应的rpm包到虚拟机里，然后用下列安装命令进行安装。但是这个听起来就很麻烦，而且很多时候安装a包往往都根据其依赖关系，要求先安装c包、d包、e包……，非常不人性化。所以yum安装命令才是主流，只有当yum命令装不了，或者说yum软件仓库里没有你要装的包时，再来考虑用rpm安装。</p>
+<table>
+<thead>
+<tr>
+<th>安装软件的命令格式</th>
+<th>rpm -ivh filename.rpm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>升级软件的命令格式</td>
+<td>rpm -Uvh filename.rpm</td>
+</tr>
+<tr>
+<td>卸载软件的命令格式</td>
+<td>rpm -e filename.rpm</td>
+</tr>
+<tr>
+<td>查询软件描述信息的命令格式</td>
+<td>rpm -qpi filename.rpm</td>
+</tr>
+<tr>
+<td>列出软件文件信息的命令格式</td>
+<td>rpm -qpl filename.rpm</td>
+</tr>
+<tr>
+<td>查询文件属于哪个RPM的命令格式</td>
+<td>rpm -qf filename</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Yum-（黄狗更新管理器，yellow-update-managment）"><a href="#Yum-（黄狗更新管理器，yellow-update-managment）" class="headerlink" title="Yum （黄狗更新管理器，yellow update managment）"></a>Yum （黄狗更新管理器，yellow update managment）</h3><h4 id="安装代码补全工具"><a href="#安装代码补全工具" class="headerlink" title="安装代码补全工具"></a>安装代码补全工具</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install bash-completion -y</span><br></pre></td></tr></table></figure>
+<h4 id="安装常用工具"><a href="#安装常用工具" class="headerlink" title="安装常用工具"></a>安装常用工具</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install vim screen unzip net-tools -y</span><br></pre></td></tr></table></figure>
+<h4 id="安装扩展yum源"><a href="#安装扩展yum源" class="headerlink" title="安装扩展yum源"></a>安装扩展yum源</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install epel-release -y</span><br></pre></td></tr></table></figure>
+<p>有时候很多包域名软件仓库里没有，可以安装扩展源，然后再次安装，就能安装成功了。</p>
+<h3 id="下表笔记中加星号的是目前必须掌握的"><a href="#下表笔记中加星号的是目前必须掌握的" class="headerlink" title="下表笔记中加星号的是目前必须掌握的"></a>下表笔记中加星号的是目前必须掌握的</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>yum repolist all</td>
+<td>列出所有仓库</td>
+</tr>
+<tr>
+<td>yum list all</td>
+<td>列出仓库中所有软件包</td>
+</tr>
+<tr>
+<td>yum info 软件包名称</td>
+<td>查看软件包信息</td>
+</tr>
+<tr>
+<td>*yum install 软件包名称</td>
+<td>安装软件包</td>
+</tr>
+<tr>
+<td>yum reinstall 软件包名称</td>
+<td>重新安装软件包</td>
+</tr>
+<tr>
+<td>yum update 软件包名称</td>
+<td>升级软件包</td>
+</tr>
+<tr>
+<td>*yum remove 软件包名称</td>
+<td>移除软件包</td>
+</tr>
+<tr>
+<td>*yum clean all</td>
+<td>清除所有仓库缓存</td>
+</tr>
+<tr>
+<td>yum check-update</td>
+<td>检查可更新的软件包</td>
+</tr>
+<tr>
+<td>yum grouplist</td>
+<td>查看系统中已经安装的软件包组</td>
+</tr>
+<tr>
+<td>yum groupinstall 软件包组</td>
+<td>安装指定的软件包组</td>
+</tr>
+<tr>
+<td>yum groupremove 软件包组</td>
+<td>移除指定的软件包组</td>
+</tr>
+<tr>
+<td>yum groupinfo 软件包组</td>
+<td>查询指定的软件包组信息</td>
+</tr>
+</tbody>
+</table>
+<h5 id="清理yum源缓存"><a href="#清理yum源缓存" class="headerlink" title="清理yum源缓存"></a>清理yum源缓存</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum clean all</span><br></pre></td></tr></table></figure>
+<h5 id="建立yum源缓存"><a href="#建立yum源缓存" class="headerlink" title="建立yum源缓存"></a>建立yum源缓存</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
+<h5 id="搜索软件仓库中的软件"><a href="#搜索软件仓库中的软件" class="headerlink" title="搜索软件仓库中的软件"></a>搜索软件仓库中的软件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum search 软件名或者软件名的一部分</span><br><span class="line">yum list | grep 软件名或者软件名的一部分</span><br></pre></td></tr></table></figure>
+<h3 id="systemctl系统管理命令"><a href="#systemctl系统管理命令" class="headerlink" title="systemctl系统管理命令"></a>systemctl系统管理命令</h3><h4 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h4><ol>
+<li>[root@localhost ~]# systemctl reboot</li>
+<li>[root@localhost ~]# reboot</li>
+<li>[root@localhost ~]# init 6</li>
+</ol>
+<h4 id="关机"><a href="#关机" class="headerlink" title="关机"></a>关机</h4><ol>
+<li>[root@localhost ~]# systemctl poweroff</li>
+<li>[root@localhost ~]# poweroff</li>
+<li>[root@localhost ~]# init 0  </li>
+</ol>
+<h3 id="参数作用："><a href="#参数作用：" class="headerlink" title="参数作用："></a>参数作用：</h3><p>-i：安装软件install</p>
+<p>-U：升级软件update</p>
+<p>-e：卸载软件</p>
+<p>-v：显示详细信息</p>
+<p>-h：显示操作的进度</p>
+<h3 id="linux文件系统（Centos）"><a href="#linux文件系统（Centos）" class="headerlink" title="linux文件系统（Centos）"></a>linux文件系统（Centos）</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fz8pdxclb6j30u00mlalw.jpg" alt=""></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"># Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"># RedHat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-01/" rel="next" title="linux-基础学习-01 课程大纲思维导图">
+                <i class="fa fa-chevron-left"></i> linux-基础学习-01 课程大纲思维导图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-03/" rel="prev" title="linux-基础学习-03 linux必知必会的命令">
+                linux-基础学习-03 linux必知必会的命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-基础学习-02-Linux系统介绍和安装"><span class="nav-number">1.</span> <span class="nav-text">linux-基础学习-02 Linux系统介绍和安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、安装软件，新建虚拟机"><span class="nav-number">1.1.</span> <span class="nav-text">一、安装软件，新建虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#centos镜像下载地址"><span class="nav-number">1.1.1.</span> <span class="nav-text">centos镜像下载地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VMware-Workstation-Pro快捷键"><span class="nav-number">1.1.2.</span> <span class="nav-text">VMware Workstation Pro快捷键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Centos开机密码破解（救援模式）"><span class="nav-number">1.2.</span> <span class="nav-text">二、Centos开机密码破解（救援模式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、远程登录Linux"><span class="nav-number">1.3.</span> <span class="nav-text">三、远程登录Linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、基本命令介绍"><span class="nav-number">1.4.</span> <span class="nav-text">四、基本命令介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RPM（redhat-package-managment）安装命令"><span class="nav-number">1.4.1.</span> <span class="nav-text">RPM（redhat package managment）安装命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Yum-（黄狗更新管理器，yellow-update-managment）"><span class="nav-number">1.4.2.</span> <span class="nav-text">Yum （黄狗更新管理器，yellow update managment）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装代码补全工具"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">安装代码补全工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装常用工具"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">安装常用工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装扩展yum源"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">安装扩展yum源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下表笔记中加星号的是目前必须掌握的"><span class="nav-number">1.4.3.</span> <span class="nav-text">下表笔记中加星号的是目前必须掌握的</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#清理yum源缓存"><span class="nav-number">1.4.3.0.1.</span> <span class="nav-text">清理yum源缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#建立yum源缓存"><span class="nav-number">1.4.3.0.2.</span> <span class="nav-text">建立yum源缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#搜索软件仓库中的软件"><span class="nav-number">1.4.3.0.3.</span> <span class="nav-text">搜索软件仓库中的软件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemctl系统管理命令"><span class="nav-number">1.4.4.</span> <span class="nav-text">systemctl系统管理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重启"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">重启</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关机"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">关机</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数作用："><span class="nav-number">1.4.5.</span> <span class="nav-text">参数作用：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linux文件系统（Centos）"><span class="nav-number">1.4.6.</span> <span class="nav-text">linux文件系统（Centos）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

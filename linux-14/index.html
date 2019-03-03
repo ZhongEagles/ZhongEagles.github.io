@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-运维进阶-14 SSH远程访问服务">
+<meta name="keywords" content="linux,Centos,RedHat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-运维进阶-14 SSH远程访问服务">
+<meta property="og:url" content="http://yoursite.com/linux-14/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-运维进阶-14 SSH远程访问服务">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzoczrxb5aj30j80ffgz5.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzodv65c79j30j80e27dw.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzodxnnxrqj30j80a140e.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzoe0nn90gj30j80bczlu.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzofh0q7w2j30j90dsqec.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzofl2akf4j30j90gtqfi.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzofnwp5maj30j80jwdr4.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzogpj1tosj30j80g5k3l.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzogr2jsswj30j90jswsz.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzogttqaflj30j80k6wk0.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzoguxts1tj30j80gddiy.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzogwm48qxj30j90h2dl9.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohf6z8e3j30j90ioju7.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohgu79iwj30j80j0tc2.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohhqi9jkj30j80g5dix.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohncmzgej30j90j0gpf.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohpds9x9j30j80ikjuh.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohuxqom8j30j90i2423.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohxjw9tdj30j809r790.jpg">
+<meta property="og:updated_time" content="2019-02-23T13:30:23.464Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-运维进阶-14 SSH远程访问服务">
+<meta name="twitter:description" content="linux-运维进阶-14 SSH远程访问服务">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzoczrxb5aj30j80ffgz5.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/linux-14/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-运维进阶-14 SSH远程访问服务 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/linux-14/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-运维进阶-14 SSH远程访问服务
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-23 11:35:09" itemprop="dateCreated datePublished" datetime="2019-01-23T11:35:09+08:00">2019-01-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-23 21:30:23" itemprop="dateModified" datetime="2019-02-23T21:30:23+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-运维进阶/" itemprop="url" rel="index"><span itemprop="name">linux-运维进阶</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-运维进阶-14 SSH远程访问服务</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-运维进阶-14-SSH远程访问服务"><a href="#linux-运维进阶-14-SSH远程访问服务" class="headerlink" title="linux-运维进阶-14 SSH远程访问服务"></a>linux-运维进阶-14 SSH远程访问服务</h1><p>　　提示：SSH远程访问服务会在后续章节“linux-运维实战”中，在远程控制腾讯云服务器时使用到，是保证你的服务器不被别人黑掉的重要知识点，所以必须牢牢掌握。</p>
+<h2 id="知识回顾"><a href="#知识回顾" class="headerlink" title="知识回顾"></a>知识回顾</h2><p>带端口和不带端口ssh远程连接服务器（这里以虚拟机为例，下一章咱们再去腾讯云买服务器玩儿）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[C:\~]$ ssh root@192.168.141.12</span><br><span class="line"></span><br><span class="line">[C:\~]$ ssh root@192.168.141.12 22</span><br><span class="line"></span><br><span class="line">PS：不带端口时，就是默认采用了22端口</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzoczrxb5aj30j80ffgz5.jpg" alt=""></p>
+<h2 id="nmcli网络管理命令"><a href="#nmcli网络管理命令" class="headerlink" title="nmcli网络管理命令"></a>nmcli网络管理命令</h2><h3 id="查看当前网络设备"><a href="#查看当前网络设备" class="headerlink" title="查看当前网络设备"></a>查看当前网络设备</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# nmcli connection show</span><br><span class="line">NAME                UUID                                  TYPE      DEVICE </span><br><span class="line">Wired connection 1  e574440b-5a39-3a2b-a14d-ea6a2d920a7e  ethernet  ens37  </span><br><span class="line">ens33               9c86a9bc-0939-4790-8580-274041e5eff3  ethernet  ens33  </span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="查看指定网络设备的详细信息"><a href="#查看指定网络设备的详细信息" class="headerlink" title="查看指定网络设备的详细信息"></a>查看指定网络设备的详细信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# nmcli connection show ens33</span><br></pre></td></tr></table></figure>
+<h2 id="给网卡绑定多个配置文件"><a href="#给网卡绑定多个配置文件" class="headerlink" title="给网卡绑定多个配置文件"></a>给网卡绑定多个配置文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 给网卡ens33增加一个名为ens60的配置文件</span><br><span class="line">[root@localhost ~]# nmcli connection add con-name ens60 ifname ens33 autoconnect no type ethernet ipv4.addresses 192.168.141.200/24 gw4 192.168.141.2</span><br><span class="line">Connection &apos;ens60&apos; (8ad23f3d-e490-48a8-bc9f-273ae773435a) successfully added.</span><br><span class="line">[root@localhost ~]# nmcli connection show</span><br><span class="line">NAME                UUID                                  TYPE      DEVICE </span><br><span class="line">Wired connection 1  e574440b-5a39-3a2b-a14d-ea6a2d920a7e  ethernet  ens37  </span><br><span class="line">ens33               9c86a9bc-0939-4790-8580-274041e5eff3  ethernet  ens33  </span><br><span class="line">ens60               8ad23f3d-e490-48a8-bc9f-273ae773435a  ethernet  --     </span><br><span class="line"></span><br><span class="line"># 启用ens60配置文件</span><br><span class="line">[root@localhost ~]# nmcli connection up ens60</span><br><span class="line"></span><br><span class="line"># 启用了这个配置之后，IP就可以ping通，但ifconfig可能看不到这个配置，同时ens33的ip会变化，xshell会断开，这个先不用着急。</span><br></pre></td></tr></table></figure>
+<p>验证：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzodv65c79j30j80e27dw.jpg" alt=""></p>
+<p>由于xshell、4已经断开，咱们在直接虚拟机里查看当前网卡ip</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzodxnnxrqj30j80a140e.jpg" alt=""></p>
+<p>可以看到ip 192.168.141.200已经加上去了</p>
+<p>那么咱们用nmcli网络管理命令管理网路的配置就到此结束</p>
+<p>接下来咱们在虚拟机里重启网络服务，继续下面的实验</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl restart network</span><br><span class="line">[root@localhost ~]# ip add</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzoe0nn90gj30j80bczlu.jpg" alt=""></p>
+<p>可以看到原先的ip又回来了，现在又可以用xshell连接192.168.141.12这个ip，接着做下面的实验。</p>
+<h2 id="SSH远程访问服务"><a href="#SSH远程访问服务" class="headerlink" title="SSH远程访问服务"></a>SSH远程访问服务</h2><p>保证Linux服务器开启ssh之后的基本安全，要做到以下四点：</p>
+<ol>
+<li>禁止root使用ssh访问远程Linux服务器</li>
+<li>禁止使用密码登录ssh服务</li>
+<li>使用非对称密钥登录ssh服务</li>
+<li>修改ssh服务的默认端口号</li>
+</ol>
+<h3 id="解析："><a href="#解析：" class="headerlink" title="解析："></a>解析：</h3><h4 id="1-禁止root使用ssh访问远程Linux服务器"><a href="#1-禁止root使用ssh访问远程Linux服务器" class="headerlink" title="1.禁止root使用ssh访问远程Linux服务器"></a>1.禁止root使用ssh访问远程Linux服务器</h4><p>　　有效防止黑客利用暴力破解工具，在已知用户名root的情况下，轻易将你的root密码破解。</p>
+<h4 id="2-禁止使用密码登录ssh服务"><a href="#2-禁止使用密码登录ssh服务" class="headerlink" title="2.禁止使用密码登录ssh服务"></a>2.禁止使用密码登录ssh服务</h4><p>　　即使你禁止了root使用ssh访问远程Linux服务器，但是依然存在这样一种可能：黑客可能通过社交软件了解了一些你的个人信息，了解到你可能用你的英文名或者社交昵称等作为你的服务器用户名，然后暴力破解出你的用户名和密码，黑掉你的服务器。所以用密码登录服务器，始终是不安全的。</p>
+<h4 id="3-使用非对称密钥登录ssh服务"><a href="#3-使用非对称密钥登录ssh服务" class="headerlink" title="3.使用非对称密钥登录ssh服务"></a>3.使用非对称密钥登录ssh服务</h4><p>　　不用密码登录，那咱们怎么验证身份呢？这里我们可以采用比密码安全不知道几万倍的非对称密钥登录ssh服务，别人没有你的秘钥，就无法ssh远程操控你的服务器。</p>
+<h4 id="4-修改ssh服务的默认端口号"><a href="#4-修改ssh服务的默认端口号" class="headerlink" title="4.修改ssh服务的默认端口号"></a>4.修改ssh服务的默认端口号</h4><p>​    ssh的默认端口号是22，咱们之前用的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[C:\~]$ ssh root@192.168.141.12</span><br><span class="line">[C:\~]$ ssh root@192.168.141.12 22</span><br><span class="line"></span><br><span class="line">PS：不带端口时，就是默认采用了22端口</span><br></pre></td></tr></table></figure>
+<p>　　这两条命令就是通常我们ssh远程访问服务器所使用的命令，许多小白级别的运维人员，用的root加密码123456就可以登录上去，话说就算小白同学多个心眼改一下ssh端口号，黑客也相对没那么容易攻破你的服务器哇！</p>
+<h3 id="步骤："><a href="#步骤：" class="headerlink" title="步骤："></a>步骤：</h3><p>1.新建一个用户组afeng，然后新建一个用户aaa，用来代替root的使用，加入到afeng组，可以使用sudo命令借用root的权限来管理Linux服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# groupadd afeng</span><br><span class="line">[root@localhost ~]# useradd aaa -G afeng </span><br><span class="line">[root@localhost ~]# cat /etc/group | grep aaa</span><br><span class="line">afeng:x:1000:aaa</span><br><span class="line">aaa:x:1001:</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# cat /etc/passwd | grep aaa</span><br><span class="line">aaa:x:1000:1001::/home/aaa:/bin/bash</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">可以看到，用户aaa的UID是1000，GID是1001对应的也就是aaa，所以其主组是aaa</span><br><span class="line">从/etc/group下的afeng:x:1000:aaa也可以看出afeng是aaa的附属组</span><br><span class="line"></span><br><span class="line">设置用户aaa的密码</span><br><span class="line">[root@localhost ~]# passwd aaa</span><br><span class="line">Changing password for user aaa.</span><br><span class="line">New password: </span><br><span class="line">BAD PASSWORD: The password is shorter than 8 characters</span><br><span class="line">Retype new password: </span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>2.锁定root用户的密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# passwd -l root</span><br><span class="line">Locking password for user root.</span><br><span class="line">passwd: Success</span><br><span class="line"></span><br><span class="line"># 查看root用户密码的状态</span><br><span class="line">[root@localhost ~]# passwd -S root</span><br><span class="line">root LK 2018-09-24 0 99999 7 -1 (Password locked.)</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>这时候，我们已经可以用普通用户登录到Linux服务器，用sudo su root切换到root用户继续使用root。</p>
+<p>可以用xshell另外多开一个会话来验证一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[C:\~]$ ssh aaa@192.168.141.12</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Connecting to 192.168.141.12:22...</span><br><span class="line">Connection established.</span><br><span class="line">To escape to local shell, press &apos;Ctrl+Alt+]&apos;.</span><br><span class="line"></span><br><span class="line">WARNING! The remote SSH server rejected X11 forwarding request.</span><br><span class="line">[aaa@localhost ~]$</span><br></pre></td></tr></table></figure>
+<p>发现咱们现在确实可以登陆上来，接下来验证一下咱们能否用sudo su root切换到root用户继续使用root。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[aaa@localhost ~]$ sudo su root</span><br><span class="line"></span><br><span class="line">We trust you have received the usual lecture from the local System</span><br><span class="line">Administrator. It usually boils down to these three things:</span><br><span class="line"></span><br><span class="line">    #1) Respect the privacy of others.</span><br><span class="line">    #2) Think before you type.</span><br><span class="line">    #3) With great power comes great responsibility.</span><br><span class="line"></span><br><span class="line">[sudo] password for aaa: </span><br><span class="line">aaa is not in the sudoers file.  This incident will be reported.</span><br><span class="line">[aaa@localhost ~]$</span><br></pre></td></tr></table></figure>
+<p>结果咱们被拒绝了，因为现在aaa用户尚未在sudoers file里。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzofh0q7w2j30j90dsqec.jpg" alt=""></p>
+<p>那咱们回到原来的会话（xshell一个窗口就是一个会话），也就是root登录着的那个会话，先把aaa添加进sudoers file里。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# visudo </span><br><span class="line">找到</span><br><span class="line">root    ALL=(ALL)       ALL</span><br><span class="line">在上面这一行下面新加一行：</span><br><span class="line">aaa     ALL=(ALL)       ALL</span><br><span class="line">保存退出</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzofl2akf4j30j90gtqfi.jpg" alt=""></p>
+<p>现在切换回aaa那个会话，再次验证咱们能否用sudo su root切换到root用户继续使用root</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[aaa@localhost ~]$ sudo su root</span><br><span class="line">[sudo] password for aaa: </span><br><span class="line">[root@localhost aaa]# </span><br><span class="line"></span><br><span class="line">这回可以了</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzofnwp5maj30j80jwdr4.jpg" alt=""></p>
+<p>3.设置ssh服务，禁止root使用ssh访问远程Linux服务器，禁止使用密码登录ssh服务器，改变服务端口号为10022</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/ssh/sshd_config </span><br><span class="line"></span><br><span class="line">禁止Root使用ssh远程登录</span><br><span class="line">38行将</span><br><span class="line">#PermitRootLogin yes</span><br><span class="line">改成</span><br><span class="line">PermitRootLogin no</span><br><span class="line">别忘了#号也要去掉，#号是备注的意思</span><br><span class="line"></span><br><span class="line">开启证书登录的功能</span><br><span class="line">43行将 </span><br><span class="line">#PubkeyAuthentication yes</span><br><span class="line">去掉注释改成</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">禁止使用密码登录ssh服务器</span><br><span class="line">65行将</span><br><span class="line">PasswordAuthentication yes</span><br><span class="line">改为</span><br><span class="line">PasswordAuthentication no</span><br><span class="line"></span><br><span class="line">改变ssh服务端口号</span><br><span class="line">17行将</span><br><span class="line">#Port 22</span><br><span class="line">改成</span><br><span class="line">Port 10022</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">保存后退出，重启ssh服务（sshd就是ssh device的意思）</span><br><span class="line">[root@localhost ~]# systemctl restart sshd</span><br><span class="line">如果这里报错了，那一定是上面/etc/ssh/sshd_config 这个配置文件你哪里写错了</span><br></pre></td></tr></table></figure>
+<p>4.向防火墙中添加修改的端口，如果开启了selinux，在修改端口号的时候会失败，我们直接关闭selinux</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# firewall-cmd --zone=public --add-port=10022/tcp --permanent </span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --reload </span><br><span class="line">success</span><br><span class="line">查看端口是否添加成功:</span><br><span class="line">[root@localhost ~]# firewall-cmd --zone=public --query-port=10022/tcp</span><br><span class="line">yes</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">[root@localhost ~]# vim /etc/selinux/config </span><br><span class="line">将</span><br><span class="line">SELINUX=enforcing</span><br><span class="line">改为</span><br><span class="line">SELINUX=disabled</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">检查一下</span><br><span class="line">[root@localhost ~]# cat /etc/selinux/config </span><br><span class="line"></span><br><span class="line"># This file controls the state of SELinux on the system.</span><br><span class="line"># SELINUX= can take one of these three values:</span><br><span class="line">#     enforcing - SELinux security policy is enforced.</span><br><span class="line">#     permissive - SELinux prints warnings instead of enforcing.</span><br><span class="line">#     disabled - No SELinux policy is loaded.</span><br><span class="line">SELINUX=disabled</span><br><span class="line"># SELINUXTYPE= can take one of three two values:</span><br><span class="line">#     targeted - Targeted processes are protected,</span><br><span class="line">#     minimum - Modification of targeted policy. Only selected processes are protected. </span><br><span class="line">#     mls - Multi Level Security protection.</span><br><span class="line">SELINUXTYPE=targeted </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>5.生成证书：</p>
+<p>注意：新的用户需要生成新的密钥来用来登录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">xshell的新会话中先切换回aaa</span><br><span class="line">[root@localhost aaa]# su aaa</span><br><span class="line">[aaa@localhost ~]$ ssh-keygen </span><br><span class="line">此处一直敲回车即可</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzogpj1tosj30j80g5k3l.jpg" alt=""></p>
+<p>​    命令敲完后，系统会自动生成~/.ssh目录，这个目录下会保存Linux的公钥和私钥以及存放客户端公钥的文件.ssh/authorized_keys</p>
+<p>6.windows生成客户端公钥：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzogr2jsswj30j90jswsz.jpg" alt=""></p>
+<p>此处一直点下一步，直到进入如下选项时，我们设一个密钥名称，密码和确认那俩框不用填，点击完成即可</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzogttqaflj30j80k6wk0.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzoguxts1tj30j80gddiy.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzogwm48qxj30j90h2dl9.jpg" alt=""></p>
+<p>7.将复制的内容写入到Linux系统中我们新建用户aaa的~/.ssh/authorized_keys文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[aaa@localhost ~]$ whoami</span><br><span class="line">aaa</span><br><span class="line">[aaa@localhost ~]$ vim ~/.ssh/authorized_keys</span><br><span class="line">[aaa@localhost ~]$ cat ~/.ssh/authorized_keys</span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAurKiTVI2mKJswDThaEYNF/DiBOJZeMTCofxFXw0ZjD0fisnKmLmnBQKEna1NArHFVn42RcwRYM3o5KezSNz9dcj0QB2KB9Rby7N5RBL6WQP5HhhclY5ldHI8AIrMDKtzd+IbZYoMknIXWt0iQ9Z069YmQB4dQlQrq9ZUxEdgz5mhusjoSZxVu2kf14/qhuK28/Mo5NLATvTIbN04D8bXX2Jh9vlhhhK8XCnvyuIxV2lNvfU5K88CgM+utOAvELjKhsiMlmrhvNs4kh5o3JSpmIyJfayFpnLvdrGn9w6u1ndzoTE29oTCUKllwD3BZRqPmdVGDF+koBLzipNMCjk21w== rsa 2048-013019</span><br><span class="line">[aaa@localhost ~]$ chmod 600 ~/.ssh/authorized_keys</span><br><span class="line">[aaa@localhost ~]$</span><br></pre></td></tr></table></figure>
+<p>8.重启sshd服务，让ssh配置生效（改/etc/sshd/目录下的文件需要重新服务，添加删除用户密钥并不需要重启sshd服务）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ssh]# systemctl restart sshd</span><br><span class="line">[root@localhost ssh]# netstat -ntlp | grep 10022</span><br><span class="line">tcp        0      0 0.0.0.0:10022           0.0.0.0:*               LISTEN      6110/sshd           </span><br><span class="line">tcp6       0      0 :::10022                :::*                    LISTEN      6110/sshd           </span><br><span class="line">[root@localhost ssh]#</span><br></pre></td></tr></table></figure>
+<p>9.用xshell远程登录Linux服务器</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohf6z8e3j30j90ioju7.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohgu79iwj30j80j0tc2.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohhqi9jkj30j80g5dix.jpg" alt=""></p>
+<p>用户aaa成功登录啦！</p>
+<p>　　情况一：现在假设黑客猜到了你的ssh端口号是10022，又把你的密钥也搞到了手，现在他尝试用root用户登录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[C:\~]$ ssh root@192.168.141.12 10022</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohncmzgej30j90j0gpf.jpg" alt=""></p>
+<p>结果如下图，黑客登录失败，失败的原因就是我们拒绝了root登录</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohpds9x9j30j80ikjuh.jpg" alt=""></p>
+<p>　　情况二：假设黑客搞到了你的用户名aaa和ssh端口号10022，但是服务器是拒绝用密码登陆的，也就是他没法爆破，只能用密钥登录，可惜他没有你的aaa用户的密钥feng_system，所以也登录不上</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohuxqom8j30j90i2423.jpg" alt=""></p>
+<p>情况三：这是99.99%的情况</p>
+<p>　　别人不知道你的端口号，也不知道你的用户名，更没有你的用户密钥，所以服务器很安全。但是服务器ip很容易就会被知道，ping一下咱网站域名就可以看到服务器ip了，比如ping一下我的个人博客<a href="https://xiaoxingzone.coding.me/如下图" target="_blank" rel="noopener">https://xiaoxingzone.coding.me/如下图</a></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzohxjw9tdj30j809r790.jpg" alt=""></p>
+<p>　　黑客仅仅知道你的服务器ip的话，是无法ssh远程控制你的服务器的。但是黑客可以搞一个低轨道粒子炮之类的工具，对你的服务器一直轰炸，或者搞一些其他的攻击方式，让你的服务器很难受，这就涉及到网络安全方面的知识了。</p>
+<p>​    此外，我们后续章节中还会介绍如何禁止别人ping咱们的服务器。</p>
+<p>　　另外，HEXO个人博客利用coding和github开源仓库搭建，并没有搭建在我自己的服务器上，所以无需多虑。关于ssh的配置后面我们会在运维实战章节再次用到。</p>
+<h2 id="不间断会话服务（虚拟终端）"><a href="#不间断会话服务（虚拟终端）" class="headerlink" title="不间断会话服务（虚拟终端）"></a>不间断会话服务（虚拟终端）</h2><p>　　因为在执行一些脚本的时候，可能要使用的时间很长，而我们电脑可能不会开那么久的终端软件，那么这时候，就要有一个虚拟的终端来帮助我们执行长时间的任务</p>
+<p>安装screen</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[aaa@localhost ~]$ sudo su root</span><br><span class="line">[sudo] password for aaa: </span><br><span class="line">[root@localhost aaa]# </span><br><span class="line">[root@localhost aaa]# yum install screen -y</span><br></pre></td></tr></table></figure>
+<p>新建一个终端任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# screen -S lnmp</span><br><span class="line">回车之后进入到新的终端开始一个任务</span><br><span class="line"></span><br><span class="line">[root@localhost aaa]# wget http://soft.vpser.net/lnmp/lnmp1.5.tar.gz -cO lnmp1.5.tar.gz &amp;&amp; tar zxf lnmp1.5.tar.gz &amp;&amp; cd lnmp1.5 &amp;&amp; ./install.sh lnmp</span><br></pre></td></tr></table></figure>
+<p>　　如果任务没有执行完，我们需要关闭终端，可以直接关掉终端（千万不要用CTRL+Z或者CTRL+C），也可以用ctrl+a，松开a再按一下d（ctrl不要放开）临时退出虚拟终端     </p>
+<p>恢复最近的一个终端，用screen -r命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost aaa]# screen -r</span><br></pre></td></tr></table></figure>
+<p>如果有多个虚拟终端，我们可以使用命令查看后台运行的虚拟终端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost aaa]# screen -list</span><br><span class="line">There is a screen on:</span><br><span class="line">	6327.lnmp	(Detached)</span><br><span class="line">1 Socket in /var/run/screen/S-root.</span><br><span class="line"></span><br><span class="line">[root@localhost aaa]#</span><br></pre></td></tr></table></figure>
+<p>要恢复指定的虚拟终端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost aaa]# screen -r lnmp</span><br></pre></td></tr></table></figure>
+<p>退出虚拟终端的话，进入虚拟中断（ctrl+c）之后用exit退出就行啦</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost lnmp1.5]# exit</span><br></pre></td></tr></table></figure>
+<p>虚拟终端这个不好演示，截图的话也没啥意义，上面的命令行足矣</p>
+<p>本篇到此结束</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"># Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"># RedHat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-13/" rel="next" title="linux-运维进阶-13 iptables与firewalld防火墙">
+                <i class="fa fa-chevron-left"></i> linux-运维进阶-13 iptables与firewalld防火墙
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-15/" rel="prev" title="linux-运维进阶-15 Apache服务">
+                linux-运维进阶-15 Apache服务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-14-SSH远程访问服务"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-14 SSH远程访问服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#知识回顾"><span class="nav-number">1.1.</span> <span class="nav-text">知识回顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nmcli网络管理命令"><span class="nav-number">1.2.</span> <span class="nav-text">nmcli网络管理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看当前网络设备"><span class="nav-number">1.2.1.</span> <span class="nav-text">查看当前网络设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看指定网络设备的详细信息"><span class="nav-number">1.2.2.</span> <span class="nav-text">查看指定网络设备的详细信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给网卡绑定多个配置文件"><span class="nav-number">1.3.</span> <span class="nav-text">给网卡绑定多个配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH远程访问服务"><span class="nav-number">1.4.</span> <span class="nav-text">SSH远程访问服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解析："><span class="nav-number">1.4.1.</span> <span class="nav-text">解析：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-禁止root使用ssh访问远程Linux服务器"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">1.禁止root使用ssh访问远程Linux服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-禁止使用密码登录ssh服务"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">2.禁止使用密码登录ssh服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-使用非对称密钥登录ssh服务"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">3.使用非对称密钥登录ssh服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-修改ssh服务的默认端口号"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">4.修改ssh服务的默认端口号</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#步骤："><span class="nav-number">1.4.2.</span> <span class="nav-text">步骤：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不间断会话服务（虚拟终端）"><span class="nav-number">1.5.</span> <span class="nav-text">不间断会话服务（虚拟终端）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

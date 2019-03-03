@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-运维进阶-21 Squid部署代理缓存服务">
+<meta name="keywords" content="linux,Centos,RedHat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-运维进阶-21 Squid部署代理缓存服务">
+<meta property="og:url" content="http://yoursite.com/linux-21/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-运维进阶-21 Squid部署代理缓存服务">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzuf4x3fc1j30j809j0w5.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlopvf8gj30j90a6my7.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlqm2ceij30it0gajsi.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlr9dn94j30iy0g53zn.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvls2kbspj30j80cs41e.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlopvf8gj30j90a6my7.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvm4lno25j30j70bitcb.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvm5mj546j30j80cq75g.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvmbf9ntsj30j809b0tn.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvmiq66ypj30j70bfq6y.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvnjeamwcj30j80760tp.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvnk8n9a0j30ea0iujsv.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwimf7cwgj30j80btdid.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwimnrofgj30j80bywi8.jpg">
+<meta property="og:image" content="c:/Users/zhong/AppData/Roaming/Typora/typora-user-images/1549421704276.png">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwgczlvmvj30j80gyted.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwgavd16dj30j80cv12l.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwil31x91j30j80c2q60.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwiyp6g3mj30j70ddac7.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwj3wxr1nj30j80bamyl.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwj4vrsjoj30j80gigu7.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwj54dtj6j30j90m6k34.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwj5gxpagj30j80dg75m.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwlt9tygmj30iw0o07os.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwrdim4m0j30j70bn0w1.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwrx56uo8j30j80jqh2y.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzws14wz9dj30j80cn76h.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwsavaxa5j30j90bq77l.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwsofb7mlj30j80jhjwz.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwszl061vj30j80ccwhu.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwsztvuxuj30j70cd0w3.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwt01pj2ej30j80c2426.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwtspnt2lj31ck0sx11v.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwtu0r99qj314l0s3wku.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzxk5ro04zj30lu0l0gzn.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzxke0tdmej31ca0u07ei.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzxnb3sf98j31av0txakc.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy1czz6z3j311h0o5qhl.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlqm2ceij30it0gajsi.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlr9dn94j30iy0g53zn.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvls2kbspj30j80cs41e.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlopvf8gj30j90a6my7.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy2y7o5pdj30pu0i775n.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy2zmdfs7j30rd0q6ae9.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3108lboj30pp0ndh9u.jpg">
+<meta property="og:image" content="c:/Users/zhong/AppData/Roaming/Typora/typora-user-images/1549539165166.png">
+<meta property="og:image" content="c:/Users/zhong/AppData/Roaming/Typora/typora-user-images/1549539244364.png">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3c56ntlj30qg0ji3zz.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3dc462yj30nv0g947d.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3gsx338j30x00q60we.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3kg4tgbj30ju0eita6.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3n1224ij30zk0m9go2.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3oa80qtj30lm0ionb6.jpg">
+<meta property="og:updated_time" content="2019-02-23T13:38:40.229Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-运维进阶-21 Squid部署代理缓存服务">
+<meta name="twitter:description" content="linux-运维进阶-21 Squid部署代理缓存服务">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzuf4x3fc1j30j809j0w5.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/linux-21/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-运维进阶-21 Squid部署代理缓存服务 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/linux-21/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-运维进阶-21 Squid部署代理缓存服务
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-04 08:20:25" itemprop="dateCreated datePublished" datetime="2019-02-04T08:20:25+08:00">2019-02-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-23 21:38:40" itemprop="dateModified" datetime="2019-02-23T21:38:40+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-运维进阶/" itemprop="url" rel="index"><span itemprop="name">linux-运维进阶</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-运维进阶-21 Squid部署代理缓存服务</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-运维进阶-21-Squid部署代理缓存服务"><a href="#linux-运维进阶-21-Squid部署代理缓存服务" class="headerlink" title="linux-运维进阶-21 Squid部署代理缓存服务"></a>linux-运维进阶-21 Squid部署代理缓存服务</h1><h2 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h2><h3 id="Squid"><a href="#Squid" class="headerlink" title="Squid"></a>Squid</h3><p>　　Squid是一个高性能的代理缓存服务器，Squid支持FTP、gopher、HTTPS和HTTP协议。和一般的代理缓存软件不同，Squid用一个单独的、非模块化的、I/O驱动的进程来处理所有的客户端请求。</p>
+<p>　　Squid是一种用来缓冲Internet数据的软件。它是这样实现其功能的，接受来自人们需要下载的目标（object）的请求并适当地处理这些请求。也就是说，如果一个人想下载一web页面，他请求Squid为他取得这个页面。Squid随之连接到远程服务器（比如：<a href="http://squid.nlanr.net/）并向这个页面发出请求。然后，Squid显式地聚集数据到客户端机器，而且同时复制一份。当下一次有人需要同一页面时，Squid可以简单地从磁盘中读到它，那样数据迅即就会传输到客户机上。当前的Squid可以处理HTTP，FTP，GOPHER，SSL和WAIS等协议。但它不能处理如POP，NNTP，RealAudio以及其它类型的东西。" target="_blank" rel="noopener">http://squid.nlanr.net/）并向这个页面发出请求。然后，Squid显式地聚集数据到客户端机器，而且同时复制一份。当下一次有人需要同一页面时，Squid可以简单地从磁盘中读到它，那样数据迅即就会传输到客户机上。当前的Squid可以处理HTTP，FTP，GOPHER，SSL和WAIS等协议。但它不能处理如POP，NNTP，RealAudio以及其它类型的东西。</a></p>
+<h3 id="squid分类"><a href="#squid分类" class="headerlink" title="squid分类"></a>squid分类</h3><p>按照代理类型的不同，可以将Squid代理分为正向代理和反向代理。</p>
+<p>　　正向代理：根据实现方式的不同，又可以分为普通代理和透明代理。<br>　　　　1）普通代理：需要客户机在浏览器中指定代理服务器的地址、端口；<br>　　　　2）透明代理：适用于企业的网关主机（共享接入Internet）中，客户机不需要指定代理服务器地址、端口等信息，代理服务器需要设置防火墙策略将客户机的Web访问数据转交给代理服务程序处理；</p>
+<p>　　反向代理：是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个服务器。</p>
+<p>​    </p>
+<p>​    代理服务器英文全称是Proxy Server，其功能就是代理网络用户去取得网络信息。</p>
+<p>​    Squid是一个缓存Internet 数据的软件，其接收用户的下载申请，并自动处理所下载的数据。当一个用户想要下载一个主页时，可以向Squid 发出一个申请，要Squid 代替其进行下载，然后Squid 连接所申请网站并请求该主页，接着把该主页传给用户同时保留一个备份，当别的用户申请同样的页面时，Squid 把保存的备份立即传给用户，使用户觉得速度相当快。Squid 可以代理HTTP、FTP、GOPHER、SSL和WAIS等协议并且Squid 可以自动地进行处理，可以根据自己的需要设置Squid，使之过滤掉不想要的东西。</p>
+<p>Squid代理服务器工作在TCP/IP的应用层：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzuf4x3fc1j30j809j0w5.jpg" alt=""></p>
+<h2 id="实验准备工作"><a href="#实验准备工作" class="headerlink" title="实验准备工作"></a>实验准备工作</h2><h3 id="实验原理"><a href="#实验原理" class="headerlink" title="实验原理"></a>实验原理</h3><p>　　我们需要两台虚拟机，一台是win10操作系统作为客户端，另一台我们新安装一个Centos 7的虚拟机Server。配置好虚拟机Server后，将Server作为客户端win10的代理服务器，从而让win10能够上网。为了大家能完全理解虚拟机通信原理，我这里将整体上的网络结构拓扑图画出来，如下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlopvf8gj30j90a6my7.jpg" alt=""></p>
+<p>​    在之前的文章中，我们讲解过网络适配器三种模式的工作原理，本次实验设置如下：</p>
+<h3 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h3><p>1.虚拟机Server</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlqm2ceij30it0gajsi.jpg" alt=""></p>
+<p>2.虚拟机WIN10</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlr9dn94j30iy0g53zn.jpg" alt=""></p>
+<p>3.VMware Workstation Pro设置</p>
+<p>​    点击图中更改设置即可更改，这里放出的图是改好后的图。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvls2kbspj30j80cs41e.jpg" alt=""></p>
+<h3 id="通信原理"><a href="#通信原理" class="headerlink" title="通信原理"></a>通信原理</h3><p>　　结合下图，我们的Server网卡1和WIN10 的网卡均是仅主机模式的，所以对应的，他们的ip自然是由VMnet1的虚拟DHCP服务器来分配。我们的Server网卡2是桥接模式的，相当于用一个交换机连着我们电脑的真实电脑，所以我们现在用着的物理机的ip和Server网卡2的ip均由我们的家用路由器分配。我们去到别人家里，连上别人家wifi，就会得到一个ip地址，仔细看的话就会发现家用路由器分配给我们的都是192.168.1.X的ip，在这里也是这个道理。</p>
+<p>　　对了，有一次我将虚拟机网卡设置为桥接模式之后，开机查看ip发现ip竟然不是192.168.1.X了，而是一个奇怪的ip。我当时想了很久也没发现问题，难道是电脑抽风了？后来才想起来，我家断网了，我临时连着的是手机热点，真是很尴尬。</p>
+<p>​    如下图，由于虚拟机WIN10是仅主机模式的，所以它要访问NET外网，其数据就必须从Server那里经过。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlopvf8gj30j90a6my7.jpg" alt=""></p>
+<p>查看本机ip（虚拟机win10）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\zhong&gt;ipconfig</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvm4lno25j30j70bitcb.jpg" alt=""></p>
+<p>查看Server的ip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ip add</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvm5mj546j30j80cq75g.jpg" alt=""></p>
+<p>　　由上面两张图我们得知了虚拟机WIN10的ip是192.168.23.53</p>
+<p>　　虚拟机Server的ip分别是192.168.23.52和192.168.1.106</p>
+<p>为了实验更加清晰明了，我们把分配好的ip加到拓扑图里，新的拓扑图如下：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvmbf9ntsj30j809b0tn.jpg" alt=""></p>
+<h2 id="保存快照"><a href="#保存快照" class="headerlink" title="保存快照"></a>保存快照</h2><p>　　实验到这里，基本准备已经准备好，记住一定要给上述虚拟机Server关机保存快照，这个快照的名字就叫做“快照1”，待会我们做透明代理实验的时候恢复成这个快照再做。虚拟机WIN10就可以不用弄快照了，反正是测试用的，配置少得可怜。</p>
+<h2 id="配置Squid服务程序配置Squid服务程序"><a href="#配置Squid服务程序配置Squid服务程序" class="headerlink" title="配置Squid服务程序配置Squid服务程序"></a>配置Squid服务程序配置Squid服务程序</h2><p>　　检查虚拟机WIN10是否可以和Server通信，这里要注意的是，不同网段不能ping通，同一网段可以ping通，如下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvmiq66ypj30j70bfq6y.jpg" alt=""></p>
+<p>检查Server是否可以连接外网和ping通虚拟机WIN10（ping需要手动用ctrl+c打断）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ping baidu.com</span><br><span class="line">PING baidu.com (123.125.115.110) 56(84) bytes of data.</span><br><span class="line">64 bytes from 123.125.115.110 (123.125.115.110): icmp_seq=1 ttl=51 time=45.7 ms</span><br><span class="line">64 bytes from 123.125.115.110 (123.125.115.110): icmp_seq=2 ttl=51 time=45.8 ms</span><br><span class="line">64 bytes from 123.125.115.110 (123.125.115.110): icmp_seq=3 ttl=51 time=101 ms</span><br><span class="line">^C</span><br><span class="line">--- baidu.com ping statistics ---</span><br><span class="line">3 packets transmitted, 3 received, 0% packet loss, time 2002ms</span><br><span class="line">rtt min/avg/max/mdev = 45.774/64.315/101.284/26.141 ms</span><br><span class="line">[root@localhost ~]# ping 192.169.23.53</span><br><span class="line">PING 192.169.23.53 (192.169.23.53) 56(84) bytes of data.</span><br><span class="line">^C</span><br><span class="line">--- 192.169.23.53 ping statistics ---</span><br><span class="line">3 packets transmitted, 0 received, 100% packet loss, time 2001ms</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">	可以看到，Server可以ping通外网，但是无法ping 虚拟机WIN10的时候没有响应。然鹅，奇怪的是，虚拟机WIN10可以ping通它而它能不能ping通WIN10，其实这是系统差异导致的，对本实验没有影响，Server无法ping通虚拟机WIN10那就ping不通吧，我们往下继续做实验。实验结束后，我们再解析如何让它可以ping通虚拟机WIN10。</span><br></pre></td></tr></table></figure>
+<p>安装squid程序，并查看配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install squid -y</span><br><span class="line">[root@localhost ~]# ls /etc/squid/</span><br><span class="line">cachemgr.conf          errorpage.css          mime.conf          squid.conf</span><br><span class="line">cachemgr.conf.default  errorpage.css.default  mime.conf.default  squid.conf.default</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# cat /etc/squid/squid.conf</span><br><span class="line"></span><br><span class="line">以下为其配置文件内容：</span><br><span class="line">#</span><br><span class="line"># Recommended minimum configuration:</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line"># Example rule allowing access from your local networks.</span><br><span class="line"># Adapt to list your (internal) IP networks from where browsing</span><br><span class="line"># should be allowed</span><br><span class="line">acl localnet src 10.0.0.0/8	# RFC1918 possible internal network</span><br><span class="line">acl localnet src 172.16.0.0/12	# RFC1918 possible internal network</span><br><span class="line">acl localnet src 192.168.0.0/16	# RFC1918 possible internal network</span><br><span class="line">acl localnet src fc00::/7       # RFC 4193 local private network range</span><br><span class="line">acl localnet src fe80::/10      # RFC 4291 link-local (directly plugged) machines</span><br><span class="line"></span><br><span class="line">acl SSL_ports port 443</span><br><span class="line">acl Safe_ports port 80		# http</span><br><span class="line">acl Safe_ports port 21		# ftp</span><br><span class="line">acl Safe_ports port 443		# https</span><br><span class="line">acl Safe_ports port 70		# gopher</span><br><span class="line">acl Safe_ports port 210		# wais</span><br><span class="line">acl Safe_ports port 1025-65535	# unregistered ports</span><br><span class="line">acl Safe_ports port 280		# http-mgmt</span><br><span class="line">acl Safe_ports port 488		# gss-http</span><br><span class="line">acl Safe_ports port 591		# filemaker</span><br><span class="line">acl Safe_ports port 777		# multiling http</span><br><span class="line">acl CONNECT method CONNECT</span><br><span class="line"></span><br><span class="line">#</span><br><span class="line"># Recommended minimum Access Permission configuration:</span><br><span class="line">#</span><br><span class="line"># Deny requests to certain unsafe ports</span><br><span class="line">http_access deny !Safe_ports</span><br><span class="line"></span><br><span class="line"># Deny CONNECT to other than secure SSL ports</span><br><span class="line">http_access deny CONNECT !SSL_ports</span><br><span class="line"></span><br><span class="line"># Only allow cachemgr access from localhost</span><br><span class="line">http_access allow localhost manager</span><br><span class="line">http_access deny manager</span><br><span class="line"></span><br><span class="line"># We strongly recommend the following be uncommented to protect innocent</span><br><span class="line"># web applications running on the proxy server who think the only</span><br><span class="line"># one who can access services on &quot;localhost&quot; is a local user</span><br><span class="line">#http_access deny to_localhost</span><br><span class="line"></span><br><span class="line">#</span><br><span class="line"># INSERT YOUR OWN RULE(S) HERE TO ALLOW ACCESS FROM YOUR CLIENTS</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line"># Example rule allowing access from your local networks.</span><br><span class="line"># Adapt localnet in the ACL section to list your (internal) IP networks</span><br><span class="line"># from where browsing should be allowed</span><br><span class="line">http_access allow localnet</span><br><span class="line">http_access allow localhost</span><br><span class="line"></span><br><span class="line"># And finally deny all other access to this proxy</span><br><span class="line">http_access deny all</span><br><span class="line"></span><br><span class="line"># Squid normally listens to port 3128</span><br><span class="line">http_port 3128</span><br><span class="line"></span><br><span class="line"># Uncomment and adjust the following to add a disk cache directory.</span><br><span class="line">#cache_dir ufs /var/spool/squid 100 16 256</span><br><span class="line"></span><br><span class="line"># Leave coredumps in the first cache dir</span><br><span class="line">coredump_dir /var/spool/squid</span><br><span class="line"></span><br><span class="line">#</span><br><span class="line"># Add any of your own refresh_pattern entries above these.</span><br><span class="line">#</span><br><span class="line">refresh_pattern ^ftp:		1440	20%	10080</span><br><span class="line">refresh_pattern ^gopher:	1440	0%	1440</span><br><span class="line">refresh_pattern -i (/cgi-bin/|\?) 0	0%	0</span><br><span class="line">refresh_pattern .		0	20%	4320</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">可以看到其监听的端口号为3128，一会我们设置客户端代理的时候要用到！</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>http_port 3128</td>
+<td>监听的端口号</td>
+</tr>
+<tr>
+<td>cache_mem 64M</td>
+<td>内存缓冲区的大小</td>
+</tr>
+<tr>
+<td>cache_dir ufs /var/spool/squid 2000 16   256</td>
+<td>硬盘缓冲区的大小</td>
+</tr>
+<tr>
+<td>cache_effective_user squid</td>
+<td>设置缓存的有效用户</td>
+</tr>
+<tr>
+<td>cache_effective_group squid</td>
+<td>设置缓存的有效用户组</td>
+</tr>
+<tr>
+<td>dns_nameservers [IP地址]</td>
+<td>一般不设置，而是用服务器默认的DNS地址</td>
+</tr>
+<tr>
+<td>cache_access_log   /var/log/squid/access.log</td>
+<td>访问日志文件的保存路径</td>
+</tr>
+<tr>
+<td>cache_log /var/log/squid/cache.log</td>
+<td>缓存日志文件的保存路径</td>
+</tr>
+<tr>
+<td>visible_hostname linuxprobe.com</td>
+<td>设置Squid服务器的名称</td>
+</tr>
+</tbody>
+</table>
+<h2 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h2><p>开启ip forward（路由转发）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# echo &quot;net.ipv4.ip_forward = 1&quot; &gt;&gt;/usr/lib/sysctl.d/50-default.conf</span><br><span class="line">[root@localhost ~]# grep ip_forward /usr/lib/sysctl.d/50-default.conf</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">[root@localhost ~]# sysctl -a | grep -w ip_forward</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.all.stable_secret&quot;</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.default.stable_secret&quot;</span><br><span class="line">net.ipv4.ip_forward = 0														#0表示未开启</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.ens33.stable_secret&quot;</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.ens37.stable_secret&quot;</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.lo.stable_secret&quot;</span><br><span class="line">[root@localhost ~]# sysctl -w net.ipv4.ip_forward=1							#我们将之开启</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">[root@localhost ~]# sysctl -a | grep -w ip_forward</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.all.stable_secret&quot;</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.default.stable_secret&quot;</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.ens33.stable_secret&quot;</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.ens37.stable_secret&quot;</span><br><span class="line">net.ipv4.ip_forward = 1														#1表示已开启</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.lo.stable_secret&quot;</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>放行所有http访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/squid/squid.conf</span><br><span class="line">将第56行改为：</span><br><span class="line">http_access allow all</span><br><span class="line"></span><br><span class="line">保存退出，查看结果</span><br><span class="line">[root@localhost ~]# grep -n http /etc/squid/squid.conf |grep -w all</span><br><span class="line">56:http_access allow all</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>安装openssl</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum -y install openssl</span><br></pre></td></tr></table></figure>
+<p>关闭防火墙</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl stop firewalld.service</span><br></pre></td></tr></table></figure>
+<p>squid加上DNS，重启squid服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]#  echo &quot;dns_nameservers 114.114.114.114 114.114.115.115&quot; &gt;&gt; /etc/squid/squid.conf</span><br><span class="line">[root@localhost ~]# grep nameserver /etc/squid/squid.conf</span><br><span class="line">dns_nameservers 114.114.114.114 114.114.115.115</span><br><span class="line">[root@localhost ~]# systemctl restart squid</span><br><span class="line">[root@localhost ~]# systemctl enable squid</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>一开始，我们的虚拟机WIN10客户端是无法上网的，所以要设置代理。</p>
+<p>虚拟机WIN10设置客户端代理，如下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvnjeamwcj30j80760tp.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvnk8n9a0j30ea0iujsv.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwimf7cwgj30j80btdid.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwimnrofgj30j80bywi8.jpg" alt=""></p>
+<p><img src="C:\Users\zhong\AppData\Roaming\Typora\typora-user-images\1549421704276.png" alt="1549421704276"></p>
+<p>如上图，原本处在仅主机模式的虚拟机WIN10是无法上网的，现在设置了代理就可以访问外网了。</p>
+<h2 id="ACL访问控制"><a href="#ACL访问控制" class="headerlink" title="ACL访问控制"></a>ACL访问控制</h2><h3 id="只允许某个客户端进行代理"><a href="#只允许某个客户端进行代理" class="headerlink" title="只允许某个客户端进行代理"></a>只允许某个客户端进行代理</h3><p>修改配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/squid/squid.conf</span><br><span class="line">将之前改过的56行改回：</span><br><span class="line">http_access deny all</span><br><span class="line"></span><br><span class="line">将下面这行备注掉（大概第10行）：</span><br><span class="line"> #acl localnet src 192.168.0.0/16  </span><br><span class="line"> 它的作用是让192.168.0.1-192.168.255.254之间所有ip都可以被放行，把它备注掉，方便我们接下来实验的观察。</span><br><span class="line"> </span><br><span class="line">如下图</span><br><span class="line">在合适的地方加入：</span><br><span class="line">acl client src 192.168.23.53</span><br><span class="line"></span><br><span class="line">在合适的地方加入：</span><br><span class="line">http_access allow client</span><br><span class="line"></span><br><span class="line">保存退出，重启squid服务</span><br><span class="line">[root@localhost ~]# systemctl restart squid.service</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwgczlvmvj30j80gyted.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwgavd16dj30j80cv12l.jpg" alt=""></p>
+<p>​    可以看到咱们的虚拟机WIN10仍然可以上外网，这是由于acl client src 192.168.23.53放行了它的ip所致：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwil31x91j30j80c2q60.jpg" alt=""></p>
+<p>​    </p>
+<p>　　为了对比效果，我又装了一台虚拟机WIN10Test用来测试，给它与之前那台虚拟机WIN10同等的待遇，给它的ie浏览器也配置了一样的代理，现在看看它能否上外网：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwiyp6g3mj30j70ddac7.jpg" alt=""></p>
+<p>看看它的ip：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwj3wxr1nj30j80bamyl.jpg" alt=""></p>
+<p>将他的ip也加入放行队列：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/squid/squid.conf</span><br><span class="line"></span><br><span class="line">如下图</span><br><span class="line">在合适的地方加入：</span><br><span class="line">acl client2 src 192.168.23.55</span><br><span class="line"></span><br><span class="line">在合适的地方加入：</span><br><span class="line">http_access allow client2</span><br><span class="line"></span><br><span class="line">保存退出，重启squid服务</span><br><span class="line">[root@localhost ~]# systemctl restart squid.service</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwj4vrsjoj30j80gigu7.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwj54dtj6j30j90m6k34.jpg" alt=""></p>
+<p>可以看到，这台新加的虚拟机也可以访问外网了</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwj5gxpagj30j80dg75m.jpg" alt=""></p>
+<p>　　现在开了三台虚拟机，电脑非常卡，可以把这台新的虚拟机关掉了，接下来我们继续回到正题，继续做代理实验。</p>
+<h2 id="特别注意："><a href="#特别注意：" class="headerlink" title="特别注意："></a>特别注意：</h2><p>　　本次实验特别坑的地方是，不把Server上的防火墙关掉，客户端就无法访问外网！而且，如果实验中途把Server关机了，重新启动后又得再次关闭防火墙！网上大多数的教程都没有说这一步，导致非常多初次做实验的同学们都被坑死在这里。</p>
+<h3 id="过滤敏感字"><a href="#过滤敏感字" class="headerlink" title="过滤敏感字"></a>过滤敏感字</h3><p>修改配置文件(还原上次实验的更改后再做，还原的相关命令也在下面)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vi /etc/squid/squid.conf</span><br><span class="line">去掉第10行的注释</span><br><span class="line">acl localnet src 192.168.0.0/16 </span><br><span class="line"></span><br><span class="line">第58行左右，讲我们之前改过的deny改回allow</span><br><span class="line">http_access allow all</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">如下图，在合适的地方加入如下两行：</span><br><span class="line"></span><br><span class="line">大概27行：acl deny_keyword url_regex -i nba</span><br><span class="line"></span><br><span class="line">大概33行：http_access deny deny_keyword</span><br><span class="line"></span><br><span class="line">保存退出，重启squid服务，关闭防火墙</span><br><span class="line">[root@localhost ~]# systemctl restart squid.service </span><br><span class="line">[root@localhost ~]# systemctl stop firewalld.service </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	这里之所以我又关了一次防火墙，是因为实验中途我把Server关机了，重新开机后虚拟机WIN10怎么也访问不了外网，IE浏览器上只提示“代理服务器无响应”，又是被防火墙坑了。这里防火墙一关，那里ie浏览器又就可以正常访问外网了。</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwlt9tygmj30iw0o07os.jpg" alt=""></p>
+<p>效果如下：</p>
+<p>​    如下图，可以正常访问外网，但是无法访问带有敏感字的网站。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwrdim4m0j30j70bn0w1.jpg" alt=""></p>
+<h3 id="禁止访问特定网站"><a href="#禁止访问特定网站" class="headerlink" title="禁止访问特定网站"></a>禁止访问特定网站</h3><p>修改配置文件(可以接着上述实验的更改继续再做，相当于叠加过滤)</p>
+<p>　　注意，我们平时访问qq官网，是https的网址：<a href="https://www.qq.com，但是由于咱们的Server现在针对的是http协议进行过滤的，就连配置文件里也全都是“http_access”的字段，所以我们测试用的是http://www.qq.com。" target="_blank" rel="noopener">https://www.qq.com，但是由于咱们的Server现在针对的是http协议进行过滤的，就连配置文件里也全都是“http_access”的字段，所以我们测试用的是http://www.qq.com。</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vi /etc/squid/squid.conf</span><br><span class="line"></span><br><span class="line">如下图，在合适的地方加入如下两行：</span><br><span class="line">大概28行：acl deny_url url_regex http://www.qq.com</span><br><span class="line"></span><br><span class="line">大概31行：http_access deny deny_url</span><br><span class="line"></span><br><span class="line">保存退出，重启squid服务</span><br><span class="line">[root@localhost ~]# systemctl restart squid.service</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwrx56uo8j30j80jqh2y.jpg" alt=""></p>
+<p>效果如下：</p>
+<p>​    可以正常访问外网，但是无法访问<a href="http://www.qq.com" target="_blank" rel="noopener">http://www.qq.com</a></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzws14wz9dj30j80cn76h.jpg" alt=""></p>
+<p>效果对比：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vi /etc/squid/squid.conf</span><br><span class="line"></span><br><span class="line">我们把之前加的两行备注掉：</span><br><span class="line">大概28行：#acl deny_url url_regex http://www.qq.com</span><br><span class="line"></span><br><span class="line">大概31行：#http_access deny deny_url</span><br><span class="line"></span><br><span class="line">保存退出，重启squid服务</span><br><span class="line">[root@localhost ~]# systemctl restart squid.service</span><br></pre></td></tr></table></figure>
+<p>　　现在回到刚刚的测试页面，刷新一下，可以看到它自动的从<a href="http://www.qq.com跳转到了https://www.qq.com，成功访问了qq官网。" target="_blank" rel="noopener">http://www.qq.com跳转到了https://www.qq.com，成功访问了qq官网。</a></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwsavaxa5j30j90bq77l.jpg" alt=""></p>
+<h3 id="禁止下载特定格式文件"><a href="#禁止下载特定格式文件" class="headerlink" title="禁止下载特定格式文件"></a>禁止下载特定格式文件</h3><p>修改配置文件((可以接着上述实验的更改继续再做，相当于叠加过滤)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vi /etc/squid/squid.conf</span><br><span class="line"></span><br><span class="line">如下图，在合适的地方加入如下两行：</span><br><span class="line">大概29行：acl badfile urlpath_regex -i \.exe$ \.msi$</span><br><span class="line"></span><br><span class="line">大概32行：http_access deny badfile</span><br><span class="line"></span><br><span class="line">保存退出，重启squid服务</span><br><span class="line">[root@localhost ~]# systemctl restart squid.service</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwsofb7mlj30j80jhjwz.jpg" alt=""></p>
+<p>　　如下图，我们这里用下载nodejs软件历史版本的网站<a href="https://nodejs.org/dist/v0.6.2/来测试，分别点开三个文件对比测试：" target="_blank" rel="noopener">https://nodejs.org/dist/v0.6.2/来测试，分别点开三个文件对比测试：</a></p>
+<p>node-v0.6.2.msi  </p>
+<p>node.exe</p>
+<p>node-v0.6.2.tar.gz   </p>
+<p>​    理论上，我们禁止下载了msi和exe后缀格式的文件，那么tar.gz是没有禁止的，实际测试效果如下：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwszl061vj30j80ccwhu.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwsztvuxuj30j70cd0w3.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwt01pj2ej30j80c2426.jpg" alt=""></p>
+<p>​    可以看到，实际测试效果和理论上是一样的。</p>
+<h2 id="透明正向代理"><a href="#透明正向代理" class="headerlink" title="透明正向代理"></a>透明正向代理</h2><p>　　正向代理服务一般是针对企业内部的所有员工设置的，鉴于每位员工所掌握的计算机知识不尽相同，如果您所在的公司不是IT行业的公司，想教会大家如何使用代理服务也不是一件容易的事情。再者，无论是什么行业的公司，公司领导都希望能采取某些措施限制员工在公司内的上网行为，这时就需要用到透明的正向代理模式了。</p>
+<p>　　“透明”二字指的是让用户在没有感知的情况下使用代理服务，这样的好处是一方面不需要用户手动配置代理服务器的信息，进而降低了代理服务的使用门槛；另一方面也可以更隐秘地监督员工的上网行为。</p>
+<p>　　在透明代理模式中，用户无须在浏览器或其他软件中配置代理服务器地址、端口号等信息，而是由DHCP服务器将网络配置信息分配给客户端主机。这样只要用户打开浏览器便会自动使用代理服务了。</p>
+<h3 id="准备工作："><a href="#准备工作：" class="headerlink" title="准备工作："></a>准备工作：</h3><p>　　删除之前实验配置的客户端浏览器代理配置，如下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwtspnt2lj31ck0sx11v.jpg" alt=""></p>
+<p>现在又无法访问外网了，如下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzwtu0r99qj314l0s3wku.jpg" alt=""></p>
+<p>接下来我们要用透明正向代理让它恢复访问网络的能力。</p>
+<h3 id="使用firewalld配置透明正向代理"><a href="#使用firewalld配置透明正向代理" class="headerlink" title="使用firewalld配置透明正向代理"></a>使用firewalld配置透明正向代理</h3><p>　　这里有很多坑，网上的大多教程不是缺东就是少西，另外在配置的时候要用的明明是ens37和ens33而网上的教程却都是误人子弟的eth0和eth1，为了试验更加清晰明了，这里也不特意还原之前实验的状态了，我们从头开始，把接下来的实验单独拿出来作为另外一个实验！</p>
+<h4 id="恢复快照"><a href="#恢复快照" class="headerlink" title="恢复快照"></a>恢复快照</h4><p>　　之前我们保存了快照叫做“快照1”的那个，现在咱们把Server恢复快照到那个地方，则相当于准备工作已经安排妥当，接下来实验从头开始，只不过这次咱们做的是透明代理。</p>
+<p>安装squid程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install squid -y</span><br></pre></td></tr></table></figure>
+<p>禁用selinux</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]setenforce 0					#临时关闭selinux</span><br></pre></td></tr></table></figure>
+<p>开启ip forward（路由转发）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# echo &quot;net.ipv4.ip_forward = 1&quot; &gt;&gt;/usr/lib/sysctl.d/50-default.conf</span><br><span class="line">[root@localhost ~]# grep ip_forward /usr/lib/sysctl.d/50-default.conf</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">[root@localhost ~]# sysctl -a | grep -w ip_forward</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.all.stable_secret&quot;</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.default.stable_secret&quot;</span><br><span class="line">net.ipv4.ip_forward = 0														#0表示未开启</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.ens33.stable_secret&quot;</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.ens37.stable_secret&quot;</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.lo.stable_secret&quot;</span><br><span class="line">[root@localhost ~]# sysctl -w net.ipv4.ip_forward=1							#我们将之开启</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">[root@localhost ~]# sysctl -a | grep -w ip_forward</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.all.stable_secret&quot;</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.default.stable_secret&quot;</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.ens33.stable_secret&quot;</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.ens37.stable_secret&quot;</span><br><span class="line">net.ipv4.ip_forward = 1														#1表示已开启</span><br><span class="line">sysctl: reading key &quot;net.ipv6.conf.lo.stable_secret&quot;</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">[root@localhost ~]# vim /etc/sysctl.conf</span><br><span class="line">在文末追加一行：</span><br><span class="line">net.ipv4.ip_forward=1</span><br><span class="line"></span><br><span class="line">保存退出</span><br></pre></td></tr></table></figure>
+<p>配置squid配置文件，放行所有http访问，transparent是透明的意思</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/squid/squid.conf</span><br><span class="line">将第56行改为：</span><br><span class="line">http_access allow all</span><br><span class="line"></span><br><span class="line">如下图，在合适的地方修改这两行：</span><br><span class="line">大概59行（追加一个transparent即可）：http_port 3128 transparent</span><br><span class="line"></span><br><span class="line">大概62行（去掉备注即可）：cache_dir ufs /var/spool/squid 100 16 256</span><br><span class="line"></span><br><span class="line">保存退出</span><br><span class="line"></span><br><span class="line">检查配置文件是否有误</span><br><span class="line">[root@localhost ~]# squid -k parse</span><br><span class="line">  </span><br><span class="line">初始化透明代理</span><br><span class="line">[root@localhost ~]# squid -z</span><br><span class="line"></span><br><span class="line">初始化完成后敲回车即可。</span><br><span class="line"></span><br><span class="line">重启squid服务</span><br><span class="line">[root@localhost ~]# systemctl restart squid</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzxk5ro04zj30lu0l0gzn.jpg" alt=""></p>
+<p>使用firewalld配置SNAT，然后添加squid服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"> //外网网卡添加到外网zone</span><br><span class="line"> //内网网卡添加到内网zone</span><br><span class="line"> //将masquerade配置成yes</span><br><span class="line"> //添加squid服务</span><br><span class="line"> //添加squid服务</span><br><span class="line"> //列出外网区域信息</span><br><span class="line"> //配置端口转发</span><br><span class="line"> //重新加载防火墙</span><br><span class="line"> //重启firewalld服务</span><br><span class="line">[root@localhost ~]# firewall-cmd --zone=external --add-interface=ens37 --permanent</span><br><span class="line">The interface is under control of NetworkManager, setting zone to &apos;external&apos;.</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --zone=internal --add-interface=ens33 --permanent</span><br><span class="line">The interface is under control of NetworkManager, setting zone to &apos;internal&apos;.</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --zone=external --add-masquerade --permanent</span><br><span class="line">Warning: ALREADY_ENABLED: masquerade</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --zone=external --add-service=squid --permanent</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --zone=internal --add-service=squid --permanent</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]#  firewall-cmd --zone=external --list-all</span><br><span class="line">external (active)</span><br><span class="line">  target: default</span><br><span class="line">  icmp-block-inversion: no</span><br><span class="line">  interfaces: ens37</span><br><span class="line">  sources: </span><br><span class="line">  services: ssh</span><br><span class="line">  ports: </span><br><span class="line">  protocols: </span><br><span class="line">  masquerade: yes</span><br><span class="line">  forward-ports: </span><br><span class="line">  source-ports: </span><br><span class="line">  icmp-blocks: </span><br><span class="line">  rich rules: </span><br><span class="line">	</span><br><span class="line">[root@localhost ~]# firewall-cmd --permanent --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;192.168.23.0/24&quot; forward-port port=&quot;80&quot; protocol=&quot;tcp&quot; to-port=&quot;3128&quot; to-addr=&quot;192.168.23.52&quot;&quot; --zone=internal</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --reload</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# systemctl restart firewalld</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>这里注意，如下，有时候手误会少敲一个d，结果命令就可能没敲进去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl restart firewall</span><br><span class="line">Failed to restart firewall.service: Unit not found.</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>检查客户端可以正常上网</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzxke0tdmej31ca0u07ei.jpg" alt=""></p>
+<h2 id="使用iptables配置透明正向代理"><a href="#使用iptables配置透明正向代理" class="headerlink" title="使用iptables配置透明正向代理"></a>使用iptables配置透明正向代理</h2><p>注意：iptables和firewalld是冲突的，同时只能使用一个防火墙，所以要还原上次实验的更改后再做</p>
+<p>放行DNS查询端口，配置IPv4地址转发</p>
+<p>使用iptables防火墙管理命令把所有客户端主机对网站80端口的请求转发至Squid服务器本地的3128端口上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl stop firewalld.service </span><br><span class="line">[root@localhost ~]# systemctl mask firewalld.service </span><br><span class="line">Created symlink from /etc/systemd/system/firewalld.service to /dev/null.</span><br><span class="line"> </span><br><span class="line"># 安装iptables 服务</span><br><span class="line">[root@localhost ~]# yum install iptables-services -y</span><br><span class="line"> </span><br><span class="line"># 开启iptables服务</span><br><span class="line">[root@localhost ~]#  systemctl start iptables</span><br><span class="line">[root@localhost ~]# iptables -F</span><br><span class="line">[root@localhost ~]# iptables -t nat -A POSTROUTING -p udp --dport 53 -o ens37 -j MASQUERADE</span><br><span class="line">[root@localhost ~]# echo &quot;net.ipv4.ip_forward=1&quot; &gt;&gt; /etc/sysctl.conf </span><br><span class="line">[root@localhost ~]# sysctl -p</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">[root@localhost ~]# iptables -t nat -A PREROUTING -p tcp -m tcp --dport 80 -j REDIRECT --to-port 3128</span><br><span class="line">[root@localhost ~]# iptables -t nat -A POSTROUTING -s 192.168.23.0/24 -o ens37 -j SNAT --to 192.168.1.105</span><br><span class="line">[root@localhost ~]# service iptables save</span><br><span class="line">iptables: Saving firewall rules to /etc/sysconfig/iptables:[  确定  ]</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>注意：不要写错网卡和ip，上述ens37为外网网卡，192.168.1.105为外网ip，192.168.23.0/24是内网ip。</p>
+<p>现在检查：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzxnb3sf98j31av0txakc.jpg" alt=""></p>
+<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>　　网站页面是由静态资源和动态资源一起组成的，其中静态资源包括网站架构CSS文件、大量的图片、视频等数据，这些数据相对于动态资源来说更加稳定，一般不会经常发生改变。但是，随着建站技术的更新换代，外加人们不断提升的审美能力，这些静态资源占据的网站空间越来越多。如果能够把这些静态资源从网站页面中抽离出去，然后在全国各地部署静态资源的缓存节点，这样不仅可以提升用户访问网站的速度，而且网站源服务器也会因为这些缓存节点的存在而降低负载。</p>
+<p>　　反向代理是Squid服务程序的一种重要模式，其原理是把一部分原本向网站源服务器发起的用户请求交给Squid服务器缓存节点来处理。但是这种技术的弊端也很明显，如果有心怀不轨之徒将自己的域名和服务器反向代理到某个知名的网站上面，从理论上来讲，当用户访问到这个域名时，也会看到与那个知名网站一样的内容（有些诈骗网站就是这样骗取用户信任的）。因此，当前许多网站都默认禁止了反向代理功能。开启了CDN（内容分发网络）服务的网站也可以避免这种窃取行为。</p>
+<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><p>​    注意，我的虚拟机Server重启后，作为桥接模式的外网网卡ip有所变化是很正常的，因为它的ip本就是由我家的家用路由器分配的，现在它变成了192.168.1.107，我们就用这个ip来配置。</p>
+<p>　　58.250.26.38是一个网站的ip，这个随意，拿来测试的而已，找个能用的就行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ip add</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:98:66:4e brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.23.52/24 brd 192.168.23.255 scope global noprefixroute dynamic ens33</span><br><span class="line">       valid_lft 952sec preferred_lft 952sec</span><br><span class="line">    inet6 fe80::5a82:cc9d:de3:b9f0/64 scope link noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">3: ens37: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:98:66:58 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.1.107/24 brd 192.168.1.255 scope global noprefixroute dynamic ens37</span><br><span class="line">       valid_lft 7081sec preferred_lft 7081sec</span><br><span class="line">    inet6 fe80::ccc:8d0d:490e:7f9f/64 scope link noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">[root@localhost ~]# vim /etc/squid/squid.conf</span><br><span class="line"></span><br><span class="line">大概第59行，改为：</span><br><span class="line">http_port 192.168.1.107:80 vhost</span><br><span class="line">在上面那行下面追加下面这一行：</span><br><span class="line">cache_peer  58.250.26.38 parent 80 0 originserver</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# systemctl restart squid.service</span><br></pre></td></tr></table></figure>
+<h3 id="客户端访问"><a href="#客户端访问" class="headerlink" title="客户端访问"></a>客户端访问</h3><p>我们输入Server外网网卡的ip：192.168.1.107，如下图，可以看到它自动跳转到了目标网站。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy1czz6z3j311h0o5qhl.jpg" alt=""></p>
+<p>实验到此结束</p>
+<h2 id="课外拓展"><a href="#课外拓展" class="headerlink" title="课外拓展"></a>课外拓展</h2><h3 id="仅主机模式下，linux无法ping通windows的解决办法"><a href="#仅主机模式下，linux无法ping通windows的解决办法" class="headerlink" title="仅主机模式下，linux无法ping通windows的解决办法"></a>仅主机模式下，linux无法ping通windows的解决办法</h3><p>　　我们重新弄两台虚拟机，实验准备和上面那个实验一样。Server网卡一为仅主机模式，网卡二为桥接模式。虚拟机WIN10的网卡为仅主机模式。</p>
+<p>1.虚拟机Server</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlqm2ceij30it0gajsi.jpg" alt=""></p>
+<p>2.虚拟机WIN10</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlr9dn94j30iy0g53zn.jpg" alt=""></p>
+<p>3.VMware Workstation Pro设置</p>
+<p>​    点击图中更改设置即可更改，这里放出的图是改好后的图。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvls2kbspj30j80cs41e.jpg" alt=""></p>
+<p>​    拓扑图就是和原来一样的拓扑图。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlopvf8gj30j90a6my7.jpg" alt=""></p>
+<p>开机，查看各个设备的ip：</p>
+<p>1.Server</p>
+<p>ens33:192.168.23.52</p>
+<p>ens37:192.168.1.107</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy2y7o5pdj30pu0i775n.jpg" alt=""></p>
+<p>2.虚拟机WIN10</p>
+<p>ens33：192.168.23.53</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy2zmdfs7j30rd0q6ae9.jpg" alt=""></p>
+<p>3.物理机WIN10（就是宿主机，我们现在用着的真实电脑）</p>
+<p>VMnet1:192.168.23.1</p>
+<p>VMnet8:192.168.141.1</p>
+<p>物理网卡：192.169.1.108</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3108lboj30pp0ndh9u.jpg" alt=""></p>
+<p>　　桥接模式与物理网卡相互桥接，故网段均为192.168.1.0/24</p>
+<p>　　仅主机模式对应VMnet1，故网段均为192.168.23.0/24</p>
+<p>　　我们这里没用到VMnet8，也没有NAT模式的虚拟机网卡，就先不管它了。</p>
+<p>现象：</p>
+<p>　　按照原理上讲，同一网段的ip是可以互相ping同的。然而在这里，我们可以发现，windows可以ping通linux，但是linux却是无法ping通windows的，如下图：</p>
+<p>1.物理机windows去ping虚拟机Server可以ping通</p>
+<p><img src="C:\Users\zhong\AppData\Roaming\Typora\typora-user-images\1549539165166.png" alt="1549539165166"></p>
+<p>2.虚拟机Server却无法ping通物理机windows（ping无响应，只能手动ctrl+c打断）</p>
+<p><img src="C:\Users\zhong\AppData\Roaming\Typora\typora-user-images\1549539244364.png" alt="1549539244364"></p>
+<p>3.虚拟机WIN10可以ping通Server：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3c56ntlj30qg0ji3zz.jpg" alt=""></p>
+<p>4.Server却不能ping通虚拟机WIN10：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3dc462yj30nv0g947d.jpg" alt=""></p>
+<p>解决办法：</p>
+<p>先在虚拟机WIN10上做如下设置：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3gsx338j30x00q60we.jpg" alt=""></p>
+<p>然后Server就可以ping通虚拟机WIN10了：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3kg4tgbj30ju0eita6.jpg" alt=""></p>
+<p>现在在物理机windows上做如下设置：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3n1224ij30zk0m9go2.jpg" alt=""></p>
+<p>现在虚拟机Server也可以ping通物理机windows了：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3oa80qtj30lm0ionb6.jpg" alt=""></p>
+<p>实验完毕</p>
+<p>实验做完了记得要把自己物理机的启用网络发现关闭掉。</p>
+<p>本篇到此结束</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"># Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"># RedHat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-20/" rel="next" title="linux-运维进阶-20 Postfix与Dovecot部署邮件系统">
+                <i class="fa fa-chevron-left"></i> linux-运维进阶-20 Postfix与Dovecot部署邮件系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-22/" rel="prev" title="linux-运维进阶-22 iSCSI网络存储服务">
+                linux-运维进阶-22 iSCSI网络存储服务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-21-Squid部署代理缓存服务"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-21 Squid部署代理缓存服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念解析"><span class="nav-number">1.1.</span> <span class="nav-text">概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Squid"><span class="nav-number">1.1.1.</span> <span class="nav-text">Squid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#squid分类"><span class="nav-number">1.1.2.</span> <span class="nav-text">squid分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验准备工作"><span class="nav-number">1.2.</span> <span class="nav-text">实验准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实验原理"><span class="nav-number">1.2.1.</span> <span class="nav-text">实验原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置"><span class="nav-number">1.2.2.</span> <span class="nav-text">设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通信原理"><span class="nav-number">1.2.3.</span> <span class="nav-text">通信原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保存快照"><span class="nav-number">1.3.</span> <span class="nav-text">保存快照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Squid服务程序配置Squid服务程序"><span class="nav-number">1.4.</span> <span class="nav-text">配置Squid服务程序配置Squid服务程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正向代理"><span class="nav-number">1.5.</span> <span class="nav-text">正向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACL访问控制"><span class="nav-number">1.6.</span> <span class="nav-text">ACL访问控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#只允许某个客户端进行代理"><span class="nav-number">1.6.1.</span> <span class="nav-text">只允许某个客户端进行代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特别注意："><span class="nav-number">1.7.</span> <span class="nav-text">特别注意：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过滤敏感字"><span class="nav-number">1.7.1.</span> <span class="nav-text">过滤敏感字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#禁止访问特定网站"><span class="nav-number">1.7.2.</span> <span class="nav-text">禁止访问特定网站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#禁止下载特定格式文件"><span class="nav-number">1.7.3.</span> <span class="nav-text">禁止下载特定格式文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#透明正向代理"><span class="nav-number">1.8.</span> <span class="nav-text">透明正向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作："><span class="nav-number">1.8.1.</span> <span class="nav-text">准备工作：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用firewalld配置透明正向代理"><span class="nav-number">1.8.2.</span> <span class="nav-text">使用firewalld配置透明正向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#恢复快照"><span class="nav-number">1.8.2.1.</span> <span class="nav-text">恢复快照</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用iptables配置透明正向代理"><span class="nav-number">1.9.</span> <span class="nav-text">使用iptables配置透明正向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向代理"><span class="nav-number">1.10.</span> <span class="nav-text">反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改配置文件"><span class="nav-number">1.10.1.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端访问"><span class="nav-number">1.10.2.</span> <span class="nav-text">客户端访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#课外拓展"><span class="nav-number">1.11.</span> <span class="nav-text">课外拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#仅主机模式下，linux无法ping通windows的解决办法"><span class="nav-number">1.11.1.</span> <span class="nav-text">仅主机模式下，linux无法ping通windows的解决办法</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>

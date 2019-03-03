@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-运维进阶-18 DHCP动态管理主机地址">
+<meta name="keywords" content="linux,Centos,RedHat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-运维进阶-18 DHCP动态管理主机地址">
+<meta property="og:url" content="http://yoursite.com/linux-18/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-运维进阶-18 DHCP动态管理主机地址">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzph8rporij30j80fjmzi.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzphcfjqnej30j80fu76h.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzphj61p30j30j80isn0i.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr1gift23j30iy0i474x.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr1mb875uj30j80ddwg3.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr1ow9pyrj30j80ftmz0.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr24e5bfnj30j90cwjsz.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr2e3uuqtj30j80iadgs.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr2fptklsj30in0i20tk.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr3fkxz3oj30j90f575z.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4mugwa2j30j80giwgu.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4rj51b2j30j80ih776.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4sl1fo8j30it0icdgl.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4uue65cj30j80i7q4o.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4vyg17qj30j80g1wgm.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrty67oibj30j80dbjsz.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzru43fvk2j30j80buq4i.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzru4du2daj30j80j3q6l.jpg">
+<meta property="og:updated_time" content="2019-02-23T13:33:42.062Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-运维进阶-18 DHCP动态管理主机地址">
+<meta name="twitter:description" content="linux-运维进阶-18 DHCP动态管理主机地址">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzph8rporij30j80fjmzi.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/linux-18/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-运维进阶-18 DHCP动态管理主机地址 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/linux-18/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-运维进阶-18 DHCP动态管理主机地址
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-23 11:35:47" itemprop="dateCreated datePublished" datetime="2019-01-23T11:35:47+08:00">2019-01-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-23 21:33:42" itemprop="dateModified" datetime="2019-02-23T21:33:42+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-运维进阶/" itemprop="url" rel="index"><span itemprop="name">linux-运维进阶</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-运维进阶-18 DHCP动态管理主机地址</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-运维进阶-18-DHCP动态管理主机地址"><a href="#linux-运维进阶-18-DHCP动态管理主机地址" class="headerlink" title="linux-运维进阶-18 DHCP动态管理主机地址"></a>linux-运维进阶-18 DHCP动态管理主机地址</h1><h2 id="配置实验环境"><a href="#配置实验环境" class="headerlink" title="配置实验环境"></a>配置实验环境</h2><p>　　有Test和client两台虚拟机，Test用作服务器，client用作客户端，客户端的ip由服务器分配而来。举个栗子，就是你连上了别人家wifi后，那么他家的路由器会给你的电脑或者手机分配一个ip，这样你的电脑或手机才能上网。</p>
+<p>　　做实验之前，最好把用过的虚拟机恢复到比较干净的快照，或者重新装两台虚拟机。例如我的虚拟机Test在前面的章节中，就改了网卡ip，至今它的ens33网卡还有192.168.141.12 、13、14、15多个ip呢，而且ens37我们之前也配置过静态ip，这样会影响本实验的观察，因此我是恢复到之前改网卡配置之前的快照后再进行下面的实验的。</p>
+<h3 id="Server硬件配置"><a href="#Server硬件配置" class="headerlink" title="Server硬件配置"></a>Server硬件配置</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzph8rporij30j80fjmzi.jpg" alt=""></p>
+<h3 id="Client硬件配置"><a href="#Client硬件配置" class="headerlink" title="Client硬件配置"></a>Client硬件配置</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzphcfjqnej30j80fu76h.jpg" alt=""></p>
+<h3 id="VMware-Workstation-Pro-软件设置"><a href="#VMware-Workstation-Pro-软件设置" class="headerlink" title="VMware Workstation Pro 软件设置"></a>VMware Workstation Pro 软件设置</h3><p>　　在软件上找到“编辑”-&gt;”虚拟网络编辑器”-&gt;”更改设置”，做如下图的设置</p>
+<p>　　注意：ip不用改，例如我的VMnet1的ip是192.168.23.0网段，VMnet8的ip是192.168.141.0网段，那就让它保持原样，不用去改。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzphj61p30j30j80isn0i.jpg" alt=""></p>
+<p>　　下图中，如图选择即可。注意，不要勾选“使用本地DHCP服务将ip分配给虚拟机”，如果你勾选了，那分配ip给client的就不是Test这台服务器，而是VMware Workstation Pro软件分配的了。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr1gift23j30iy0i474x.jpg" alt=""></p>
+<p>两台虚拟机开机，开始配置。</p>
+<h2 id="Test配置DHCP服务"><a href="#Test配置DHCP服务" class="headerlink" title="Test配置DHCP服务"></a>Test配置DHCP服务</h2><h3 id="配置网络"><a href="#配置网络" class="headerlink" title="配置网络"></a>配置网络</h3><p>　　Test中能上网的网卡（NAT模式的网卡，也就是网络适配器1，也就是ens33）不用管，给新增的网卡（仅主机模式的网卡，也就是网络适配器2，也就是ens37）配置一个跟默认网卡不同网段的固定IP，此处以网段192.168.10.0/24为例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# nmcli connection add con-name ens37 ifname ens37 type ethernet autoconnect yes ipv4.method manual ipv4.addresses 192.168.10.254/24</span><br><span class="line">Connection &apos;ens37&apos; (cae18d83-b6d8-4945-b704-aaf9b918ef04) successfully added.</span><br><span class="line">[root@localhost ~]# systemctl restart network</span><br><span class="line">[root@localhost ~]# ip add</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:9b:23:d9 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.141.173/24 brd 192.168.141.255 scope global noprefixroute dynamic ens33</span><br><span class="line">       valid_lft 1798sec preferred_lft 1798sec</span><br><span class="line">    inet6 fe80::be8c:1227:c5b2:e66d/64 scope link noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">3: ens37: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:9b:23:e3 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.10.254/24 brd 192.168.10.255 scope global noprefixroute ens37</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::81bc:c746:2ead:eb30/64 scope link noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">可以看到，ens37的ip已经变成了192.168.10.254/24</span><br></pre></td></tr></table></figure>
+<h3 id="安装dhcp服务"><a href="#安装dhcp服务" class="headerlink" title="安装dhcp服务"></a>安装dhcp服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install dhcp -y</span><br></pre></td></tr></table></figure>
+<h3 id="查看参考示例"><a href="#查看参考示例" class="headerlink" title="查看参考示例"></a>查看参考示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cat /usr/share/doc/dhcp*/dhcpd.conf.example | grep -v &quot;^$&quot; | grep -v &quot;#&quot;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ddns-update-style [类型]</td>
+<td>定义DNS服务动态更新的类型，类型包括none（不支持动态更新）、interim（互动更新模式）与ad-hoc（特殊更新模式）</td>
+</tr>
+<tr>
+<td>[allow \</td>
+<td>ignore] client-updates</td>
+<td>允许/忽略客户端更新DNS记录</td>
+</tr>
+<tr>
+<td>default-lease-time [21600]</td>
+<td>默认超时时间</td>
+</tr>
+<tr>
+<td>max-lease-time [43200]</td>
+<td>最大超时时间</td>
+</tr>
+<tr>
+<td>option domain-name-servers [8.8.8.8]</td>
+<td>定义DNS服务器地址</td>
+</tr>
+<tr>
+<td>option domain-name [“domain.org”]</td>
+<td>定义DNS域名</td>
+</tr>
+<tr>
+<td>range</td>
+<td>定义用于分配的IP地址池</td>
+</tr>
+<tr>
+<td>option subnet-mask</td>
+<td>定义客户端的子网掩码</td>
+</tr>
+<tr>
+<td>option routers</td>
+<td>定义客户端的网关地址</td>
+</tr>
+<tr>
+<td>broadcase-address[广播地址]</td>
+<td>定义客户端的广播地址</td>
+</tr>
+<tr>
+<td>ntp-server[IP地址]</td>
+<td>定义客户端的网络时间服务器（NTP）</td>
+</tr>
+<tr>
+<td>nis-servers[IP地址]</td>
+<td>定义客户端的NIS域服务器的地址</td>
+</tr>
+<tr>
+<td>Hardware[网卡物理地址]</td>
+<td>指定网卡接口的类型与MAC地址</td>
+</tr>
+<tr>
+<td>server-name[主机名]</td>
+<td>向DHCP客户端通知DHCP服务器的主机名</td>
+</tr>
+<tr>
+<td>fixed-address[IP地址]</td>
+<td>将某个固定的IP地址分配给指定主机</td>
+</tr>
+<tr>
+<td>time-offset[偏移误差]</td>
+<td>指定客户端与格林尼治时间的偏移差</td>
+</tr>
+</tbody>
+</table>
+<h3 id="配置dhcp服务"><a href="#配置dhcp服务" class="headerlink" title="配置dhcp服务"></a>配置dhcp服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/dhcp/dhcpd.conf </span><br><span class="line"></span><br><span class="line">#</span><br><span class="line"># DHCP Server Configuration file.</span><br><span class="line">#   see /usr/share/doc/dhcp*/dhcpd.conf.example</span><br><span class="line">#   see dhcpd.conf(5) man page</span><br><span class="line">#</span><br><span class="line">ddns-update-style none;</span><br><span class="line">ignore client-updates;</span><br><span class="line">subnet 192.168.10.0 netmask 255.255.255.0&#123;</span><br><span class="line">range 192.168.10.50 192.168.10.150;</span><br><span class="line">option subnet-mask 255.255.255.0;</span><br><span class="line">option routers 192.168.10.254;</span><br><span class="line">option domain-name &quot;feng.io&quot;;</span><br><span class="line">option domain-name-servers 8.8.8.8;</span><br><span class="line">default-lease-time 21600;</span><br><span class="line">default-lease-time 43200;</span><br><span class="line">&#125;     </span><br><span class="line"></span><br><span class="line">保存退出</span><br></pre></td></tr></table></figure>
+<p>PS：如果要将某个固定的IP分配给指定的主机,需要在主配置文件追加如下（实际上是将MAC地址和IP做了一个映射）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">host subnet1</span><br><span class="line">&#123;</span><br><span class="line">        hardware ethernet 00:0c:29:66:3d:fd;  #机器的mac地址</span><br><span class="line">        fixed-address 192.168.10.88;          #提供的独立IP</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参数作用</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ddns-update-style none;</td>
+<td>设置DNS服务不自动进行动态更新</td>
+</tr>
+<tr>
+<td>ignore client-updates;</td>
+<td>忽略客户端更新DNS记录</td>
+</tr>
+<tr>
+<td>subnet 192.168.1.0 netmask 255.255. 255.0</td>
+<td>作用域为192.168.1.0/24网段</td>
+</tr>
+<tr>
+<td>range 192.168.1.50 192.168.1.150;</td>
+<td>IP地址池为192.168.1.50-150（约100个IP地址）</td>
+</tr>
+<tr>
+<td>option subnet-mask 255.255.255.0;</td>
+<td>定义客户端默认的子网掩码</td>
+</tr>
+<tr>
+<td>option routers 192.168.1.1;</td>
+<td>定义客户端的网关地址</td>
+</tr>
+<tr>
+<td>option domain-name “test.com”;</td>
+<td>定义默认的搜索域</td>
+</tr>
+<tr>
+<td>option domain-name-servers 192.168. 1.1;</td>
+<td>定义客户端的DNS地址</td>
+</tr>
+<tr>
+<td>default-lease-time 21600;</td>
+<td>定义默认租约时间（单位：秒）</td>
+</tr>
+<tr>
+<td>max-lease-time 43200;</td>
+<td>定义最大预约时间（单位：秒）</td>
+</tr>
+<tr>
+<td>}</td>
+<td>结束符</td>
+</tr>
+</tbody>
+</table>
+<h3 id="启动dhcp服务"><a href="#启动dhcp服务" class="headerlink" title="启动dhcp服务"></a>启动dhcp服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# firewall-cmd --add-service=dhcp --permanent </span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --reload</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# systemctl restart dhcpd</span><br><span class="line">[root@localhost ~]# systemctl enable dhcpd</span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/dhcpd.service to /usr/lib/systemd/system/dhcpd.service.</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="client客户端设置成自动获取ip（默认就是），测试"><a href="#client客户端设置成自动获取ip（默认就是），测试" class="headerlink" title="client客户端设置成自动获取ip（默认就是），测试"></a>client客户端设置成自动获取ip（默认就是），测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl restart network</span><br><span class="line">[root@localhost ~]# ip add</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr1mb875uj30j80ddwg3.jpg" alt=""></p>
+<p>　　可以看到，client获取到的ip是192.168.10.50/24，恰恰是我们IP地址池为192.168.1.50-150（约100个IP地址）的第一个地址，说明我们的DHCP服务配置成功了。</p>
+<p>这时，我们试试在Test上关掉DHCP服务</p>
+<p>Test上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]#  systemctl stop dhcpd</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>client上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl restart network</span><br><span class="line">[root@localhost ~]# ip add</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr1ow9pyrj30j80ftmz0.jpg" alt=""></p>
+<p>　　可以看到，一旦Tset上面的DHCP服务关掉了，那么client重启网络服务就会直接报错，再次查看其ip发现，它连IP地址都没了，只能看到其物理地址（Mac地址），上图中我的Mac地址就是00:0c:29:98:66:4e。</p>
+<p>　　接下来，我们把它的ens33网卡的Mac地址记下来，加入到Test的DHCP配置中（Mac地址这么长不要敲错了哈,那个冒号:是英文的冒号，容易敲错）：</p>
+<p>Test上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/dhcp/dhcpd.conf </span><br><span class="line"></span><br><span class="line">#</span><br><span class="line"># DHCP Server Configuration file.</span><br><span class="line">#   see /usr/share/doc/dhcp*/dhcpd.conf.example</span><br><span class="line">#   see dhcpd.conf(5) man page</span><br><span class="line">#</span><br><span class="line">ddns-update-style none;</span><br><span class="line">ignore client-updates;</span><br><span class="line">subnet 192.168.10.0 netmask 255.255.255.0&#123;</span><br><span class="line">range 192.168.10.50 192.168.10.150;</span><br><span class="line">option subnet-mask 255.255.255.0;</span><br><span class="line">option routers 192.168.10.254;</span><br><span class="line">option domain-name &quot;feng.io&quot;;</span><br><span class="line">option domain-name-servers 8.8.8.8;</span><br><span class="line">default-lease-time 21600;</span><br><span class="line">default-lease-time 43200;</span><br><span class="line">&#125;</span><br><span class="line">host subnet1</span><br><span class="line">&#123;</span><br><span class="line">        hardware ethernet 00:0c:29:98:66:4e;  #机器的mac地址</span><br><span class="line">        fixed-address 192.168.10.88;          #提供的独立IP</span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line">保存退出，重启DHCP服务</span><br><span class="line">[root@localhost ~]#  systemctl restart dhcpd</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<p>client上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl restart network</span><br><span class="line">[root@localhost ~]# ip add</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr24e5bfnj30j90cwjsz.jpg" alt=""></p>
+<p>​    可以看到，它的ip已经变成了我们指定分配给它的192.168.10.88/24了，配置成功！</p>
+<p>​    实验到此结束！</p>
+<p>​    </p>
+<h2 id="虚拟机和虚拟网卡的通信原理"><a href="#虚拟机和虚拟网卡的通信原理" class="headerlink" title="虚拟机和虚拟网卡的通信原理"></a>虚拟机和虚拟网卡的通信原理</h2><p>host-only（仅主机）模式与VMnet1虚拟网卡进行通信<br>NAT模式与VMnet8虚拟网卡进行通信<br>桥接使用的是你机器的真实网卡进行上网</p>
+<h3 id="1-仅主机模式"><a href="#1-仅主机模式" class="headerlink" title="1.仅主机模式"></a>1.仅主机模式</h3><p>　　此模式下，虚拟机与VMnet1虚拟网卡进行通信，咱们做一下测试：</p>
+<p>　　在虚拟网络编辑器中，我们将VMnet1如下图设置，给它设置一个DHCP地址池192.168.23.50-150。这样一来，我们的虚拟机网络适配器但凡是使用仅主机模式且以DHCP方式获取ip的，就能从这个地址池中获取到ip。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr2e3uuqtj30j80iadgs.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr2fptklsj30in0i20tk.jpg" alt=""></p>
+<p>　　这样设置以后，只要你的虚拟机网卡是仅主机模式且网卡配置文件里设置的ip获取方式是DHCP（默认就是DHCP），则其ip就会从上图中那个DHCP地址池中选取。例如，我新安装的一台虚拟机，网卡设置为仅主机模式后，打开后其ip如下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr3fkxz3oj30j90f575z.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4mugwa2j30j80giwgu.jpg" alt=""></p>
+<p>可以看到它的ip为192.168.23.50，恰恰是上述地址池的第一个ip。</p>
+<h3 id="2-NAT模式"><a href="#2-NAT模式" class="headerlink" title="2.NAT模式"></a>2.NAT模式</h3><p>​    此模式下，虚拟机与VMnet8虚拟网卡进行通信，咱们做一下测试：</p>
+<p>　　在虚拟网络编辑器中，我们将VMnet8如下图设置，给它设置一个DHCP地址池192.168.100.50-150。这样一来，我们的虚拟机网络适配器但凡是使用NAT模式且以DHCP方式获取ip的，就能从这个地址池中获取到ip。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4rj51b2j30j80ih776.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4sl1fo8j30it0icdgl.jpg" alt=""></p>
+<p>　　这样设置以后，只要你的虚拟机网卡是NAT模式且网卡配置文件里设置的ip获取方式是DHCP（默认就是DHCP），则其ip就会从上图中那个DHCP地址池中选取。例如，刚刚那台虚拟机，网卡设置为NAT模式后，打开后其ip如下图：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4uue65cj30j80i7q4o.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4vyg17qj30j80g1wgm.jpg" alt=""></p>
+<p>可以看到它的ip为192.168.100.50，恰恰是上述地址池的第一个ip。</p>
+<h3 id="3-桥接模式"><a href="#3-桥接模式" class="headerlink" title="3.桥接模式"></a>3.桥接模式</h3><p>　　桥接模式使用的是你机器的真实网卡进行上网，也就是说，如果你的虚拟机网络适配器设置为桥接模式的话，则相当于虚拟机与你的电脑物理主机桥接，桥指的是网桥，就是交换机。所以，桥接模式下，你的虚拟机和你的物理机是在同一个网段的，如下图：</p>
+<p>​    我们将刚刚那台虚拟机设置为桥接模式，查看其ip：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrty67oibj30j80dbjsz.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzru43fvk2j30j80buq4i.jpg" alt=""></p>
+<p>可以看到它的ip为192.168.1.105，那么我们看看我的物理机ip：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzru4du2daj30j80j3q6l.jpg" alt=""></p>
+<p>可以看到我的物理机ip是192.168.1.108，与之确实是同一个网段的。</p>
+<p>　　我们常用的是NAT模式的虚拟机，所以我们按刚刚的NAT那样设置就好。</p>
+<p>本篇到此结束。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"># Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"># RedHat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-17/" rel="next" title="linux-运维进阶-17 Samba服务与NFS">
+                <i class="fa fa-chevron-left"></i> linux-运维进阶-17 Samba服务与NFS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-19/" rel="prev" title="linux-运维进阶-19 bind提供域名解析服务">
+                linux-运维进阶-19 bind提供域名解析服务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-18-DHCP动态管理主机地址"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-18 DHCP动态管理主机地址</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置实验环境"><span class="nav-number">1.1.</span> <span class="nav-text">配置实验环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Server硬件配置"><span class="nav-number">1.1.1.</span> <span class="nav-text">Server硬件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client硬件配置"><span class="nav-number">1.1.2.</span> <span class="nav-text">Client硬件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VMware-Workstation-Pro-软件设置"><span class="nav-number">1.1.3.</span> <span class="nav-text">VMware Workstation Pro 软件设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test配置DHCP服务"><span class="nav-number">1.2.</span> <span class="nav-text">Test配置DHCP服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置网络"><span class="nav-number">1.2.1.</span> <span class="nav-text">配置网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装dhcp服务"><span class="nav-number">1.2.2.</span> <span class="nav-text">安装dhcp服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看参考示例"><span class="nav-number">1.2.3.</span> <span class="nav-text">查看参考示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置dhcp服务"><span class="nav-number">1.2.4.</span> <span class="nav-text">配置dhcp服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动dhcp服务"><span class="nav-number">1.2.5.</span> <span class="nav-text">启动dhcp服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#client客户端设置成自动获取ip（默认就是），测试"><span class="nav-number">1.3.</span> <span class="nav-text">client客户端设置成自动获取ip（默认就是），测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机和虚拟网卡的通信原理"><span class="nav-number">1.4.</span> <span class="nav-text">虚拟机和虚拟网卡的通信原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-仅主机模式"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.仅主机模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-NAT模式"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.NAT模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-桥接模式"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.桥接模式</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>
