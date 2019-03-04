@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/computer-06/</loc>
+    
+    <lastmod>2019-03-04T01:46:50.044Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/about/index.html</loc>
     
     <lastmod>2019-03-03T14:47:01.615Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://yoursite.com/baidu_verify_WiEkpiME0y.html</loc>
     
     <lastmod>2019-03-02T14:33:09.649Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/computer-06/</loc>
-    
-    <lastmod>2019-03-02T03:03:42.082Z</lastmod>
     
   </url>
   
