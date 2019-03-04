@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2019-03-03T14:47:01.615Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/baidu_verify_WiEkpiME0y.html</loc>
     
     <lastmod>2019-03-02T14:33:09.649Z</lastmod>
@@ -390,13 +397,6 @@
     <loc>http://yoursite.com/hexo-01-%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1/</loc>
     
     <lastmod>2019-02-23T13:16:35.884Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/about/index.html</loc>
-    
-    <lastmod>2019-02-20T01:44:29.461Z</lastmod>
     
   </url>
   
