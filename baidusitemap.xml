@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/linux-21/</loc>
+    <lastmod>2019-03-12</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-20/</loc>
+    <lastmod>2019-03-12</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-10/</loc>
+    <lastmod>2019-03-12</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-12/</loc>
+    <lastmod>2019-03-12</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-15/</loc>
+    <lastmod>2019-03-12</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-02/</loc>
+    <lastmod>2019-03-07</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/computer-07/</loc>
     <lastmod>2019-03-04</lastmod>
   </url>  <url>
@@ -94,12 +112,6 @@
     <loc>http://yoursite.com/linux-22/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/linux-21/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-20/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/linux-19/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
@@ -112,22 +124,13 @@
     <loc>http://yoursite.com/linux-16/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/linux-15/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/linux-14/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-13/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/linux-12/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/linux-11/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-10/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-09/</loc>
@@ -149,9 +152,6 @@
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-03/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-02/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/hexo-05-%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2/</loc>

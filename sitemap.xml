@@ -2,6 +2,48 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/linux-21/</loc>
+    
+    <lastmod>2019-03-12T12:46:40.779Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/linux-20/</loc>
+    
+    <lastmod>2019-03-12T12:45:09.364Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/linux-10/</loc>
+    
+    <lastmod>2019-03-12T12:43:43.151Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/linux-12/</loc>
+    
+    <lastmod>2019-03-12T12:36:12.026Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/linux-15/</loc>
+    
+    <lastmod>2019-03-12T12:23:01.585Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/linux-02/</loc>
+    
+    <lastmod>2019-03-07T04:55:47.106Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/computer-07/</loc>
     
     <lastmod>2019-03-04T12:39:14.905Z</lastmod>
@@ -233,20 +275,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/linux-21/</loc>
-    
-    <lastmod>2019-02-23T13:38:40.229Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/linux-20/</loc>
-    
-    <lastmod>2019-02-23T13:35:42.319Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/linux-19/</loc>
     
     <lastmod>2019-02-23T13:34:58.480Z</lastmod>
@@ -275,13 +303,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/linux-15/</loc>
-    
-    <lastmod>2019-02-23T13:31:16.695Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/linux-14/</loc>
     
     <lastmod>2019-02-23T13:30:23.464Z</lastmod>
@@ -296,23 +317,9 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/linux-12/</loc>
-    
-    <lastmod>2019-02-23T13:27:42.999Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/linux-11/</loc>
     
     <lastmod>2019-02-23T13:26:57.936Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/linux-10/</loc>
-    
-    <lastmod>2019-02-23T13:25:36.673Z</lastmod>
     
   </url>
   
@@ -362,13 +369,6 @@
     <loc>http://yoursite.com/linux-03/</loc>
     
     <lastmod>2019-02-23T13:21:00.438Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/linux-02/</loc>
-    
-    <lastmod>2019-02-23T13:20:19.665Z</lastmod>
     
   </url>
   

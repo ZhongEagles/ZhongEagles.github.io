@@ -131,7 +131,7 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzbpm4swc1j30hb05n776.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzgn5zcj4aj30gp0e3jzn.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzgo4pmkylj30j808h449.jpg">
-<meta property="og:updated_time" content="2019-02-23T13:25:36.673Z">
+<meta property="og:updated_time" content="2019-03-12T12:43:43.151Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-运维进阶-10 用户权限与文件权限">
 <meta name="twitter:description" content="linux-运维进阶-10 用户权限与文件权限">
@@ -494,7 +494,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-23 21:25:36" itemprop="dateModified" datetime="2019-02-23T21:25:36+08:00">2019-02-23</time>
+                <time title="修改时间：2019-03-12 20:43:43" itemprop="dateModified" datetime="2019-03-12T20:43:43+08:00">2019-03-12</time>
               
             
           </span>
@@ -585,7 +585,7 @@
 <h2 id="用户操作"><a href="#用户操作" class="headerlink" title="用户操作"></a>用户操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd [username]</span><br></pre></td></tr></table></figure>
 <p>新建一个用户zhangsan</p>
 <p>新建一个用户lisi，指定其家目录为/home/userlisi，指定他的登录shell为zsh</p>
-<p>从passwd文件中查看出上述两个用户的uid、git、家目录、登录sshell信息</p>
+<p>从passwd文件中查看出上述两个用户的uid、git、家目录、登录shell信息</p>
 <p>用id命令可以查看用户的基本信息</p>
 <p>使用usermod命令修改已有用户的信息（其参数和useradd几乎一样），例如将李四的登录shell改为bash</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# useradd zhangsan</span><br><span class="line">[root@localhost ~]# grep zhangsan /etc/passwd</span><br><span class="line">zhangsan:x1009:1009::/home/zhangsan:/bin/bash</span><br><span class="line">[root@localhost ~]# useradd lisi -d /home/userlisi -s /bin/zsh</span><br><span class="line">[root@localhost ~]# grep lisi  /etc/passwd</span><br><span class="line">lisi:x1010:1010::/home/userlisi:/bin/zsh</span><br><span class="line">[root@localhost ~]# id zhangsan</span><br><span class="line">uid=1009(zhangsan) gid=1009(zhangsan) groups=1009(zhangsan)</span><br><span class="line">[root@localhost ~]# id lisi</span><br><span class="line">uid=1010(lisi) gid=1010(lisi) groups=1010(lisi)</span><br><span class="line">[root@localhost ~]# usermod lisi -d /home/userlisi -s /bin/bash</span><br><span class="line">[root@localhost ~]# grep lisi  /etc/passwd</span><br><span class="line">lisi:x:1010:1010::/home/userlisi:/bin/bash</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
@@ -654,7 +654,7 @@
 <p>创建用户之后，可以用usermod -G加入其他的附属组，而且之前加入的组不会退掉。</p>
 <h3 id="主组与附属组的区别与联系"><a href="#主组与附属组的区别与联系" class="headerlink" title="主组与附属组的区别与联系"></a>主组与附属组的区别与联系</h3><p>一个用户可以属于多个附属组。但是一个用户只能有一个主组。</p>
 <p>创建一个用户组feng，在/etc/group下可看到该组，然后把它删除掉，然后再加回来。可以看到删组可以不用加参数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# groupadd feng</span><br><span class="line">[root@localhost ~]# [root@localhost ~]# groupadd feng</span><br><span class="line">[root@localhost ~]# grep feng /etc/group</span><br><span class="line">feng:x:1000:</span><br><span class="line">[root@localhost ~]# groupdel feng</span><br><span class="line">[root@localhost ~]# grep feng /etc/group</span><br><span class="line">[root@localhost ~]# groupadd feng</span><br><span class="line">[root@localhost ~]# grep feng /etc/group</span><br><span class="line">feng:x:1000:</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">grep feng /etc/group</span><br><span class="line">feng:x:1000:</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# groupadd feng</span><br><span class="line">[root@localhost ~]# grep feng /etc/group</span><br><span class="line">feng:x:1000:</span><br><span class="line">[root@localhost ~]# groupdel feng</span><br><span class="line">[root@localhost ~]# grep feng /etc/group</span><br><span class="line">[root@localhost ~]# groupadd feng</span><br><span class="line">[root@localhost ~]# grep feng /etc/group</span><br><span class="line">feng:x:1000:</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">grep feng /etc/group</span><br><span class="line">feng:x:1000:</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <p>创建用户组afeng，bfeng，cfeng</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# groupadd afeng</span><br><span class="line">[root@localhost ~]# groupadd bfeng</span><br><span class="line">[root@localhost ~]# groupadd cfeng</span><br></pre></td></tr></table></figure>
 <p>创建用户aaa，并且其主组设置为afeng</p>
