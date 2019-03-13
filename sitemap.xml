@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/linux-28/</loc>
+    
+    <lastmod>2019-03-13T12:02:39.170Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/linux-29/</loc>
+    
+    <lastmod>2019-03-13T12:00:17.204Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/linux-26/</loc>
+    
+    <lastmod>2019-03-13T12:00:00.120Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/linux-21/</loc>
     
     <lastmod>2019-03-12T12:46:40.779Z</lastmod>
@@ -226,23 +247,9 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/linux-28/</loc>
-    
-    <lastmod>2019-02-23T13:42:55.461Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/linux-27/</loc>
     
     <lastmod>2019-02-23T13:41:45.379Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/linux-26/</loc>
-    
-    <lastmod>2019-02-23T13:41:26.636Z</lastmod>
     
   </url>
   
@@ -404,13 +411,6 @@
     <loc>http://yoursite.com/hexo-01-%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1/</loc>
     
     <lastmod>2019-02-23T13:16:35.884Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/linux-29/</loc>
-    
-    <lastmod>2019-02-10T10:30:32.453Z</lastmod>
     
   </url>
   

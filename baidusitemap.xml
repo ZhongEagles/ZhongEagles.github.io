@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/linux-28/</loc>
+    <lastmod>2019-03-13</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-29/</loc>
+    <lastmod>2019-03-13</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-26/</loc>
+    <lastmod>2019-03-13</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/linux-21/</loc>
     <lastmod>2019-03-12</lastmod>
   </url>  <url>
@@ -91,13 +100,7 @@
     <loc>http://yoursite.com/linux-30/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/linux-28/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/linux-27/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-26/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-25/</loc>
@@ -168,9 +171,6 @@
   </url>  <url>
     <loc>http://yoursite.com/hexo-01-%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1/</loc>
     <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-29/</loc>
-    <lastmod>2019-02-10</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-01/</loc>
     <lastmod>2019-01-18</lastmod>

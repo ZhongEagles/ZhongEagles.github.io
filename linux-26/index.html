@@ -128,7 +128,7 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00fyc28dbj30j80bpwi8.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00gnaj6fpj30j80dyq3n.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00h2r7xxmj30j70byjta.jpg">
-<meta property="og:updated_time" content="2019-02-23T13:41:26.636Z">
+<meta property="og:updated_time" content="2019-03-13T12:00:00.120Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-运维进阶-26 使用phpmyadmin管理数据库">
 <meta name="twitter:description" content="linux-运维进阶-26 使用phpmyadmin管理数据库">
@@ -491,7 +491,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-23 21:41:26" itemprop="dateModified" datetime="2019-02-23T21:41:26+08:00">2019-02-23</time>
+                <time title="修改时间：2019-03-13 20:00:00" itemprop="dateModified" datetime="2019-03-13T20:00:00+08:00">2019-03-13</time>
               
             
           </span>
@@ -575,7 +575,7 @@
       
         <h1 id="linux-运维进阶-26-使用phpmyadmin管理数据库"><a href="#linux-运维进阶-26-使用phpmyadmin管理数据库" class="headerlink" title="linux-运维进阶-26 使用phpmyadmin管理数据库"></a>linux-运维进阶-26 使用phpmyadmin管理数据库</h1><h2 id="使用phpMyAdmin管理数据库"><a href="#使用phpMyAdmin管理数据库" class="headerlink" title="使用phpMyAdmin管理数据库"></a>使用phpMyAdmin管理数据库</h2><p>安装必须的组件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum -y install httpd php mariadb mariadb-server php-mysql php-mbstring php-mcrypt unzip</span><br></pre></td></tr></table></figure>
-<p>　　首先，我们到这个网站：<a href="https://www.phpmyadmin.net/files/，如下图，右键最新版本的压缩包，复制下载链接，下面wget的链接就是现在复制下来的链接。记住往下翻翻，下载旧一点的版本，这里以4.1.0版本为例：" target="_blank" rel="noopener">https://www.phpmyadmin.net/files/，如下图，右键最新版本的压缩包，复制下载链接，下面wget的链接就是现在复制下来的链接。记住往下翻翻，下载旧一点的版本，这里以4.1.0版本为例：</a></p>
+<p>　　首先，我们到这个网站：<a href="https://www.phpmyadmin.net/files，如下图，右键最新版本的压缩包，复制下载链接，下面wget的链接就是现在复制下来的链接。记住往下翻翻，下载旧一点的版本，这里以4.1.0版本为例：" target="_blank" rel="noopener">https://www.phpmyadmin.net/files，如下图，右键最新版本的压缩包，复制下载链接，下面wget的链接就是现在复制下来的链接。记住往下翻翻，下载旧一点的版本，这里以4.1.0版本为例：</a></p>
 <p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00gkm5yynj30j708840a.jpg" alt=""></p>
 <p>获得phpmyadmin软件包并且解压和移动路径</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# wget https://files.phpmyadmin.net/phpMyAdmin/4.1.0/phpMyAdmin-4.1.0-all-languages.zip</span><br><span class="line">[root@localhost ~]# ls</span><br><span class="line">anaconda-ks.cfg  phpMyAdmin-4.1.0-all-languages.zip</span><br><span class="line">[root@localhost ~]# unzip phpMyAdmin-4.1.0-all-languages.zip </span><br><span class="line">[root@localhost ~]# ls</span><br><span class="line">anaconda-ks.cfg  phpMyAdmin-4.1.0-all-languages  phpMyAdmin-4.1.0-all-languages.zip</span><br><span class="line">[root@localhost ~]# mv phpMyAdmin-4.1.0-all-languages /var/www/html/phpmyadmin</span><br><span class="line">[root@localhost ~]# ls /var/www/html/</span><br><span class="line">phpmyadmin</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# cd /var/www/html/</span><br><span class="line">[root@localhost html]# chown -R apache:apache phpmyadmin</span><br><span class="line">[root@localhost html]# chmod 755 -R phpmyadmin</span><br><span class="line">[root@localhost html]#</span><br></pre></td></tr></table></figure>
