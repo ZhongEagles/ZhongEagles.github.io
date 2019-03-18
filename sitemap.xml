@@ -2,16 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/linux-28/</loc>
+    <loc>http://yoursite.com/linux-29/</loc>
     
-    <lastmod>2019-03-13T12:02:39.170Z</lastmod>
+    <lastmod>2019-03-18T02:30:29.233Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/linux-29/</loc>
+    <loc>http://yoursite.com/linux-31/</loc>
     
-    <lastmod>2019-03-13T12:00:17.204Z</lastmod>
+    <lastmod>2019-03-18T01:41:37.409Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/linux-32/</loc>
+    
+    <lastmod>2019-03-18T01:11:44.100Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/linux-30/</loc>
+    
+    <lastmod>2019-03-17T03:18:53.269Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/linux-28/</loc>
+    
+    <lastmod>2019-03-13T12:02:39.170Z</lastmod>
     
   </url>
   
@@ -222,27 +243,6 @@
     <loc>http://yoursite.com/windows-01/</loc>
     
     <lastmod>2019-02-23T13:49:37.111Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/linux-32/</loc>
-    
-    <lastmod>2019-02-23T13:46:41.405Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/linux-31/</loc>
-    
-    <lastmod>2019-02-23T13:46:04.668Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/linux-30/</loc>
-    
-    <lastmod>2019-02-23T13:44:22.423Z</lastmod>
     
   </url>
   
