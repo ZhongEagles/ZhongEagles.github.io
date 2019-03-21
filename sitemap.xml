@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/linux-04/</loc>
+    
+    <lastmod>2019-03-21T14:30:41.329Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/linux-29/</loc>
     
-    <lastmod>2019-03-18T06:58:22.699Z</lastmod>
+    <lastmod>2019-03-21T13:55:49.163Z</lastmod>
     
   </url>
   
@@ -362,13 +369,6 @@
     <loc>http://yoursite.com/linux-05/</loc>
     
     <lastmod>2019-02-23T13:21:46.923Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/linux-04/</loc>
-    
-    <lastmod>2019-02-23T13:21:14.584Z</lastmod>
     
   </url>
   
