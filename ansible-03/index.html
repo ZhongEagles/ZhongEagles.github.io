@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-ansible-03 ansible常用模块命令实例">
+<meta name="keywords" content="linux,Centos,RedHat,ansible">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-ansible-03 ansible常用模块命令实例">
+<meta property="og:url" content="http://yoursite.com/ansible-03/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-ansible-03 ansible常用模块命令实例">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1cuh6z3nyj30s30l4e1v.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1cvczejdtj30v70mix3n.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1cvfm8uw0j30up0mnat5.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d1s21d1hj30q20bgwun.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d1xd4jgfj30th0md4qp.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d22h33fyj30pw0tt7wh.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d280qtzsj30ua0md4qp.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d28j43k0j30uo0mb7wh.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2ckc5i3j30uq0m87oy.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2ih1x5yj30ux0i24k7.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2is4jk6j30ul0ch7lp.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2nq7c5mj30t40sg1kx.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2qg6kizj30u00tb4qp.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2rsspluj30ub0tf7su.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2vcsyqjj30uw0h214h.jpg">
+<meta property="og:updated_time" content="2019-03-23T14:06:10.669Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-ansible-03 ansible常用模块命令实例">
+<meta name="twitter:description" content="linux-ansible-03 ansible常用模块命令实例">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1cuh6z3nyj30s30l4e1v.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/ansible-03/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-ansible-03 ansible常用模块命令实例 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/ansible-03/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-ansible-03 ansible常用模块命令实例
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-23 15:23:12 / 修改时间：22:06:10" itemprop="dateCreated datePublished" datetime="2019-03-23T15:23:12+08:00">2019-03-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/ansible/" itemprop="url" rel="index"><span itemprop="name">ansible</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/ansible-03/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/ansible-03/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/ansible-03/" class="leancloud_visitors" data-flag-title="linux-ansible-03 ansible常用模块命令实例">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-ansible-03 ansible常用模块命令实例</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-ansible-03-ansible常用模块命令实例"><a href="#linux-ansible-03-ansible常用模块命令实例" class="headerlink" title="linux-ansible-03 ansible常用模块命令实例"></a>linux-ansible-03 ansible常用模块命令实例</h1><h2 id="user模块"><a href="#user模块" class="headerlink" title="user模块"></a>user模块</h2><h3 id="创建一个用户：feng"><a href="#创建一个用户：feng" class="headerlink" title="创建一个用户：feng"></a>创建一个用户：feng</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m user -a &quot;name=feng uid=1024 password=000000 shell=/bin/bash group=root&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1cuh6z3nyj30s30l4e1v.jpg" alt=""></p>
+<p>可以到node2上查看这个用户的uid，如下，uid确实是1024</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@node2 ~]# id feng</span><br><span class="line">uid=1024(feng) gid=0(root) 组=0(root)</span><br></pre></td></tr></table></figure>
+<h3 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m user -a &quot;name=feng  state=absent force=yes&quot;</span><br><span class="line">node2 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;force&quot;: true, </span><br><span class="line">    &quot;name&quot;: &quot;feng&quot;, </span><br><span class="line">    &quot;remove&quot;: false, </span><br><span class="line">    &quot;state&quot;: &quot;absent&quot;</span><br><span class="line">&#125;</span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="group模块"><a href="#group模块" class="headerlink" title="group模块"></a>group模块</h2><p>给node2创建一个组fenggroup</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m group -a &quot;gid=1024 name=fenggroup system=yes&quot;</span><br><span class="line">node2 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;gid&quot;: 1024, </span><br><span class="line">    &quot;name&quot;: &quot;fenggroup&quot;, </span><br><span class="line">    &quot;state&quot;: &quot;present&quot;, </span><br><span class="line">    &quot;system&quot;: true</span><br><span class="line">&#125;</span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<p>给node2创建一个用户feng，其主组root，加入到fenggroup附属组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m user -a &quot;name=feng uid=1024 password=000000 shell=/bin/bash group=root groups=fenggroup&quot;</span><br><span class="line"> [WARNING]: The input password appears not to have been hashed. The &apos;password&apos; argument must be encrypted for this</span><br><span class="line">module to work properly.</span><br><span class="line"></span><br><span class="line">node2 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;comment&quot;: &quot;&quot;, </span><br><span class="line">    &quot;create_home&quot;: true, </span><br><span class="line">    &quot;group&quot;: 0, </span><br><span class="line">    &quot;groups&quot;: &quot;fenggroup&quot;, </span><br><span class="line">    &quot;home&quot;: &quot;/home/feng&quot;, </span><br><span class="line">    &quot;name&quot;: &quot;feng&quot;, </span><br><span class="line">    &quot;password&quot;: &quot;NOT_LOGGING_PASSWORD&quot;, </span><br><span class="line">    &quot;shell&quot;: &quot;/bin/bash&quot;, </span><br><span class="line">    &quot;state&quot;: &quot;present&quot;, </span><br><span class="line">    &quot;stderr&quot;: &quot;useradd: warning: the home directory already exists.\nNot copying any file from skel directory into it.\nCreating mailbox file: File exists\n&quot;, </span><br><span class="line">    &quot;stderr_lines&quot;: [</span><br><span class="line">        &quot;useradd: warning: the home directory already exists.&quot;, </span><br><span class="line">        &quot;Not copying any file from skel directory into it.&quot;, </span><br><span class="line">        &quot;Creating mailbox file: File exists&quot;</span><br><span class="line">    ], </span><br><span class="line">    &quot;system&quot;: false, </span><br><span class="line">    &quot;uid&quot;: 1024</span><br><span class="line">&#125;</span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<p>到node2上查看这个用户的信息，可以看到一切无误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@node2 ~]# id feng</span><br><span class="line">uid=1024(feng) gid=0(root) 组=0(root),1024(fenggroup)</span><br></pre></td></tr></table></figure>
+<p>删除fenggroup组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m group -a &quot;name=fenggroup state=absent&quot;</span><br><span class="line">node2 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;name&quot;: &quot;fenggroup&quot;, </span><br><span class="line">    &quot;state&quot;: &quot;absent&quot;</span><br><span class="line">&#125;</span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<p>此时再到node2上查看这个用户的信息，可以看到它不再从属于fenggroup组了，因为fenggroup组已被删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@node2 ~]# id feng</span><br><span class="line">uid=1024(feng) gid=0(root) 组=0(root)</span><br></pre></td></tr></table></figure>
+<h2 id="selinux模块"><a href="#selinux模块" class="headerlink" title="selinux模块"></a>selinux模块</h2><p>首先到node2上查看node2的selinux状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@node2 ~]# getenforce </span><br><span class="line">Enforcing</span><br></pre></td></tr></table></figure>
+<p>在test上将node2的selinux关闭掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m selinux -a &quot;state=disabled&quot;</span><br><span class="line"> [WARNING]: SELinux state temporarily changed from &apos;enforcing&apos; to &apos;permissive&apos;. State change will take effect next</span><br><span class="line">reboot.</span><br><span class="line"></span><br><span class="line">node2 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;configfile&quot;: &quot;/etc/selinux/config&quot;, </span><br><span class="line">    &quot;msg&quot;: &quot;Config SELinux state changed from &apos;enforcing&apos; to &apos;disabled&apos;&quot;, </span><br><span class="line">    &quot;policy&quot;: &quot;targeted&quot;, </span><br><span class="line">    &quot;reboot_required&quot;: true, </span><br><span class="line">    &quot;state&quot;: &quot;disabled&quot;</span><br><span class="line">&#125;</span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<p>再到node2上查看node2的selinux状态，可以看到关闭成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@node2 ~]# getenforce </span><br><span class="line">Permissive</span><br><span class="line">[root@node2 ~]# cat /etc/selinux/config </span><br><span class="line"></span><br><span class="line"># This file controls the state of SELinux on the system.</span><br><span class="line"># SELINUX= can take one of these three values:</span><br><span class="line">#     enforcing - SELinux security policy is enforced.</span><br><span class="line">#     permissive - SELinux prints warnings instead of enforcing.</span><br><span class="line">#     disabled - No SELinux policy is loaded.</span><br><span class="line">SELINUX=disabled</span><br><span class="line"># SELINUXTYPE= can take one of three two values:</span><br><span class="line">#     targeted - Targeted processes are protected,</span><br><span class="line">#     minimum - Modification of targeted policy. Only selected processes are protected. </span><br><span class="line">#     mls - Multi Level Security protection.</span><br><span class="line">SELINUXTYPE=targeted </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@node2 ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="copy模块"><a href="#copy模块" class="headerlink" title="copy模块"></a>copy模块</h2><p>先在test上创建一个文件user.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# touch user.txt</span><br></pre></td></tr></table></figure>
+<p>将这个文件传送给node2的/tmp目录下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m copy -a &quot;src=/root/user.txt dest=/tmp&quot;</span><br><span class="line">node2 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;checksum&quot;: &quot;da39a3ee5e6b4b0d3255bfef95601890afd80709&quot;, </span><br><span class="line">    &quot;dest&quot;: &quot;/tmp/user.txt&quot;, </span><br><span class="line">    &quot;gid&quot;: 0, </span><br><span class="line">    &quot;group&quot;: &quot;root&quot;, </span><br><span class="line">    &quot;md5sum&quot;: &quot;d41d8cd98f00b204e9800998ecf8427e&quot;, </span><br><span class="line">    &quot;mode&quot;: &quot;0644&quot;, </span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;, </span><br><span class="line">    &quot;secontext&quot;: &quot;unconfined_u:object_r:admin_home_t:s0&quot;, </span><br><span class="line">    &quot;size&quot;: 0, </span><br><span class="line">    &quot;src&quot;: &quot;/root/.ansible/tmp/ansible-tmp-1553334220.5-91381585251620/source&quot;, </span><br><span class="line">    &quot;state&quot;: &quot;file&quot;, </span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br><span class="line">[root@test ~]# ansible node2 -a &quot;ls /tmp&quot;</span><br><span class="line">node2 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">ansible_command_payload_ZUXpXh</span><br><span class="line">ks-script-NiyyIS</span><br><span class="line">systemd-private-60d307935d5b4b589a7ba7fb1e063954-chronyd.service-kxndmt</span><br><span class="line">user.txt</span><br><span class="line">vmware-root</span><br><span class="line">yum.log</span><br><span class="line"></span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1cvczejdtj30v70mix3n.jpg" alt=""></p>
+<p>往node2的/tmp目录下的user.txt里写入：”hello“</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m copy -a &quot;dest=/tmp/user.txt content=hello&quot;</span><br><span class="line">node2 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;checksum&quot;: &quot;aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d&quot;, </span><br><span class="line">    &quot;dest&quot;: &quot;/tmp/user.txt&quot;, </span><br><span class="line">    &quot;gid&quot;: 0, </span><br><span class="line">    &quot;group&quot;: &quot;root&quot;, </span><br><span class="line">    &quot;md5sum&quot;: &quot;5d41402abc4b2a76b9719d911017c592&quot;, </span><br><span class="line">    &quot;mode&quot;: &quot;0644&quot;, </span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;, </span><br><span class="line">    &quot;secontext&quot;: &quot;unconfined_u:object_r:admin_home_t:s0&quot;, </span><br><span class="line">    &quot;size&quot;: 5, </span><br><span class="line">    &quot;src&quot;: &quot;/root/.ansible/tmp/ansible-tmp-1553334393.04-135202047372696/source&quot;, </span><br><span class="line">    &quot;state&quot;: &quot;file&quot;, </span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br><span class="line">[root@test ~]# ansible node2 -a &quot;cat /tmp/user.txt&quot;</span><br><span class="line">node2 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">hello</span><br><span class="line"></span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1cvfm8uw0j30up0mnat5.jpg" alt=""></p>
+<h2 id="file模块"><a href="#file模块" class="headerlink" title="file模块"></a>file模块</h2><p>给node2的/tmp目录下创建一个名为user.test的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m file -a &quot;path=/tmp/user.test state=touch owner=root group=root mode=777&quot;</span><br><span class="line">node2 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;dest&quot;: &quot;/tmp/user.test&quot;, </span><br><span class="line">    &quot;gid&quot;: 0, </span><br><span class="line">    &quot;group&quot;: &quot;root&quot;, </span><br><span class="line">    &quot;mode&quot;: &quot;0777&quot;, </span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;, </span><br><span class="line">    &quot;size&quot;: 0, </span><br><span class="line">    &quot;state&quot;: &quot;file&quot;, </span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br><span class="line">[root@test ~]# ansible node2 -a &quot;ls /tmp&quot;</span><br><span class="line">node2 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">ansible_command_payload_7oz5ZR</span><br><span class="line">ks-script-NiyyIS</span><br><span class="line">systemd-private-521b915097e843e2a1cd732f94d50984-chronyd.service-sTxtbh</span><br><span class="line">user.test</span><br><span class="line">user.txt</span><br><span class="line">vmware-root</span><br><span class="line">yum.log</span><br><span class="line"></span><br><span class="line">[root@test ~]# ansible node2 -a &quot;ls -l /tmp/user.test&quot;</span><br><span class="line">node2 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">-rwxrwxrwx 1 root root 0 Mar 23 21:23 /tmp/user.test</span><br><span class="line"></span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d1s21d1hj30q20bgwun.jpg" alt=""></p>
+<p>给node2的/tmp目录下创建一个名为test的文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m file -a &quot;path=/tmp/test state=directory owner=root group=root mode=644&quot;</span><br><span class="line">node2 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;gid&quot;: 0, </span><br><span class="line">    &quot;group&quot;: &quot;root&quot;, </span><br><span class="line">    &quot;mode&quot;: &quot;0644&quot;, </span><br><span class="line">    &quot;owner&quot;: &quot;root&quot;, </span><br><span class="line">    &quot;path&quot;: &quot;/tmp/test&quot;, </span><br><span class="line">    &quot;size&quot;: 6, </span><br><span class="line">    &quot;state&quot;: &quot;directory&quot;, </span><br><span class="line">    &quot;uid&quot;: 0</span><br><span class="line">&#125;</span><br><span class="line">[root@test ~]# ansible node2 -a &quot;ls -l /tmp/test&quot;</span><br><span class="line">node2 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">total 0</span><br><span class="line"></span><br><span class="line">[root@test ~]# ansible node2 -a &quot;ls -l /tmp&quot;</span><br><span class="line">node2 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">total 8</span><br><span class="line">drwx------  2 root root  80 Mar 23 21:30 ansible_command_payload_dUhGn0</span><br><span class="line">-rwx------. 1 root root 836 Mar 16 22:08 ks-script-NiyyIS</span><br><span class="line">drwx------  3 root root  17 Mar 23 21:16 systemd-private-521b915097e843e2a1cd732f94d50984-chronyd.service-sTxtbh</span><br><span class="line">drw-r--r--  2 root root   6 Mar 23 21:29 test</span><br><span class="line">-rwxrwxrwx  1 root root   0 Mar 23 21:23 user.test</span><br><span class="line">-rw-r--r--. 1 root root   5 Mar 23 17:46 user.txt</span><br><span class="line">drwx------. 2 root root   6 Mar 16 22:18 vmware-root</span><br><span class="line">-rw-------. 1 root root   0 Mar 16 22:01 yum.log</span><br><span class="line"></span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d1xd4jgfj30th0md4qp.jpg" alt=""></p>
+<p>删除/tmp目录下一个名为user.test的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -a &quot;ls /tmp&quot;</span><br><span class="line">node2 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">ansible_command_payload_cRmbqn</span><br><span class="line">ks-script-NiyyIS</span><br><span class="line">systemd-private-521b915097e843e2a1cd732f94d50984-chronyd.service-sTxtbh</span><br><span class="line">test</span><br><span class="line">user.test</span><br><span class="line">user.txt</span><br><span class="line">vmware-root</span><br><span class="line">yum.log</span><br><span class="line"></span><br><span class="line">[root@test ~]# ansible node2 -m file -a &quot;path=/tmp/user.test state=absent&quot;</span><br><span class="line">node2 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;path&quot;: &quot;/tmp/user.test&quot;, </span><br><span class="line">    &quot;state&quot;: &quot;absent&quot;</span><br><span class="line">&#125;</span><br><span class="line">[root@test ~]# ansible node2 -a &quot;ls /tmp&quot;</span><br><span class="line">node2 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">ansible_command_payload_SabNht</span><br><span class="line">ks-script-NiyyIS</span><br><span class="line">systemd-private-521b915097e843e2a1cd732f94d50984-chronyd.service-sTxtbh</span><br><span class="line">test</span><br><span class="line">user.txt</span><br><span class="line">vmware-root</span><br><span class="line">yum.log</span><br><span class="line"></span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d22h33fyj30pw0tt7wh.jpg" alt=""></p>
+<h2 id="cron-计划任务-模块"><a href="#cron-计划任务-模块" class="headerlink" title="cron(计划任务)模块"></a>cron(计划任务)模块</h2><p>给node2指定一个计划任务，*/1表示每一分钟，date显示日期时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m cron -a &quot;name=showdate minute=*/1 job=date state=present&quot;</span><br><span class="line">node2 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;envs&quot;: [], </span><br><span class="line">    &quot;jobs&quot;: [</span><br><span class="line">        &quot;showdate&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d280qtzsj30ua0md4qp.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d28j43k0j30uo0mb7wh.jpg" alt=""></p>
+<p>删除上面指定的计划任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m cron -a &quot;name=showdate state=absent&quot;</span><br><span class="line">node2 | CHANGED =&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: true, </span><br><span class="line">    &quot;envs&quot;: [], </span><br><span class="line">    &quot;jobs&quot;: []</span><br><span class="line">&#125;</span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="setup模块"><a href="#setup模块" class="headerlink" title="setup模块"></a>setup模块</h2><p>查看node2的系统信息（该系统信息篇幅很长）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m setup | less</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2ckc5i3j30uq0m87oy.jpg" alt=""></p>
+<h2 id="yum模块"><a href="#yum模块" class="headerlink" title="yum模块"></a>yum模块</h2><p>给node2安装和卸载lrzsz，其中state为install表示安装，为latest表示安装到最新版，为removed表示卸载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m yum -a &quot;name=lrzsz state=latest&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2ih1x5yj30ux0i24k7.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m yum -a &quot;name=lrzsz state=removed&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2is4jk6j30ul0ch7lp.jpg" alt=""></p>
+<p>如果yum报错的话：可以尝试以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible node2 -m copy -a &quot;src=/etc/resolv.conf dest=/etc/resolv.conf force=yes&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="service模块"><a href="#service模块" class="headerlink" title="service模块"></a>service模块</h2><p>先给node2安装httpd</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m yum -a &quot;name=httpd state=latest&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2nq7c5mj30t40sg1kx.jpg" alt=""></p>
+<p>给node2重启httpd服务，设置其开机自启</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m service -a &quot;name=httpd state=restarted enabled=yes&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2qg6kizj30u00tb4qp.jpg" alt=""></p>
+<p>给node2停止httpd服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# ansible node2 -m service -a &quot;name=httpd state=stopped&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2rsspluj30ub0tf7su.jpg" alt=""></p>
+<p>查看node2的httpd状态，可以看到是关闭的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]#  ansible node2 -m command -a &quot;systemctl status httpd&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1d2vcsyqjj30uw0h214h.jpg" alt=""></p>
+<p>本篇到此结束</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0r235fj35j30f30ljgn5.jpg" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0r22sfwwlj30ri16stf3.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"><i class="fa fa-tag"></i> Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"><i class="fa fa-tag"></i> RedHat</a>
+          
+            <a href="/tags/ansible/" rel="tag"><i class="fa fa-tag"></i> ansible</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/ansible-02/" rel="next" title="linux-ansible-02 ansible常用模块">
+                <i class="fa fa-chevron-left"></i> linux-ansible-02 ansible常用模块
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/ansible-04/" rel="prev" title="ansible-04">
+                ansible-04 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+    
+</div>
+
+    
+ </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">65</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:fengfengzone@outlook.com" title="E-Mail &rarr; mailto:fengfengzone@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-ansible-03-ansible常用模块命令实例"><span class="nav-number">1.</span> <span class="nav-text">linux-ansible-03 ansible常用模块命令实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#user模块"><span class="nav-number">1.1.</span> <span class="nav-text">user模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个用户：feng"><span class="nav-number">1.1.1.</span> <span class="nav-text">创建一个用户：feng</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除用户"><span class="nav-number">1.1.2.</span> <span class="nav-text">删除用户</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#group模块"><span class="nav-number">1.2.</span> <span class="nav-text">group模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#selinux模块"><span class="nav-number">1.3.</span> <span class="nav-text">selinux模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#copy模块"><span class="nav-number">1.4.</span> <span class="nav-text">copy模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file模块"><span class="nav-number">1.5.</span> <span class="nav-text">file模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cron-计划任务-模块"><span class="nav-number">1.6.</span> <span class="nav-text">cron(计划任务)模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setup模块"><span class="nav-number">1.7.</span> <span class="nav-text">setup模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yum模块"><span class="nav-number">1.8.</span> <span class="nav-text">yum模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#service模块"><span class="nav-number">1.9.</span> <span class="nav-text">service模块</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'oRRidMLeXm0NaDn2l75tIUbG-gzGzoHsz',
+        appKey: 'FVer77pnefOcpG7iwJHhJnTl',
+        placeholder: '各位道友，来说两句吧~',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>

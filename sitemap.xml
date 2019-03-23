@@ -2,6 +2,48 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/ansible-03/</loc>
+    
+    <lastmod>2019-03-23T14:06:10.669Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/linux-10/</loc>
+    
+    <lastmod>2019-03-23T13:20:10.371Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/ansible-02/</loc>
+    
+    <lastmod>2019-03-23T09:10:05.994Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/ansible-01/</loc>
+    
+    <lastmod>2019-03-23T08:04:43.519Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/ansible-05/</loc>
+    
+    <lastmod>2019-03-23T07:23:26.498Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/ansible-04/</loc>
+    
+    <lastmod>2019-03-23T07:23:19.560Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/linux-04/</loc>
     
     <lastmod>2019-03-21T14:30:41.329Z</lastmod>
@@ -61,13 +103,6 @@
     <loc>http://yoursite.com/linux-20/</loc>
     
     <lastmod>2019-03-12T12:45:09.364Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/linux-10/</loc>
-    
-    <lastmod>2019-03-12T12:43:43.151Z</lastmod>
     
   </url>
   
