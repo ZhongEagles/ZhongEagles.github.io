@@ -116,18 +116,21 @@
 
 
 
-  <meta name="description" content="IT技术分享">
-<meta name="keywords" content="linux">
+  <meta name="description" content="linux-ansible-04 ansible-playbook">
+<meta name="keywords" content="linux,Centos,RedHat,ansible">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ansible-04">
+<meta property="og:title" content="linux-ansible-04 ansible-playbook">
 <meta property="og:url" content="http://yoursite.com/ansible-04/index.html">
 <meta property="og:site_name" content="峰">
-<meta property="og:description" content="IT技术分享">
+<meta property="og:description" content="linux-ansible-04 ansible-playbook">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-23T07:23:19.560Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dompv9acj30u00jl1gi.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dor7s12hj30th0lh7u8.jpg">
+<meta property="og:updated_time" content="2019-03-24T02:48:45.292Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ansible-04">
-<meta name="twitter:description" content="IT技术分享">
+<meta name="twitter:title" content="linux-ansible-04 ansible-playbook">
+<meta name="twitter:description" content="linux-ansible-04 ansible-playbook">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dompv9acj30u00jl1gi.jpg">
 
 
 
@@ -144,7 +147,7 @@
   };
 </script>
 
-  <title>ansible-04 | 峰</title>
+  <title>linux-ansible-04 ansible-playbook | 峰</title>
   
 
 
@@ -443,7 +446,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ansible-04
+          <h1 class="post-title" itemprop="name headline">linux-ansible-04 ansible-playbook
 
               
             
@@ -473,8 +476,49 @@
             
 
             
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-24 10:48:45" itemprop="dateModified" datetime="2019-03-24T10:48:45+08:00">2019-03-24</time>
+              
+            
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/ansible/" itemprop="url" rel="index"><span itemprop="name">ansible</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -493,7 +537,7 @@
 
           
           
-             <span id="/ansible-04/" class="leancloud_visitors" data-flag-title="ansible-04">
+             <span id="/ansible-04/" class="leancloud_visitors" data-flag-title="linux-ansible-04 ansible-playbook">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -511,6 +555,8 @@
           
 
           
+              <div class="post-description">linux-ansible-04 ansible-playbook</div>
+          
 
         </div>
       </header>
@@ -525,7 +571,87 @@
       
 
       
-        
+        <h1 id="linux-ansible-04-ansible-playbook"><a href="#linux-ansible-04-ansible-playbook" class="headerlink" title="linux-ansible-04 ansible-playbook"></a>linux-ansible-04 ansible-playbook</h1><h2 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h2><h3 id="playbook"><a href="#playbook" class="headerlink" title="playbook"></a>playbook</h3><p>　　Playbooks俗称”剧本“，是一种高效运用Ansible的方式，也是系统ansible命令的集合。playbook利用yaml语言编写，其命令根据自上而下的顺序依次执行。<br>　　简单来说，Playbooks 是一种简单的配置管理系统与多机器部署系统的基础。与现有的其他系统有不同之处，且非常适合于复杂应用的部署。</p>
+<p>　　同时，Playbooks开创了很多特性，它可以允许你传输某个命令的状态到后面的指令，如你可以从一台机器的文件中抓取内容并附为变量，然后在另一台机器中使用，这使得你可以实现一些复杂的部署机制，这是ansible命令无法实现的。</p>
+<p>　　Playbooks可用于声明配置，更强大的地方在于，在Playbooks中可以编排有序的执行过程，甚至于做到在多组机器间，来回有序的执行特别指定的步骤。并且可以同步或异步的发起任务。</p>
+<p>　　我们完成一个任务，例如安装部署一个httpd服务，我们需要多个模块（一个模块也可以称之为task）提供功能来完成。而playbook就是组织多个task的容器，他的实质就是一个文件，有着特定的组织格式，它采用的语法格式是YAML（Yet Another Markup Language）。YAML语法能够简单的表示散列表，字典等数据结构，详情可参考：<a href="https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html" target="_blank" rel="noopener">YAML详细语法</a> 。</p>
+<h3 id="YAML"><a href="#YAML" class="headerlink" title="YAML"></a>YAML</h3><p>　　YAML是“YAML不是一种标记语言”的外语缩写，又被称为“另外一种标记语言”，但为了强调这种语言以数据做为中心，而不是以置标语言为重点，而用返璞词重新命名。它是一种直观的能够被电脑识别的数据序列化格式，是一个可读性高并且容易被人类阅读，容易和脚本语言交互，用来表达资料序列的编程语言。</p>
+<h2 id="playbook基础组件"><a href="#playbook基础组件" class="headerlink" title="playbook基础组件"></a>playbook基础组件</h2><pre><code>Hosts：运行执行任务（task）的目标主机
+remote_user：在远程主机上执行任务的用户
+tasks：任务列表，由模块定义的操作列表
+handlers：任务，和nogity结合使用，为条件触发操作，满足条件方才执行，否则不执行；与tasks不同的是只有在接受到通知时才会被触发。
+templates：使用模板语言的文本文件，使用jinja2语法。
+variables：变量，变量替换{{ variable_name }}，内置变量或自定义变量在playbook中调用
+roles: 角色
+</code></pre><p>　　整个playbook是以task为中心，表明要执行的任务；hosts和remote_user表明在哪些远程主机以何种身份执行；其他组件让其能够更加灵活。</p>
+<h3 id="官方实例"><a href="#官方实例" class="headerlink" title="官方实例"></a>官方实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">- hosts: webservers</span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80</span><br><span class="line">    max_clients: 200</span><br><span class="line">  remote_user: root</span><br><span class="line">  tasks:</span><br><span class="line">  - name: ensure apache is at the latest version</span><br><span class="line">    yum:</span><br><span class="line">      name: httpd</span><br><span class="line">      state: latest</span><br><span class="line">  - name: write the apache config file</span><br><span class="line">    template:	#作用：将变量在远程主机上变成指定的值，应用变量传参</span><br><span class="line">      src: /srv/httpd.j2	#源文件必须以j2结尾</span><br><span class="line">      dest: /etc/httpd.conf</span><br><span class="line">    notify:</span><br><span class="line">    - restart apache</span><br><span class="line">  - name: ensure apache is running</span><br><span class="line">    service:</span><br><span class="line">      name: httpd</span><br><span class="line">      state: started</span><br><span class="line">  handlers:</span><br><span class="line">    - name: restart apache</span><br><span class="line">      service:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: restarted</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">运行：</span><br><span class="line">    -t Tag 指定运行特定的任务</span><br><span class="line">    --skip-tags=SKIP_TAGS  跳过指定的标签</span><br><span class="line">    --start-at-task=START_AT 从哪个任务后执行</span><br><span class="line">    </span><br><span class="line">    使用 -e选项传入参数，例如：</span><br><span class="line">	ansible-playbook 192.168.200.136 -e &quot;httpd_port=808&quot; httpd04.yml</span><br></pre></td></tr></table></figure>
+<h4 id="实例解析"><a href="#实例解析" class="headerlink" title="实例解析"></a>实例解析</h4><p>webservers是官方对其管理机所管理服务器的统称，我们这里用的是node。</p>
+<p>vars:    #在playbook中定义变量<br>    http_port: 80<br>    max_clients: 200</p>
+<p>变量的引用：</p>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><h4 id="变量的来源："><a href="#变量的来源：" class="headerlink" title="变量的来源："></a>变量的来源：</h4><ul>
+<li>ansible setup facts远程主机的所有变量都可以用</li>
+<li>自定义变量</li>
+</ul>
+<h4 id="优先级："><a href="#优先级：" class="headerlink" title="优先级："></a>优先级：</h4><ul>
+<li>通过命令行指定变量，优先级最高</li>
+<li>在/etc/ansible/hosts 定义变量，在主机组中的主机单独定义</li>
+<li>在/etc/ansible/hosts 定义变量，针对主机组中的所有主机集中定义变量</li>
+<li>在Playbook中定义变量（建议使用这种方法）</li>
+</ul>
+<h3 id="模版"><a href="#模版" class="headerlink" title="模版"></a>模版</h3><ul>
+<li>使用模板语言的文本文件内部嵌套有模板语言脚本（使用模板语言编写）</li>
+<li>Jinja2 是由python编写的。在我们打算使用基于文本的模板语言时，jinja2是很好的解决方案。yaml是写playbook，jinja2是写配置文件模板的。</li>
+<li>功能：将模板的文件的变量值转换成对应的本地主机的确定值。例如：ansible端写一个内建变量，当这个文件被复制到对应主机时会自动生成对应主机 cpu的颗数的结果替换之。<ul>
+<li>templates文件必须存放在templates目录下</li>
+<li>yaml文件需要和templates目录平级</li>
+</ul>
+</li>
+<li>template只能在palybook中使用。</li>
+<li>Jinja2语法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">字面量：</span><br><span class="line">    字符串：使用单引号或双引号； </span><br><span class="line">    数字：整数、浮点数；</span><br><span class="line">    列表：[item1, item2, ...]</span><br><span class="line">    元组：(item1, item2, ...)</span><br><span class="line">    字典：&#123;key1:value1, key2:value2, ...&#125;</span><br><span class="line">    布尔型：true/false</span><br><span class="line">算术运算：</span><br><span class="line">    +, -, *, /, //, %, **</span><br><span class="line">比较操作：</span><br><span class="line">    ==, !=, &gt;, &lt;, &gt;=, &lt;=</span><br><span class="line">逻辑运算：and, or, not</span><br></pre></td></tr></table></figure>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 templates]# cat nginxconf.j2.bak </span><br><span class="line">&#123;% for vhost in  nginx_vhosts %&#125;</span><br><span class="line">server &#123;</span><br><span class="line">   listen &#123;&#123; vhost &#125;&#125;</span><br><span class="line">#   listen &#123;&#123; vhost.listen &#125;&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line">worker_processes &#123;&#123; ansible_processor_vcpus &#125;&#125;;</span><br><span class="line">[root@node1 tmp]# cat nginxtemp.yam</span><br><span class="line">- hosts: mageduweb</span><br><span class="line">  remote_user: root</span><br><span class="line">  vars:</span><br><span class="line">    nginx_vhosts:</span><br><span class="line">      - web1</span><br><span class="line">      - web2</span><br><span class="line">      - web3</span><br><span class="line">#     nginx_vhosts:</span><br><span class="line">#      - listen: 8080</span><br><span class="line">  tasks:</span><br><span class="line">    - name: template config to remote hosts</span><br><span class="line">      template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+<h3 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h3><p>一般通过when或者迭代循环</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- name: restart Nginx</span><br><span class="line">  service: name=nginx state=restarted</span><br><span class="line">  when: ansible_distribution_major_version == &quot;6&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="循环迭代"><a href="#循环迭代" class="headerlink" title="循环迭代"></a>循环迭代</h3><p>迭代列表或者键值对</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#基于字符串列表</span><br><span class="line">  tasks:</span><br><span class="line">  - name: create rsyncd file</span><br><span class="line">    copy: src=&#123;&#123; item &#125;&#125; dest=/tmp/&#123;&#123; item &#125;&#125;</span><br><span class="line">    with_items:</span><br><span class="line">      - a</span><br><span class="line">      - b</span><br><span class="line">      - c</span><br><span class="line">      - d</span><br><span class="line">*with_itmes 嵌套子变量*</span><br><span class="line">#基于字典列表</span><br><span class="line">- hosts: eagleslab</span><br><span class="line">  remote_user: root</span><br><span class="line">  tasks:</span><br><span class="line">  - name: add several users</span><br><span class="line">    user: name=&#123;&#123; item.name &#125;&#125; state=present groups=&#123;&#123; item.groups &#125;&#125;</span><br><span class="line">    with_items:</span><br><span class="line">      - &#123; name: &apos;testuser1&apos; , groups: &apos;wheel&apos;&#125;</span><br><span class="line">      - &#123; name: &apos;testuser2&apos; , groups: &apos;root&apos; &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="角色roles"><a href="#角色roles" class="headerlink" title="角色roles"></a>角色roles</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 ~]# tree /etc/ansible/roles/</span><br><span class="line">/etc/ansible/roles/</span><br><span class="line">└── http</span><br><span class="line">    ├── defaults</span><br><span class="line">    ├── files</span><br><span class="line">    ├── headlers</span><br><span class="line">    ├── meta</span><br><span class="line">    ├── tasks</span><br><span class="line">    ├── template</span><br><span class="line">    └── varsfiles/：存储由copy或script等模块调用的文件；</span><br></pre></td></tr></table></figure>
+<ul>
+<li>tasks/：此目录中至少应该有一个名为main.yml的文件，用于定义各task；其它的文件需要由main.yml进行“包含”调用；</li>
+<li>handlers/：此目录中至少应该有一个名为main.yml的文件，用于定义各handler；其它的文件需要由main.yml进行“包含”调用；</li>
+<li>vars/：此目录中至少应该有一个名为main.yml的文件，用于定义各variable；其它的文件需要由main.yml进行“包含”调用；</li>
+<li>templates/：存储由template模块调用的模板文本；</li>
+<li>meta/：此目录中至少应该有一个名为main.yml的文件，定义当前角色的特殊设定及其依赖关系；其它的文件需要由main.yml进行“包含”调用；</li>
+<li>default/：此目录中至少应该有一个名为main.yml的文件，用于设定默认变量；</li>
+<li>files目录：存放由copy或script等模块调用的文件；</li>
+</ul>
+<h3 id="调用roles"><a href="#调用roles" class="headerlink" title="调用roles"></a>调用roles</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 ~]# cat /etc/ansible/roles/site.yml</span><br><span class="line">- hosts: abc</span><br><span class="line">  remote_user: root</span><br><span class="line">  roles:</span><br><span class="line">    - httpd</span><br></pre></td></tr></table></figure>
+<h3 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 ansible]# tree roles/</span><br><span class="line">roles/</span><br><span class="line">├── http</span><br><span class="line">│   ├── defaults</span><br><span class="line">│   │   └── main.yaml</span><br><span class="line">│   ├── files</span><br><span class="line">│   │   └── index.html</span><br><span class="line">│   ├── headlers</span><br><span class="line">│   │   └── main.yaml</span><br><span class="line">│   ├── meta</span><br><span class="line">│   │   └── main.yaml</span><br><span class="line">│   ├── tasks</span><br><span class="line">│   │   └── main.yaml</span><br><span class="line">│   ├── templates</span><br><span class="line">│   │   └── httpd.conf.j2</span><br><span class="line">│   └── vars</span><br><span class="line">│       └── main.yaml</span><br><span class="line">└── site.yaml</span><br><span class="line">[root@node1 roles]# cat site.yaml </span><br><span class="line">- hosts: node2</span><br><span class="line">  remote_user: root</span><br><span class="line">#  vars:</span><br><span class="line">#    httpd_ports: 8080</span><br><span class="line">  roles:</span><br><span class="line">  - http</span><br><span class="line">[root@node1 http]# cat files/index.html </span><br><span class="line">hello eagleslab!</span><br><span class="line">[root@node1 http]# cat tasks/main.yaml </span><br><span class="line">- name: installed httpd service</span><br><span class="line">  yum: name=httpd state=latest</span><br><span class="line">  when: ansible_os_family  == &quot;RedHat&quot;</span><br><span class="line">- name: start httpd server</span><br><span class="line">  service: name=httpd state=restarted </span><br><span class="line">- name: write httpd config</span><br><span class="line">  template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf</span><br><span class="line">  notify:</span><br><span class="line">  - restart httpd</span><br><span class="line">- name: config httpd index</span><br><span class="line">  copy: src=index.html dest=/var/www/html/index.html</span><br><span class="line">[root@node1 http]# cat templates/httpd.conf.j2 | grep -Ev &quot;^[[:space:]]|^#&quot;</span><br><span class="line">ServerRoot &quot;/etc/httpd&quot;</span><br><span class="line">Listen &#123;&#123; httpd_ports &#125;&#125;</span><br><span class="line">Include conf.modules.d/*.conf</span><br><span class="line">User apache</span><br><span class="line">Group apache</span><br><span class="line">ServerAdmin root@localhost</span><br><span class="line">&lt;Directory /&gt;</span><br><span class="line">&lt;/Directory&gt;</span><br><span class="line">DocumentRoot &quot;/var/www/html&quot;</span><br><span class="line">&lt;Directory &quot;/var/www&quot;&gt;</span><br><span class="line">&lt;/Directory&gt;</span><br><span class="line">&lt;Directory &quot;/var/www/html&quot;&gt;</span><br><span class="line">&lt;/Directory&gt;</span><br><span class="line">&lt;IfModule dir_module&gt;</span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line">&lt;Files &quot;.ht*&quot;&gt;</span><br><span class="line">&lt;/Files&gt;</span><br><span class="line">ErrorLog &quot;logs/error_log&quot;</span><br><span class="line">LogLevel warn</span><br><span class="line">&lt;IfModule log_config_module&gt;</span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line">&lt;IfModule alias_module&gt;</span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line">&lt;Directory &quot;/var/www/cgi-bin&quot;&gt;</span><br><span class="line">&lt;/Directory&gt;</span><br><span class="line">&lt;IfModule mime_module&gt;</span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line">AddDefaultCharset UTF-8</span><br><span class="line">&lt;IfModule mime_magic_module&gt;</span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line">EnableSendfile on</span><br><span class="line">IncludeOptional conf.d/*.conf</span><br><span class="line">[root@node1 http]# cat headlers/main.yaml </span><br><span class="line">- name: restart httpd</span><br><span class="line">  service: name=httpd state=restarted</span><br><span class="line">[root@node1 http]# cat vars/main.yaml </span><br><span class="line">httpd_ports: 8000</span><br></pre></td></tr></table></figure>
+<h3 id="任务tasks"><a href="#任务tasks" class="headerlink" title="任务tasks"></a>任务tasks</h3><p>执行的模块命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">格式：</span><br><span class="line">  action：模块参数（此种方式只在较新的版本中出现）</span><br><span class="line">  module：参数(已键值对的形式出现)</span><br><span class="line"></span><br><span class="line">每一个task都有一个名称，用于标记此任务。任务示例：</span><br><span class="line">  name: install httpd</span><br><span class="line">  yum: name=httpd state=present</span><br><span class="line"></span><br><span class="line">注意：shell和command没有参数，可在后面直接跟命令</span><br><span class="line">  shell: ss -tnl | grep :80</span><br><span class="line"></span><br><span class="line">（1）某任务的运行状态为changed后，可通过相应的notify通知相应的handlers</span><br><span class="line">（2）任务可以通过tags打标签，然后通过palybook命令-t选项调用.</span><br></pre></td></tr></table></figure>
+<h2 id="playbook调用方式"><a href="#playbook调用方式" class="headerlink" title="playbook调用方式"></a>playbook调用方式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">用法：</span><br><span class="line">ansible-playbook &lt;filename.yml&gt; ... [options]</span><br><span class="line"></span><br><span class="line">  &lt;filename.yml&gt;:yaml格式的playbook文件路径，必须指明</span><br><span class="line">  [options]: 选项</span><br><span class="line">    -C, --check：并不在远程主机上执行，只是测试。</span><br><span class="line">    -i PATH, --inventory=PATH：资产的文件路径</span><br><span class="line">    --flush-cache：清楚fact缓存</span><br><span class="line">    --list-hosts：列出匹配的远程主机，并不执行任何动作</span><br><span class="line">    -t, TAGS, --tags=TAGS：运行指定的标签任务</span><br><span class="line">    --skip-tags:跳过指定的notify，后面详细介绍。</span><br></pre></td></tr></table></figure>
+<h2 id="palybook实验"><a href="#palybook实验" class="headerlink" title="palybook实验"></a>palybook实验</h2><h4 id="实验准备"><a href="#实验准备" class="headerlink" title="实验准备"></a>实验准备</h4><p>下述实验环境和之前的一样，无需改动即可。</p>
+<p>在服务端安装ansible</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install epel-release -y</span><br><span class="line">[root@localhost ~]# yum install ansible -y</span><br></pre></td></tr></table></figure>
+<p>服务端修改主机清单配置文件host</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/ansible/hosts</span><br><span class="line"></span><br><span class="line">#在文档末尾加上一下这几行</span><br><span class="line"></span><br><span class="line">[node]</span><br><span class="line">node2</span><br><span class="line">node3</span><br></pre></td></tr></table></figure>
+<p>服务端修改host文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/hosts</span><br><span class="line"></span><br><span class="line">#在文档中加入下列两行</span><br><span class="line"></span><br><span class="line">192.168.141.53 node2</span><br><span class="line">192.168.141.69 node3</span><br></pre></td></tr></table></figure>
+<h4 id="通过playbook添加用户示例"><a href="#通过playbook添加用户示例" class="headerlink" title="通过playbook添加用户示例"></a>通过playbook添加用户示例</h4><p>（1）给远程主机node3添加用户test</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# vim user.yml</span><br><span class="line">[root@test ~]# cat user.yml </span><br><span class="line">- hosts: node3</span><br><span class="line">  remote_user: root</span><br><span class="line">  gather_facts: False</span><br><span class="line">  vars:</span><br><span class="line">    - user: test</span><br><span class="line">  tasks:</span><br><span class="line">  - name: create user</span><br><span class="line">    user: name=&#123;&#123; user &#125;&#125;</span><br><span class="line">[root@test ~]# ansible-playbook user.yml</span><br><span class="line"></span><br><span class="line">PLAY [node3] *********************************************************************************************************</span><br><span class="line"></span><br><span class="line">TASK [create user] ***************************************************************************************************</span><br><span class="line">changed: [node3]</span><br><span class="line"></span><br><span class="line">PLAY RECAP ***********************************************************************************************************</span><br><span class="line">node3                      : ok=1    changed=1    unreachable=0    failed=0   </span><br><span class="line"></span><br><span class="line">[root@test ~]# ansible node3 -a &quot;id test&quot;</span><br><span class="line">node3 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">uid=1000(test) gid=1000(test) groups=1000(test)</span><br><span class="line"></span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dompv9acj30u00jl1gi.jpg" alt=""></p>
+<p>上面的playbook 实现的功能是新增一个用户：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">name：对该playbook实现的功能做一个概述，后面执行过程中，会打印name变量的值</span><br><span class="line">hosts：指定了对哪些主机进行参作</span><br><span class="line">remote_user：指定了使用什么用户登录远程主机操作</span><br><span class="line">gather_facts：指定了在以下任务部分执行前，是否先执行setup模块获取主机相关信息，这在后面的task会使用到setup获取的信息时用到</span><br><span class="line">vars：指定了变量，这里指定了一个user变量，其值为test，需要注意的是，变量值一定要用引号引起来</span><br><span class="line">tasks：指定了一个任务，其下面的name参数同样是对任务的描述，在执行过程中会打印出来。user提定了调用user模块，name是user模块里的一个参数，而增加的用户名字调用了上面user变量的值</span><br></pre></td></tr></table></figure>
+<p>（2）删除远程主机test的账号<br>只需改一行：</p>
+<p>user: name=”“ state=absent remove=yes </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# vim user.yml</span><br><span class="line">[root@test ~]# cat user.yml </span><br><span class="line">- hosts: node3</span><br><span class="line">  remote_user: root</span><br><span class="line">  gather_facts: False</span><br><span class="line">  vars:</span><br><span class="line">    - user: test</span><br><span class="line">  tasks:</span><br><span class="line">  - name: create user</span><br><span class="line">    user: name=&#123;&#123; user &#125;&#125; state=absent remove=yes</span><br><span class="line">[root@test ~]# ansible node3 -a &quot;id test&quot;</span><br><span class="line">node3 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">uid=1000(test) gid=1000(test) groups=1000(test)</span><br><span class="line"></span><br><span class="line">[root@test ~]# ansible-playbook user.yml</span><br><span class="line"></span><br><span class="line">PLAY [node3] *********************************************************************************************************</span><br><span class="line"></span><br><span class="line">TASK [create user] ***************************************************************************************************</span><br><span class="line">changed: [node3]</span><br><span class="line"></span><br><span class="line">PLAY RECAP ***********************************************************************************************************</span><br><span class="line">node3                      : ok=1    changed=1    unreachable=0    failed=0   </span><br><span class="line"></span><br><span class="line">[root@test ~]# ansible node3 -a &quot;id test&quot;</span><br><span class="line">node3 | FAILED | rc=1 &gt;&gt;</span><br><span class="line">id: test: no such usernon-zero return code</span><br><span class="line"></span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dor7s12hj30th0lh7u8.jpg" alt=""></p>
+<h4 id="通过playbook-安装apache实例"><a href="#通过playbook-安装apache实例" class="headerlink" title="通过playbook 安装apache实例"></a>通过playbook 安装apache实例</h4><p>安装 httpd 服务，将本地准备好的配置文件 copy 过去，并且启动服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@Ansible ~]# vim apache.yml</span><br><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  remote_user: root</span><br><span class="line">  gather_facts: False</span><br><span class="line">  tasks:</span><br><span class="line">    - name: install apache on CentOS 7</span><br><span class="line">      yum: name=httpd state=present</span><br><span class="line">    - name: copy httpd conf</span><br><span class="line">      copy: src=/etc/httpd/conf/httpd.conf dest=/etc/httpd/conf/httpd.conf</span><br><span class="line">    - name: start apache service</span><br><span class="line">      service: name=httpd state=started </span><br><span class="line">[root@Ansible ~]# ansible-playbook apache.yml</span><br><span class="line">[root@Ansible ~]# ansible all -m shell -a &quot;lsof -i:80&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>（4）通过playbook 安装apache（修改端口，并带有vars变量）</strong><br>将httpd.conf监听的端口改为8080，然后重新覆盖配置文件，当这个配置文件发生改变时，就触发handler进行服务重启<br>notify 这个 action可用于在每个play的最后被触发，这样可以避免多次有改变发生时每次都执行指定的操作，notify中列出的操作称为handler</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@Ansible ~]# vim apache.yml</span><br><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  remote_user: root</span><br><span class="line">  gather_facts: False</span><br><span class="line">  vars:</span><br><span class="line">    src_http_dir: /etc/httpd/conf</span><br><span class="line">    dest_http_dir: /etc/httpd/conf</span><br><span class="line">  tasks:</span><br><span class="line">    - name: install apache on CentOS 7</span><br><span class="line">      yum: name=httpd state=present</span><br><span class="line">    - name: copy httpd conf</span><br><span class="line">      copy: src=&#123;&#123; src_http_dir &#125;&#125;/httpd.conf dest=&#123;&#123; dest_http_dir &#125;&#125;/httpd.conf</span><br><span class="line">      notify:</span><br><span class="line">        - systemctl restart httpd</span><br><span class="line">    - name: start apache service</span><br><span class="line">      service: name=httpd state=restarted</span><br><span class="line">  handlers:</span><br><span class="line">    - name: restart apache</span><br><span class="line">      service: name=httpd state=restarted</span><br><span class="line">[root@Ansible ~]# vim /etc/httpd/conf/httpd.conf</span><br><span class="line">42 Listen 80  --》 修改为8080</span><br><span class="line">[root@Ansible ~]# ansible-playbook apache.yml </span><br><span class="line">[root@Ansible ~]# ansible all -m shell -a &quot;lsof -i:8080&quot;</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -574,6 +700,18 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"><i class="fa fa-tag"></i> Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"><i class="fa fa-tag"></i> RedHat</a>
+          
+            <a href="/tags/ansible/" rel="tag"><i class="fa fa-tag"></i> ansible</a>
+          
+        </div>
       
 
       
@@ -655,8 +793,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -791,6 +938,22 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-ansible-04-ansible-playbook"><span class="nav-number">1.</span> <span class="nav-text">linux-ansible-04 ansible-playbook</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念解析"><span class="nav-number">1.1.</span> <span class="nav-text">概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#playbook"><span class="nav-number">1.1.1.</span> <span class="nav-text">playbook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YAML"><span class="nav-number">1.1.2.</span> <span class="nav-text">YAML</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#playbook基础组件"><span class="nav-number">1.2.</span> <span class="nav-text">playbook基础组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#官方实例"><span class="nav-number">1.2.1.</span> <span class="nav-text">官方实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例解析"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">实例解析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">1.2.2.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量的来源："><span class="nav-number">1.2.2.1.</span> <span class="nav-text">变量的来源：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优先级："><span class="nav-number">1.2.2.2.</span> <span class="nav-text">优先级：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模版"><span class="nav-number">1.2.3.</span> <span class="nav-text">模版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">1.2.4.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件判断"><span class="nav-number">1.2.5.</span> <span class="nav-text">条件判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环迭代"><span class="nav-number">1.2.6.</span> <span class="nav-text">循环迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#角色roles"><span class="nav-number">1.2.7.</span> <span class="nav-text">角色roles</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用roles"><span class="nav-number">1.2.8.</span> <span class="nav-text">调用roles</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例分析"><span class="nav-number">1.2.9.</span> <span class="nav-text">实例分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#任务tasks"><span class="nav-number">1.2.10.</span> <span class="nav-text">任务tasks</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#playbook调用方式"><span class="nav-number">1.3.</span> <span class="nav-text">playbook调用方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#palybook实验"><span class="nav-number">1.4.</span> <span class="nav-text">palybook实验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实验准备"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">实验准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过playbook添加用户示例"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">通过playbook添加用户示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过playbook-安装apache实例"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">通过playbook 安装apache实例</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
