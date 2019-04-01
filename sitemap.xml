@@ -2,51 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/ansible-05/</loc>
+    
+    <lastmod>2019-03-28T07:01:25.308Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/hexo-01/</loc>
+    
+    <lastmod>2019-03-24T07:21:04.751Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/hexo-02/</loc>
+    
+    <lastmod>2019-03-24T07:20:34.988Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/hexo-03/</loc>
+    
+    <lastmod>2019-03-24T07:20:16.285Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/hexo-04/</loc>
+    
+    <lastmod>2019-03-24T07:20:00.835Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/hexo-05/</loc>
+    
+    <lastmod>2019-03-24T07:19:40.944Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/linux-30/</loc>
     
     <lastmod>2019-03-24T04:55:40.792Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/ansible-10/</loc>
-    
-    <lastmod>2019-03-24T04:52:00.527Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/ansible-09/</loc>
-    
-    <lastmod>2019-03-24T04:51:45.987Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/ansible-08/</loc>
-    
-    <lastmod>2019-03-24T04:51:30.932Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/ansible-07/</loc>
-    
-    <lastmod>2019-03-24T04:51:21.861Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/ansible-06/</loc>
-    
-    <lastmod>2019-03-24T04:50:39.023Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/ansible-05/</loc>
-    
-    <lastmod>2019-03-24T04:45:06.683Z</lastmod>
     
   </url>
   
@@ -446,41 +446,6 @@
     <loc>http://yoursite.com/linux-03/</loc>
     
     <lastmod>2019-02-23T13:21:00.438Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/hexo-05-%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2/</loc>
-    
-    <lastmod>2019-02-23T13:18:55.501Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/hexo-04-%E6%96%87%E7%AB%A0%E5%86%99%E4%BD%9C/</loc>
-    
-    <lastmod>2019-02-23T13:18:28.777Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/hexo-03-%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7%E5%87%86%E5%A4%87/</loc>
-    
-    <lastmod>2019-02-23T13:17:41.542Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/hexo-02-%E6%96%87%E7%AB%A0%E5%88%9B%E5%BB%BA/</loc>
-    
-    <lastmod>2019-02-23T13:17:08.241Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/hexo-01-%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1/</loc>
-    
-    <lastmod>2019-02-23T13:16:35.884Z</lastmod>
     
   </url>
   

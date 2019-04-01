@@ -126,7 +126,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dqmsb46wj30ud0sse81.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1ds1rr5duj30xg0fwwev.jpg">
-<meta property="og:updated_time" content="2019-03-24T04:45:06.683Z">
+<meta property="og:updated_time" content="2019-03-28T07:01:25.308Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-ansible-05 ansible-playbook-roles">
 <meta name="twitter:description" content="linux-ansible-05 ansible-playbook-roles">
@@ -489,7 +489,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-24 12:45:06" itemprop="dateModified" datetime="2019-03-24T12:45:06+08:00">2019-03-24</time>
+                <time title="修改时间：2019-03-28 15:01:25" itemprop="dateModified" datetime="2019-03-28T15:01:25+08:00">2019-03-28</time>
               
             
           </span>
@@ -571,7 +571,8 @@
       
 
       
-        <h1 id="linux-ansible-05-ansible-playbook-roles"><a href="#linux-ansible-05-ansible-playbook-roles" class="headerlink" title="linux-ansible-05 ansible-playbook-roles"></a>linux-ansible-05 ansible-playbook-roles</h1><h2 id="通过playbook角色目录（roles）安装apache"><a href="#通过playbook角色目录（roles）安装apache" class="headerlink" title="通过playbook角色目录（roles）安装apache"></a>通过playbook角色目录（roles）安装apache</h2><p>　　在上一篇文章中，我们给出了角色目录文件结构tree的官方案例，现在我们将它实现出来自己做一个案例，具体如下：</p>
+        <h1 id="linux-ansible-05-ansible-playbook-roles"><a href="#linux-ansible-05-ansible-playbook-roles" class="headerlink" title="linux-ansible-05 ansible-playbook-roles"></a>linux-ansible-05 ansible-playbook-roles</h1><h2 id="通过playbook角色目录（roles）安装apache"><a href="#通过playbook角色目录（roles）安装apache" class="headerlink" title="通过playbook角色目录（roles）安装apache"></a>通过playbook角色目录（roles）安装apache</h2><p>　　前面写过了ansible常用的模块介绍，熟悉这些模块是基础，接下来我们通过一个实例来介绍playbook，playbook通过灵活的组装这些基础模块组件，可以适应各种复杂的业务操作场景。</p>
+<p>　　在上一篇文章中，我们给出了角色目录文件结构tree的官方案例，现在我们将它实现出来自己做一个案例，具体如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# cd /etc/ansible/</span><br><span class="line">[root@test ansible]# </span><br><span class="line">[root@test ansible]# yum install tree -y</span><br><span class="line">[root@test ansible]# tree roles/</span><br><span class="line">roles/</span><br><span class="line">├── httpd</span><br><span class="line">│   ├── defaults</span><br><span class="line">│   ├── files</span><br><span class="line">│   │   └── index.html</span><br><span class="line">│   ├── handlers</span><br><span class="line">│   │   └── main.yaml</span><br><span class="line">│   ├── metas</span><br><span class="line">│   ├── tasks</span><br><span class="line">│   │   └── main.yaml</span><br><span class="line">│   ├── templates</span><br><span class="line">│   │   └── vhost1.conf.j2</span><br><span class="line">│   └── vars</span><br><span class="line">│       └── main.yaml</span><br><span class="line">└── httpd.yaml</span><br><span class="line"></span><br><span class="line">8 directories, 6 files</span><br><span class="line">[root@test ansible]#</span><br></pre></td></tr></table></figure>
 <p>在roles文件夹里，创建httpd文件夹以及httpd.yaml，编辑httpd.yaml内容如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# cd /etc/ansible/roles</span><br><span class="line">[root@test roles]# </span><br><span class="line">[root@test roles]# ls</span><br><span class="line">[root@test roles]# mkdir httpd</span><br><span class="line">[root@test roles]# vim httpd.yaml</span><br><span class="line">[root@test roles]# cat httpd.yaml </span><br><span class="line">- hosts: node3</span><br><span class="line">  remote_user: root</span><br><span class="line">  roles:</span><br><span class="line">    - httpd</span><br><span class="line"></span><br><span class="line">[root@test roles]# ls</span><br><span class="line">httpd  httpd.yaml</span><br><span class="line">[root@test roles]#</span><br></pre></td></tr></table></figure>
@@ -681,10 +682,6 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/ansible-06/" rel="prev" title="ansible-06">
-                ansible-06 <i class="fa fa-chevron-right"></i>
-              </a>
-            
           </div>
         </div>
       
@@ -769,7 +766,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">70</span>
+                    <span class="site-state-item-count">65</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1544,5 +1541,5 @@
 
   <!-- 页面点击小红心 -->
 <script type="text/javascript" src="/js/src/love.js"></script>
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?a84a10965b0e13b3bf2d22960408192c"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>
