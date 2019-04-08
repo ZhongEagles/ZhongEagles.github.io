@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/keepalived-03/</loc>
+    <lastmod>2019-04-08</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/keepalived-04/</loc>
+    <lastmod>2019-04-08</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/keepalived-02/</loc>
+    <lastmod>2019-04-08</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/keepalived-05/</loc>
+    <lastmod>2019-04-08</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/keepalived-01/</loc>
+    <lastmod>2019-04-08</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/ansible-05/</loc>
     <lastmod>2019-03-28</lastmod>
   </url>  <url>
