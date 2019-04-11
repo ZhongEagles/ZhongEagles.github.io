@@ -125,7 +125,7 @@
 <meta property="og:description" content="linux-keepalived-01 keepalived-基础学习">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1vc3mnaruj30kk0az75v.jpg">
-<meta property="og:updated_time" content="2019-04-08T09:07:59.508Z">
+<meta property="og:updated_time" content="2019-04-10T07:53:58.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-keepalived-01 keepalived-基础学习">
 <meta name="twitter:description" content="linux-keepalived-01 keepalived-基础学习">
@@ -488,7 +488,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-08 17:07:59" itemprop="dateModified" datetime="2019-04-08T17:07:59+08:00">2019-04-08</time>
+                <time title="修改时间：2019-04-10 15:53:58" itemprop="dateModified" datetime="2019-04-10T15:53:58+08:00">2019-04-10</time>
               
             
           </span>
@@ -626,6 +626,14 @@
 <li>Keepalived是实现前端高可用，常用的前端高可用的组合有，就是我们常见的LVS+Keepalived、Nginx+Keepalived、HAproxy+Keepalived</li>
 <li>Heartbeat或Corosync是实现服务的高可用，常见的组合有Heartbeat v3(Corosync)+Pacemaker+NFS+Httpd 实现Web服务器的高可用、Heartbeat v3(Corosync)+Pacemaker+NFS+MySQL 实现MySQL服务器的高可用。</li>
 </ul>
+<h2 id="keepalived相关路径"><a href="#keepalived相关路径" class="headerlink" title="keepalived相关路径"></a>keepalived相关路径</h2><p>/etc/keepalived/keepalived.conf # 主配置文件<br>/etc/sysconfig/keepalived # 系统进程<br>/usr/bin/genhash # hash计算工具<br>/usr/lib/systemd/system/keepalived.service # 守护进程<br>/usr/sbin/keepalived # 命令工具</p>
+<h2 id="keepalived主从选举"><a href="#keepalived主从选举" class="headerlink" title="keepalived主从选举"></a>keepalived主从选举</h2><p>　　keepalived默认采用抢占模式，谁的优先级最高，谁就可以抢占到vip。例如node1的优先级是100，node2的优先级是90，一开始vip在node1上面。关闭node1上面的keepalived后，vip会漂移到node2上，可是一旦node1的keepalived再次开启，那么vip还是会漂移回到node1的。</p>
+<p><strong>选举机制</strong>：</p>
+<p>​    通过优先级<br>​    设置抢占和非抢占的参数：nopreempt</p>
+<h2 id="keepalived组件"><a href="#keepalived组件" class="headerlink" title="keepalived组件"></a>keepalived组件</h2><p>netlink reflector：控制高可用集群当即后的vip切换和设置</p>
+<h2 id="keepalived三种状态"><a href="#keepalived三种状态" class="headerlink" title="keepalived三种状态"></a>keepalived三种状态</h2><p>在/etc/keepalived/keepalived.conf # 主配置文件中，有一行：</p>
+<p>state BACKUP # 指定Keepalived的角色，主是MASTER，从是BACKUP</p>
+<p>　　<strong>init</strong>：初始状态<br>　　<strong>master</strong>：主服务节点<br>　　<strong>backup</strong>：从服务节点</p>
 <p>本篇到此结束</p>
 
       
@@ -698,8 +706,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/ansible-05/" rel="next" title="linux-ansible-05 ansible-playbook-roles">
-                <i class="fa fa-chevron-left"></i> linux-ansible-05 ansible-playbook-roles
+              <a href="/ansible-06/" rel="next" title="linux-ansible-06 ansible-playbook部署LNMP">
+                <i class="fa fa-chevron-left"></i> linux-ansible-06 ansible-playbook部署LNMP
               </a>
             
           </div>
@@ -796,7 +804,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">71</span>
+                    <span class="site-state-item-count">72</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -928,7 +936,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-keepalived-01-keepalived-基础学习"><span class="nav-number">1.</span> <span class="nav-text">linux-keepalived-01 keepalived-基础学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VRRP协议"><span class="nav-number">1.2.</span> <span class="nav-text">VRRP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VRRP选举机制"><span class="nav-number">1.3.</span> <span class="nav-text">VRRP选举机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作原理"><span class="nav-number">1.4.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#体系结构"><span class="nav-number">1.5.</span> <span class="nav-text">体系结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对比"><span class="nav-number">1.6.</span> <span class="nav-text">对比</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-keepalived-01-keepalived-基础学习"><span class="nav-number">1.</span> <span class="nav-text">linux-keepalived-01 keepalived-基础学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VRRP协议"><span class="nav-number">1.2.</span> <span class="nav-text">VRRP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VRRP选举机制"><span class="nav-number">1.3.</span> <span class="nav-text">VRRP选举机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作原理"><span class="nav-number">1.4.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#体系结构"><span class="nav-number">1.5.</span> <span class="nav-text">体系结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对比"><span class="nav-number">1.6.</span> <span class="nav-text">对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keepalived相关路径"><span class="nav-number">1.7.</span> <span class="nav-text">keepalived相关路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keepalived主从选举"><span class="nav-number">1.8.</span> <span class="nav-text">keepalived主从选举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keepalived组件"><span class="nav-number">1.9.</span> <span class="nav-text">keepalived组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keepalived三种状态"><span class="nav-number">1.10.</span> <span class="nav-text">keepalived三种状态</span></a></li></ol></li></ol></div>
             
 
           </div>
