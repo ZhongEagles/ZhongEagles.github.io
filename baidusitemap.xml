@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/git-05/</loc>
+    <lastmod>2019-04-12</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/git-01/</loc>
+    <lastmod>2019-04-12</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/git-04/</loc>
+    <lastmod>2019-04-12</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/git-03/</loc>
+    <lastmod>2019-04-11</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/git-02/</loc>
+    <lastmod>2019-04-11</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/ansible-01/</loc>
+    <lastmod>2019-04-11</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/ansible-06/</loc>
     <lastmod>2019-04-11</lastmod>
   </url>  <url>
@@ -53,9 +71,6 @@
     <lastmod>2019-03-24</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/ansible-02/</loc>
-    <lastmod>2019-03-24</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/ansible-01/</loc>
     <lastmod>2019-03-24</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-10/</loc>

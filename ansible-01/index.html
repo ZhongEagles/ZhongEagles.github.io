@@ -127,7 +127,7 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dm1vdxi7j30pu0f5q54.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1cs4ghmpkj30lb0lcwqr.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1csed0qfgj30me0ksnha.jpg">
-<meta property="og:updated_time" content="2019-03-24T01:40:27.758Z">
+<meta property="og:updated_time" content="2019-04-11T12:07:24.404Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-ansible-01 ansible基础学习">
 <meta name="twitter:description" content="linux-ansible-01 ansible基础学习">
@@ -490,7 +490,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-24 09:40:27" itemprop="dateModified" datetime="2019-03-24T09:40:27+08:00">2019-03-24</time>
+                <time title="修改时间：2019-04-11 20:07:24" itemprop="dateModified" datetime="2019-04-11T20:07:24+08:00">2019-04-11</time>
               
             
           </span>
@@ -572,7 +572,10 @@
       
 
       
-        <h1 id="linux-ansible-01-ansible基础学习"><a href="#linux-ansible-01-ansible基础学习" class="headerlink" title="linux-ansible-01 ansible基础学习"></a>linux-ansible-01 ansible基础学习</h1><h2 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h2><p>　　ansible是新出现的自动化运维工具，基于Python开发，集合了众多运维工具（puppet、cfengine、chef、func、fabric）的优点，实现了批量系统配置、批量程序部署、批量运行命令等功能。ansible是基于模块工作的，本身没有批量部署的能力。真正具有批量部署的是ansible所运行的模块，ansible只是提供一种框架。</p>
+        <h1 id="linux-ansible-01-ansible基础学习"><a href="#linux-ansible-01-ansible基础学习" class="headerlink" title="linux-ansible-01 ansible基础学习"></a>linux-ansible-01 ansible基础学习</h1><h2 id="概念引入"><a href="#概念引入" class="headerlink" title="概念引入"></a>概念引入</h2><p>假如我们要管理几十台刚买来的服务器，步骤如下：<br>1.给每一台服务器装系统，可采用PXE+kickstart无人值守安装，亦或是云端镜像服务。<br>2.给每一台服务器配置网络。<br>3.给每一台服务器安装服务所需软件包 。<br>4.给每一台服务器修改配置文件<br>5.给每一台服务器启动服务<br>6.其他…</p>
+<p>　　那么，如果上述步骤，我们全部手动操作，一台一台服务器去弄，效率必然很低。我们嫌弃效率太慢，那么可以写脚本，一个脚本下去一步到位。但是，每一台服务器都要去手动执行一次这个脚本，是很麻烦的，如果后面有了新的服务需要部署，那么你既要写新的脚本，又要到每台服务器上手动执行一次新脚本，不胜其烦。所以，我们需要额外搭建一台服务器，在上面弄个任务清单，让其他服务器照着这个任务清单完成任务即可。当我们想要对服务器群做其他新的配置或搭建新的服务时，只需要在控制机上再写一个任务清单，让其他服务器照做即可，这就需要引入自动化运维的概念了。</p>
+<h2 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h2><h3 id="自动化运维"><a href="#自动化运维" class="headerlink" title="自动化运维"></a>自动化运维</h3><p>　　随着信息时代的持续发展，IT运维已经成为IT服务内涵中重要的组成部分。面对越来越复杂的业务，面对越来越多样化的用户需求，不断扩展的IT应用需要越来越合理的模式来保障IT服务能灵活便捷、安全稳定地持续保障，这种模式中的保障因素就是IT运维（其他因素是更加优越的IT架构等）。从初期的几台服务器发展到庞大的数据中心，单靠人工已经无法满足在技术、业务、管理等方面的要求，那么标准化、自动化、架构优化、过程优化等降低IT服务成本的因素越来越被人们所重视。其中，自动化最开始作为代替人工操作为出发点的诉求被广泛研究和应用。<br>　　IT运维从诞生发展至今，自动化作为其重要属性之一已经不仅仅只是代替人工操作，更重要的是深层探知和全局分析，关注的是在当前条件下如何实现性能与服务最优化，同时保障投资收益最大化。自动化对IT运维的影响，已经不仅仅是人与设备之间的关系，已经发展到了面向客户服务驱动IT运维决策的层面，IT运维团队的构成，也从各级技术人员占大多数发展到业务人员甚至用户占大多数的局面。<br>　　因此，IT运维自动化是一组将静态的设备结构转化为根据IT服务需求动态弹性响应的策略，目的就是实现IT运维的质量，降低成本。可以说自动化一定是IT运维最高层面的重要属性之一，但不是全部。</p>
+<h3 id="ansible"><a href="#ansible" class="headerlink" title="ansible"></a>ansible</h3><p>　　ansible是新出现的自动化运维工具，基于Python开发，集合了众多运维工具（puppet、cfengine、chef、func、fabric）的优点，实现了批量系统配置、批量程序部署、批量运行命令等功能。ansible是基于模块工作的，本身没有批量部署的能力。真正具有批量部署的是ansible所运行的模块，ansible只是提供一种框架。</p>
 <h3 id="ansible框架"><a href="#ansible框架" class="headerlink" title="ansible框架"></a>ansible框架</h3><p>1、连接插件connection plugins：负责和被监控端实现通信；<br>2、host inventory：指定操作的主机，是一个配置文件里面定义监控的主机；<br>3、各种模块核心模块、command模块、自定义模块；<br>4、借助于插件完成记录日志邮件等功能；<br>5、playbook：剧本执行多个任务时，非必需可以让节点一次性运行多个任务。</p>
 <h3 id="ansible核心组件"><a href="#ansible核心组件" class="headerlink" title="ansible核心组件"></a>ansible核心组件</h3><ol>
 <li>Ansible：核心程序</li>
@@ -800,7 +803,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-count">77</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -835,7 +838,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -882,7 +887,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                      
+                    
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -932,7 +939,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-ansible-01-ansible基础学习"><span class="nav-number">1.</span> <span class="nav-text">linux-ansible-01 ansible基础学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念解析"><span class="nav-number">1.1.</span> <span class="nav-text">概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible框架"><span class="nav-number">1.1.1.</span> <span class="nav-text">ansible框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible核心组件"><span class="nav-number">1.1.2.</span> <span class="nav-text">ansible核心组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible特性"><span class="nav-number">1.1.3.</span> <span class="nav-text">ansible特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible优点"><span class="nav-number">1.1.4.</span> <span class="nav-text">ansible优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible命令执行过程"><span class="nav-number">1.1.5.</span> <span class="nav-text">ansible命令执行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible安装部署"><span class="nav-number">1.1.6.</span> <span class="nav-text">ansible安装部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible程序文件"><span class="nav-number">1.1.7.</span> <span class="nav-text">ansible程序文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本配置"><span class="nav-number">1.1.8.</span> <span class="nav-text">基本配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验准备"><span class="nav-number">1.2.</span> <span class="nav-text">实验准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ansible安装与配置"><span class="nav-number">1.3.</span> <span class="nav-text">ansible安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现管理机对所有客户端的免密钥登录—ssh-key"><span class="nav-number">1.3.1.</span> <span class="nav-text">实现管理机对所有客户端的免密钥登录—ssh-key</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ansible测试"><span class="nav-number">1.4.</span> <span class="nav-text">ansible测试</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-ansible-01-ansible基础学习"><span class="nav-number">1.</span> <span class="nav-text">linux-ansible-01 ansible基础学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念引入"><span class="nav-number">1.1.</span> <span class="nav-text">概念引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概念解析"><span class="nav-number">1.2.</span> <span class="nav-text">概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动化运维"><span class="nav-number">1.2.1.</span> <span class="nav-text">自动化运维</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible"><span class="nav-number">1.2.2.</span> <span class="nav-text">ansible</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible框架"><span class="nav-number">1.2.3.</span> <span class="nav-text">ansible框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible核心组件"><span class="nav-number">1.2.4.</span> <span class="nav-text">ansible核心组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible特性"><span class="nav-number">1.2.5.</span> <span class="nav-text">ansible特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible优点"><span class="nav-number">1.2.6.</span> <span class="nav-text">ansible优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible命令执行过程"><span class="nav-number">1.2.7.</span> <span class="nav-text">ansible命令执行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible安装部署"><span class="nav-number">1.2.8.</span> <span class="nav-text">ansible安装部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible程序文件"><span class="nav-number">1.2.9.</span> <span class="nav-text">ansible程序文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本配置"><span class="nav-number">1.2.10.</span> <span class="nav-text">基本配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验准备"><span class="nav-number">1.3.</span> <span class="nav-text">实验准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ansible安装与配置"><span class="nav-number">1.4.</span> <span class="nav-text">ansible安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现管理机对所有客户端的免密钥登录—ssh-key"><span class="nav-number">1.4.1.</span> <span class="nav-text">实现管理机对所有客户端的免密钥登录—ssh-key</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ansible测试"><span class="nav-number">1.5.</span> <span class="nav-text">ansible测试</span></a></li></ol></li></ol></div>
             
 
           </div>
