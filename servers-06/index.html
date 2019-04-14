@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="linux-servers-06 数据库">
+<meta name="keywords" content="linux,Centos,RedHat,servers">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-servers-06 数据库">
+<meta property="og:url" content="http://yoursite.com/servers-06/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="linux-servers-06 数据库">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-14T06:22:59.997Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux-servers-06 数据库">
+<meta name="twitter:description" content="linux-servers-06 数据库">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/servers-06/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linux-servers-06 数据库 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/servers-06/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux-servers-06 数据库
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-29 06:04:25" itemprop="dateCreated datePublished" datetime="2019-03-29T06:04:25+08:00">2019-03-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-14 14:22:59" itemprop="dateModified" datetime="2019-04-14T14:22:59+08:00">2019-04-14</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-servers/" itemprop="url" rel="index"><span itemprop="name">linux-servers</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/servers-06/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/servers-06/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/servers-06/" class="leancloud_visitors" data-flag-title="linux-servers-06 数据库">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">linux-servers-06 数据库</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="linux-servers-06-数据库"><a href="#linux-servers-06-数据库" class="headerlink" title="linux-servers-06 数据库"></a>linux-servers-06 数据库</h1><h2 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h2><h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>　　数据库是以表格形式保存数据的特定结构。支持通过基于表格结构的数据流的软件称为数据库管理系统（DBMS）。使用最广泛的数据库管理系统（DBMS）是关系数据库管理系统（RDBMS）。数据库管理系统（DBMS）是一种计算机软件应用程序，可与终端用户，其他应用程序和数据库本身交互以捕获数据。通用数据库管理系统允许定义，创建，查询，更新和管理数据库。</p>
+<h3 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h3><p>　　数据库（Data Base，<strong>DB</strong>)是按一定结构组织并长期存储在计算机内的、可共享的大量数据的有机集合。其实就是存放数据的仓库，只不过这些数据存在一定的关联、并按一定的格式存放在计算机上。例如，把一个学校的学生、课程、学生成绩等数据有序的组织并存放在计算机内，就可以构成一个数据库。</p>
+<p>　　数据库管理系统（Data Base Management System，<strong>DBMS</strong>）是管理和维护数据库的系统软件。常用的DBMS有：Oracle、DB2、SqlServer、MySql等</p>
+<p>　　数据库管理员（Date Base Administrator ,<strong>DBA</strong>)管理操作数据库人员。</p>
+<p>　　数据库系统（Data Base System，<strong>DBS</strong>）是实现有组织的、动态地存储大量关联数据、方便多用户访问的计算机软件、硬件和数据资源组成的系统，简化为：DBS=计算机系统（硬件、软件平台、人）+DBMS+DB</p>
+<p>关系型数据库管理系统（Relational Database Management System，<strong>RDBMS</strong>）</p>
+<p>非关系型数据库，又被称为<strong>NoSQL</strong>（Not Only SQL )，意为不仅仅是SQL。</p>
+<h3 id="关系型数据库"><a href="#关系型数据库" class="headerlink" title="关系型数据库"></a>关系型数据库</h3><p>　　关系数据库，是建立在关系模型基础上的数据库，借助于集合代数等数学概念和方法来处理数据库中的数据。现实世界中的各种实体以及实体之间的各种联系均用关系模型来表示。关系模型是由埃德加·科德于1970年首先提出的，并配合“科德十二定律”。现如今虽然对此模型有一些批评意见，但它还是数据存储的传统标准。标准数据查询语言SQL就是一种基于关系数据库的语言，这种语言执行对关系数据库中数据的检索和操作。 关系模型由关系数据结构、关系操作集合、关系完整性约束三部分组成。简单说，关系型数据库是由多张能互相联接的二维行列表格组成的数据库。</p>
+<p>　　关系模型就是指二维表格模型,因而一个关系型数据库就是由二维表及其之间的联系组成的一个数据组织。当前主流的关系型数据库有Oracle、DB2、PostgreSQL、Microsoft SQL Server、Microsoft Access、MySQL、浪潮K-DB等。<br>　　实体关系模型（Entity-Relationship Model)，简称E-R Model是陈品山（Peter P.S Chen)博士于1976年提出的一套数据库的设计工具，他运用真实世界中事物与关系的观念，来解释数据库中的抽象的数据架构。实体关系模型利用图形的方式（实体-关系图（Entity-Relationship Diagram））来表示数据库的概念设计，有助于设计过程中的构思及沟通讨论。</p>
+<h3 id="非关系型数据库"><a href="#非关系型数据库" class="headerlink" title="非关系型数据库"></a>非关系型数据库</h3><p>　　非关系型数据库，又被称为NoSQL（Not Only SQL )，意为不仅仅是SQL（ Structured QueryLanguage，结构化查询语言)，据维基百科介绍，NoSQL最早出现于1998 年，是由Carlo Storzzi最早开发的个轻量、开源、不兼容SQL 功能的关系型数据库，2009 年，在一次分布式开源数据库的讨论会上，再次提出了NoSQL 的概念，此时NoSQL主要是指非关系型、分布式、不提供ACID (数据库事务处理的四个基本要素)的数据库设计模式。同年，在亚特兰大举行的“NoSQL(east)”讨论会上，对NoSQL 最普遍的定义是“非关联型的”，强调Key-Value 存储和文档数据库的优点，而不是单纯地反对RDBMS，至此，NoSQL 开始正式出现在世人面前。 </p>
+<h4 id="非关系型数据库的分类"><a href="#非关系型数据库的分类" class="headerlink" title="非关系型数据库的分类"></a>非关系型数据库的分类</h4><p>　　NoSQL描述的是大量结构化数据存储方法的集合，根据结构化方法以及应用场合的不同，主要可以将NoSQL分为以下几类。</p>
+<h5 id="1-Column-Oriented"><a href="#1-Column-Oriented" class="headerlink" title="(1)Column-Oriented"></a>(1)Column-Oriented</h5><p>　　面向检索的列式存储，其存储结构为列式结构，同于关系型数据库的行式结构，这种结构会让很多统计聚合操作更简单方便，使系统具有较高的可扩展性。这类数据库还可以适应海量数据的增加以及数据结构的变化，这个特点与云计算所需的相关需求是相符合的，比如GoogleAppengine的BigTable以及相同设计理念的Hadoop子系统HaBase就是这类的典型代表。需要特别指出的是，Big Table特别适用于MapReduce处理，这对于云计算的发展有很高的适应性。</p>
+<h5 id="2-Key-Value。"><a href="#2-Key-Value。" class="headerlink" title="(2)Key-Value。"></a>(2)Key-Value。</h5><p>　　面向高性能并发读/写的缓存存储，其结构类似于数据结构中的Hash表，每个Key分别对应一个Value,能够提供非常快的查询速度、大数据存放量和高并发操作，非常适合通过主键对数据进行查询和修改等操作。Key-Value数据库的主要特点是具有极高的并发读/写性能，非常适合作为缓存系统使用。MemcacheDB、BerkeleyDB、Redis、Flare就是Key-Value数据库的代表。</p>
+<h5 id="3-Document-Oriented。"><a href="#3-Document-Oriented。" class="headerlink" title="(3)Document-Oriented。"></a>(3)Document-Oriented。</h5><p>　　面向海量数据访问的文档存储，这类存储的结构与Key-Value非常相似，也是每个Key分别对应一个Value，但是这个Value主要以JSON(JavaScriptObjectNotations)或者XML等格式的文档来进行存储。这种存储方式可以很方便地被面向对象的语言所使用。这类数据库可在海量的数据中快速查询数据，典型代表为MongoDB、CouchDB等。<br>　　NoSQL具有扩展简单、高并发、高稳定性、成本低廉等优势，也存在一些问题。例如，NoSQL暂不提供SQL的支持，会造成开发人员的额外学习成本;NoSQL大多为开源软件其成熟度与商用的关系型数据库系统相比有差距;NoSQL的架构特性决定了其很难保证数据的完整性，适合在一些特殊的应用场景使用。</p>
+<h2 id="举例分析"><a href="#举例分析" class="headerlink" title="举例分析"></a>举例分析</h2><p>关系型数据库如mysql等用于存放具有约束性的关系模型（表）。</p>
+<p>非关系型数据库如mongodb hbase等用于存放图片、文本等。</p>
+<h2 id="MariaDB与MySQL"><a href="#MariaDB与MySQL" class="headerlink" title="MariaDB与MySQL"></a>MariaDB与MySQL</h2><h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><p>　　MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目前属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件。<br>　　MySQL是一种关系数据库管理系统，关系数据库将数据保存在不同的表中，而不是将所有数据放在一个大仓库内，这样就增加了速度并提高了灵活性。<br>　　MySQL所使用的 SQL 语言是用于访问数据库的最常用标准化语言。MySQL 软件采用了双授权政策，分为社区版和商业版，由于其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，一般中小型网站的开发都选择 MySQL 作为网站数据库。</p>
+<h3 id="MariaDB"><a href="#MariaDB" class="headerlink" title="MariaDB"></a>MariaDB</h3><p>　　MariaDB数据库管理系统是MySQL的一个分支，主要由开源社区在维护，采用GPL授权许可 MariaDB的目的是完全兼容MySQL，包括API和命令行，使之能轻松成为MySQL的代替品。在存储引擎方面，使用XtraDB（英语：XtraDB）来代替MySQL的InnoDB。 MariaDB由MySQL的创始人Michael Widenius（英语：Michael Widenius）主导开发，他早前曾以10亿美元的价格，将自己创建的公司MySQL AB卖给了SUN，此后，随着SUN被甲骨文收购，MySQL的所有权也落入Oracle的手中。MariaDB名称来自Michael Widenius的女儿Maria的名字。</p>
+<h3 id="MariaDB与MySQL的渊源"><a href="#MariaDB与MySQL的渊源" class="headerlink" title="MariaDB与MySQL的渊源"></a>MariaDB与MySQL的渊源</h3><p>　　MySQL之父Widenius先生离开了Sun之后，觉得依靠Sun/Oracle来发展MySQL，实在很不靠谱，于是决定从新开发代码全部开源免费关系型数据库，这就是MariaDB。在navicat中操作mariaDB的界面和提示符还是mysql端口也是3306 外人看起来除了数据库名字改了其他和mysql完全一致，但是看一下性能比较，大多数人认为MariaDB更优于MySQL。</p>
+<h3 id="MySQL的特点"><a href="#MySQL的特点" class="headerlink" title="MySQL的特点"></a>MySQL的特点</h3><p><strong>关系数据库管理系统：</strong></p>
+<p>　　 MySQL支持所有功能，这使得它成为一个完整的关系数据库管理系统（RDBMS）。它支持完整的SQL作为查询和更新数据的标准化语言，并且可以管理数据库。</p>
+<p><strong>简单而安全：</strong></p>
+<p>　　与其他数据库管理系统（DBMS）软件相比，MySQL使用非常简单且具有交互性，并且具有可靠的数据安全层，可为数据提供高效的加密，因此非常安全。</p>
+<p><strong>客户机/服务器体系结构：</strong></p>
+<p>　　其简单的客户机/服务器体系结构可帮助终端用户创建一个与许多客户机连接的服务器，以便与服务器进行通信进行插入，更新和管理数据库。</p>
+<p><strong>可伸缩性：</strong></p>
+<p>　　 MySQL可以处理大量数据而不会出现任何卡顿 – 多达5000万行。它可以处理高达8TB的数据而没有任何问题。</p>
+<p><strong>跨平台：</strong>与几乎所有操作系统兼容，如UNIX，Windows，Linux，MAC OS X等。</p>
+<p><strong>高性能，灵活且高效的生产力：</strong> </p>
+<p>　　MySQL提供更快速，高度可靠，便宜的存储解决方案，并支持大量嵌入式应用程序。它利用触发器，程序和视图来提高生产力。</p>
+<h3 id="MariaDB的特点"><a href="#MariaDB的特点" class="headerlink" title="MariaDB的特点"></a>MariaDB的特点</h3><ul>
+<li>MariaDB可用于GPL，LGPL和BSD。</li>
+<li>它包括广泛的存储引擎选择，包括高性能存储引擎，用于与其他关系数据库管理系统（RDBMS）数据源一起工作。</li>
+<li>它使用标准和流行的查询语言。</li>
+<li>MariaDB在许多操作系统上运行，并支持各种编程语言。</li>
+<li>它提供对PHP的支持，PHP是最流行的Web开发语言之一。</li>
+<li>它提供Galera群集技术。</li>
+<li>MariaDB还提供了很多在MySQL中不可用的操作和命令，并消除/取代了对性能产生负面影响的功能。</li>
+</ul>
+<h2 id="MariaDB和MySQL的比较分析"><a href="#MariaDB和MySQL的比较分析" class="headerlink" title="MariaDB和MySQL的比较分析"></a>MariaDB和MySQL的比较分析</h2><p>　　MariaDB拥有大量新功能，这使得它在性能和用户导向方面更加出色。mysql是centos6默认使用的数据库，mariadb是centos7默认使用的数据库。</p>
+<h2 id="MariaDB-1"><a href="#MariaDB-1" class="headerlink" title="MariaDB"></a>MariaDB</h2><p><strong>优点</strong></p>
+<ul>
+<li>MariaDB针对性能进行了优化，对于大型数据集，它比MySQL强大得多。从其他数据库系统可以优雅的迁移到MariaDB是另一个好处。</li>
+<li>从MySQL切换到MariaDB相对容易，这对于系统管理员来说好像是一块蛋糕。</li>
+<li>MariaDB通过引入微秒级精度和扩展用户统计数据提供更好的监控。</li>
+<li>MariaDB增强了KILL命令，使您可以杀死用户的所有查询（KILL USER 用户名）或杀死查询ID（KILL QUERY ID query_id）。MariaDB也转而使用Perl兼容的正则表达式（PCRE），它提供比标准MySQL正则表达式支持更强大和更精确的查询。</li>
+<li>MariaDB为与磁盘访问，连接操作，子查询，派生表和视图，执行控制甚至解释语句相关的查询应用了许多查询优化。</li>
+<li>MariaDB纯粹是开源的，而不是MySQL使用的双重授权模式。一些仅适用于MySQL Enterprise客户的插件在MariaDB中具有等效的开源实现。</li>
+<li>与MySQL相比，MariaDB支持更多的引擎（SphinxSE，Aria，FederatedX，TokuDB，Spider，ScaleDB等）。</li>
+<li>MariaDB提供了一个用于商业用途的集群数据库，它也支持多主复制。任何人都可以自由使用它，并且不需要依赖MySQL Enterprise系统。</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>从版本5.5.36开始，MariaDB无法迁移回MySQL。</li>
+<li>对于MariaDB的新版本，相应的库（用于Debian）不会及时部署，由于依赖关系，这将导致必需升级到较新的版本。</li>
+<li>MariaDB的群集版本不是很稳定。</li>
+</ul>
+<p><strong>MySQL和MariaDB之间的一些重要差异</strong></p>
+<ol>
+<li><p><strong>数据库的使用情况：</strong>自1995年以来，MySQL一直被视为迄今为止实施最为广泛且最广泛使用的开源数据库。许多像Twitter，YouTube，Netflix和PayPal这样的IT巨头，以及美国国家航空航天局，美国国防部队和沃尔玛都利用这个数据库。最近才到来的MariaDB也在各种IT巨头组织（如Google，Red Hat，CentOS和Fedora）中作为后端软件因此得到了强大的基础。</p>
+</li>
+<li><p><strong>数据库和索引的结构：</strong> MySQL是一个纯粹的关系数据库，集成了一个ANSI标准的信息模式，由表，列，视图，过程，触发器，游标等组成。MySQL的结构化查询语言（SQL）是ANSI SQL 99。而MariaDB是MySQL的一个分支，因此具有相同的数据库结构和索引。该功能使MariaDB成为希望直接切换或升级后端的用户的理想选择，而无需升级数据库和数据结构。当从MySQL升级到MariaDB时，所有内容（从数据，表格定义，结构和API）都保持一致。</p>
+</li>
+<li><p><strong>二进制和实现：</strong> MySQL是使用C和C ++开发的，并且完全兼容几乎所有操作系统，如Microsoft Windows，MAC OS X，Linux，FreeBSD，UNIX，NetBSD，Novell Netware和其他许多操作系统。MariaDB使用C，C ++，Bash和Perl开发。它与Microsoft Windows，Linux，MAC OS X，FreeBSD，Solaris等各种操作系统兼容。</p>
+</li>
+<li><p><strong>复制和集群：</strong> MySQL通过主从主复制和主从复制提供强大的复制和集群，并利用Galera集群实现多主集群。MariaDB为主终端用户提供与主从主复制和主从复制相同的复制和集群功能。它还使用10.1版以后的Galera Cluster。</p>
+</li>
+<li><p><strong>对数据库的支持：</strong>通过Oracle全天候提供MySQL技术支持服务，支持团队由专业开发人员和工程师组成，他们提供各种工具，如错误修复，修补程序和版本发布。Oracle根据用户的需求提供MySQL首要支持，扩展支持和持续支持。MariaDB通过开源社区，在线论坛甚至通过专家为用户提供强有力的支持。MariaDB通过企业订阅提供24小时全天候支持，尤其适用于任务关键型生产系统。</p>
+</li>
+<li><p><strong>安全性：</strong>就安全性而言，MySQL为表空间数据提供了强大的加密机制。它提供了强大的安全参数，包括选择好的密码，不给用户不必要的特权，并通过防止SQL注入和数据损坏来确保应用程序安全。MariaDB在内部安全和密码检查，验证模块（PAM）和轻量级目录访问协议（LDAP）认证，Kerberos，用户角色以及对表空间，表格和日志的强大加密等安全功能方面取得了重大进展。</p>
+</li>
+<li><p><strong>可扩展性：</strong>支持可扩展系统的数据库可以用许多不同的方式进行扩展，如添加新的数据类型，函数，运算符，聚集函数，索引方法和过程语言。MySQL不支持可扩展性。MariaDB建立在现代架构的基础之上，可以在每一层 – 客户端，集群，内核和存储上进行扩展。这种可扩展性提供了两个主要优势。它允许通过插件实现持续的社区创新，这意味着可以通过MariaDB的可扩展架构集成各种存储引擎，如MariaDB ColumnStore或Facebook的MyRocks。此外，它使客户能够轻松配置MariaDB以支持从联机事务处理（OLTP）到联机分析处理（OLAP）的各种用例。</p>
+</li>
+<li><p><strong>JSON支持：</strong> MySQL支持本地JSON数据类型，可以在JSON（JavaScript Object Notation）文档中高效地访问数据。与将JSON格式的字符串存储在字符串列中相比，JSON数据类型提供了以下优点：</p>
+</li>
+</ol>
+<ul>
+<li>自动验证存储在JSON列中的JSON文档。无效的文档会产生错误。</li>
+<li><em>优化的存储格式：</em>存储在JSON列中的JSON文档被转换为允许快速读取文档元素的内部格式。当服务器稍后必须读取以这种二进制格式存储的JSON值时，不需要从文本表示中解析该值。二进制格式的结构使服务器能够直接通过键或数组索引查找子对象或嵌套值，而无需读取文档中的所有值。另一方面，MariaDB Server 10.2引入了一整套用于读写JSON文档的24个函数。另外，JSON_VALID函数可以与校验约束一起使用，而像JSON_VALUE这样的函数可以与动态列一起使用来索引特定的字段。</li>
+</ul>
+<ol start="9">
+<li><p><strong>授权许可：</strong> MySQL在GPL下以开放源代码提供代码，并以MySQL Enterprise形式提供非GPL商业分发选项。MariaDB只能使用GPL，因为它的工作源于该许可条款下的MySQL源代码。</p>
+</li>
+<li><p><strong>性能：</strong> MariaDB通过MySQL的许多创新实现了同类最佳性能。其中包括线程池管理以最大限度地提高处理效率，以及InnoDB数据存储区内的碎片整理等广泛的优化功能。因此，当从InnoDB表中删除行时，可用空间立即可供操作系统使用。不需要将旧表中的数据复制到新表中，并且表空间中没有空闲。MariaDB还提供与引擎无关的表统计信息，以改善优化程序的性能，加快对表的大小和结构进行查询处理和数据分析。如果没有这些增强功能，MySQL的性能就会下降。MySQL中的线程利用率是次优的，InnoDB表随着时间的推移变得碎片化，从而影响性能。</p>
+</li>
+</ol>
+<p>本篇到此结束</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0r235fj35j30f30ljgn5.jpg" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0r22sfwwlj30ri16stf3.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"><i class="fa fa-tag"></i> Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"><i class="fa fa-tag"></i> RedHat</a>
+          
+            <a href="/tags/servers/" rel="tag"><i class="fa fa-tag"></i> servers</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/servers-05/" rel="next" title="linux-servers-05 网站资源动静分离">
+                <i class="fa fa-chevron-left"></i> linux-servers-05 网站资源动静分离
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/keepalived-01/" rel="prev" title="linux-keepalived-01 keepalived-基础学习">
+                linux-keepalived-01 keepalived-基础学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+    
+</div>
+
+    
+ </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">83</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:fengfengzone@outlook.com" title="E-Mail &rarr; mailto:fengfengzone@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-servers-06-数据库"><span class="nav-number">1.</span> <span class="nav-text">linux-servers-06 数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念解析"><span class="nav-number">1.1.</span> <span class="nav-text">概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库"><span class="nav-number">1.1.1.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关概念"><span class="nav-number">1.1.2.</span> <span class="nav-text">相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关系型数据库"><span class="nav-number">1.1.3.</span> <span class="nav-text">关系型数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非关系型数据库"><span class="nav-number">1.1.4.</span> <span class="nav-text">非关系型数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#非关系型数据库的分类"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">非关系型数据库的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Column-Oriented"><span class="nav-number">1.1.4.1.1.</span> <span class="nav-text">(1)Column-Oriented</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Key-Value。"><span class="nav-number">1.1.4.1.2.</span> <span class="nav-text">(2)Key-Value。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-Document-Oriented。"><span class="nav-number">1.1.4.1.3.</span> <span class="nav-text">(3)Document-Oriented。</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举例分析"><span class="nav-number">1.2.</span> <span class="nav-text">举例分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MariaDB与MySQL"><span class="nav-number">1.3.</span> <span class="nav-text">MariaDB与MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql"><span class="nav-number">1.3.1.</span> <span class="nav-text">mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MariaDB"><span class="nav-number">1.3.2.</span> <span class="nav-text">MariaDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MariaDB与MySQL的渊源"><span class="nav-number">1.3.3.</span> <span class="nav-text">MariaDB与MySQL的渊源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL的特点"><span class="nav-number">1.3.4.</span> <span class="nav-text">MySQL的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MariaDB的特点"><span class="nav-number">1.3.5.</span> <span class="nav-text">MariaDB的特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MariaDB和MySQL的比较分析"><span class="nav-number">1.4.</span> <span class="nav-text">MariaDB和MySQL的比较分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MariaDB-1"><span class="nav-number">1.5.</span> <span class="nav-text">MariaDB</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+  
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="post-meta-divider">|</span>
+      <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+  
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'oRRidMLeXm0NaDn2l75tIUbG-gzGzoHsz',
+        appKey: 'FVer77pnefOcpG7iwJHhJnTl',
+        placeholder: '各位道友，来说两句吧~',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?a84a10965b0e13b3bf2d22960408192c"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
