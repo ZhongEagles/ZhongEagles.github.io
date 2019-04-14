@@ -126,7 +126,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1w6kl74w7j30o309twej.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1w7matqdnj30jy0h8aad.jpg">
-<meta property="og:updated_time" content="2019-04-14T06:21:54.250Z">
+<meta property="og:updated_time" content="2019-04-14T07:59:13.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-servers-01 反向代理+负载均衡">
 <meta name="twitter:description" content="linux-servers-01 反向代理+负载均衡">
@@ -489,7 +489,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-14 14:21:54" itemprop="dateModified" datetime="2019-04-14T14:21:54+08:00">2019-04-14</time>
+                <time title="修改时间：2019-04-14 15:59:13" itemprop="dateModified" datetime="2019-04-14T15:59:13+08:00">2019-04-14</time>
               
             
           </span>
@@ -579,7 +579,7 @@
 <h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>　　在计算机网络中，反向代理是代理服务器的一种。服务器根据客户端的请求，从其关系的一组或多组后端服务器（如Web服务器）上获取资源，然后再将这些资源返回给客户端，客户端只会得知反向代理的IP地址，而不知道在代理服务器后面的服务器簇的存在。<br>　　与前向代理不同，前向代理作为客户端的代理，将从互联网上获取的资源返回给一个或多个的客户端，服务端（如Web服务器）只知道代理的IP地址而不知道客户端的IP地址；而反向代理是作为服务器端（如Web服务器）的代理使用，而不是客户端。客户端借由前向代理可以间接访问很多不同互联网服务器（簇）的资源，而反向代理是供很多客户端都通过它间接访问不同后端服务器上的资源，而不需要知道这些后端服务器的存在，而以为所有资源都来自于这个反向代理服务器。</p>
 <h3 id="负载均衡服务器"><a href="#负载均衡服务器" class="headerlink" title="负载均衡服务器"></a>负载均衡服务器</h3><p>　　负载均衡服务器（load-balancing server）是进行负载分配的服务器。通过负载均衡服务器，将服务请求均衡分配到实际执行的服务中，从而保证整个系统的响应速度。</p>
 <p>　　“负载均衡服务器”是本系统的控制服务器，所有用户的请求都首先到此服务器，然后由此服务器根据各个实际处理服务器状态将请求具体分配到某个实际处理服务器中，对外公开的域名与IP地址都是这台服务器。负载均衡控制与管理软件安装在这台服务器上，这台服务器一般只做负载均衡任务分配，但不是实际对网络请求进行处理的服务器。</p>
-<h3 id="常用方案"><a href="#常用方案" class="headerlink" title="常用方案"></a>常用方案</h3><p>负载均衡方案：lvs（/nat,dr,tun,fulltun）并发量小用nat，一般常用lvs/dr，还有haproxy、nginx（upstream）<br>反向代理方案：varnish（web加速器）、nginx、haproxy<br>正向代理方案：squid<br>高可用方案：keepalived、hearbeat、coresync</p>
+<h3 id="常用方案"><a href="#常用方案" class="headerlink" title="常用方案"></a>常用方案</h3><p><strong>负载均衡方案</strong>：lvs（/nat,dr,tun,fulltun）并发量小用nat，一般常用lvs/dr，还有haproxy、nginx（nginx负载均衡通过ngx_http_upstream_module模块 ）<br><strong>反向代理方案</strong>：varnish（web加速器）、nginx、haproxy<br><strong>正向代理方案</strong>：squid<br><strong>高可用方案</strong>：keepalived、hearbeat、coresync</p>
 <h3 id="实例解析"><a href="#实例解析" class="headerlink" title="实例解析"></a>实例解析</h3><p>node1（反向代理+负载均衡）：192.168.141.53<br>node3（web1）：192.168.141.12<br>node4（web2）：192.168.141.132</p>
 <p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1w7matqdnj30jy0h8aad.jpg" alt=""></p>
 <h3 id="反向代理工作方式"><a href="#反向代理工作方式" class="headerlink" title="反向代理工作方式"></a>反向代理工作方式</h3><p>　　通常的代理服务器，只用于代理内部网络对Internet的连接请求，客户机必须指定代理服务器,并将本来要直接发送到Web服务器上的http请求发送到代理服务器中。</p>

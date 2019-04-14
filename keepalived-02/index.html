@@ -124,13 +124,14 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-keepalived-02 keepalived+LVS+Apache部署">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1w3zkdmx6j30px0d0747.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g229o3zpbhj30lp0dp0sy.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g229nm301vj30pt0kd0tb.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1kxqm24r4j30ls0l6qh7.jpg">
-<meta property="og:updated_time" content="2019-04-10T07:40:26.650Z">
+<meta property="og:updated_time" content="2019-04-14T08:59:58.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-keepalived-02 keepalived+LVS+Apache部署">
 <meta name="twitter:description" content="linux-keepalived-02 keepalived+LVS+Apache部署">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1w3zkdmx6j30px0d0747.jpg">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g229o3zpbhj30lp0dp0sy.jpg">
 
 
 
@@ -489,7 +490,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-10 15:40:26" itemprop="dateModified" datetime="2019-04-10T15:40:26+08:00">2019-04-10</time>
+                <time title="修改时间：2019-04-14 16:59:58" itemprop="dateModified" datetime="2019-04-14T16:59:58+08:00">2019-04-14</time>
               
             
           </span>
@@ -577,12 +578,13 @@
 <p>如下图：</p>
 <p>当web服务器太多时，RS就压力很大，所以引入DS。</p>
 <p>重要参数：<br>arp_announce<br>arp_ignore</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1w3zkdmx6j30px0d0747.jpg" alt=""></p>
 <h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>1、开源，免费<br>2、在网上能找到一些相关技术资源<br>3、具有软件负载均衡的一些优点</p>
 <h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>1、最核心的就是没有可靠的支持服务，没有人对其结果负责；<br>2、功能比较简单，支持复杂应用的负载均衡能力较差，如算法较少等；<br>3、开启隧道方式需重编译内核；<br>4、配置复杂；<br>5、主要应用于LINUX，目前没有专门用于WINDOWS的版本，不过可以通过配置，使windows成为LVS集群中的real server（win2003、win2008中）。</p>
 <h2 id="LVS相关概念"><a href="#LVS相关概念" class="headerlink" title="LVS相关概念"></a>LVS相关概念</h2><p><strong>ipvs</strong>：ipvs称之为IP虚拟服务器（IP Virtual Server，简写为IPVS），是运行在LVS下的提供负载平衡功能的一种技术。工作于内核当中，定义转发规则。<br><strong>ipvsadm</strong>：工作于用户空间，是一个工具，同时它也是一条命令，用于管理LVS的策略规则。<br><strong>DS</strong>：前端负载均衡节点 direct-server<br><strong>RS</strong>：后端真实节点 real-server<br><strong>DIP</strong>：负载均衡节点的IP地址<br><strong>VIP</strong>：虚拟IP地址，必须要与RS在同一网段<br><strong>RIP</strong>：真实节点的IP地址<br><strong>CIP</strong>：客户端IP地址</p>
 <p><strong>LVS/NAT模型</strong><br>　　RS的网关必须为DIP<br>　　DIP要和RIP处于同一网络<br>　　RS支持任意操作系统<br>　　RIP必须为私网地址<br>　　DS支持端口映射</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g229o3zpbhj30lp0dp0sy.jpg" alt=""></p>
 <p><strong>LVS/DR模型</strong><br>　　前端路由必须发送给DS<br>　　VIP要和RIP处于同一网络<br>　　RS的网关不能够指向DIP<br>　　不支持端口映射<br>　　RS响应报文绝不通过DS<br>　　在环回口上配置VIP地址，因为环回口本来没有ip</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g229nm301vj30pt0kd0tb.jpg" alt=""></p>
 <p><strong>LVS/TUN模型</strong></p>
 <p>　　主要是解决DR转发到不同数据中心的RS    </p>
 <h3 id="lvs负载均衡算法"><a href="#lvs负载均衡算法" class="headerlink" title="lvs负载均衡算法"></a>lvs负载均衡算法</h3><p>　　<strong>rr</strong>：轮询<br>　　<strong>wrr</strong>：加权轮询<br>　　<strong>lc</strong>：最少连接数<br>　　<strong>wlc</strong>：加权最少连接数<br>　　<strong>ip hash</strong>：源地址哈希<br>　　<strong>sip hash</strong>：目的地址哈希</p>
