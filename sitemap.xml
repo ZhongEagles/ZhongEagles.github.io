@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/linux-09/</loc>
+    
+    <lastmod>2019-04-14T22:59:39.688Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/keepalived-05/</loc>
+    
+    <lastmod>2019-04-14T22:53:29.871Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/keepalived-04/</loc>
+    
+    <lastmod>2019-04-14T22:52:17.725Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/keepalived-02/</loc>
     
     <lastmod>2019-04-14T08:59:58.635Z</lastmod>
@@ -114,13 +135,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/keepalived-04/</loc>
-    
-    <lastmod>2019-04-10T07:56:01.258Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/hexo-06/</loc>
     
     <lastmod>2019-04-09T13:47:46.270Z</lastmod>
@@ -138,13 +152,6 @@
     <loc>http://yoursite.com/linux-13/</loc>
     
     <lastmod>2019-04-09T06:11:26.980Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/keepalived-05/</loc>
-    
-    <lastmod>2019-04-08T09:11:37.741Z</lastmod>
     
   </url>
   
@@ -530,13 +537,6 @@
     <loc>http://yoursite.com/linux-11/</loc>
     
     <lastmod>2019-02-23T13:26:57.936Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/linux-09/</loc>
-    
-    <lastmod>2019-02-23T13:24:50.341Z</lastmod>
     
   </url>
   
