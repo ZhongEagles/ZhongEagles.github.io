@@ -135,14 +135,17 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr2fptklsj30in0i20tk.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr3fkxz3oj30j90f575z.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4mugwa2j30j80giwgu.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g29a40lijmj31fk0kfgu8.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4rj51b2j30j80ih776.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4sl1fo8j30it0icdgl.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4uue65cj30j80i7q4o.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4vyg17qj30j80g1wgm.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g29a7m7stvj314o0kln0m.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g29acsm3q4j31ao0k0jyw.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrty67oibj30j80dbjsz.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzru43fvk2j30j80buq4i.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzru4du2daj30j80j3q6l.jpg">
-<meta property="og:updated_time" content="2019-02-23T13:33:42.062Z">
+<meta property="og:updated_time" content="2019-04-20T10:43:15.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-运维进阶-18 DHCP动态管理主机地址">
 <meta name="twitter:description" content="linux-运维进阶-18 DHCP动态管理主机地址">
@@ -505,7 +508,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-23 21:33:42" itemprop="dateModified" datetime="2019-02-23T21:33:42+08:00">2019-02-23</time>
+                <time title="修改时间：2019-04-20 18:43:15" itemprop="dateModified" datetime="2019-04-20T18:43:15+08:00">2019-04-20</time>
               
             
           </span>
@@ -762,7 +765,8 @@
 <p>　　这样设置以后，只要你的虚拟机网卡是仅主机模式且网卡配置文件里设置的ip获取方式是DHCP（默认就是DHCP），则其ip就会从上图中那个DHCP地址池中选取。例如，我新安装的一台虚拟机，网卡设置为仅主机模式后，打开后其ip如下图：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr3fkxz3oj30j90f575z.jpg" alt=""></p>
 <p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4mugwa2j30j80giwgu.jpg" alt=""></p>
-<p>可以看到它的ip为192.168.23.50，恰恰是上述地址池的第一个ip。</p>
+<p>　　可以看到它的ip为192.168.23.50，恰恰是上述地址池的第一个ip。那么上述地址池的最后一个ip用来干嘛了呢？如下图，打开控制面板，查看VMnet1的详细信息，可以看到上述地址池最后一个ip：192.168.23.150充当的是DHCP服务器的ip。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g29a40lijmj31fk0kfgu8.jpg" alt=""></p>
 <h3 id="2-NAT模式"><a href="#2-NAT模式" class="headerlink" title="2.NAT模式"></a>2.NAT模式</h3><p>​    此模式下，虚拟机与VMnet8虚拟网卡进行通信，咱们做一下测试：</p>
 <p>　　在虚拟网络编辑器中，我们将VMnet8如下图设置，给它设置一个DHCP地址池192.168.100.50-150。这样一来，我们的虚拟机网络适配器但凡是使用NAT模式且以DHCP方式获取ip的，就能从这个地址池中获取到ip。</p>
 <p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4rj51b2j30j80ih776.jpg" alt=""></p>
@@ -770,7 +774,11 @@
 <p>　　这样设置以后，只要你的虚拟机网卡是NAT模式且网卡配置文件里设置的ip获取方式是DHCP（默认就是DHCP），则其ip就会从上图中那个DHCP地址池中选取。例如，刚刚那台虚拟机，网卡设置为NAT模式后，打开后其ip如下图：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4uue65cj30j80i7q4o.jpg" alt=""></p>
 <p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzr4vyg17qj30j80g1wgm.jpg" alt=""></p>
-<p>可以看到它的ip为192.168.100.50，恰恰是上述地址池的第一个ip。</p>
+<p>　　可以看到它的ip为192.168.100.50，恰恰是上述地址池的第一个ip。要注意的是，在日常使用电脑的过程中，偶尔可能会把虚拟网卡VMnet1和VMnet8改动，出现下面这种情况：</p>
+<p>　　本来我的电脑VMnet8网卡采用的是192.168.100.X网段的ip，但是某一次更改配置之后就自动变成了下面这个网段。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g29a7m7stvj314o0kln0m.jpg" alt=""></p>
+<p>　　这时候只需要将属性配置为自动获取ip地址，那么就会变回原样了。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g29acsm3q4j31ao0k0jyw.jpg" alt=""></p>
 <h3 id="3-桥接模式"><a href="#3-桥接模式" class="headerlink" title="3.桥接模式"></a>3.桥接模式</h3><p>　　桥接模式使用的是你机器的真实网卡进行上网，也就是说，如果你的虚拟机网络适配器设置为桥接模式的话，则相当于虚拟机与你的电脑物理主机桥接，桥指的是网桥，就是交换机。所以，桥接模式下，你的虚拟机和你的物理机是在同一个网段的，如下图：</p>
 <p>​    我们将刚刚那台虚拟机设置为桥接模式，查看其ip：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrty67oibj30j80dbjsz.jpg" alt=""></p>
@@ -947,7 +955,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">83</span>
+                    <span class="site-state-item-count">92</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -986,7 +994,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1037,7 +1049,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

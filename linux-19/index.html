@@ -128,6 +128,7 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrvidvhrxj30wk0es0zq.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrurhx84tj30pp0jdn0w.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzruwruhjtj30ef07lmyr.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g22z7iqyo8j30ev0bagnf.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxahp5thj30j90ezq4g.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxblg8fcj30j80f9jsz.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrxchlp1cj30j80fpdic.jpg">
@@ -138,7 +139,7 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzt1f8onqlj30j80dcjxm.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzt26qi6i0j30j80i0ndw.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzt350f75jj30j80dvmyl.jpg">
-<meta property="og:updated_time" content="2019-02-23T13:34:58.480Z">
+<meta property="og:updated_time" content="2019-04-15T06:31:23.144Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-运维进阶-19 bind提供域名解析服务">
 <meta name="twitter:description" content="linux-运维进阶-19 bind提供域名解析服务">
@@ -501,7 +502,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-23 21:34:58" itemprop="dateModified" datetime="2019-02-23T21:34:58+08:00">2019-02-23</time>
+                <time title="修改时间：2019-04-15 14:31:23" itemprop="dateModified" datetime="2019-04-15T14:31:23+08:00">2019-04-15</time>
               
             
           </span>
@@ -598,7 +599,7 @@
 <h4 id="用户向就近的一台DNS服务器发起对某个域名的查询大致流程"><a href="#用户向就近的一台DNS服务器发起对某个域名的查询大致流程" class="headerlink" title="用户向就近的一台DNS服务器发起对某个域名的查询大致流程"></a>用户向就近的一台DNS服务器发起对某个域名的查询大致流程</h4><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrvidvhrxj30wk0es0zq.jpg" alt=""></p>
 <p>　　当用户向网络指定的DNS服务器发起一个域名请求时，通常情况下会有本地由此DNS服务器向上级的DNS服务器发送迭代查询请求；如果该DNS服务器没有要查询的信息，则会进一步向上级DNS服务器发送迭代查询请求，直到获得准确的查询结果为止。其中最高级、最权威的根DNS服务器总共有13台，分布在世界各地。</p>
 <h3 id="根域名服务器"><a href="#根域名服务器" class="headerlink" title="根域名服务器"></a>根域名服务器</h3><p>　　根域名服务器是域名解析体系的核心，握有域名的最终解释权，简单来说，如果要查询域名，均需要从根域名服务器开始查询。域名服务器是提供域名解析的服务器，在有基本的知识下，任何人都可以搭建域名服务器，甚至是根域名服务器，有名的软件有：BIND。</p>
-<h3 id="全球只有13台根服务器的准确说法"><a href="#全球只有13台根服务器的准确说法" class="headerlink" title="全球只有13台根服务器的准确说法"></a>全球只有13台根服务器的准确说法</h3><p>​    域名服务器就像许多国际组织一样，是需要被承认的，当你的根域名服务器被全世界承认，你的服务器也可以成为这其中的一员。因为互联网起源于美国，域名体系也是诞生于美国，在互联网不断扩张和发展的过程中，逐渐形成了13台服务器为全球根服务器。这13台根服务器由ICANN管理，由12个机构具体运营。13台根服务器如下图所示：</p>
+<h3 id="全球只有13台根服务器的准确说法"><a href="#全球只有13台根服务器的准确说法" class="headerlink" title="全球只有13台根服务器的准确说法"></a>全球只有13台根服务器的准确说法</h3><p>　　域名服务器就像许多国际组织一样，是需要被承认的，当你的根域名服务器被全世界承认，你的服务器也可以成为这其中的一员。因为互联网起源于美国，域名体系也是诞生于美国，在互联网不断扩张和发展的过程中，逐渐形成了13台服务器为全球根服务器。这13台根服务器由ICANN管理，由12个机构具体运营。13台根服务器如下图所示：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzrurhx84tj30pp0jdn0w.jpg" alt=""></p>
 <p>13台根域名服务器从a至m编号，分属12个运营机构运营。</p>
 <p>　　但是，网上新闻中有些说法并不准确，举个反例：“全世界只有13台根域名服务器，名字分别为A至M，其中一个主根服务器在美国，其余12个均为辅根服务器，其中9个在美国，欧洲两个，分别位于英国和瑞典，亚洲一个位于日本”</p>
@@ -607,6 +608,17 @@
 <p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzruwruhjtj30ef07lmyr.jpg" alt=""></p>
 <p>　　在上述反例中，还强调了主辅之分，然鹅，事实上，这几百台除了运营者不同，哪有什么区别，真正的根一直在幕后。我个人比较支持下面的一种说法：</p>
 <p>　　全世界只有13台逻辑根域名服务器，名字分别为A至M，由12个运营者运营，其中8个在美国，欧洲两个位于英国和瑞典，亚洲1个位于日本，而真正的主根服务器并未公开。</p>
+<h2 id="DNS解析过程分析"><a href="#DNS解析过程分析" class="headerlink" title="DNS解析过程分析"></a>DNS解析过程分析</h2><h3 id="如下图"><a href="#如下图" class="headerlink" title="如下图"></a>如下图</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g22z7iqyo8j30ev0bagnf.jpg" alt=""></p>
+<h3 id="域名DNS解析完整流程（以www-baidu-com为例）："><a href="#域名DNS解析完整流程（以www-baidu-com为例）：" class="headerlink" title="域名DNS解析完整流程（以www.baidu.com为例）："></a>域名DNS解析完整流程（以<a href="http://www.baidu.com为例）：" target="_blank" rel="noopener">www.baidu.com为例）：</a></h3><p>第一步：本地客户机提出域名解析请求，查找本地HOST文件有无该域名记录；如果没有，将该请求发送给本地的域名服务器。</p>
+<p>第二步：当本地的域名服务器收到请求后，就先查询本地的缓存，如果有该纪录项，则本地的域名服务器就直接把查询的结果返回。</p>
+<p>第三步：如果本地DNS缓存中没有该纪录，则本地域名服务器就直接把请求发给根域名服务器，根域名服务器收到请求后，返回该域名对应的顶级域名服务器，比如这次请求返回.com的服务器地址。</p>
+<p>第四步：本地域名服务器接到顶级域名服务器地址后，向该顶级域名服务器请求；然后，接受请求的顶级域名服务器查询自己的缓存；如果有该纪录项，则顶级域名域名服务器就直接把查询的结果返回；如果没有该记录，则顶级域名服务器返回该域名的二级域名务器地址，即返回.baidu.com对应的二级服务器地址。</p>
+<p>第五步：本地域名服务器获得该地址后，发请求到该域名的二级域名服务器；二级域名服务器开始解析<a href="http://www.baidu.com，并将解析结果返回给本地域名服务器。" target="_blank" rel="noopener">www.baidu.com，并将解析结果返回给本地域名服务器。</a></p>
+<p>第六步：本地域名服务器把返回的结果保存到缓存，以备下一次使用，同时还将结果返回给客户机，解析到此完成。</p>
+<h3 id="DNS解析模式"><a href="#DNS解析模式" class="headerlink" title="DNS解析模式"></a>DNS解析模式</h3><p>递归查询：在该模式下DNS服务器接收到客户机请求，必须使用一个准确的查询结果回复客户机。如果DNS服务器本地没有存储查询DNS信息，那么该服务器会询问其他服务器，并将返回的查询结果提交给客户机。</p>
+<p>迭代查询：DNS所在服务器若没有可以响应的结果，会向客户机提供其他能够解析查询请求的DNS服务器地址，当客户机发送查询请求时，DNS服务器并不直接回复查询结果，而是告诉客户机另一台DNS服务器地址，客户机再向这台DNS服务器提交请求，依次循环直到返回查询的结果为止。</p>
+<p>可以看到，上面的DNS解析六个步骤使用的是迭代查询模式。</p>
+<h3 id="常用DNS服务器地址"><a href="#常用DNS服务器地址" class="headerlink" title="常用DNS服务器地址"></a>常用DNS服务器地址</h3><p>国内：114.114.114.114 备用：114.114.114.115<br>国外：8.8.8.8 备用：8.8.4.4</p>
 <h2 id="BIND"><a href="#BIND" class="headerlink" title="BIND"></a>BIND</h2><p>　　BIND（Berkeley Internet Name Domain，伯克利网络域名）服务是全球范围内使用最广泛、最安全可靠且高效的域名解析服务程序。DNS域名解析服务作为互联网基础设施服务，其责任之重可想而知，因此建议大家在生产环境中安装部署bind服务程序时加上chroot（俗称牢笼机制）扩展包，以便有效地限制bind服务程序仅能对自身的配置文件进行操作，以确保整个服务器的安全。</p>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>CentOS7安装DNS服务软件包</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install bind bind-chroot bind-utils -y</span><br></pre></td></tr></table></figure>
@@ -834,7 +846,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">83</span>
+                    <span class="site-state-item-count">92</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -873,7 +885,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -924,7 +940,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -974,7 +994,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-19-bind提供域名解析服务"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-19 bind提供域名解析服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念解析"><span class="nav-number">1.1.</span> <span class="nav-text">概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS域名解析服务"><span class="nav-number">1.1.1.</span> <span class="nav-text">DNS域名解析服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS域名解析服务采用的层次目录结构"><span class="nav-number">1.1.2.</span> <span class="nav-text">DNS域名解析服务采用的层次目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主服务器"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">主服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从服务器"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">从服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存服务器"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">缓存服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户向就近的一台DNS服务器发起对某个域名的查询大致流程"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">用户向就近的一台DNS服务器发起对某个域名的查询大致流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根域名服务器"><span class="nav-number">1.1.3.</span> <span class="nav-text">根域名服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全球只有13台根服务器的准确说法"><span class="nav-number">1.1.4.</span> <span class="nav-text">全球只有13台根服务器的准确说法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BIND"><span class="nav-number">1.2.</span> <span class="nav-text">BIND</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.3.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正向解析实验"><span class="nav-number">1.4.</span> <span class="nav-text">正向解析实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向解析实验"><span class="nav-number">1.5.</span> <span class="nav-text">反向解析实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署dns的主从服务器"><span class="nav-number">1.6.</span> <span class="nav-text">部署dns的主从服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置主服务器"><span class="nav-number">1.6.1.</span> <span class="nav-text">配置主服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置从服务器"><span class="nav-number">1.6.2.</span> <span class="nav-text">配置从服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查同步结果"><span class="nav-number">1.6.3.</span> <span class="nav-text">检查同步结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全的加密传输同步主从服务器"><span class="nav-number">1.7.</span> <span class="nav-text">安全的加密传输同步主从服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主服务器配置"><span class="nav-number">1.7.1.</span> <span class="nav-text">主服务器配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置从服务器-1"><span class="nav-number">1.7.2.</span> <span class="nav-text">配置从服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查结果"><span class="nav-number">1.7.3.</span> <span class="nav-text">检查结果</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-运维进阶-19-bind提供域名解析服务"><span class="nav-number">1.</span> <span class="nav-text">linux-运维进阶-19 bind提供域名解析服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念解析"><span class="nav-number">1.1.</span> <span class="nav-text">概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS域名解析服务"><span class="nav-number">1.1.1.</span> <span class="nav-text">DNS域名解析服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS域名解析服务采用的层次目录结构"><span class="nav-number">1.1.2.</span> <span class="nav-text">DNS域名解析服务采用的层次目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主服务器"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">主服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从服务器"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">从服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存服务器"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">缓存服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户向就近的一台DNS服务器发起对某个域名的查询大致流程"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">用户向就近的一台DNS服务器发起对某个域名的查询大致流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根域名服务器"><span class="nav-number">1.1.3.</span> <span class="nav-text">根域名服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全球只有13台根服务器的准确说法"><span class="nav-number">1.1.4.</span> <span class="nav-text">全球只有13台根服务器的准确说法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS解析过程分析"><span class="nav-number">1.2.</span> <span class="nav-text">DNS解析过程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如下图"><span class="nav-number">1.2.1.</span> <span class="nav-text">如下图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#域名DNS解析完整流程（以www-baidu-com为例）："><span class="nav-number">1.2.2.</span> <span class="nav-text">域名DNS解析完整流程（以www.baidu.com为例）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS解析模式"><span class="nav-number">1.2.3.</span> <span class="nav-text">DNS解析模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用DNS服务器地址"><span class="nav-number">1.2.4.</span> <span class="nav-text">常用DNS服务器地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BIND"><span class="nav-number">1.3.</span> <span class="nav-text">BIND</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.4.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正向解析实验"><span class="nav-number">1.5.</span> <span class="nav-text">正向解析实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向解析实验"><span class="nav-number">1.6.</span> <span class="nav-text">反向解析实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署dns的主从服务器"><span class="nav-number">1.7.</span> <span class="nav-text">部署dns的主从服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置主服务器"><span class="nav-number">1.7.1.</span> <span class="nav-text">配置主服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置从服务器"><span class="nav-number">1.7.2.</span> <span class="nav-text">配置从服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查同步结果"><span class="nav-number">1.7.3.</span> <span class="nav-text">检查同步结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全的加密传输同步主从服务器"><span class="nav-number">1.8.</span> <span class="nav-text">安全的加密传输同步主从服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主服务器配置"><span class="nav-number">1.8.1.</span> <span class="nav-text">主服务器配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置从服务器-1"><span class="nav-number">1.8.2.</span> <span class="nav-text">配置从服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查结果"><span class="nav-number">1.8.3.</span> <span class="nav-text">检查结果</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

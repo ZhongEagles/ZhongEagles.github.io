@@ -1,10 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://yoursite.com/linux-09/</loc>
-    <lastmod>2019-04-14</lastmod>
+    <loc>http://yoursite.com/command-04/</loc>
+    <lastmod>2019-04-21</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/command-02/</loc>
+    <lastmod>2019-04-21</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/command-03/</loc>
+    <lastmod>2019-04-21</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/shell-05/</loc>
+    <lastmod>2019-04-21</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/command-01/</loc>
+    <lastmod>2019-04-21</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-14/</loc>
+    <lastmod>2019-04-20</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/keepalived-05/</loc>
+    <lastmod>2019-04-20</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/shell-04/</loc>
+    <lastmod>2019-04-20</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-18/</loc>
+    <lastmod>2019-04-20</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/shell-03/</loc>
+    <lastmod>2019-04-15</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-19/</loc>
+    <lastmod>2019-04-15</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/shell-02/</loc>
+    <lastmod>2019-04-15</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/shell-01/</loc>
+    <lastmod>2019-04-15</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-10/</loc>
+    <lastmod>2019-04-14</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-09/</loc>
     <lastmod>2019-04-14</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/keepalived-04/</loc>
@@ -93,9 +132,6 @@
   </url>  <url>
     <loc>http://yoursite.com/ansible-02/</loc>
     <lastmod>2019-03-24</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-10/</loc>
-    <lastmod>2019-03-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-04/</loc>
     <lastmod>2019-03-21</lastmod>
@@ -208,19 +244,10 @@
     <loc>http://yoursite.com/linux-22/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/linux-19/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-18/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/linux-17/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-16/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-14/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-11/</loc>
