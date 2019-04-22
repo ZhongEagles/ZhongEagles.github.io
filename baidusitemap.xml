@@ -2,7 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://yoursite.com/shell-05/</loc>
-    <lastmod>2019-04-21</lastmod>
+    <lastmod>2019-04-22</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/command-05/</loc>
+    <lastmod>2019-04-22</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/command-04/</loc>
     <lastmod>2019-04-21</lastmod>
