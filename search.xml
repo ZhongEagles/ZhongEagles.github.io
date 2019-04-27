@@ -1209,6 +1209,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[HEXO-07-微博图床限制外链问题]]></title>
+    <url>%2Fhexo-07%2F</url>
+    <content type="text"><![CDATA[HEXO-07-微博图床限制外链问题 2019-4-26日左右，好多人惊恐地发现自己hexo博客上图片无法显示了，但是图片链接单独在网页上还能打开。这是由于微博图床开始限制外链了，建议将图片转移到其他图床，否则后面如果微博做出更加严格的外链限制，那可真就神仙难救了。 但是就目前来说，暂时的补救办法还是有的。按照下面的步骤即可让微博图床图片恢复显示。 方法：给head文件里面添加no-ferrer避免微博服务器发现你的网站引用了它的图片。 步骤1.以next主题为例，编辑下面这个文件： 1D:\Blog\themes\next\layout\_partials\head\head.swig 在文件中增加一行 1&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot; /&gt; 这样所有页面都会以no-referrer这样方法加载了，微博服务器也就不会发现你的网站引用了它的图片，外链限制解决。但是切记后面可能会有更加严格的限制，真是提心吊胆，建议趁早换个图床吧。 本篇到此结束]]></content>
+      <categories>
+        <category>HEXO</category>
+      </categories>
+      <tags>
+        <tag>HEXO</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[HEXO-06-coding 认证问题]]></title>
     <url>%2Fhexo-06%2F</url>
     <content type="text"><![CDATA[HEXO-06-coding 认证问题 由于coding的安全机制，它会不定时选择某一天，当你敲下hexo d时弹出一个窗口，让你输入coding的用户名和密码，万一你输错了，那么后面这个窗口直接不弹出来，然后每次你敲hexo d是都会报错，关机重启也没用，连一个给你改过的机会都不给，实在有违人道！ 但是，其实解决办法还是有的。 在控制面板打开凭据管理器 找到这个coding的凭据，点击编辑 在这里输入你的coding的用户名和密码，再次hexo d的时候就不会再报错了。 coding的用户名不是你的coding账号名，而是用户名，不要搞错了。 后来想想，每个一段时间就要这样认证一次，估计是电脑里保存的那个凭据有一定时长的有效期，到期了就得重新认证。 本篇到此结束]]></content>
