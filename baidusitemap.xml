@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/linux-25/</loc>
+    <lastmod>2019-06-07</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/hexo-07/</loc>
     <lastmod>2019-04-27</lastmod>
   </url>  <url>
@@ -239,9 +242,6 @@
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-27/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-25/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-24/</loc>
