@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/linux-13/</loc>
+    <lastmod>2019-08-12</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/shell-04/</loc>
+    <lastmod>2019-08-09</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/shell-03/</loc>
+    <lastmod>2019-08-09</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/linux-25/</loc>
     <lastmod>2019-06-07</lastmod>
   </url>  <url>
@@ -8,9 +17,6 @@
     <lastmod>2019-04-27</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/command-06/</loc>
-    <lastmod>2019-04-22</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/shell-03/</loc>
     <lastmod>2019-04-22</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/shell-05/</loc>
@@ -35,9 +41,6 @@
     <lastmod>2019-04-20</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/keepalived-05/</loc>
-    <lastmod>2019-04-20</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/shell-04/</loc>
     <lastmod>2019-04-20</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-18/</loc>
@@ -113,9 +116,6 @@
     <lastmod>2019-04-09</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/keepalived-03/</loc>
-    <lastmod>2019-04-09</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-13/</loc>
     <lastmod>2019-04-09</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/ansible-05/</loc>
