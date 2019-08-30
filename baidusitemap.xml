@@ -1,17 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://yoursite.com/mysql-01/</loc>
+    <loc>http://yoursite.com/mysql-02/</loc>
     <lastmod>2019-08-30</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/rhce-10/</loc>
-    <lastmod>2019-08-29</lastmod>
+    <lastmod>2019-08-30</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/rhce-09/</loc>
-    <lastmod>2019-08-29</lastmod>
+    <lastmod>2019-08-30</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/rhce-08/</loc>
-    <lastmod>2019-08-29</lastmod>
+    <lastmod>2019-08-30</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-07/</loc>
+    <lastmod>2019-08-30</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-06/</loc>
+    <lastmod>2019-08-30</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-05/</loc>
+    <lastmod>2019-08-30</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-04/</loc>
+    <lastmod>2019-08-30</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-03/</loc>
+    <lastmod>2019-08-30</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-02/</loc>
+    <lastmod>2019-08-30</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-01/</loc>
+    <lastmod>2019-08-30</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/mysql-01/</loc>
+    <lastmod>2019-08-30</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/prometheus-01/</loc>
     <lastmod>2019-08-22</lastmod>
@@ -27,27 +51,6 @@
   </url>  <url>
     <loc>http://yoursite.com/shell-03/</loc>
     <lastmod>2019-08-09</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-07/</loc>
-    <lastmod>2019-08-08</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-06/</loc>
-    <lastmod>2019-08-08</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-05/</loc>
-    <lastmod>2019-08-08</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-04/</loc>
-    <lastmod>2019-08-08</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-03/</loc>
-    <lastmod>2019-07-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-02/</loc>
-    <lastmod>2019-07-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-01/</loc>
-    <lastmod>2019-07-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/rhcsa-04/</loc>
     <lastmod>2019-07-20</lastmod>

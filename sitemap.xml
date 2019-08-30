@@ -2,30 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/mysql-01/</loc>
+    <loc>http://yoursite.com/mysql-02/</loc>
     
-    <lastmod>2019-08-30T04:08:02.738Z</lastmod>
+    <lastmod>2019-08-30T05:47:13.262Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/rhce-10/</loc>
     
-    <lastmod>2019-08-29T12:35:28.637Z</lastmod>
+    <lastmod>2019-08-30T05:45:44.411Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/rhce-09/</loc>
     
-    <lastmod>2019-08-29T12:24:16.565Z</lastmod>
+    <lastmod>2019-08-30T05:45:34.481Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/rhce-08/</loc>
     
-    <lastmod>2019-08-29T12:06:16.675Z</lastmod>
+    <lastmod>2019-08-30T05:45:25.971Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/rhce-07/</loc>
+    
+    <lastmod>2019-08-30T05:45:15.994Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/rhce-06/</loc>
+    
+    <lastmod>2019-08-30T05:45:05.128Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/rhce-05/</loc>
+    
+    <lastmod>2019-08-30T05:44:56.211Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/rhce-04/</loc>
+    
+    <lastmod>2019-08-30T05:44:46.992Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/rhce-03/</loc>
+    
+    <lastmod>2019-08-30T05:44:36.184Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/rhce-02/</loc>
+    
+    <lastmod>2019-08-30T05:44:24.984Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/rhce-01/</loc>
+    
+    <lastmod>2019-08-30T05:44:10.183Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/mysql-01/</loc>
+    
+    <lastmod>2019-08-30T04:08:02.738Z</lastmod>
     
   </url>
   
@@ -61,55 +117,6 @@
     <loc>http://yoursite.com/shell-03/</loc>
     
     <lastmod>2019-08-09T02:00:12.354Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/rhce-07/</loc>
-    
-    <lastmod>2019-08-08T08:52:16.852Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/rhce-06/</loc>
-    
-    <lastmod>2019-08-08T08:02:57.564Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/rhce-05/</loc>
-    
-    <lastmod>2019-08-08T06:44:28.373Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/rhce-04/</loc>
-    
-    <lastmod>2019-08-08T03:30:29.319Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/rhce-03/</loc>
-    
-    <lastmod>2019-07-23T02:58:28.774Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/rhce-02/</loc>
-    
-    <lastmod>2019-07-23T02:08:44.880Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/rhce-01/</loc>
-    
-    <lastmod>2019-07-23T01:37:20.042Z</lastmod>
     
   </url>
   
