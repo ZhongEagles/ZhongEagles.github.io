@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/docker-03/</loc>
+    
+    <lastmod>2019-09-01T02:40:16.631Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/docker-02/</loc>
+    
+    <lastmod>2019-09-01T02:39:25.160Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/mysql-02/</loc>
     
     <lastmod>2019-08-30T05:54:13.480Z</lastmod>
@@ -411,6 +425,13 @@
     <loc>http://yoursite.com/ansible-05/</loc>
     
     <lastmod>2019-03-28T07:01:25.308Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/docker-01/</loc>
+    
+    <lastmod>2019-03-25T06:12:09.335Z</lastmod>
     
   </url>
   
