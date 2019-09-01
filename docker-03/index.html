@@ -147,7 +147,7 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1hn5dyi53j31hc0u0dj5.jpg">
 <meta property="og:image" content="https://i.loli.net/2019/09/01/q7Rk3nptJ5u6a8y.png">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1hpvc67rhj30lt0o71h2.jpg">
-<meta property="og:updated_time" content="2019-09-01T03:36:46.267Z">
+<meta property="og:updated_time" content="2019-09-01T03:45:48.580Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-docker-03 docker的使用">
 <meta name="twitter:description" content="linux-docker-03 docker的使用">
@@ -510,7 +510,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-01 11:36:46" itemprop="dateModified" datetime="2019-09-01T11:36:46+08:00">2019-09-01</time>
+                <time title="修改时间：2019-09-01 11:45:48" itemprop="dateModified" datetime="2019-09-01T11:45:48+08:00">2019-09-01</time>
               
             
           </span>
@@ -732,7 +732,7 @@
 <h3 id="更新镜像"><a href="#更新镜像" class="headerlink" title="更新镜像"></a>更新镜像</h3><p>更新镜像之前，我们需要使用镜像来创建一个容器。</p>
 <p>在运行的容器内使用 apt-get update 命令进行更新。</p>
 <p>在完成操作之后，输入 exit命令来退出这个容器。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">runoob@runoob:~$ docker run -t -i ubuntu:15.10 /bin/bash</span><br><span class="line">root@6f96516f979d:/# apt-get update</span><br><span class="line">root@6f96516f979d:/# exit</span><br><span class="line">exit</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]#  docker run -t -i ubuntu:15.10 /bin/bash</span><br><span class="line">root@6f96516f979d:/# apt-get update</span><br><span class="line">root@6f96516f979d:/# exit</span><br><span class="line">exit</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <p>　　此时ID为6f96516f979d的容器，是按我们的需求更改的容器。我们可以通过命令 docker commit来提交容器副本。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker commit -m=&quot;has update&quot; -a=&quot;feng&quot; 6f96516f979d my/ubuntu:v2</span><br><span class="line">sha256:3042e8d9219ab4a49990f0262a1ebe5162667ff2b7c2620d39953ee8b0479597</span><br><span class="line">[root@localhost ~]# docker images</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">my/ubuntu           v2                  3042e8d9219a        5 seconds ago       137MB</span><br><span class="line">httpd               latest              5eace252f2f2        14 hours ago        132MB</span><br><span class="line">hello-world         latest              fce289e99eb9        2 months ago        1.84kB</span><br><span class="line">ubuntu              15.10               9b9cb95443b5        2 years ago         137MB</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">#docker commit的参数说明</span><br><span class="line">Options:</span><br><span class="line">  -a, --author string    Author (e.g., &quot;John Hannibal Smith &lt;hannibal@a-team.com&gt;&quot;)</span><br><span class="line">  -c, --change list      Apply Dockerfile instruction to the created image</span><br><span class="line">  -m, --message string   Commit message</span><br><span class="line">  -p, --pause            Pause container during commit (default true)</span><br></pre></td></tr></table></figure>
 <p>使用我们的新镜像 <strong>my/ubuntu</strong> 来启动一个容器</p>
