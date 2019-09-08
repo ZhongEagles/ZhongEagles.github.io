@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/mysql-03/</loc>
+    <lastmod>2019-09-08</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/mysql-01/</loc>
+    <lastmod>2019-09-07</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/docker-03/</loc>
     <lastmod>2019-09-01</lastmod>
   </url>  <url>
@@ -38,9 +44,6 @@
     <lastmod>2019-08-30</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/rhce-01/</loc>
-    <lastmod>2019-08-30</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/mysql-01/</loc>
     <lastmod>2019-08-30</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-02/</loc>

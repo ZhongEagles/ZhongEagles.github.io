@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="referrer" content="no-referrer">
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="WiEkpiME0y">
+  <meta name="baidu-site-verification" content="J0gKiYWhR9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="mysql-03 mysql 一主多从+主从复制+读写分离">
+<meta name="keywords" content="linux,Centos,RedHat,mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql-03 mysql 一主多从+主从复制+读写分离">
+<meta property="og:url" content="http://yoursite.com/mysql-03/index.html">
+<meta property="og:site_name" content="峰">
+<meta property="og:description" content="mysql-03 mysql 一主多从+主从复制+读写分离">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/rCRuqfJFVjpyS8A.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/B19wTxPQgu6KVr3.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/sF49JPUASWBrm3t.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/4r8WwHncsfhbjpR.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/aJv7PIwir3ASRm4.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/oznPlK3TMSqEO2x.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/cFRL9NjQlGaX27g.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/uADl9NChaWJ4Yg1.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/yGDtIsBOfg9LlU6.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/WF6Kdplfwm4RMjP.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/iKMhGlojumJZISU.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/DeSubxIJcV3Wkzl.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/N5Xx2vhbazEVwZC.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/5XgBvi4d9JwAmyT.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/ynB8IjFkbl3uWY7.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/Fd2hf7eHklc9bKn.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/SLd3Asf1FTqImuO.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/LflgTZa5HQoRYA9.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/tPTuXgjnqLAaKx6.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/eUuSOsrmkNXQfWw.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/1t3H7Sn9yPVFZWs.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/15mxQcSebGahWA2.png">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s3wlbez5j30n807uq7w.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s3ya86mij30an088tb8.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s3ylgxxwj30ex0610uv.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s41r4h1ij30m90eygt9.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/iNH54WdnqkIKGua.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/08/Zrz3HuJG8OcaAX9.png">
+<meta property="og:updated_time" content="2019-09-08T06:52:22.819Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql-03 mysql 一主多从+主从复制+读写分离">
+<meta name="twitter:description" content="mysql-03 mysql 一主多从+主从复制+读写分离">
+<meta name="twitter:image" content="https://i.loli.net/2019/09/08/rCRuqfJFVjpyS8A.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/mysql-03/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>mysql-03 mysql 一主多从+主从复制+读写分离 | 峰</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">峰</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">个人博客</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/mysql-03/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="feng">
+      <meta itemprop="description" content="IT技术分享">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mysql-03 mysql 一主多从+主从复制+读写分离
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-26 09:53:40" itemprop="dateCreated datePublished" datetime="2019-07-26T09:53:40+08:00">2019-07-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-09-08 14:52:22" itemprop="dateModified" datetime="2019-09-08T14:52:22+08:00">2019-09-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/linux-mysql/" itemprop="url" rel="index"><span itemprop="name">linux-mysql</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/mysql-03/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/mysql-03/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/mysql-03/" class="leancloud_visitors" data-flag-title="mysql-03 mysql 一主多从+主从复制+读写分离">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">mysql-03 mysql 一主多从+主从复制+读写分离</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="mysql-03-mysql-一主多从-主从复制-读写分离"><a href="#mysql-03-mysql-一主多从-主从复制-读写分离" class="headerlink" title="mysql-03 mysql 一主多从+主从复制+读写分离"></a>mysql-03 mysql 一主多从+主从复制+读写分离</h1><h2 id="概念引入"><a href="#概念引入" class="headerlink" title="概念引入"></a>概念引入</h2><p>　　利用mysql主从复制技术，可以在保证主从数据库数据同步的前提下，实现读写分离。在master上完成写操作，在slave上完成读操作，可以分担master的压力，从而减少主数据库的连接，降低数据库崩溃、数据丢失等风险。mysql读写分离技术非常适用于读操作量比较大的场景，slave也可以设置多台，可大幅减轻master的压力。</p>
+<h2 id="常见mysql读写分离分类"><a href="#常见mysql读写分离分类" class="headerlink" title="常见mysql读写分离分类"></a>常见mysql读写分离分类</h2><h3 id="一、基于程序代码内部实现"><a href="#一、基于程序代码内部实现" class="headerlink" title="一、基于程序代码内部实现"></a>一、基于程序代码内部实现</h3><p>​         在代码中根据select 、insert进行路由分类，这类方法也是目前生产环境下应用最广泛的。优点是性能较好，因为程序在代码中实现，不需要增加额外的硬件开支，缺点是需要开发人员来实现，运维人员无从下手。</p>
+<h3 id="二、基于中间代理层实现"><a href="#二、基于中间代理层实现" class="headerlink" title="二、基于中间代理层实现"></a>二、基于中间代理层实现</h3><p>​         代理一般介于应用服务器和数据库服务器之间，代理数据库服务器接收到应用服务器的请求后根据判断后转发到，后端数据库，有以下代表性的应用程序。</p>
+<p>1）<strong>mysql_proxy：</strong>mysql_proxy是Mysql的一个开源项目，通过其自带的<strong>lua</strong>脚本进行sql判断。（要求具有lua编程能力，严重依赖lua脚本，需要不停给mysql_proxy打补丁，修复一些缺陷，mysql官方并不建议将此程序在生产环境使用）。</p>
+<p>2）<strong>Atlas：</strong>是由 Qihoo 360, Web平台部基础架构团队开发维护的一个基于MySQL协议的数据中间层项目。它是在mysql-proxy 0.8.2版本的基础上，对其进行了优化，增加了一些新的功能特性。360内部使用Atlas运行的mysql业务，每天承载的读写请求数达几十亿条。支持事物以及存储过程。</p>
+<p>3）<strong>Amoeba：</strong>由阿里巴巴集团在职员工陈思儒使用序java语言进行开发，阿里巴巴集团将其用户生产环境下，但是它并不支持事物以及存数过程。（只需要针对xml配置文件配置即可，功能强大配置简单，无需依赖额外脚本）</p>
+<p>4）Cobar：基于Amoeba上开发的，主要实现分库，这里不做详细介绍。</p>
+<p>注意：一般来讲，当在程序代码中实现读写分离对代码的改动较大时，会选择是由中间代理层来实现读写分离。</p>
+<h2 id="实验准备"><a href="#实验准备" class="headerlink" title="实验准备"></a>实验准备</h2><p>slave1：192.168.141.53/24</p>
+<p>slave2：192.168.141.69/24</p>
+<p>master：192.168.141.12/24</p>
+<p>proxy：192.168.141.16/24</p>
+<p>client：192.168.141.132/24</p>
+<p>实现方法：基于中间代理层实现，使用mysql_proxy程序实现。</p>
+<p>实验拓扑：</p>
+<p><img src="https://i.loli.net/2019/09/08/rCRuqfJFVjpyS8A.png" alt=""></p>
+<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><h3 id="1、下载mysql-proxy"><a href="#1、下载mysql-proxy" class="headerlink" title="1、下载mysql_proxy"></a>1、下载mysql_proxy</h3><p>1）打开mysql官网<a href="http://www.mysql.com，找到download-&gt;MySQL" target="_blank" rel="noopener">www.mysql.com，找到download-&gt;MySQL</a> Community (GPL) Downloads ，如下图</p>
+<p><img src="https://i.loli.net/2019/09/08/B19wTxPQgu6KVr3.png" alt=""></p>
+<p>2）点击Download Archives</p>
+<p><img src="https://i.loli.net/2019/09/08/sF49JPUASWBrm3t.png" alt=""></p>
+<p>3）点击Mysql_Proxy</p>
+<p><img src="https://i.loli.net/2019/09/08/4r8WwHncsfhbjpR.png" alt=""></p>
+<p>4）选择最新版本，对应通用的Linux-Generic操作系统，选择适合你的linux系统的包下载，例如我的虚拟机是64位的，就下载64位的。</p>
+<p><img src="https://i.loli.net/2019/09/08/aJv7PIwir3ASRm4.png" alt=""></p>
+<h3 id="2、配置proxy服务器"><a href="#2、配置proxy服务器" class="headerlink" title="2、配置proxy服务器"></a>2、配置proxy服务器</h3><p>1）安装lua，新建代理用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy ~]# yum install lua -y</span><br><span class="line">[root@proxy ~]# useradd -r mysql-proxy</span><br></pre></td></tr></table></figure>
+<p>2）安装lrzsz，将刚刚下载好的mysql_proxy压缩包上传到proxy服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy ~]# rz</span><br><span class="line"></span><br><span class="line">[root@proxy ~]# ls</span><br><span class="line"></span><br><span class="line">[root@proxy ~]# tar -xf mysql-proxy-0.8.5-linux-glibc2.3-x86-64bit.tar.gz -C /usr/local</span><br><span class="line">[root@proxy ~]# cd /usr/local</span><br><span class="line">[root@proxy local]# ls</span><br><span class="line"></span><br><span class="line">[root@proxy local]# ln -sv mysql-proxy-0.8.5-linux-glibc2.3-x86-64bit/ mysql-proxy</span><br><span class="line"></span><br><span class="line">[root@proxy local]# ll</span><br></pre></td></tr></table></figure>
+<p>如下图</p>
+<p><img src="https://i.loli.net/2019/09/08/oznPlK3TMSqEO2x.png" alt=""></p>
+<p>3、了解mysql_proxy</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy local]# cd mysql-proxy</span><br><span class="line">[root@proxy mysql-proxy]# ls bin/</span><br><span class="line">mysql-binlog-dump  mysql-myisam-dump  mysql-proxy</span><br><span class="line">[root@proxy mysql-proxy]# </span><br><span class="line"></span><br><span class="line">#新建目录，用以存放配置文件和文件夹</span><br><span class="line">[root@proxy mysql-proxy]# mkdir conf logs  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#为了方便访问bin/目录下的mysql-proxy命令，运行以下脚本，运行环境变量</span><br><span class="line">[root@proxy mysql-proxy]# vim /etc/profile.d/mysql-proxy.sh</span><br><span class="line">[root@proxy mysql-proxy]# cat /etc/profile.d/mysql-proxy.sh</span><br><span class="line">export PATH=$PATH:/usr/local/mysql-proxy/bin</span><br><span class="line">[root@proxy mysql-proxy]# . /etc/profile.d/mysql-proxy.sh</span><br><span class="line">[root@proxy mysql-proxy]#</span><br></pre></td></tr></table></figure>
+<p>注意：查找帮助加–help-all即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy mysql-proxy]# mysql-proxy --help-all</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/09/08/cFRL9NjQlGaX27g.png" alt=""></p>
+<p>注意：若正在64位linux系统装了32位的mysql_proxy，运行mysql-proxy –help-all命令会出错，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy mysql-proxy]# mysql-proxy --help-all</span><br><span class="line">/usr/local/mysql-proxy/bin/mysql-proxy: /usr/local/mysql-proxy/libexec/mysql-proxy: /lib/ld-linux.so.2: bad ELF interpreter: 没有那个文件或目录</span><br><span class="line">/usr/local/mysql-proxy/bin/mysql-proxy:行52: /usr/local/mysql-proxy/libexec/mysql-proxy: 成功</span><br></pre></td></tr></table></figure>
+<h4 id="参数解释"><a href="#参数解释" class="headerlink" title="参数解释"></a>参数解释</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy mysql-proxy]# mysql-proxy --help-all</span><br><span class="line">Usage:</span><br><span class="line">  mysql-proxy [OPTION...] - MySQL Proxy</span><br><span class="line"></span><br><span class="line">#命令帮助提示</span><br><span class="line">Help Options:</span><br><span class="line">  -?, --help                                              Show help options</span><br><span class="line">  --help-all                                              Show all help options</span><br><span class="line">  --help-proxy                                            Show options for the proxy-module</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#代理模块配置</span><br><span class="line">proxy-module  </span><br><span class="line"> </span><br><span class="line">  #代理服务器proxy-server主机地址使用ip+端口</span><br><span class="line">  -P, --proxy-address=&lt;host:port&gt;                         listening address:port of the proxy-server (default: :4040)</span><br><span class="line">  </span><br><span class="line">  #只读后端slave-server</span><br><span class="line">  -r, --proxy-read-only-backend-addresses=&lt;host:port&gt;     address:port of the remote slave-server (default: not set)</span><br><span class="line">  </span><br><span class="line">  #可读可写的后端backend-servers</span><br><span class="line">  -b, --proxy-backend-addresses=&lt;host:port&gt;               address:port of the remote backend-servers (default: 127.0.0.1:3306)</span><br><span class="line">  --proxy-skip-profiling                                  disables profiling of queries (default: enabled)</span><br><span class="line">  --proxy-fix-bug-25371                                   fix bug #25371 (mysqld &gt; 5.1.12) for older libmysql versions</span><br><span class="line">  </span><br><span class="line">  #lua脚本路径</span><br><span class="line">  -s, --proxy-lua-script=&lt;file&gt;                           filename of the lua script (default: not set)</span><br><span class="line">  --no-proxy                                              don&apos;t start the proxy-module (default: enabled)</span><br><span class="line">  --proxy-pool-no-change-user                             don&apos;t use CHANGE_USER to reset the connection coming from the pool (default: enabled)</span><br><span class="line">  </span><br><span class="line">  #连接超时时长</span><br><span class="line">  --proxy-connect-timeout                                 connect timeout in seconds (default: 2.0 seconds)</span><br><span class="line">  </span><br><span class="line">  #读超时时长</span><br><span class="line">  --proxy-read-timeout                                    read timeout in seconds (default: 8 hours)</span><br><span class="line">  </span><br><span class="line">   #写超时时长</span><br><span class="line">  --proxy-write-timeout                                   write timeout in seconds (default: 8 hours)</span><br><span class="line"></span><br><span class="line">Application Options:</span><br><span class="line">  -V, --version                                           Show version</span><br><span class="line"> </span><br><span class="line">  #默认读取的配置文件</span><br><span class="line">  --defaults-file=&lt;file&gt;                                  configuration file</span><br><span class="line">  --verbose-shutdown                                      Always log the exit code when shutting down</span><br><span class="line">  </span><br><span class="line">  #以守护进程模式运行，否则运行在前台</span><br><span class="line">  --daemon                                                Start in daemon-mode</span><br><span class="line">  </span><br><span class="line">  #刚刚我们建的用户mysql-proxy，就是为了以普通用户身份运行mysql-proxy而建立的。</span><br><span class="line">  --user=&lt;user&gt;                                           Run mysql-proxy as user</span><br><span class="line">  --basedir=&lt;absolute path&gt;                               Base directory to prepend to relative paths in the config</span><br><span class="line">  --pid-file=&lt;file&gt;                                       PID file in case we are started as daemon</span><br><span class="line">  </span><br><span class="line">  #加载插件，某个插件或者某个目录下所有插件</span><br><span class="line">  --plugin-dir=&lt;path&gt;                                     path to the plugins</span><br><span class="line">  --plugins=&lt;name&gt;                                        plugins to load</span><br><span class="line">  </span><br><span class="line">  #日志级别</span><br><span class="line">  --log-level=(error|warning|info|message|debug)          log all messages of level ... or higher</span><br><span class="line">  </span><br><span class="line">  #日志文件</span><br><span class="line">  --log-file=&lt;file&gt;                                       log all messages in a file</span><br><span class="line">  </span><br><span class="line">  #使用sys-log</span><br><span class="line">  --log-use-syslog                                        log all messages to syslog</span><br><span class="line">  --log-backtrace-on-crash                                try to invoke debugger on crash</span><br><span class="line">  </span><br><span class="line">  #若proxy宕机了，自动尝试重启</span><br><span class="line">  --keepalive                                             try to restart the proxy if it crashed</span><br><span class="line">  --max-open-files                                        maximum number of open files (ulimit -n)</span><br><span class="line">  --event-threads                                         number of event-handling threads (default: 1)</span><br><span class="line">  --lua-path=&lt;...&gt;                                        set the LUA_PATH</span><br><span class="line">  --lua-cpath=&lt;...&gt;                                       set the LUA_CPATH</span><br></pre></td></tr></table></figure>
+<p>关于插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy mysql-proxy]# ll lib/mysql-proxy/plugins/</span><br><span class="line">总用量 232</span><br><span class="line">-rwxr-xr-x. 1 7161 wheel 45824 8月  19 2014 libadmin.so</span><br><span class="line">-rwxr-xr-x. 1 7161 wheel 38100 8月  19 2014 libdebug.so</span><br><span class="line">-rwxr-xr-x. 1 7161 wheel 86104 8月  19 2014 libproxy.so</span><br><span class="line">-rwxr-xr-x. 1 7161 wheel 56043 8月  19 2014 libreplicant.so</span><br><span class="line">[root@proxy mysql-proxy]#</span><br></pre></td></tr></table></figure>
+<p>　　其中有一个libadmin.so管理接口比较常用，可以看看当前后端有几个服务器，这些服务器在何种状态等。使用这个管理接口：–plugins=admin</p>
+<h3 id="4、搭建主从复制后端架构"><a href="#4、搭建主从复制后端架构" class="headerlink" title="4、搭建主从复制后端架构"></a>4、搭建主从复制后端架构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#节点</span><br><span class="line">slave1：192.168.141.53/24</span><br><span class="line">slave2：192.168.141.69/24</span><br><span class="line">master：192.168.141.12/24</span><br><span class="line"></span><br><span class="line">#可参考上一篇博客完成命令理解，url：</span><br><span class="line">https://hexo.yfengzone.com/mysql-02/</span><br></pre></td></tr></table></figure>
+<h4 id="初始配置"><a href="#初始配置" class="headerlink" title="初始配置"></a>初始配置</h4><p>slave1、slave2、master上执行以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mariadb mariadb-server</span><br><span class="line">systemctl restart mariadb</span><br><span class="line">systemctl enable mariadb</span><br><span class="line">firewall-cmd --add-port=3306/tcp --permanent </span><br><span class="line">firewall-cmd --reload</span><br><span class="line">mysql_secure_installation</span><br></pre></td></tr></table></figure>
+<h4 id="master"><a href="#master" class="headerlink" title="master"></a>master</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# vim /etc/my.cnf</span><br><span class="line"></span><br><span class="line">#找到[mysqld]段，在其中加入下面两行代码</span><br><span class="line"></span><br><span class="line">server-id=1</span><br><span class="line">log-bin=mysql-bin</span><br><span class="line"></span><br><span class="line">[root@master ~]# systemctl restart mariadb</span><br><span class="line">[root@master ~]#</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@master ~]# mysql -u root -p</span><br><span class="line">Enter password: </span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt; grant replication slave on *.* to &apos;tongbu&apos;@&apos;%&apos; identified by &apos;123456&apos;;</span><br><span class="line">MariaDB [(none)]&gt; show master status;</span><br><span class="line"></span><br><span class="line">+------------------+----------+--------------+------------------+</span><br><span class="line">| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |</span><br><span class="line">+------------------+----------+--------------+------------------+</span><br><span class="line">| mysql-bin.000001 |      389 |              |                  |</span><br><span class="line">+------------------+----------+--------------+------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#记录下bin-log文件名（mysql-bin.000001）以及position（389）</span><br></pre></td></tr></table></figure>
+<h4 id="slave1"><a href="#slave1" class="headerlink" title="slave1"></a>slave1</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@slave1 ~]# vim /etc/my.cnf</span><br><span class="line"></span><br><span class="line">#找到[mysqld]段，在其中加入下面1行代码</span><br><span class="line"></span><br><span class="line">server-id=2</span><br><span class="line"></span><br><span class="line">[root@slave1 ~]# systemctl restart mariadb</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@slave1 ~]# mysql -u root -p</span><br><span class="line">Enter password: </span><br><span class="line">MariaDB [(none)]&gt; change master to master_host = &apos;192.168.141.12&apos;,master_user=&apos;tongbu&apos;,master_password=&apos;123456&apos;,master_log_file=&apos;mysql-bin.000001&apos;,master_log_pos=389;</span><br><span class="line">MariaDB [(none)]&gt; </span><br><span class="line">MariaDB [(none)]&gt; slave start;</span><br><span class="line">MariaDB [(none)]&gt; show slave status\G</span><br></pre></td></tr></table></figure>
+<h4 id="slave2"><a href="#slave2" class="headerlink" title="slave2"></a>slave2</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@slave2 ~]# vim /etc/my.cnf</span><br><span class="line"></span><br><span class="line">#找到[mysqld]段，在其中加入下面1行代码</span><br><span class="line"></span><br><span class="line">server-id=3</span><br><span class="line"></span><br><span class="line">[root@slave2 ~]# systemctl restart mariadb</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@slave2 ~]# mysql -u root -p</span><br><span class="line">Enter password: </span><br><span class="line">MariaDB [(none)]&gt; change master to master_host = &apos;192.168.141.12&apos;,master_user=&apos;tongbu&apos;,master_password=&apos;123456&apos;,master_log_file=&apos;mysql-bin.000001&apos;,master_log_pos=389;</span><br><span class="line">MariaDB [(none)]&gt; </span><br><span class="line">MariaDB [(none)]&gt; slave start;</span><br><span class="line">MariaDB [(none)]&gt; show slave status\G</span><br></pre></td></tr></table></figure>
+<p>两个slave的结果均如下图：</p>
+<p><img src="https://i.loli.net/2019/09/08/uADl9NChaWJ4Yg1.png" alt=""></p>
+<h4 id="验证结果"><a href="#验证结果" class="headerlink" title="验证结果"></a>验证结果</h4><p>master</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; create database test charset=utf8;</span><br><span class="line">Query OK, 1 row affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt; use test;</span><br><span class="line">Database changed</span><br><span class="line">MariaDB [test]&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| test               |</span><br><span class="line">+--------------------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt; create table t (id varchar(20),name varchar(20));</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt; show tables;</span><br><span class="line">+----------------+</span><br><span class="line">| Tables_in_test |</span><br><span class="line">+----------------+</span><br><span class="line">| t              |</span><br><span class="line">+----------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt; insert into t values (&quot;01&quot;,&quot;abcd&quot;);</span><br><span class="line">Query OK, 1 row affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt; insert into t values (&quot;02&quot;,&quot;efgh&quot;);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt; select * from t;</span><br><span class="line">+------+------+</span><br><span class="line">| id   | name |</span><br><span class="line">+------+------+</span><br><span class="line">| 01   | abcd |</span><br><span class="line">| 02   | efgh |</span><br><span class="line">+------+------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt;</span><br></pre></td></tr></table></figure>
+<p>slave1、slave2上查看数据是否同步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; use test;</span><br><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">MariaDB [test]&gt; select * from t;</span><br><span class="line">+------+------+</span><br><span class="line">| id   | name |</span><br><span class="line">+------+------+</span><br><span class="line">| 01   | abcd |</span><br><span class="line">| 02   | efgh |</span><br><span class="line">+------+------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="5、启动mysql-proxy"><a href="#5、启动mysql-proxy" class="headerlink" title="5、启动mysql-proxy"></a>5、启动mysql-proxy</h3><p>1）先回顾一下各个节点ip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">slave1：192.168.141.53/24</span><br><span class="line">slave2：192.168.141.69/24</span><br><span class="line">master：192.168.141.12/24</span><br><span class="line">proxy：192.168.141.16/24</span><br><span class="line">client：192.168.141.132/24</span><br></pre></td></tr></table></figure>
+<p>2）编辑配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy mysql-proxy]# vim /usr/local/mysql-proxy/conf/mysql-proxy.conf</span><br><span class="line">[root@proxy logs]# cat /usr/local/mysql-proxy/conf/mysql-proxy.conf</span><br><span class="line">[mysql-proxy]</span><br><span class="line">user=root</span><br><span class="line">proxy-address=0.0.0.0:3306</span><br><span class="line">proxy-backend-addresses=192.168.141.12:3306</span><br><span class="line">proxy-read-only-backend-addresses=192.168.141.53:3306,192.168.141.69:3306</span><br><span class="line">proxy-lua-script=/usr/local/mysql-proxy/share/doc/mysql-proxy/rw-splitting.lua</span><br><span class="line">log-file=/usr/local/mysql-proxy/logs/mysql-proxy.log</span><br><span class="line">log-level=debug</span><br><span class="line">daemon=true</span><br><span class="line">keepalive=true</span><br><span class="line">[root@proxy logs]#</span><br></pre></td></tr></table></figure>
+<p>3）提升配置文件的权限，修改lua脚本（:set nu查看行号，编辑第40、41行）</p>
+<p>注意：rw-splitting.lua是指读写分离脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy mysql-proxy]# chmod 660 conf/mysql-proxy.conf</span><br><span class="line">[root@proxy mysql-proxy]# vim /usr/local/mysql-proxy/share/doc/mysql-proxy/rw-splitting.lua</span><br><span class="line"></span><br><span class="line"> 38 if not proxy.global.config.rwsplit then</span><br><span class="line"> 39         proxy.global.config.rwsplit = &#123;</span><br><span class="line"> 40                 min_idle_connections = 1,</span><br><span class="line"> 41                 max_idle_connections = 2,</span><br><span class="line"> 42 </span><br><span class="line"> 43                 is_debug = false</span><br><span class="line"> 44         &#125;</span><br></pre></td></tr></table></figure>
+<p>　　上述命令修改了两个参数，最小连接数和最大连接数，修改后，mysql-proxy的调度机制就变成了，如果连接的客户端，超过两台，就会执行读写分离策略。</p>
+<p>4）启动mysql-proxy（如果无法正常启动，根据报错修改配置文件）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy mysql-proxy]# mysql-proxy --defaults-file=/usr/local/mysql-proxy/conf/mysql-proxy.conf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#验证0.0.0.0:4040已在listen状态。（netstat需要yum install net-tools后可以使用）</span><br><span class="line">[root@proxy logs]# netstat -tnlp</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/09/08/yGDtIsBOfg9LlU6.png" alt=""></p>
+<p>可以看到mysql-proxy启动成功。</p>
+<p>可以通过查看日志来确定mysql-proxy启动是否成功，以及后端服务器是否加入成功。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy logs]# pwd</span><br><span class="line">/usr/local/mysql-proxy/logs</span><br><span class="line">[root@proxy logs]# cat mysql-proxy.log</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/09/08/WF6Kdplfwm4RMjP.png" alt=""></p>
+<h3 id="6、master进行数据库授权"><a href="#6、master进行数据库授权" class="headerlink" title="6、master进行数据库授权"></a>6、master进行数据库授权</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; use mysql;</span><br><span class="line">MariaDB [mysql]&gt; grant all on *.* to &apos;root&apos;@&apos;%&apos; identified by &apos;123456&apos;;</span><br><span class="line">MariaDB [mysql]&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="7、测试"><a href="#7、测试" class="headerlink" title="7、测试"></a>7、测试</h3><p>1）在proxy放行3306端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy logs]# firewall-cmd --permanent --add-port=3306/tcp</span><br><span class="line">[root@proxy logs]# firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<p>2）在client连接proxy的数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# yum install mariadb -y</span><br><span class="line">[root@client ~]# mysql -h 192.168.141.16 -u root -p123456</span><br><span class="line">MariaDB [(none)]&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/09/08/iKMhGlojumJZISU.png" alt=""></p>
+<p>3）在proxy查看连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy ~]# yum install lsof -y</span><br><span class="line">[root@proxy ~]# lsof -i:3306</span><br></pre></td></tr></table></figure>
+<p>　　如下图，数据指向是proxy-&gt;192.168.141.12，也就是由代理服务器指向了master。因此，在client连接proxy的数据库时，事实上连接到的是master的数据库。</p>
+<p><img src="https://i.loli.net/2019/09/08/DeSubxIJcV3Wkzl.png" alt=""></p>
+<p>4）在client验证，可以看到主数据库master上，我们刚刚建的表格t和插入的相关数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; use test;</span><br><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">MariaDB [test]&gt; select * from t;</span><br><span class="line">+------+------+</span><br><span class="line">| id   | name |</span><br><span class="line">+------+------+</span><br><span class="line">| 01   | abcd |</span><br><span class="line">| 02   | efgh |</span><br><span class="line">| 03   | hijk |</span><br><span class="line">+------+------+</span><br><span class="line">3 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/09/08/N5Xx2vhbazEVwZC.png" alt=""></p>
+<p>5）再开一个窗口，在client上建立第二个连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# mysql -h 192.168.141.16 -u root -p123456</span><br><span class="line">MariaDB [(none)]&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/09/08/5XgBvi4d9JwAmyT.png" alt=""></p>
+<p>6）在proxy查看连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy ~]# lsof -i:3306</span><br></pre></td></tr></table></figure>
+<p>　　　如下图，此时由于在client上开了两个连接，因此除了proxy-&gt;master外，连接指向多了一个proxy-&gt;slave1。</p>
+<p><img src="https://i.loli.net/2019/09/08/ynB8IjFkbl3uWY7.png" alt=""></p>
+<p>7）再开一个窗口，在client上建立第三个连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# mysql -h 192.168.141.16 -u root -p123456</span><br><span class="line">MariaDB [(none)]&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/09/08/Fd2hf7eHklc9bKn.png" alt=""></p>
+<p>8）在proxy查看连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy ~]# lsof -i:3306</span><br></pre></td></tr></table></figure>
+<p>如下图，没啥不同的，暂时忽略。</p>
+<p><img src="https://i.loli.net/2019/09/08/SLd3Asf1FTqImuO.png" alt=""></p>
+<p>9）再开一个窗口，在client上建立第四个连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# mysql -h 192.168.141.16 -u root -p123456</span><br><span class="line">MariaDB [(none)]&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/09/08/LflgTZa5HQoRYA9.png" alt=""></p>
+<p>10）在proxy查看连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy ~]# lsof -i:3306</span><br></pre></td></tr></table></figure>
+<p>如下图，除了proxy-&gt;master、proxy-&gt;slave1外，连接指向多了一个proxy-&gt;slave2。</p>
+<p><img src="https://i.loli.net/2019/09/08/tPTuXgjnqLAaKx6.png" alt=""></p>
+<p>至此，master、slave1、slave2均用上了，一主多从模式配置成功。</p>
+<h2 id="验证读写分离"><a href="#验证读写分离" class="headerlink" title="验证读写分离"></a>验证读写分离</h2><p>　　读写分离的验证，可以在slave1、slave2的数据库上分别插入不同的数据，由于主从同步是单向的，salve数据改变时，master仍然不变，我们可以利用这一特性来验证读写分离是否成功。</p>
+<h3 id="1）首先在master上清空原来的t表，salve1和slave2的t表也会同步被清空"><a href="#1）首先在master上清空原来的t表，salve1和slave2的t表也会同步被清空" class="headerlink" title="1）首先在master上清空原来的t表，salve1和slave2的t表也会同步被清空"></a>1）首先在master上清空原来的t表，salve1和slave2的t表也会同步被清空</h3><p><strong>master：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# mysql -u root -p</span><br><span class="line"></span><br><span class="line">MariaDB [(none)]&gt; use test;</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt; delete from t;</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt; select * from t;</span><br><span class="line">Empty set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>slave1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [test]&gt; select * from t;</span><br><span class="line">Empty set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>slave2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [test]&gt; select * from t;</span><br><span class="line">Empty set (0.00 sec)</span><br><span class="line"></span><br><span class="line">MariaDB [test]&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2）接着在master、slave1、slave2上分别插入不同的语句。"><a href="#2）接着在master、slave1、slave2上分别插入不同的语句。" class="headerlink" title="2）接着在master、slave1、slave2上分别插入不同的语句。"></a>2）接着在master、slave1、slave2上分别插入不同的语句。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">master：</span><br><span class="line">MariaDB [test]&gt; insert into t values (&quot;01&quot;,&quot;i am database&quot;);</span><br><span class="line"></span><br><span class="line">slave1：</span><br><span class="line">MariaDB [test]&gt; insert into t values (&quot;01&quot;,&quot;i am slave1&quot;);</span><br><span class="line"></span><br><span class="line">slave2：</span><br><span class="line">MariaDB [test]&gt; insert into t values (&quot;01&quot;,&quot;i am slave2&quot;);</span><br></pre></td></tr></table></figure>
+<h3 id="3）然后分别在master、slave1、slave2上分别查询表t内容。"><a href="#3）然后分别在master、slave1、slave2上分别查询表t内容。" class="headerlink" title="3）然后分别在master、slave1、slave2上分别查询表t内容。"></a>3）然后分别在master、slave1、slave2上分别查询表t内容。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">master：</span><br><span class="line">MariaDB [test]&gt; select * from t;</span><br><span class="line">+------+---------------+</span><br><span class="line">| id   | name          |</span><br><span class="line">+------+---------------+</span><br><span class="line">| 01   | i am database |</span><br><span class="line">+------+---------------+</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">slave1：</span><br><span class="line">MariaDB [test]&gt; select * from t;</span><br><span class="line">+------+---------------+</span><br><span class="line">| id   | name          |</span><br><span class="line">+------+---------------+</span><br><span class="line">| 01   | i am database |</span><br><span class="line">| 01   | i am slave1   |</span><br><span class="line">+------+---------------+</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">slave2：</span><br><span class="line">MariaDB [test]&gt; select * from t;</span><br><span class="line">+------+---------------+</span><br><span class="line">| id   | name          |</span><br><span class="line">+------+---------------+</span><br><span class="line">| 01   | i am database |</span><br><span class="line">| 01   | i am slave2   |</span><br><span class="line">+------+---------------+</span><br></pre></td></tr></table></figure>
+<p>　　如上，可以看到master、slave1、slave2上t表的内容各有不同，我们在client之前打开的四个窗口上分别查询t表，结果如下：</p>
+<p><img src="https://i.loli.net/2019/09/08/eUuSOsrmkNXQfWw.png" alt=""></p>
+<p>　　由上图可知，client查表，是从slave1上读取的数据，而非从master上读取的，否则就不会读取到“i am slave1”这一行内容了。</p>
+<h3 id="4）接下来在客户端插入一行数据"><a href="#4）接下来在客户端插入一行数据" class="headerlink" title="4）接下来在客户端插入一行数据"></a>4）接下来在客户端插入一行数据</h3><p><img src="https://i.loli.net/2019/09/08/1t3H7Sn9yPVFZWs.png" alt=""></p>
+<p>　　如上图，前一句是插入，后一句是读取。由“i am slave1”这一行内容我们可以判断出这次读取是从slave上读取的数据，那么新写入的“this is insert”究竟是写入到了slave1上，还是写入到master由slave1同步过来的呢？</p>
+<p>结果如下图</p>
+<p><strong>master：</strong></p>
+<p><img src="https://i.loli.net/2019/09/08/15mxQcSebGahWA2.png" alt=""></p>
+<p><strong>slave1：</strong></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s3wlbez5j30n807uq7w.jpg" alt=""></p>
+<p><strong>slave2：</strong></p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s3ya86mij30an088tb8.jpg" alt=""></p>
+<p>　　综合上面三图可知，“this is insert”这一行内容是插入到master之后，同步到两个slave的。因此，可以总结出，写操作是针对于master完成的，而读操作，是针对slave完成的，读写分离实现成功。</p>
+<h3 id="5）测试slave之间的切换功能"><a href="#5）测试slave之间的切换功能" class="headerlink" title="5）测试slave之间的切换功能"></a>5）测试slave之间的切换功能</h3><p>现在将slave1关机</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s3ylgxxwj30ex0610uv.jpg" alt=""></p>
+<p>然后在client上，查看表t的内容</p>
+<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s41r4h1ij30m90eygt9.jpg" alt=""></p>
+<p>　　如上图，可以看到之前client尚且还是读取slave1上的数据，此时已经读取到了slave2上的数据，说明slave之间可以正常切换。</p>
+<h3 id="附：重启mysql-proxy的方法"><a href="#附：重启mysql-proxy的方法" class="headerlink" title="附：重启mysql-proxy的方法"></a>附：重启mysql-proxy的方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy logs]# netstat -tnlp</span><br><span class="line">[root@proxy logs]# kill 11659（这里填mysql-proxy对应PID）</span><br><span class="line">[root@proxy logs]# mysql-proxy --defaults-file=/usr/local/mysql-proxy/conf/mysql-proxy.conf</span><br><span class="line">[root@proxy ~]# cat /usr/local/mysql-proxy/logs/mysql-proxy.log</span><br></pre></td></tr></table></figure>
+<p>如下图，可以看到mysql-proxy重启成功。</p>
+<p><img src="https://i.loli.net/2019/09/08/iNH54WdnqkIKGua.png" alt=""></p>
+<p>重启后，暂时尚未出现连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy ~]# lsof -i:3306</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/09/08/Zrz3HuJG8OcaAX9.png" alt=""></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作，感谢您的支持！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0r235fj35j30f30ljgn5.jpg" alt="feng 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0r22sfwwlj30ri16stf3.jpg" alt="feng 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          
+            <a href="/tags/Centos/" rel="tag"><i class="fa fa-tag"></i> Centos</a>
+          
+            <a href="/tags/RedHat/" rel="tag"><i class="fa fa-tag"></i> RedHat</a>
+          
+            <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/mysql-02/" rel="next" title="mysql-02 mysql-主从复制实验">
+                <i class="fa fa-chevron-left"></i> mysql-02 mysql-主从复制实验
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+    
+</div>
+
+    
+ </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="feng">
+            
+              <p class="site-author-name" itemprop="name">feng</p>
+              <p class="site-description motion-element" itemprop="description">IT技术分享</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">117</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:fengfengzone@outlook.com" title="E-Mail &rarr; mailto:fengfengzone@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mysql-03-mysql-一主多从-主从复制-读写分离"><span class="nav-number">1.</span> <span class="nav-text">mysql-03 mysql 一主多从+主从复制+读写分离</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念引入"><span class="nav-number">1.1.</span> <span class="nav-text">概念引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见mysql读写分离分类"><span class="nav-number">1.2.</span> <span class="nav-text">常见mysql读写分离分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、基于程序代码内部实现"><span class="nav-number">1.2.1.</span> <span class="nav-text">一、基于程序代码内部实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、基于中间代理层实现"><span class="nav-number">1.2.2.</span> <span class="nav-text">二、基于中间代理层实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验准备"><span class="nav-number">1.3.</span> <span class="nav-text">实验准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验步骤"><span class="nav-number">1.4.</span> <span class="nav-text">实验步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、下载mysql-proxy"><span class="nav-number">1.4.1.</span> <span class="nav-text">1、下载mysql_proxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、配置proxy服务器"><span class="nav-number">1.4.2.</span> <span class="nav-text">2、配置proxy服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数解释"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">参数解释</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、搭建主从复制后端架构"><span class="nav-number">1.4.3.</span> <span class="nav-text">4、搭建主从复制后端架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始配置"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">初始配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#master"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">master</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#slave1"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">slave1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#slave2"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">slave2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证结果"><span class="nav-number">1.4.3.5.</span> <span class="nav-text">验证结果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、启动mysql-proxy"><span class="nav-number">1.4.4.</span> <span class="nav-text">5、启动mysql-proxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、master进行数据库授权"><span class="nav-number">1.4.5.</span> <span class="nav-text">6、master进行数据库授权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、测试"><span class="nav-number">1.4.6.</span> <span class="nav-text">7、测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证读写分离"><span class="nav-number">1.5.</span> <span class="nav-text">验证读写分离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1）首先在master上清空原来的t表，salve1和slave2的t表也会同步被清空"><span class="nav-number">1.5.1.</span> <span class="nav-text">1）首先在master上清空原来的t表，salve1和slave2的t表也会同步被清空</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）接着在master、slave1、slave2上分别插入不同的语句。"><span class="nav-number">1.5.2.</span> <span class="nav-text">2）接着在master、slave1、slave2上分别插入不同的语句。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3）然后分别在master、slave1、slave2上分别查询表t内容。"><span class="nav-number">1.5.3.</span> <span class="nav-text">3）然后分别在master、slave1、slave2上分别查询表t内容。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4）接下来在客户端插入一行数据"><span class="nav-number">1.5.4.</span> <span class="nav-text">4）接下来在客户端插入一行数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5）测试slave之间的切换功能"><span class="nav-number">1.5.5.</span> <span class="nav-text">5）测试slave之间的切换功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附：重启mysql-proxy的方法"><span class="nav-number">1.5.6.</span> <span class="nav-text">附：重启mysql-proxy的方法</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">本博客除特别声明外，均采用CC BY-NC-SA 4.0许可协议。转载请注明出处！</span>
+
+  
+
+  
+
+
+
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'oRRidMLeXm0NaDn2l75tIUbG-gzGzoHsz',
+        appKey: 'FVer77pnefOcpG7iwJHhJnTl',
+        placeholder: '各位道友，来说两句吧~',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?a84a10965b0e13b3bf2d22960408192c"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
