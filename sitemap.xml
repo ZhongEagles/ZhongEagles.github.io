@@ -2,6 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/mysql-10/</loc>
+    
+    <lastmod>2019-09-22T08:23:22.865Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/mysql-11/</loc>
+    
+    <lastmod>2019-09-22T08:22:18.819Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/mysql-09/</loc>
+    
+    <lastmod>2019-09-22T08:14:25.538Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/mysql-08/</loc>
+    
+    <lastmod>2019-09-22T07:34:55.769Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/mysql-07/</loc>
+    
+    <lastmod>2019-09-22T07:20:45.320Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/mysql-06/</loc>
+    
+    <lastmod>2019-09-20T02:58:46.889Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/mysql-05/</loc>
+    
+    <lastmod>2019-09-20T00:21:37.291Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/mysql-04/</loc>
+    
+    <lastmod>2019-09-19T07:49:06.304Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/memcache-02/</loc>
     
     <lastmod>2019-09-12T14:02:23.458Z</lastmod>
