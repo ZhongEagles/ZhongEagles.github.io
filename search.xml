@@ -31,6 +31,48 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[mysql-14 并发控制]]></title>
+    <url>%2Fmysql-14%2F</url>
+    <content type="text"><![CDATA[mysql-14 并发控制概念引入1、并发控制 事务是并发控制的基本单位，并发操作可能会带来数据不一致性，包括丢失修改、不可重复读和读脏数据三种。 如上图三例中： 1）丢失修改：T2提交的结果破坏了T1提交的结果； 2）不可重复读：T1为了校对，重新读取B值，却与之前读取的不一致； 3）读脏数据：T2读的数据是即将需要被T1回滚的数据；即T2读取到的是T1撤销掉的操作里的数据，即脏数据。 2、封锁1）共享锁（S锁，读锁） 2）排它锁（X锁，写锁） 3）一级封锁协议：事务T在修改数据R之前必须对其加X锁，知道事务结束（提交或回滚）才释放； 4）二级封锁协议：在一级封锁协议的基础上，增加事务T在读取数据R之前必须先对其加S锁，读完即可释放S锁； 4）三级封锁协议：在一级封锁协议的基础上，增加事务T在读取数据R之前必须先对其加S锁，事务结束才释放； 3、活锁和死锁1）活锁：T1先封锁数据R，然后T2、T3、T4……申请封锁R，可是T1释放R之后，系统批准了T3，T2只能等待；之后给了T4、T5、T6……，造成T2有可能永远等待，这就是活锁； 2）死锁：T1，T2均需要数据（X，Y），T1先封锁了X，而T2先封锁了Y；然后T1等待T2释放Y，同时T2等待T1释放X，造成两个事务永远也不能结束，形成死锁。]]></content>
+      <categories>
+        <category>linux</category>
+        <category>linux-mysql</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>Centos</tag>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[mysql-13 数据库恢复技术]]></title>
+    <url>%2Fmysql-13%2F</url>
+    <content type="text"><![CDATA[mysql-13 数据库恢复技术一、相关概念1、事务1）定义 事务是用户定义的一个数据库操作序列，这些操作要么全做，要么全不做，是一个不可分割的工作单位。 2）定义事务的语句 begin transaction：开始 commit：提交（事务正常结束） rollback：回滚（事务运行故障，撤销所有已完成操作） 3）注意事项 事务通常以begin transaction开始，以commit或rollback结束； 4）事务特性（ACID） Atomic（原子性） 指整个数据库事务是不可分割的工作单位。只有使据库中所有的操作执行成功，才算整个事务成功；事务中任何一个SQL语句执行失败，那么已经执行成功的SQL语句也必须撤销，数据库状态应该退回到执行事务前的状态。 Consistency（一致性） 指数据库事务不能破坏关系数据的完整性以及业务逻辑上的一致性。例如对银行转帐事务，不管事务成功还是失败，应该保证事务结束后转账方和收款方存款总额不变。 Isolation（隔离性） 指的是在并发环境中，当不同的事务同时操纵相同的数据时，每个事务都有各自的完整数据空间。 Durability（持久性） 指的是只要事务成功结束，它对数据库所做的更新就必须永久保存下来。即使发生系统崩溃，重新启动数据库系统后，数据库还能恢复到事务成功结束时的状态。 2、故障1）事务内部故障 非预期，不能由应用程序处理；例如运算移除、并发事务思索而被选中撤销该事务、违反了某些完整性限制而被终止等； 恢复方法：回滚 2）系统故障（俗称“软故障”） 造成系统停止运转的任何时间，使得系统需要重启；例如CPU故障、操作系统故障、DBMS代码错误、系统断电等； 恢复方法：回滚+重做（已完成事务） 3）介质故障（俗称“硬故障”，此故障最为严重） 外存故障，例如磁盘损坏、磁头碰撞、瞬间强磁场干扰等； 恢复方法：重装（数据库）+重做（已完成事务） 4）计算机病毒（数据库系统的主要威胁） 人为的故障或破坏； 3、日志 日志文件可以用来进行实物故障恢复和系统故障恢复，并协助后备副本进行介质故障恢复； 登记日志文件的两条原则 1）登记次序必须严格按照并发事务执行的时间顺序； 2）必须先写日志文件，后写数据库； 说明：先写日志文件，按照日志文件恢复时，只不过多了一些undo操作，不会影响数据库正确性；而先写到数据库后写到日志文件，有可能在此二者之间发生故障。]]></content>
+      <categories>
+        <category>linux</category>
+        <category>linux-mysql</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>Centos</tag>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[mysql-12 数据库完整性与关系数据理论]]></title>
+    <url>%2Fmysql-12%2F</url>
+    <content type="text"><![CDATA[mysql-12 数据库完整性与关系数据理论概念1）安全性：保护数据库以防止不合法使用所造成的数据泄露、更改或破坏； 2）完整性：指数据的正确性和相容性，即防止数据库中存在不符合语义（或不正确）的数据； 3）PK：Primary Key 4）FK：Foreign Key 1、实体完整性（primary key）1）可以在表级或者列级定义primary key 2）若主码由多个属性构成，那么只能在表级定义primary key 12345678910111213141516171819#在列级定义主码create table student( sno char(9) primary key, sname char(20), ssex char(2)); #在表级定义主码create table student( sno char(9), sname char(20), ssex char(2), primary key(sno)); #主码由多个属性构成，那么只能在表级定义primary keycreate table sc( sno char(9), cno char(4), grade smallint, primary key(sno,cno)); 2、参照完整性（foreign key）123456789101112131415161718192021#定义sc表的参照完整性create table sc( sno char(9), cno char(4), grade smallint, primary key(sno,cno), foreign key(sno) references student(sno), foreign key(cno) references course(cno)); #定义sc表的参照完整性create table sc( sno char(9), cno char(4), grade smallint, primary key(sno,cno), foreign key(sno) references student(sno) on delete cascade on update cascade, foreign key(cno) references course(cno) on delete no action on update cascade);1）第一行on delete cascade 表示当删除student表中元组时，级联删除sc表中对应元组2）第一行on update cascade 表示当更新student表中sno时，级联更新sc表中对应元组3）第二行on delete no action 表示当删除course表中元组造成与sc表不一致时，拒绝删除4）第二行on update cascade 表示当更新course表中cno时，级联更新sc表中对应元组 3、用户定义的完整性（约束条件）1）约束条件包括 列值非空（not null） 列值唯一（unique） 检查列值是否满足一个条件表达式（check 短语） 12345create table sc( sno char(9) not null, cno char(4) unique not null, grade smallint check(grade&gt;=0 and grade&lt;=100), primary key(sno,cno)); 4、完整性约束命名子句（constraint）1）语法 1234constraint &lt;约束名&gt; &lt;约束条件&gt;约束条件包括：not null，unique，primary key，foreign key，check短语等 2）举例 建立学生表student，要求学生学号在1~99之间，姓名不能取空值，年龄小于30，性别只能是男或者女。 12345678910create table student( sno numeric(6) constraint c1 check(sno between 1 and 99), sname char(20) constraint c2 not null, sage numeric(3) constraint c3 check(sage&lt;30), ssex char(2) constraint c4 check(ssex in(&apos;男&apos;,&apos;女&apos;))， constraint studentkey primary key(sno)); 去掉上例中对性别的限制 1drop constraint c4; 将上例中年龄改为25岁以下 1234alter table student drop constraint c3;alter table student add constraint c3 check(sage&lt;25); 注意：修改约束只能删除原有约束再新建约束。 5、断言（assertion） 断言可以定义涉及多个表或聚集操作的比较复杂的完整性约束，断言创建以后，任何对断言中所涉及关系的操作都会触发关系数据库的管理系统对断言的检查，任何使断言部位真值的操作都会被拒绝执行。 1）语法 1create assertion &lt;断言名&gt; &lt;check子句&gt; 2）举例 限制数据库课程最多60名学生选修。（涉及到两个表） 1234create assertion a1 check(60&gt;= (select count(*) from sc,course where sc.cno=course.cno and couese.sname=&apos;数据库&apos;)); 每当学生选修课程的时候，将在sc表中插入一条元组（sno，cno，null）,断言a1会被出发检查，如果此时数据库课程选课人数已经超过60人，则check子句返回 ‘假’，那么此插入操作会被拒绝。 限制每个学期每门课程最多只能60名学生选修。 12345alter table sc add term date;create assertion a2 check(60&gt;= all(select count(*) from sc group by cno,term)); 注意： 上例中，先新增一个属性列term，其格式为date，指的是这一列专门用来区分课程是哪个学期的；然后增加断言a2，以cno，term为准分组，即按照不同学期的不同课程分组。 3）删除断言 如果断言很复杂，那么系统在检测和维护断言上的开销较高，这时就该考虑是否删除断言了。 1drop assertion &lt;断言名&gt; 6、触发器（trigger） 触发器又叫“事件-条件-动作”规则，当指定事件发生，对条件检查，若条件成立则执行规则，否则不执行。规则的动作体可以很复杂，可以涉及其他表和其他数据库对象。 1）语法 12345create trigger &lt;触发器名&gt;&#123;before|after&#125; &lt;触发事件&gt; on &lt;表名&gt;referencing new|old row as &lt;变量&gt;for each &#123;row|statement&#125;[when &lt;触发条件&gt;] &lt;触发动作体&gt; 2）说明 只有表的创建者（拥有者）才可以在表上创建触发器，且触发器数量有限（由RDBMS决定）； 触发器名必须唯一； 触发器只能定义在基本表上，不能定义在视图上； before|after表示激活触发器的时机，before表示在触发事件的操作执行之前激活触发器； row|statement表示行级触发器和语句级触发器； when &lt;触发条件&gt;在触发器被激活后检查条件是否为真，为真则触发器动作体执行，否则不执行； when &lt;触发条件&gt;可以省略，即省略了检查条件的步骤，相当于没有“where”子句一样； 有时候由于动作提设计有误等原因，触发动作体执行失败，那么此时，激活触发器的事件就会终止执行； 3）触发器执行顺序 一个数据表上可能定义了多个触发器，如多个before触发器、多个after触发器等，同一个表上的多个触发器激活时的执行顺序如下 执行该表上的before触发器 激活触发器的sql语句 执行该表上的after语句 4）举例 将每次对表student的插入操作所增加的学生个数记录到表snum中。 1234567create trigger scountafter insert on studentreferencing new table as delta for each statement insert into snum(numbers) select count(*) from delta; 5）删除触发器 每一次访问一个表都可能触发一个触发器，因此很容易影响系统性能，需要慎重使用。 1drop trigger &lt;触发器名&gt; on &lt;表名&gt; 7、范式1）相关概念 关系数据库中的关系需要满足一定要求，满足不同程度要求的为不同范式。 X-&gt;Y：X函数确定Y，或者说Y函数依赖于X； 若候选码多于一个，则选定其中一个作为主码； 包含在任何一个候选码中的属性称为主属性； 不包含在任何候选码的属性称为非主属性； 整个属性组是码时，称为全码； 2）找候选码的三个准则 未出现在函数依赖中的属性 未出现在函数依赖右边的属性 只在右边出现的属性一定不是候选码的一部分 注意：由候选码可以决定所有属性 3）举例 123456789101112131415161718191、R(&#123;W,X,Y,Z&#125;,&#123;X-&gt;Z,WX-&gt;Y&#125; KEY=(W,X)解析：1）排除Z和Y（准则3）2）仅由X无法决定所有属性，需要再加一个W，因此KEY=(W,X)2、R(&#123;A,B,C,D,E,I&#125;,&#123;A-&gt;D,AB-&gt;E,E-&gt;C,BI-&gt;E,CD-&gt;I&#125;) KEY=(A,B)解析：1）函数依赖右边无A、B，（准则2）2）仅由A、B觉可以推出其他属性了，所以KEY=(A,B)3、R(&#123;J,S,P&#125;,&#123;(S,J)-&gt;P,(J,P)-&gt;S&#125;) KEY=(J,S)或者KEY=(J,P)，此时主属性为J,S,P解析：1）确定J为候选码的一部分（准则2）2）验证发现(J,S)或者(J,P)均可决定所有属性，因此KEY=(J,S)或者KEY=(J,P)，此时主属性为J,S,P。 4）各个范式关系（这里&lt;不是小于号，是包含于的意思） 15NF&lt;4NF&lt;BCNF&lt;3NF&lt;2NF&lt;1NF]]></content>
+      <categories>
+        <category>linux</category>
+        <category>linux-mysql</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>Centos</tag>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[mysql-11 权限操作]]></title>
     <url>%2Fmysql-11%2F</url>
     <content type="text"><![CDATA[mysql-11 权限操作一、 1）安全性：保护数据库以防止不合法使用所造成的数据泄露、更改或破坏； 2）完整性：防止数据库中存在不符合语义（即不正确）的数据； ACIDAtomic（原子性）Consistency（一致性）Isolation（隔离性）Durability（持久性） Atomic（原子性）：指整个数据库事务是不可分割的工作单位。只有使据库中所有的操作执行成功，才算整个事务成功；事务中任何一个SQL语句执行失败，那么已经执行成功的SQL语句也必须撤销，数据库状态应该退回到执行事务前的状态。 Consistency（一致性）：指数据库事务不能破坏关系数据的完整性以及业务逻辑上的一致性。例如对银行转帐事务，不管事务成功还是失败，应该保证事务结束后ACCOUNTS表中Tom和Jack的存款总额为2000元。 Isolation（隔离性）：指的是在并发环境中，当不同的事务同时操纵相同的数据时，每个事务都有各自的完整数据空间。 Durability（持久性）：指的是只要事务成功结束，它对数据库所做的更新就必须永久保存下来。即使发生系统崩溃，重新启动数据库系统后，数据库还能恢复到事务成功结束时的状态。]]></content>

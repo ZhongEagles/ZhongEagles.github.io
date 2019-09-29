@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/mysql-14/</loc>
+    
+    <lastmod>2019-09-29T03:03:02.768Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/mysql-13/</loc>
+    
+    <lastmod>2019-09-29T02:31:55.021Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/mysql-12/</loc>
+    
+    <lastmod>2019-09-29T01:56:55.108Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/mysql-10/</loc>
     
     <lastmod>2019-09-22T08:23:22.865Z</lastmod>
