@@ -116,18 +116,18 @@
 
 
 
-  <meta name="description" content="mysql-11 权限操作">
+  <meta name="description" content="mysql-11 数据库安全性以及权限操作">
 <meta name="keywords" content="linux,Centos,mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql-11 权限操作">
+<meta property="og:title" content="mysql-11 数据库安全性以及权限操作">
 <meta property="og:url" content="http://yoursite.com/mysql-11/index.html">
 <meta property="og:site_name" content="峰">
-<meta property="og:description" content="mysql-11 权限操作">
+<meta property="og:description" content="mysql-11 数据库安全性以及权限操作">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-22T08:22:18.819Z">
+<meta property="og:updated_time" content="2019-09-28T04:15:48.177Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql-11 权限操作">
-<meta name="twitter:description" content="mysql-11 权限操作">
+<meta name="twitter:title" content="mysql-11 数据库安全性以及权限操作">
+<meta name="twitter:description" content="mysql-11 数据库安全性以及权限操作">
 
 
 
@@ -144,7 +144,7 @@
   };
 </script>
 
-  <title>mysql-11 权限操作 | 峰</title>
+  <title>mysql-11 数据库安全性以及权限操作 | 峰</title>
   
 
 
@@ -443,7 +443,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">mysql-11 权限操作
+          <h1 class="post-title" itemprop="name headline">mysql-11 数据库安全性以及权限操作
 
               
             
@@ -486,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-22 16:22:18" itemprop="dateModified" datetime="2019-09-22T16:22:18+08:00">2019-09-22</time>
+                <time title="修改时间：2019-09-28 12:15:48" itemprop="dateModified" datetime="2019-09-28T12:15:48+08:00">2019-09-28</time>
               
             
           </span>
@@ -534,7 +534,7 @@
 
           
           
-             <span id="/mysql-11/" class="leancloud_visitors" data-flag-title="mysql-11 权限操作">
+             <span id="/mysql-11/" class="leancloud_visitors" data-flag-title="mysql-11 数据库安全性以及权限操作">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -552,7 +552,7 @@
           
 
           
-              <div class="post-description">mysql-11 权限操作</div>
+              <div class="post-description">mysql-11 数据库安全性以及权限操作</div>
           
 
         </div>
@@ -568,14 +568,55 @@
       
 
       
-        <h1 id="mysql-11-权限操作"><a href="#mysql-11-权限操作" class="headerlink" title="mysql-11 权限操作"></a>mysql-11 权限操作</h1><p>一、</p>
-<p>1）安全性：保护数据库以防止不合法使用所造成的数据泄露、更改或破坏；</p>
-<p>2）完整性：防止数据库中存在不符合语义（即不正确）的数据；</p>
-<p>ACID<br>Atomic（原子性）<br>Consistency（一致性）<br>Isolation（隔离性）<br>Durability（持久性）</p>
-<p>Atomic（原子性）：指整个数据库事务是不可分割的工作单位。只有使据库中所有的操作执行成功，才算整个事务成功；事务中任何一个SQL语句执行失败，那么已经执行成功的SQL语句也必须撤销，数据库状态应该退回到执行事务前的状态。</p>
-<p>Consistency（一致性）：指数据库事务不能破坏关系数据的完整性以及业务逻辑上的一致性。例如对银行转帐事务，不管事务成功还是失败，应该保证事务结束后ACCOUNTS表中Tom和Jack的存款总额为2000元。</p>
-<p>Isolation（隔离性）：指的是在并发环境中，当不同的事务同时操纵相同的数据时，每个事务都有各自的完整数据空间。</p>
-<p>Durability（持久性）：指的是只要事务成功结束，它对数据库所做的更新就必须永久保存下来。即使发生系统崩溃，重新启动数据库系统后，数据库还能恢复到事务成功结束时的状态。</p>
+        <h1 id="mysql-11-数据库安全性以及权限操作"><a href="#mysql-11-数据库安全性以及权限操作" class="headerlink" title="mysql-11 数据库安全性以及权限操作"></a>mysql-11 数据库安全性以及权限操作</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>1）<strong>安全性：</strong>保护数据库以防止不合法使用所造成的数据泄露、更改或破坏；</p>
+<p>2）<strong>完整性：</strong>指数据的正确性和相容性，即防止数据库中存在不符合语义（或不正确）的数据；</p>
+<h3 id="关系数据库系统中的存取权限"><a href="#关系数据库系统中的存取权限" class="headerlink" title="关系数据库系统中的存取权限"></a>关系数据库系统中的存取权限</h3><table>
+<thead>
+<tr>
+<th>对象类型</th>
+<th>对象</th>
+<th>操作类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据库模式</td>
+<td>模式</td>
+<td>create，schema</td>
+</tr>
+<tr>
+<td>数据库模式</td>
+<td>基本表</td>
+<td>create table，alter table</td>
+</tr>
+<tr>
+<td>数据库模式</td>
+<td>视图</td>
+<td>create view</td>
+</tr>
+<tr>
+<td>数据库模式</td>
+<td>索引</td>
+<td>create index</td>
+</tr>
+<tr>
+<td>数据</td>
+<td>基本表和视图</td>
+<td>select，insert，update，delete，references，all privileges</td>
+</tr>
+<tr>
+<td>数据</td>
+<td>属性列</td>
+<td>select，insert，update，references，all privileges</td>
+</tr>
+</tbody>
+</table>
+<h2 id="相关语法举例"><a href="#相关语法举例" class="headerlink" title="相关语法举例"></a>相关语法举例</h2><h3 id="1、授权（grant）"><a href="#1、授权（grant）" class="headerlink" title="1、授权（grant）"></a>1、授权（grant）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#将对student和course表的全部操作权限授予用户u2和u3，并且允许将此权限再授予其他用户</span><br><span class="line">grant all privileges</span><br><span class="line">on table student,course</span><br><span class="line">to u2,u3</span><br><span class="line">with grant option;</span><br><span class="line"></span><br><span class="line">#将查询student表和修改学生学号的权限授予所有用户</span><br><span class="line">grant select,update(sno)</span><br><span class="line">onn table student</span><br><span class="line">to public;</span><br></pre></td></tr></table></figure>
+<h3 id="2、收回权限（revoke）"><a href="#2、收回权限（revoke）" class="headerlink" title="2、收回权限（revoke）"></a>2、收回权限（revoke）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#收回所有用户对student表的查询权限</span><br><span class="line">revoke select</span><br><span class="line">on table student</span><br><span class="line">from public;</span><br><span class="line"></span><br><span class="line">#收回用户u5对sc表的insert权限，同时级联收回用户u5赋予其他用户的对应权限，以及其他用户又赋予其他用户的对应权限（就是级联的意思）</span><br><span class="line">revoke insert</span><br><span class="line">on table sc</span><br><span class="line">from u5 cascade;</span><br></pre></td></tr></table></figure>
+<h2 id="数据库角色"><a href="#数据库角色" class="headerlink" title="数据库角色"></a>数据库角色</h2><p>　　数据库角色是被命名的一组与数据库操作相关的权限，角色是权限的集合。常用做法是为一组具有相同权限的用户创建一个角色，以此简化授权的过程。</p>
+<h3 id="1、通过角色实现将一组权限授权给用户"><a href="#1、通过角色实现将一组权限授权给用户" class="headerlink" title="1、通过角色实现将一组权限授权给用户"></a>1、通过角色实现将一组权限授权给用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#创建角色r1</span><br><span class="line">create role r1;</span><br><span class="line"></span><br><span class="line">#使用grant语句，使角色r1拥有student表的select、update、insert权限</span><br><span class="line">grant select,update,insert</span><br><span class="line">on table student</span><br><span class="line">to r1;</span><br><span class="line"></span><br><span class="line">#将这个角色授予wang、zhao，使他俩具有角色r1所包含的全部权限</span><br><span class="line">grant r1</span><br><span class="line">to wang,zhao;</span><br><span class="line"></span><br><span class="line">#一次性回收wang对student表的select、update、insert权限</span><br><span class="line">revoke r1</span><br><span class="line">from wang;</span><br><span class="line"></span><br><span class="line">#修改角色权限(在原基础上新增delete权限)</span><br><span class="line">grant delete</span><br><span class="line">on table student</span><br><span class="line">to r1;</span><br></pre></td></tr></table></figure>
+<h2 id="视图机制"><a href="#视图机制" class="headerlink" title="视图机制"></a>视图机制</h2><p>　　除了角色，还可以给不同的用户定义不同的视图，将数据对象限制在一定范围内，为数据提供一定程度的安全保护（不同用户视图不同，例如学生A不能看到学生B的成绩）。</p>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#建立计算机系学生的视图，把对该视图的select权限授予wang（老师），将该视图的所有权限授予zhang（系主任）</span><br><span class="line">create view cs_student</span><br><span class="line">as</span><br><span class="line">select *</span><br><span class="line">from student</span><br><span class="line">where sdept=&apos;cs&apos;;</span><br><span class="line"></span><br><span class="line">grant select</span><br><span class="line">on cs_student</span><br><span class="line">to wang;</span><br><span class="line"></span><br><span class="line">grant all privileges</span><br><span class="line">on cs_student</span><br><span class="line">to zhang;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -913,7 +954,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mysql-11-权限操作"><span class="nav-number">1.</span> <span class="nav-text">mysql-11 权限操作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mysql-11-数据库安全性以及权限操作"><span class="nav-number">1.</span> <span class="nav-text">mysql-11 数据库安全性以及权限操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.1.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关系数据库系统中的存取权限"><span class="nav-number">1.1.1.</span> <span class="nav-text">关系数据库系统中的存取权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关语法举例"><span class="nav-number">1.2.</span> <span class="nav-text">相关语法举例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、授权（grant）"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、授权（grant）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、收回权限（revoke）"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、收回权限（revoke）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库角色"><span class="nav-number">1.3.</span> <span class="nav-text">数据库角色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、通过角色实现将一组权限授权给用户"><span class="nav-number">1.3.1.</span> <span class="nav-text">1、通过角色实现将一组权限授权给用户</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视图机制"><span class="nav-number">1.4.</span> <span class="nav-text">视图机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#举例"><span class="nav-number">1.4.1.</span> <span class="nav-text">举例</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

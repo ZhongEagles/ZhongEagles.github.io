@@ -153,9 +153,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[mysql-11 权限操作]]></title>
+    <title><![CDATA[mysql-11 数据库安全性以及权限操作]]></title>
     <url>%2Fmysql-11%2F</url>
-    <content type="text"><![CDATA[mysql-11 权限操作一、 1）安全性：保护数据库以防止不合法使用所造成的数据泄露、更改或破坏； 2）完整性：防止数据库中存在不符合语义（即不正确）的数据； ACIDAtomic（原子性）Consistency（一致性）Isolation（隔离性）Durability（持久性） Atomic（原子性）：指整个数据库事务是不可分割的工作单位。只有使据库中所有的操作执行成功，才算整个事务成功；事务中任何一个SQL语句执行失败，那么已经执行成功的SQL语句也必须撤销，数据库状态应该退回到执行事务前的状态。 Consistency（一致性）：指数据库事务不能破坏关系数据的完整性以及业务逻辑上的一致性。例如对银行转帐事务，不管事务成功还是失败，应该保证事务结束后ACCOUNTS表中Tom和Jack的存款总额为2000元。 Isolation（隔离性）：指的是在并发环境中，当不同的事务同时操纵相同的数据时，每个事务都有各自的完整数据空间。 Durability（持久性）：指的是只要事务成功结束，它对数据库所做的更新就必须永久保存下来。即使发生系统崩溃，重新启动数据库系统后，数据库还能恢复到事务成功结束时的状态。]]></content>
+    <content type="text"><![CDATA[mysql-11 数据库安全性以及权限操作概念1）安全性：保护数据库以防止不合法使用所造成的数据泄露、更改或破坏； 2）完整性：指数据的正确性和相容性，即防止数据库中存在不符合语义（或不正确）的数据； 关系数据库系统中的存取权限 对象类型 对象 操作类型 数据库模式 模式 create，schema 数据库模式 基本表 create table，alter table 数据库模式 视图 create view 数据库模式 索引 create index 数据 基本表和视图 select，insert，update，delete，references，all privileges 数据 属性列 select，insert，update，references，all privileges 相关语法举例1、授权（grant）12345678910#将对student和course表的全部操作权限授予用户u2和u3，并且允许将此权限再授予其他用户grant all privilegeson table student,courseto u2,u3with grant option;#将查询student表和修改学生学号的权限授予所有用户grant select,update(sno)onn table studentto public; 2、收回权限（revoke）123456789#收回所有用户对student表的查询权限revoke selecton table studentfrom public;#收回用户u5对sc表的insert权限，同时级联收回用户u5赋予其他用户的对应权限，以及其他用户又赋予其他用户的对应权限（就是级联的意思）revoke inserton table scfrom u5 cascade; 数据库角色 数据库角色是被命名的一组与数据库操作相关的权限，角色是权限的集合。常用做法是为一组具有相同权限的用户创建一个角色，以此简化授权的过程。 1、通过角色实现将一组权限授权给用户1234567891011121314151617181920#创建角色r1create role r1;#使用grant语句，使角色r1拥有student表的select、update、insert权限grant select,update,inserton table studentto r1;#将这个角色授予wang、zhao，使他俩具有角色r1所包含的全部权限grant r1to wang,zhao;#一次性回收wang对student表的select、update、insert权限revoke r1from wang;#修改角色权限(在原基础上新增delete权限)grant deleteon table studentto r1; 视图机制 除了角色，还可以给不同的用户定义不同的视图，将数据对象限制在一定范围内，为数据提供一定程度的安全保护（不同用户视图不同，例如学生A不能看到学生B的成绩）。 举例1234567891011121314#建立计算机系学生的视图，把对该视图的select权限授予wang（老师），将该视图的所有权限授予zhang（系主任）create view cs_studentasselect *from studentwhere sdept=&apos;cs&apos;;grant selecton cs_studentto wang;grant all privilegeson cs_studentto zhang;]]></content>
       <categories>
         <category>linux</category>
         <category>linux-mysql</category>
