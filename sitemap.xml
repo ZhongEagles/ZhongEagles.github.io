@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/crawler-09/</loc>
+    
+    <lastmod>2020-01-18T12:35:00.372Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/hexo-08/</loc>
+    
+    <lastmod>2019-12-26T03:33:54.204Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/crawler-04/</loc>
     
     <lastmod>2019-12-16T09:10:58.777Z</lastmod>

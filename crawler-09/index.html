@@ -124,10 +124,12 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="crawler-09 Re 正则表达式入门">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-16T10:03:03.463Z">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/18/1pjR2V.png">
+<meta property="og:updated_time" content="2020-01-18T12:35:00.372Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="crawler-09 Re 正则表达式入门">
 <meta name="twitter:description" content="crawler-09 Re 正则表达式入门">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/01/18/1pjR2V.png">
 
 
 
@@ -486,7 +488,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-12-16 18:03:03" itemprop="dateModified" datetime="2019-12-16T18:03:03+08:00">2019-12-16</time>
+                <time title="修改时间：2020-01-18 20:35:00" itemprop="dateModified" datetime="2020-01-18T20:35:00+08:00">2020-01-18</time>
               
             
           </span>
@@ -575,12 +577,15 @@
       
 
       
-        <h1 id="crawler-09-Re-正则表达式入门"><a href="#crawler-09-Re-正则表达式入门" class="headerlink" title="crawler-09 Re 正则表达式入门"></a>crawler-09 Re 正则表达式入门</h1><h2 id="一、概念"><a href="#一、概念" class="headerlink" title="一、概念"></a>一、概念</h2><p>　　正则表达式, Regular Expression （缩写 regex），是用来简洁表达一组字符串的表达式；其特点是简洁，一行胜千言。</p>
-<p>正则表达式是用来简洁表达一组字符串的表达式 正则表达式是一种通用的字符串表达框架<br>正则表达式是一种针对字符串表达“简洁”和“特征”思想的工具 正则表达式可以用来判断某字符串的特征归属</p>
-<p>正则表达式在文本处理中十分常用：<br>表达文本类型的特征（病毒、入侵等） 同时查找或替换一组字符串 匹配字符串的全部或部分 …… 主要应用在字符串匹配中</p>
-<h2 id="二、正则表达式语法"><a href="#二、正则表达式语法" class="headerlink" title="二、正则表达式语法"></a>二、正则表达式语法</h2><p>正则表达式语法由字符和操作符构成</p>
-<p>常用操作符</p>
-<table>
+        <h1 id="crawler-09-Re-正则表达式入门"><a href="#crawler-09-Re-正则表达式入门" class="headerlink" title="crawler-09 Re 正则表达式入门"></a>crawler-09 Re 正则表达式入门</h1><h2 id="一、概念"><a href="#一、概念" class="headerlink" title="一、概念"></a>一、概念</h2><p>　　正则表达式, Regular Expression （缩写 regex），是用来简洁表达一组字符串的表达式；其特点是简洁，一</p>
+<p>行胜千言。</p>
+<p>　　正则表达式是用来简洁表达一组字符串的表达式，是一种通用的字符串表达框架。正则表达式是一种针对字符</p>
+<p>串表达“简洁”和“特征”思想的工具 正则表达式可以用来判断某字符串的特征归属。</p>
+<p>正则表达式在文本处理中十分常用：</p>
+<p>　　表达文本类型的特征（病毒、入侵等） 同时查找或替换一组字符串 匹配字符串的全部或部分 …… 主要应用在</p>
+<p>字符串匹配中。</p>
+<h2 id="二、正则表达式语法"><a href="#二、正则表达式语法" class="headerlink" title="二、正则表达式语法"></a>二、正则表达式语法</h2><p>　　正则表达式语法由字符和操作符构成。</p>
+<h3 id="1、常用操作符"><a href="#1、常用操作符" class="headerlink" title="1、常用操作符"></a>1、常用操作符</h3><table>
 <thead>
 <tr>
 <th>操作符</th>
@@ -664,20 +669,190 @@
 </tr>
 </tbody>
 </table>
-<p>经典正则表达式实例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">1）由26个字母组成的字符</span><br><span class="line">^[A‐Za‐z]+$ </span><br><span class="line"></span><br><span class="line">2）由26个字母和数字组成的字符串 </span><br><span class="line">^[A‐Za‐z0‐9]+$</span><br><span class="line"></span><br><span class="line">3）整数形式的字符串</span><br><span class="line">^‐?\d+$ </span><br><span class="line"></span><br><span class="line">4）正整数形式的字符串 </span><br><span class="line">^[0‐9]*[1‐9][0‐9]*$ </span><br><span class="line"></span><br><span class="line">5）中国境内邮政编码，6位</span><br><span class="line">[1‐9]\d&#123;5&#125; </span><br><span class="line"></span><br><span class="line">6）匹配中文字符 </span><br><span class="line">[\u4e00‐\u9fa5] </span><br><span class="line"></span><br><span class="line">7）国内电话号码，010‐68913536</span><br><span class="line">\d&#123;3&#125;‐\d&#123;8&#125;|\d&#123;4&#125;‐\d&#123;7&#125;</span><br></pre></td></tr></table></figure>
-<p>匹配ip地址的正则表达式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1）粗略写法</span><br><span class="line">\d+.\d+.\d+.\d+ </span><br><span class="line"></span><br><span class="line">2）精确写法</span><br><span class="line">\d&#123;1,3&#125;.\d&#123;1,3&#125;.\d&#123;1,3&#125;.\d&#123;1,3&#125;</span><br><span class="line"></span><br><span class="line">3）精确写法</span><br><span class="line">0‐99：[1‐9]?\d  </span><br><span class="line">100‐199: 1\d&#123;2&#125; </span><br><span class="line">200‐249: 2[0‐4]\d </span><br><span class="line">250‐255: 25[0‐5]</span><br></pre></td></tr></table></figure>
+<h3 id="2、经典正则表达式实例"><a href="#2、经典正则表达式实例" class="headerlink" title="2、经典正则表达式实例"></a>2、经典正则表达式实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1）由26个字母组成的字符</span><br><span class="line">^[A‐Za‐z]+$ </span><br><span class="line"></span><br><span class="line">2）由26个字母和数字组成的字符串 </span><br><span class="line">^[A‐Za‐z0‐9]+$</span><br><span class="line"></span><br><span class="line">3）整数形式的字符串</span><br><span class="line">^‐?\d+$ </span><br><span class="line"></span><br><span class="line">4）正整数形式的字符串 </span><br><span class="line">^[0‐9]*[1‐9][0‐9]*$ </span><br><span class="line"></span><br><span class="line">5）中国境内邮政编码，6位</span><br><span class="line">#意思是邮政编码的首位一定是1-9而不是0；后5位则是任意数字</span><br><span class="line">[1‐9]\d&#123;5&#125; </span><br><span class="line"></span><br><span class="line">6）匹配中文字符 </span><br><span class="line">[\u4e00‐\u9fa5] </span><br><span class="line"></span><br><span class="line">7）国内电话号码，010‐68913536</span><br><span class="line">#电话号有两种格式，另一种是0397-2865666这种格式</span><br><span class="line">\d&#123;3&#125;‐\d&#123;8&#125;|\d&#123;4&#125;‐\d&#123;7&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3、匹配ip地址的正则表达式"><a href="#3、匹配ip地址的正则表达式" class="headerlink" title="3、匹配ip地址的正则表达式"></a>3、匹配ip地址的正则表达式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1）粗略写法</span><br><span class="line">\d+.\d+.\d+.\d+ </span><br><span class="line"></span><br><span class="line">2）精确写法</span><br><span class="line">\d&#123;1,3&#125;.\d&#123;1,3&#125;.\d&#123;1,3&#125;.\d&#123;1,3&#125;</span><br><span class="line"></span><br><span class="line">3）精确写法</span><br><span class="line">0‐99：[1‐9]?\d  </span><br><span class="line">100‐199: 1\d&#123;2&#125; </span><br><span class="line">200‐249: 2[0‐4]\d </span><br><span class="line">250‐255: 25[0‐5]</span><br></pre></td></tr></table></figure>
 <h2 id="Re库的基本使用"><a href="#Re库的基本使用" class="headerlink" title="Re库的基本使用"></a>Re库的基本使用</h2><p>　　Re库是Python的标准库，主要用于字符串匹配；调用方式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br></pre></td></tr></table></figure>
-<p>1、正则表达式的表示类型</p>
-<p>1）raw string类型（原生字符串类型） ；re库采用raw string类型表示正则表达式，表示为： r’text’ 例如：</p>
+<h3 id="1、正则表达式的表示类型"><a href="#1、正则表达式的表示类型" class="headerlink" title="1、正则表达式的表示类型"></a>1、正则表达式的表示类型</h3><p>1）raw string类型（原生字符串类型） ；re库采用raw string类型表示正则表达式，表示为： r’text’ 例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r&apos;[1‐9]\d&#123;5&#125;&apos; </span><br><span class="line">r&apos;\d&#123;3&#125;‐\d&#123;8&#125;|\d&#123;4&#125;‐\d&#123;7&#125;&apos;</span><br></pre></td></tr></table></figure>
-<p><strong>注意：</strong>raw string是不包含对转义符再次转义的字符串</p>
-<p>2）string类型；例如：</p>
+<p><strong>注意：</strong>raw string是不包含对转义符再次转义的字符串。</p>
+<p>2）string类型（字符串类型）；例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;[1‐9]\\d&#123;5&#125;&apos; </span><br><span class="line">&apos;\\d&#123;3&#125;‐\\d&#123;8&#125;|\\d&#123;4&#125;‐\\d&#123;7&#125;&apos;</span><br></pre></td></tr></table></figure>
-<p><strong>建议：</strong>当正则表达式包含转义符时，使用raw string，否则会很繁琐。</p>
-<p>Re库主要功能函数</p>
+<p><strong>建议：</strong>当正则表达式包含转义符时，应该使用raw string，否则会很繁琐。</p>
+<h2 id="Re库主要功能函数"><a href="#Re库主要功能函数" class="headerlink" title="Re库主要功能函数"></a>Re库主要功能函数</h2><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>re.search()</td>
+<td>在一个字符串中搜索匹配正则表达式的第一个位置，返回match对象</td>
+</tr>
+<tr>
+<td>re.match</td>
+<td>从一个字符串的开始位置起匹配正则表达式，返回match对象</td>
+</tr>
+<tr>
+<td>re.findall()</td>
+<td>搜索字符串，以列表类型返回全部能匹配的子串</td>
+</tr>
+<tr>
+<td>re.split()</td>
+<td>将一个字符串按照正则表达式匹配结果进行分割，返回列表类型</td>
+</tr>
+<tr>
+<td>re.finditer()</td>
+<td>搜索字符串，返回一个匹配结果的迭代类型，每个迭代元素是match对象</td>
+</tr>
+<tr>
+<td>re.sub()</td>
+<td>在一个字符串中替换所有匹配正则表达式的子串，返回替换后的字符串</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1、re-search"><a href="#1、re-search" class="headerlink" title="1、re.search()"></a>1、re.search()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">re.search(pattern,string,flags=0)</span><br><span class="line"></span><br><span class="line">∙ pattern : 正则表达式的字符串或原生字符串表示 </span><br><span class="line">∙ string : 待匹配字符串 </span><br><span class="line">∙ flags : 正则表达式使用时的控制标记</span><br></pre></td></tr></table></figure>
+<p>1）flags : 正则表达式使用时的控制标</p>
+<table>
+<thead>
+<tr>
+<th>常用标记</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>re.I re.IGNORECASE</td>
+<td>忽略正则表达式的大小写，[A‐Z]能够匹配小写字符</td>
+</tr>
+<tr>
+<td>re.M re.MULTILINE</td>
+<td>正则表达式中的^操作符能够将给定字符串的每行当作匹配开始</td>
+</tr>
+<tr>
+<td>re.S re.DOTALL</td>
+<td>正则表达式中的.操作符能够匹配所有字符，默认匹配除换行外的所有字符</td>
+</tr>
+</tbody>
+</table>
+<p>2）实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#在字符串&apos;abcd 212000&apos;中匹配出邮编</span><br><span class="line">import re</span><br><span class="line">match=re.search(r&apos;[1-9]\d&#123;5&#125;&apos;,&apos;abcd 212000&apos;)</span><br><span class="line">if match:</span><br><span class="line">    print(match.group(0))		#match对象通常用group()函数来提取数据</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">212000</span><br></pre></td></tr></table></figure>
+<h3 id="2、re-match"><a href="#2、re-match" class="headerlink" title="2、re.match"></a>2、re.match</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">re.match(pattern,string,flags=0)</span><br><span class="line"></span><br><span class="line">∙ pattern : 正则表达式的字符串或原生字符串表示 </span><br><span class="line">∙ string : 待匹配字符串 </span><br><span class="line">∙ flags : 正则表达式使用时的控制标记</span><br></pre></td></tr></table></figure>
+<p>1） flags和re.search()里的一样，其他参数也一样</p>
+<p>2）实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">match=re.match(r&apos;[1-9]\d&#123;5&#125;&apos;,&apos;abcd 212000&apos;)</span><br><span class="line">if match:</span><br><span class="line">    print(match.group(0))</span><br><span class="line">print(match.group(0))</span><br><span class="line"></span><br><span class="line">#执行结果</span><br><span class="line">AttributeError: &apos;NoneType&apos; object has no attribute &apos;group&apos;</span><br><span class="line">报错，说是没有这个类型，实际上match这个变量是空的，空变量自然不能调用group。</span><br><span class="line">match是空的，原因是re.match函数是从起始位置开始匹配，起始位置是abcd而不是邮编，所以匹配无结果，返回的值便是空的。</span><br></pre></td></tr></table></figure>
+<p>3）实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#判断字符串&apos;212000 abcdefg&apos;的起始位置是否为邮编</span><br><span class="line">import re</span><br><span class="line">match=re.match(r&apos;[1-9]\d&#123;5&#125;&apos;,&apos;212000 abcdefg&apos;)</span><br><span class="line">if match:</span><br><span class="line">    print(match.group(0))</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">212000</span><br></pre></td></tr></table></figure>
+<h3 id="3、re-findall"><a href="#3、re-findall" class="headerlink" title="3、re.findall()"></a>3、re.findall()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">re.findall(pattern,string,flags=0)</span><br><span class="line"></span><br><span class="line">∙ pattern : 正则表达式的字符串或原生字符串表示 </span><br><span class="line">∙ string : 待匹配字符串 </span><br><span class="line">∙ flags : 正则表达式使用时的控制标记</span><br></pre></td></tr></table></figure>
+<p>1）实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">ls=re.findall(r&apos;[1-9]\d&#123;5&#125;&apos;,&apos;212000abcdefg 202222abc&apos;)</span><br><span class="line">print(ls)</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">[&apos;212000&apos;, &apos;202222&apos;]</span><br></pre></td></tr></table></figure>
+<h3 id="4、re-split"><a href="#4、re-split" class="headerlink" title="4、re.split()"></a>4、re.split()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">re.split(pattern,string,maxsplit=0,flags=0)</span><br><span class="line"></span><br><span class="line">∙ pattern : 正则表达式的字符串或原生字符串表示 </span><br><span class="line">∙ string : 待匹配字符串 </span><br><span class="line">∙ maxsplit: 大分割数，剩余部分作为后一个元素输出 </span><br><span class="line">∙ flags : 正则表达式使用时的控制标记</span><br></pre></td></tr></table></figure>
+<p>1）实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">print(re.split(r&apos;[1-9]\d&#123;5&#125;&apos;,&apos;212000abcdefg 202222abc&apos;))</span><br><span class="line">print(&quot;===================================&quot;)</span><br><span class="line">print(re.split(r&apos;[1-9]\d&#123;5&#125;&apos;,&apos;2120</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">[&apos;&apos;, &apos;abcdefg &apos;, &apos;abc&apos;]</span><br><span class="line">===================================</span><br><span class="line">[&apos;&apos;, &apos;abcdefg 202222abc&apos;]</span><br></pre></td></tr></table></figure>
+<h3 id="5、re-finditer"><a href="#5、re-finditer" class="headerlink" title="5、re.finditer()"></a>5、re.finditer()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">re.finditer(pattern,string,flags=0)</span><br><span class="line"></span><br><span class="line">∙ pattern : 正则表达式的字符串或原生字符串表示 </span><br><span class="line">∙ string : 待匹配字符串 </span><br><span class="line">∙ flags : 正则表达式使用时的控制标记</span><br></pre></td></tr></table></figure>
+<p>1）实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#用for循环可以迭代地获取结果</span><br><span class="line">import re</span><br><span class="line">for m in re.finditer(r&apos;[1-9]\d&#123;5&#125;&apos;,&apos;212000abcdefg 202222abc&apos;):</span><br><span class="line">    if m:</span><br><span class="line">        print(m.group(0))</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">212000</span><br><span class="line">202222</span><br></pre></td></tr></table></figure>
+<h3 id="6、re-sub"><a href="#6、re-sub" class="headerlink" title="6、re.sub()"></a>6、re.sub()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">re.sub(pattern,repl, string,count=0,flags=0)</span><br><span class="line"></span><br><span class="line">∙ pattern : 正则表达式的字符串或原生字符串表示 </span><br><span class="line">∙ repl: 替换匹配字符串的字符串 </span><br><span class="line">∙ string : 待匹配字符串 </span><br><span class="line">∙ count : 匹配的大替换次数 </span><br><span class="line">∙ flags : 正则表达式使用时的控制标记</span><br></pre></td></tr></table></figure>
+<p>1）实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">print(re.sub(r&apos;[1-9]\d&#123;5&#125;&apos;,&apos;pppppp&apos;,&apos;212000abcdefg 202222abc&apos;))</span><br><span class="line"></span><br><span class="line">#结果</span><br><span class="line">ppppppabcdefg ppppppabc</span><br></pre></td></tr></table></figure>
+<h2 id="Re库的另一种等价用法"><a href="#Re库的另一种等价用法" class="headerlink" title="Re库的另一种等价用法"></a>Re库的另一种等价用法</h2><p>　　Re库的上述用法是函数式用法，例如：rst=re.search(r’[1-9]\d{5}’,’abcd 212000’)，这里的r’[1-9]\d{5}’只是正则表达式通俗的表示（可以用字符串类型或者原生字符串类型），它需要通过编译之后，才能成为python认可的真正意义上的正则表达式。</p>
+<p>　　因此，上述Re库的函数式用法，实际上是一次性操作，即用到一次Re库就编译一次，如果需要多次使用，那么这样效率也比较低。</p>
+<p>　　Re库的另一种等价用法是：面向对象用法，是先把字符串或者原生字符串编译成正则表达式类型的pattern对象，然后进行多次操作。这种方式的好处是，一次编译，多次使用，可以加速程序运行。</p>
+<p>1、re.compile()函数</p>
+<p>　　将正则表达式的字符串形式编译成正则表达式对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">regex = re.compile(pattern,flags=0)</span><br><span class="line"></span><br><span class="line">∙ pattern : 正则表达式的字符串或原生字符串表示 </span><br><span class="line">∙ flags : 正则表达式使用时的控制标记</span><br></pre></td></tr></table></figure>
+<p>2、实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">pat=re.compile(r&apos;[1-9]\d&#123;5&#125;&apos;)</span><br><span class="line">rst=pat.search(&apos;abcd 212000&apos;)		#使用时就无需再加pattern参数了</span><br><span class="line">print(rst.group(0))</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">212000</span><br></pre></td></tr></table></figure>
+<h2 id="Re库的match对象"><a href="#Re库的match对象" class="headerlink" title="Re库的match对象"></a>Re库的match对象</h2><p>　　Match对象是一次匹配的结果，包含匹配的很多信息，这些信息可以用match对象直接调用出来，例如其属性、函数等。</p>
+<h3 id="1、实例"><a href="#1、实例" class="headerlink" title="1、实例"></a>1、实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">match=re.search(r&apos;[1-9]\d&#123;5&#125;&apos;,&apos;abcd 100085&apos;)</span><br><span class="line">if match:</span><br><span class="line">    print(match.group(0))</span><br><span class="line">print(type(match))</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">100085</span><br><span class="line">&lt;class &apos;re.Match&apos;&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2、match对象的属性"><a href="#2、match对象的属性" class="headerlink" title="2、match对象的属性"></a>2、match对象的属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.string</td>
+<td>待匹配的文本</td>
+</tr>
+<tr>
+<td>.re</td>
+<td>匹配时使用的patter对象（正则表达式）</td>
+</tr>
+<tr>
+<td>.pos</td>
+<td>正则表达式搜索文本的开始位置</td>
+</tr>
+<tr>
+<td>.endpos</td>
+<td>正则表达式搜索文本的结束位置</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3、match对象的方法"><a href="#3、match对象的方法" class="headerlink" title="3、match对象的方法"></a>3、match对象的方法</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.group(0)</td>
+<td>获得匹配后的字符串</td>
+</tr>
+<tr>
+<td>.start()</td>
+<td>匹配字符串在原始字符串的开始位置（下标）</td>
+</tr>
+<tr>
+<td>.end()</td>
+<td>匹配字符串在原始字符串的结束位置（下标）</td>
+</tr>
+<tr>
+<td>.span()</td>
+<td>返回(.start(), .end())</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4、综合实例"><a href="#4、综合实例" class="headerlink" title="4、综合实例"></a>4、综合实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">m=re.search(r&apos;[1-9]\d&#123;5&#125;&apos;,&apos;abcd212000 efgh212003&apos;)</span><br><span class="line"></span><br><span class="line">print(&quot;m.string: &quot;,m.string)</span><br><span class="line">print(&quot;m.re: &quot;,m.re)</span><br><span class="line">print(&quot;m.pos: &quot;,m.pos)</span><br><span class="line">print(&quot;m.endpos: &quot;,m.endpos)</span><br><span class="line"></span><br><span class="line">print(&quot;m.group(0): &quot;,m.group(0))</span><br><span class="line">print(&quot;m.start(): &quot;,m.start())</span><br><span class="line">print(&quot;m.end(): &quot;,m.end())</span><br><span class="line">print(&quot;m.span(): &quot;,m.span())</span><br><span class="line"></span><br><span class="line">#运行结果</span><br><span class="line">m.string:  abcd212000 efgh212003</span><br><span class="line">m.re:  re.compile(&apos;[1-9]\\d&#123;5&#125;&apos;)		#程序认为经过compile编译过的才是正则表达式</span><br><span class="line">m.pos:  0</span><br><span class="line">m.endpos:  21</span><br><span class="line">m.group(0):  212000		#search()函数只匹配一个结果，finditer()函数可以返回所有结果</span><br><span class="line">m.start():  4</span><br><span class="line">m.end():  10</span><br><span class="line">m.span():  (4, 10)</span><br></pre></td></tr></table></figure>
+<h2 id="Re库的贪婪匹配和最小匹配"><a href="#Re库的贪婪匹配和最小匹配" class="headerlink" title="Re库的贪婪匹配和最小匹配"></a>Re库的贪婪匹配和最小匹配</h2><h3 id="1、实例-1"><a href="#1、实例-1" class="headerlink" title="1、实例"></a>1、实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">match=re.search(r&apos;PY.*N&apos;,&apos;PYANBNCNDN&apos;)</span><br><span class="line">print(match.group(0))</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">PYANBNCNDN</span><br></pre></td></tr></table></figure>
+<p>　　如上，此情况下，PY.*N可以匹配PYAN，也可以匹配’PYANBN或者PYANBNCN或者PYANBNCNDN，那么究竟会匹配到哪个呢？答案是PYANBNCNDN。</p>
+<p>　　<strong>Re库默认采用贪婪匹配，即输出匹配长的子串。</strong></p>
+<h3 id="2、如何使用最小匹配"><a href="#2、如何使用最小匹配" class="headerlink" title="2、如何使用最小匹配"></a>2、如何使用最小匹配</h3><p>　　上例中，如何输出短的子串呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">match=re.search(r&apos;PY.*?N&apos;,&apos;PYANBNCNDN&apos;)</span><br><span class="line">print(match.group(0))</span><br><span class="line"></span><br><span class="line">#输出</span><br><span class="line">PYAN</span><br></pre></td></tr></table></figure>
+<h3 id="3、最小匹配操作符"><a href="#3、最小匹配操作符" class="headerlink" title="3、最小匹配操作符"></a>3、最小匹配操作符</h3><table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*?</td>
+<td>前一个字符0次或无限次扩展，最小匹配</td>
+</tr>
+<tr>
+<td>+?</td>
+<td>前一个字符1次或无限次扩展，最小匹配</td>
+</tr>
+<tr>
+<td>??</td>
+<td>前一个字符0次或1次扩展，最小匹配</td>
+</tr>
+<tr>
+<td>{m,n}?</td>
+<td>扩展前一个字符m至n次（含n），最小匹配</td>
+</tr>
+</tbody>
+</table>
+<p>　　<strong>只要长度输出可能不同的，都可以通过在操作符后增加问号?变成最小匹配。</strong></p>
+<h2 id="Re库总结"><a href="#Re库总结" class="headerlink" title="Re库总结"></a>Re库总结</h2><p><img src="https://s2.ax1x.com/2020/01/18/1pjR2V.png" alt="1pjR2V.png"></p>
 
       
     </div>
@@ -841,7 +1016,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">144</span>
+                    <span class="site-state-item-count">145</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1039,7 +1214,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#crawler-09-Re-正则表达式入门"><span class="nav-number">1.</span> <span class="nav-text">crawler-09 Re 正则表达式入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、概念"><span class="nav-number">1.1.</span> <span class="nav-text">一、概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、正则表达式语法"><span class="nav-number">1.2.</span> <span class="nav-text">二、正则表达式语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Re库的基本使用"><span class="nav-number">1.3.</span> <span class="nav-text">Re库的基本使用</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#crawler-09-Re-正则表达式入门"><span class="nav-number">1.</span> <span class="nav-text">crawler-09 Re 正则表达式入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、概念"><span class="nav-number">1.1.</span> <span class="nav-text">一、概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、正则表达式语法"><span class="nav-number">1.2.</span> <span class="nav-text">二、正则表达式语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、常用操作符"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、常用操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、经典正则表达式实例"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、经典正则表达式实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、匹配ip地址的正则表达式"><span class="nav-number">1.2.3.</span> <span class="nav-text">3、匹配ip地址的正则表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Re库的基本使用"><span class="nav-number">1.3.</span> <span class="nav-text">Re库的基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、正则表达式的表示类型"><span class="nav-number">1.3.1.</span> <span class="nav-text">1、正则表达式的表示类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Re库主要功能函数"><span class="nav-number">1.4.</span> <span class="nav-text">Re库主要功能函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、re-search"><span class="nav-number">1.4.1.</span> <span class="nav-text">1、re.search()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、re-match"><span class="nav-number">1.4.2.</span> <span class="nav-text">2、re.match</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、re-findall"><span class="nav-number">1.4.3.</span> <span class="nav-text">3、re.findall()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、re-split"><span class="nav-number">1.4.4.</span> <span class="nav-text">4、re.split()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、re-finditer"><span class="nav-number">1.4.5.</span> <span class="nav-text">5、re.finditer()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、re-sub"><span class="nav-number">1.4.6.</span> <span class="nav-text">6、re.sub()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Re库的另一种等价用法"><span class="nav-number">1.5.</span> <span class="nav-text">Re库的另一种等价用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Re库的match对象"><span class="nav-number">1.6.</span> <span class="nav-text">Re库的match对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、实例"><span class="nav-number">1.6.1.</span> <span class="nav-text">1、实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、match对象的属性"><span class="nav-number">1.6.2.</span> <span class="nav-text">2、match对象的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、match对象的方法"><span class="nav-number">1.6.3.</span> <span class="nav-text">3、match对象的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、综合实例"><span class="nav-number">1.6.4.</span> <span class="nav-text">4、综合实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Re库的贪婪匹配和最小匹配"><span class="nav-number">1.7.</span> <span class="nav-text">Re库的贪婪匹配和最小匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、实例-1"><span class="nav-number">1.7.1.</span> <span class="nav-text">1、实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、如何使用最小匹配"><span class="nav-number">1.7.2.</span> <span class="nav-text">2、如何使用最小匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、最小匹配操作符"><span class="nav-number">1.7.3.</span> <span class="nav-text">3、最小匹配操作符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Re库总结"><span class="nav-number">1.8.</span> <span class="nav-text">Re库总结</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1059,7 +1234,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
