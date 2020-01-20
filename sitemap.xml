@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/hexo-04/</loc>
+    
+    <lastmod>2020-01-20T01:05:01.692Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/hello-world/</loc>
+    
+    <lastmod>2020-01-20T00:50:34.564Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/hexo-03/</loc>
+    
+    <lastmod>2020-01-20T00:49:24.824Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/hexo-06/</loc>
+    
+    <lastmod>2020-01-20T00:39:01.877Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/crawler-10/</loc>
     
     <lastmod>2020-01-19T13:50:26.996Z</lastmod>
@@ -618,13 +646,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/hexo-06/</loc>
-    
-    <lastmod>2019-04-09T13:47:46.270Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/keepalived-03/</loc>
     
     <lastmod>2019-04-09T12:34:06.484Z</lastmod>
@@ -656,20 +677,6 @@
     <loc>http://yoursite.com/hexo-02/</loc>
     
     <lastmod>2019-03-24T07:20:34.988Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/hexo-03/</loc>
-    
-    <lastmod>2019-03-24T07:20:16.285Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/hexo-04/</loc>
-    
-    <lastmod>2019-03-24T07:20:00.835Z</lastmod>
     
   </url>
   
@@ -1020,13 +1027,6 @@
     <loc>http://yoursite.com/linux-01/</loc>
     
     <lastmod>2019-01-18T06:38:52.699Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/hello-world/</loc>
-    
-    <lastmod>2019-01-16T07:20:49.928Z</lastmod>
     
   </url>
   

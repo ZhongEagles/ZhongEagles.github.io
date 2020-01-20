@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/hexo-04/</loc>
+    <lastmod>2020-01-20</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/hello-world/</loc>
+    <lastmod>2020-01-20</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/hexo-03/</loc>
+    <lastmod>2020-01-20</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/hexo-06/</loc>
+    <lastmod>2020-01-20</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/crawler-10/</loc>
     <lastmod>2020-01-19</lastmod>
   </url>  <url>
@@ -265,9 +277,6 @@
     <loc>http://yoursite.com/ansible-03/</loc>
     <lastmod>2019-04-11</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/hexo-06/</loc>
-    <lastmod>2019-04-09</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/keepalived-03/</loc>
     <lastmod>2019-04-09</lastmod>
   </url>  <url>
@@ -281,12 +290,6 @@
     <lastmod>2019-03-24</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/hexo-02/</loc>
-    <lastmod>2019-03-24</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/hexo-03/</loc>
-    <lastmod>2019-03-24</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/hexo-04/</loc>
     <lastmod>2019-03-24</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/hexo-05/</loc>
@@ -432,9 +435,6 @@
   </url>  <url>
     <loc>http://yoursite.com/linux-01/</loc>
     <lastmod>2019-01-18</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/hello-world/</loc>
-    <lastmod>2019-01-16</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/testmd/</loc>
     <lastmod>2019-01-16</lastmod>
