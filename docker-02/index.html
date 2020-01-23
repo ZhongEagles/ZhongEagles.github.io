@@ -124,13 +124,12 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-docker-02 docker安装与部署">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1f0z6twgej30mp0g4143.jpg">
 <meta property="og:image" content="https://i.loli.net/2019/09/01/3FQ2W4cOZyiEnMf.png">
-<meta property="og:updated_time" content="2019-09-01T02:52:51.432Z">
+<meta property="og:updated_time" content="2020-01-23T00:50:56.934Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-docker-02 docker安装与部署">
 <meta name="twitter:description" content="linux-docker-02 docker安装与部署">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1f0z6twgej30mp0g4143.jpg">
+<meta name="twitter:image" content="https://i.loli.net/2019/09/01/3FQ2W4cOZyiEnMf.png">
 
 
 
@@ -489,7 +488,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-01 10:52:51" itemprop="dateModified" datetime="2019-09-01T10:52:51+08:00">2019-09-01</time>
+                <time title="修改时间：2020-01-23 08:50:56" itemprop="dateModified" datetime="2020-01-23T08:50:56+08:00">2020-01-23</time>
               
             
           </span>
@@ -571,10 +570,10 @@
       
 
       
-        <h1 id="linux-docker-02-docker安装与部署"><a href="#linux-docker-02-docker安装与部署" class="headerlink" title="linux-docker-02 docker安装与部署"></a>linux-docker-02 docker安装与部署</h1><h2 id="实验准备"><a href="#实验准备" class="headerlink" title="实验准备"></a>实验准备</h2><p>准备一台干净的虚拟机</p>
-<h3 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h3><p>Docker 运行在 CentOS 7 上，要求系统为64位、系统内核版本为 3.10 以上。</p>
-<p>Docker 运行在 CentOS-6.5 或更高的版本的 CentOS 上，要求系统为64位、系统内核版本为 2.6.32-431 或者更高版本。</p>
-<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><p>通过 uname -r 命令查看你当前的内核版本，如下，可以看到我的当前内核版本是支持安装docker的。</p>
+        <h1 id="linux-docker-02-docker安装与部署"><a href="#linux-docker-02-docker安装与部署" class="headerlink" title="linux-docker-02 docker安装与部署"></a>linux-docker-02 docker安装与部署</h1><h2 id="实验准备"><a href="#实验准备" class="headerlink" title="实验准备"></a>实验准备</h2><p>　　Centos7虚拟机一台。</p>
+<h3 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h3><p>1）Docker 运行在 CentOS 7 上，要求系统为64位、系统内核版本为 3.10 以上；</p>
+<p>2）Docker 运行在 CentOS-6.5 或更高的版本的 CentOS 上，要求系统为64位、系统内核版本为 2.6.32-431 或者更高版本。</p>
+<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><p>　　通过 uname -r 命令查看你当前的内核版本，如下，可以看到我的当前内核版本是支持安装docker的。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# uname -r</span><br><span class="line">3.10.0-862.el7.x86_64</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><p>1.安装一些必要的系统工具</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure>
@@ -589,12 +588,11 @@
 <p>6.测试运行 hello-world</p>
 <p>由于本地没有hello-world这个镜像，所以会下载一个hello-world的镜像，并在容器内运行。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker run hello-world</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1f0z6twgej30mp0g4143.jpg" alt=""></p>
 <p>　　注意：若运行docker run hello-world时镜像拉取超时导致报错（如下图），先配置好下面的镜像加速，然后再尝试运行docker run hello-world即可。</p>
 <p><img src="https://i.loli.net/2019/09/01/3FQ2W4cOZyiEnMf.png" alt=""></p>
 <h3 id="镜像加速"><a href="#镜像加速" class="headerlink" title="镜像加速"></a>镜像加速</h3><p>　　鉴于国内网络问题，后续拉取 Docker 镜像十分缓慢，我们可以需要配置加速器来解决，新版的 Docker 使用 /etc/docker/daemon.json（Linux）来配置 Daemon，这里我们选用daocloud的镜像源，是我目前所知中速度最快的。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/docker/daemon.json</span><br><span class="line">[root@localhost ~]# cat /etc/docker/daemon.json</span><br><span class="line">&#123;</span><br><span class="line">	&quot;registry-mirrors&quot;: [&quot;http://141e5461.m.daocloud.io&quot;]</span><br><span class="line">&#125;</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# systemctl daemon-reload</span><br><span class="line">[root@localhost ~]# systemctl restart docker</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
-<h4 id="以下是国内加速地址"><a href="#以下是国内加速地址" class="headerlink" title="以下是国内加速地址"></a>以下是国内加速地址</h4><p>Docker中国区官方镜像(<a href="http://www.docker-cn.com/registry-mirror" target="_blank" rel="noopener">http://www.docker-cn.com/registry-mirror</a>)<br><a href="https://registry.docker-cn.com/" target="_blank" rel="noopener">https://registry.docker-cn.com</a></p>
+<h4 id="以下是其他国内加速地址"><a href="#以下是其他国内加速地址" class="headerlink" title="以下是其他国内加速地址"></a>以下是其他国内加速地址</h4><p>Docker中国区官方镜像(<a href="http://www.docker-cn.com/registry-mirror" target="_blank" rel="noopener">http://www.docker-cn.com/registry-mirror</a>)<br><a href="https://registry.docker-cn.com/" target="_blank" rel="noopener">https://registry.docker-cn.com</a></p>
 <p>网易<br><a href="http://hub-mirror.c.163.com/" target="_blank" rel="noopener">http://hub-mirror.c.163.com</a></p>
 <p>ustc<br><a href="https://docker.mirrors.ustc.edu.cn/" target="_blank" rel="noopener">https://docker.mirrors.ustc.edu.cn</a></p>
 <h3 id="docker-CE-与-docker-EE"><a href="#docker-CE-与-docker-EE" class="headerlink" title="docker CE 与 docker EE"></a>docker CE 与 docker EE</h3><p>2017年的3月1号之后，Docker的版本命名开始发生变化，同时将CE版本和EE版本进行分开。</p>
@@ -769,7 +767,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">146</span>
+                    <span class="site-state-item-count">145</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -967,7 +965,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-docker-02-docker安装与部署"><span class="nav-number">1.</span> <span class="nav-text">linux-docker-02 docker安装与部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实验准备"><span class="nav-number">1.1.</span> <span class="nav-text">实验准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前提条件"><span class="nav-number">1.1.1.</span> <span class="nav-text">前提条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验步骤"><span class="nav-number">1.2.</span> <span class="nav-text">实验步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Docker"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装 Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像加速"><span class="nav-number">1.2.2.</span> <span class="nav-text">镜像加速</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#以下是国内加速地址"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">以下是国内加速地址</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-CE-与-docker-EE"><span class="nav-number">1.2.3.</span> <span class="nav-text">docker CE 与 docker EE</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-docker-02-docker安装与部署"><span class="nav-number">1.</span> <span class="nav-text">linux-docker-02 docker安装与部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实验准备"><span class="nav-number">1.1.</span> <span class="nav-text">实验准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前提条件"><span class="nav-number">1.1.1.</span> <span class="nav-text">前提条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验步骤"><span class="nav-number">1.2.</span> <span class="nav-text">实验步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Docker"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装 Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像加速"><span class="nav-number">1.2.2.</span> <span class="nav-text">镜像加速</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#以下是其他国内加速地址"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">以下是其他国内加速地址</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-CE-与-docker-EE"><span class="nav-number">1.2.3.</span> <span class="nav-text">docker CE 与 docker EE</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

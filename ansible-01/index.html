@@ -124,14 +124,12 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-ansible-01 ansible基础学习">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dm1vdxi7j30pu0f5q54.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1cs4ghmpkj30lb0lcwqr.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1csed0qfgj30me0ksnha.jpg">
-<meta property="og:updated_time" content="2019-04-11T12:07:24.404Z">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/20/1PYIPO.png">
+<meta property="og:updated_time" content="2020-01-20T01:46:07.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-ansible-01 ansible基础学习">
 <meta name="twitter:description" content="linux-ansible-01 ansible基础学习">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dm1vdxi7j30pu0f5q54.jpg">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/01/20/1PYIPO.png">
 
 
 
@@ -490,7 +488,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-11 20:07:24" itemprop="dateModified" datetime="2019-04-11T20:07:24+08:00">2019-04-11</time>
+                <time title="修改时间：2020-01-20 09:46:07" itemprop="dateModified" datetime="2020-01-20T09:46:07+08:00">2020-01-20</time>
               
             
           </span>
@@ -585,7 +583,7 @@
 <li>Inventory：定义Ansible管理主机的清单</li>
 <li>Connection Plugins：负责和被监控端实现通信</li>
 </ol>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dm1vdxi7j30pu0f5q54.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/20/1PYIPO.png" alt="1PYIPO.png"></p>
 <h3 id="ansible特性"><a href="#ansible特性" class="headerlink" title="ansible特性"></a>ansible特性</h3><p>1、no agents：不需要在被管控主机上安装任何客户端；<br>2、no server：无服务器端，使用时直接运行命令即可；<br>3、modules in any languages：基于模块工作，可使用任意语言开发模块；<br>4、yaml，not code：使用yaml语言定制剧本playbook；<br>5、ssh by default：基于SSH工作；<br>6、strong multi-tier solution：可实现多级指挥。</p>
 <h3 id="ansible优点"><a href="#ansible优点" class="headerlink" title="ansible优点"></a>ansible优点</h3><p>1、轻量级，无需在客户端安装agent，更新时，只需在操作机上进行一次更新即可；<br>2、批量任务执行可以写成脚本，而且不用分发到远程就可以执行；<br>3、使用python编写，维护更简单<br>4、支持sudo。</p>
 <h3 id="ansible命令执行过程"><a href="#ansible命令执行过程" class="headerlink" title="ansible命令执行过程"></a>ansible命令执行过程</h3><ul>
@@ -616,7 +614,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/ansible/hosts</span><br><span class="line"></span><br><span class="line">#在文档末尾加上一下这几行</span><br><span class="line"></span><br><span class="line">[node]</span><br><span class="line">node2</span><br><span class="line">node3</span><br></pre></td></tr></table></figure>
 <p>服务端修改host文件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/hosts</span><br><span class="line"></span><br><span class="line">#在文档中加入下列两行</span><br><span class="line"></span><br><span class="line">192.168.141.53 node2</span><br><span class="line">192.168.141.69 node3</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1cs4ghmpkj30lb0lcwqr.jpg" alt=""></p>
 <h3 id="实现管理机对所有客户端的免密钥登录—ssh-key"><a href="#实现管理机对所有客户端的免密钥登录—ssh-key" class="headerlink" title="实现管理机对所有客户端的免密钥登录—ssh-key"></a>实现管理机对所有客户端的免密钥登录—ssh-key</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
 <p>#提示生成的密钥放在/root/.ssh/id_dsa</p>
 <p>#提示是否给生成的密钥再加密一次，回车即可</p>
@@ -628,7 +625,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ssh 192.168.141.69</span><br><span class="line">Last login: Sat Mar 23 15:47:08 2019 from 192.168.141.1</span><br><span class="line">[root@localhost ~]# exit</span><br><span class="line">logout</span><br><span class="line">Connection to 192.168.141.69 closed.</span><br><span class="line">[root@localhost ~]# ssh 192.168.141.53</span><br><span class="line">Last login: Sat Mar 23 15:46:03 2019 from 192.168.141.1</span><br><span class="line">[root@localhost ~]# exit</span><br><span class="line">logout</span><br><span class="line">Connection to 192.168.141.53 closed.</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <h2 id="ansible测试"><a href="#ansible测试" class="headerlink" title="ansible测试"></a>ansible测试</h2><p>我们先改好三台虚拟机的主机名</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# hostnamectl set-hostname Test</span><br><span class="line">[root@localhost ~]# ansible node2 -m command -a &quot;hostnamectl set-hostname node2&quot;</span><br><span class="line">node2 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@localhost ~]# ansible node3 -m command -a &quot;hostnamectl set-hostname node3&quot;</span><br><span class="line">node3 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@localhost ~]# ssh 192.168.141.53</span><br><span class="line">Last login: Sat Mar 23 16:01:20 2019 from 192.168.141.12</span><br><span class="line">[root@node2 ~]# exit</span><br><span class="line">logout</span><br><span class="line">Connection to 192.168.141.53 closed.</span><br><span class="line">[root@localhost ~]# ssh 192.168.141.69</span><br><span class="line">Last login: Sat Mar 23 16:01:28 2019 from 192.168.141.12</span><br><span class="line">[root@node3 ~]# exit</span><br><span class="line">logout</span><br><span class="line">Connection to 192.168.141.69 closed.</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1csed0qfgj30me0ksnha.jpg" alt=""></p>
 <p>可以看到上面三台虚拟机的主机名都已经改好，当然，Test的主机名你需要再次登录才能看到，如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# exit</span><br><span class="line">logout</span><br><span class="line">Connection closing...Socket close.</span><br><span class="line"></span><br><span class="line">Connection closed by foreign host.</span><br><span class="line"></span><br><span class="line">Disconnected from remote host(Test) at 16:03:19.</span><br><span class="line"></span><br><span class="line">Type `help&apos; to learn how to use Xshell prompt.</span><br><span class="line">[C:\~]$ </span><br><span class="line"></span><br><span class="line">Connecting to 192.168.141.12:22...</span><br><span class="line">Connection established.</span><br><span class="line">To escape to local shell, press &apos;Ctrl+Alt+]&apos;.</span><br><span class="line"></span><br><span class="line">WARNING! The remote SSH server rejected X11 forwarding request.</span><br><span class="line">Last login: Sat Mar 23 02:44:34 2019 from 192.168.141.1</span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
 <p>查看ansible帮助</p>
@@ -803,7 +799,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">146</span>
+                    <span class="site-state-item-count">145</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

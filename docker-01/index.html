@@ -124,17 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-docker-01 docker基础学习">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1f04hlondj30mt0aft8v.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1f06cfpwaj30or0gpjzc.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1esxebjb1j30o208hjug.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1f02631jyj30r70csagi.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1ezycwqisj30r80frqly.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1f08utbl2j30ed0awtak.jpg">
-<meta property="og:updated_time" content="2019-03-25T06:12:09.335Z">
+<meta property="og:updated_time" content="2020-01-23T00:49:00.871Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-docker-01 docker基础学习">
 <meta name="twitter:description" content="linux-docker-01 docker基础学习">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1f04hlondj30mt0aft8v.jpg">
 
 
 
@@ -493,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-25 14:12:09" itemprop="dateModified" datetime="2019-03-25T14:12:09+08:00">2019-03-25</time>
+                <time title="修改时间：2020-01-23 08:49:00" itemprop="dateModified" datetime="2020-01-23T08:49:00+08:00">2020-01-23</time>
               
             
           </span>
@@ -580,7 +573,6 @@
 <p>虚拟机：硬件层的虚拟化（hypervisor）</p>
 <p>区别：</p>
 <p>　　把一个公寓套间比作虚拟机，那么容器就是合租的模式，每一个容器就是公寓里的一个卧室，大家共享客厅和厨房，但是隔壁同学大声放音乐可能会吵到隔壁同学，并且从锁门保护隐私来看也不是这么的安全。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1f04hlondj30mt0aft8v.jpg" alt=""></p>
 <h3 id="传统虚拟化方式-vs-Docker"><a href="#传统虚拟化方式-vs-Docker" class="headerlink" title="传统虚拟化方式 vs Docker"></a>传统虚拟化方式 vs Docker</h3><p>　　传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，在该系统上再运行所需应用进程。而容器内的应用进程直接运行于宿主的内核，容器内没有自己的内核，而且也没有进行硬件虚拟。因此容器要比传统虚拟机更为轻便。</p>
 <h3 id="容器的三个特点"><a href="#容器的三个特点" class="headerlink" title="容器的三个特点"></a>容器的三个特点</h3><p>1、容器具有不可变的特性</p>
 <p>　　在it运维过程中，环境变化是导致运维故障的主要原因，例如本地安装的python3，上架到服务器上调试时发现服务器原有环境是Python2，这就会导致问题出现。或者开发工作结束后，到服务器上测试会由于环境不同而出现很多问题。然而docker技术解决了问题，只要定义了docker file的环境，则有了一次构建，到处执行的特性。</p>
@@ -589,7 +581,6 @@
 <p>3、容器的创建速度更快</p>
 <p>秒级启动、创建、销毁</p>
 <h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><p>　　Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从Apache2.0协议开源。Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1f06cfpwaj30or0gpjzc.jpg" alt=""></p>
 <h3 id="Docker参考资料"><a href="#Docker参考资料" class="headerlink" title="Docker参考资料"></a>Docker参考资料</h3><p>官方网站：<a href="https://www.docker.com/" target="_blank" rel="noopener">https://www.docker.com</a><a href="https://www.docker.com/" target="_blank" rel="noopener">/</a></p>
 <p>官方文档：<a href="https://docs.docker.com/" target="_blank" rel="noopener">https://docs.docker.com/</a></p>
 <h3 id="Docker-发展历史"><a href="#Docker-发展历史" class="headerlink" title="Docker 发展历史"></a>Docker 发展历史</h3><p>　　Docker最初是dotCloud公司创始人Solomon Hykes。 üDocker使用Google公司推出的Go语言进行开发实现。最初实现是基于 LXC，从 0.7 版本以后开始去除 LXC，转而使用自行开发的libcontainer，从 1.11 开始，则进一步演进为使用 runC 和 containerd。</p>
@@ -614,12 +605,9 @@
 <h3 id="Docker的优势"><a href="#Docker的优势" class="headerlink" title="Docker的优势"></a>Docker的优势</h3><h4 id="对于开发人员——Build-Once-Run-Anywhere"><a href="#对于开发人员——Build-Once-Run-Anywhere" class="headerlink" title="对于开发人员——Build Once, Run Anywhere"></a>对于开发人员——Build Once, Run Anywhere</h4><p>　　容器意味着环境隔离和可重复性。开发人员只需为应用创建一次运行环境，然后打包成容器便可在其他机器上运行。另外，容器环境与所在的 Host 环境是隔离的，就像虚拟机一样，但更快更简单。</p>
 <h4 id="对于运维人员——Configure-Once-Run-Anything"><a href="#对于运维人员——Configure-Once-Run-Anything" class="headerlink" title="对于运维人员——Configure Once, Run Anything"></a>对于运维人员——Configure Once, Run Anything</h4><p>　　只需要配置好标准的 runtime 环境，服务器就可以运行任何容器。这使得运维人员的工作变得更高效，一致和可重复。容器消除了开发、测试、生产环境的不一致性。</p>
 <h2 id="从全球航运视角认识docker"><a href="#从全球航运视角认识docker" class="headerlink" title="从全球航运视角认识docker"></a>从全球航运视角认识docker</h2><p>　　没有集装箱就没有全球化，集装箱改变世界，docker也在改变世界。集装箱是二十世纪最伟大的发明之一，不同尺寸的货物在全世界如何通过一种低沉本、快速的方式去运输？</p>
-<h3 id="docker类比于传统航运体系"><a href="#docker类比于传统航运体系" class="headerlink" title="docker类比于传统航运体系"></a>docker类比于传统航运体系</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1esxebjb1j30o208hjug.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1f02631jyj30r70csagi.jpg" alt=""></p>
-<p>　　建立”航运“技术标准的挑战有集装箱尺寸形状、装卸流程、吊车尺寸、通关流程等，docker自然也面临这些挑战。</p>
-<p>集装箱：变革了人类整个生产流程体系，让地球变平了</p>
-<p>docker：变革IT领域的软件交付方式，让IT之间的鸿沟消失</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1ezycwqisj30r80frqly.jpg" alt=""></p>
+<h3 id="docker类比于传统航运体系"><a href="#docker类比于传统航运体系" class="headerlink" title="docker类比于传统航运体系"></a>docker类比于传统航运体系</h3><p>　　建立”航运“技术标准的挑战有集装箱尺寸形状、装卸流程、吊车尺寸、通关流程等，docker自然也面临这些挑战。</p>
+<p>集装箱：变革了人类整个生产流程体系，让地球变平了；</p>
+<p>docker：变革IT领域的软件交付方式，让IT之间的鸿沟消失。</p>
 <h2 id="Docker的应用场景"><a href="#Docker的应用场景" class="headerlink" title="Docker的应用场景"></a>Docker的应用场景</h2><ul>
 <li>Web 应用的自动化打包和发布。</li>
 <li>自动化测试和持续集成、发布。</li>
@@ -679,8 +667,6 @@
 <h3 id="Docker组件协同工作流程"><a href="#Docker组件协同工作流程" class="headerlink" title="Docker组件协同工作流程"></a>Docker组件协同工作流程</h3><p>①Docker客户端执行docker run 命令<br>②Docker daemon发现本地没有httpd镜像<br>③Dameon从Docker Hub 下载镜像<br>④下载完成，镜像被保存到本地<br>⑤Docker daemon启动容器</p>
 <h2 id="Docker-架构"><a href="#Docker-架构" class="headerlink" title="Docker 架构"></a>Docker 架构</h2><p>　　Docker 使用客户端-服务器 (C/S) 架构模式，使用远程API来管理和创建Docker容器，Docker 容器通过 Docker 镜像来创建，容器与镜像的关系类似于面向对象编程中的对象与类。</p>
 <p>　　Docker 采用的是 Client/Server 架构，客户端向服务器发送请求，服务器负责构建、运行和分发容器。客户端和服务器可以运行在同一个 Host 上，客户端也可以通过 socket 或REST API 与远程的服务器通信。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1f08utbl2j30ed0awtak.jpg" alt=""></p>
-<p>本篇到此结束</p>
 
       
     </div>
@@ -850,7 +836,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">146</span>
+                    <span class="site-state-item-count">145</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

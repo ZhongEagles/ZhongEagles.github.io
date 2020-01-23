@@ -124,21 +124,19 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-git-03 git远程仓库">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z0ijs45gj31gz0ln40c.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z18lloxpj31g30nwq48.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z1aqhlnzj31c20mqgmy.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z1cu3paij31gs0qbac5.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z1hyjewjj31ge0n7jtg.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z2aedoepj30zh0kdt9w.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z2l086pwj31g90p4gng.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z2m4co2gj31cl0m140f.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z2otbussj31dx0l5wfp.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z2reh4jej319q0n1mz1.jpg">
-<meta property="og:updated_time" content="2019-04-11T14:43:52.126Z">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1Edz0U.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1EwS7F.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1EwCtJ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1EwA6x.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1EwZnK.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1EwZnK.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1EwKtH.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1Ewl9A.png">
+<meta property="og:updated_time" content="2020-01-23T01:41:25.470Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-git-03 git远程仓库">
 <meta name="twitter:description" content="linux-git-03 git远程仓库">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z0ijs45gj31gz0ln40c.jpg">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/01/23/1Edz0U.png">
 
 
 
@@ -497,7 +495,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-11 22:43:52" itemprop="dateModified" datetime="2019-04-11T22:43:52+08:00">2019-04-11</time>
+                <time title="修改时间：2020-01-23 09:41:25" itemprop="dateModified" datetime="2020-01-23T09:41:25+08:00">2020-01-23</time>
               
             
           </span>
@@ -585,31 +583,29 @@
 <h4 id="添加远程仓库-1"><a href="#添加远程仓库-1" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h4><p>1.注册Github账号，官网：<a href="https://github.com" target="_blank" rel="noopener">https://github.com</a></p>
 <p>2.打开一台centos7的虚拟机，创建SSH Key，下面<a href="mailto:youremail@example.com" target="_blank" rel="noopener">youremail@example.com</a>这里可以填的你邮箱，然后直接敲三个回车即可，存放密钥用的是默认的文件夹，而且没有为密钥设置密码。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@localhost ~]# ls /root/.ssh/</span><br><span class="line">id_rsa  id_rsa.pub</span><br><span class="line">[root@localhost ~]# cat /root/.ssh/id_rsa.pub </span><br><span class="line"></span><br><span class="line">这里会显示公钥内容，把公钥复制下来</span><br><span class="line"></span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
-<p>3.登录github，如下图，将上面复制好的ssh key公钥添加到你的github中。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z0ijs45gj31gz0ln40c.jpg" alt=""></p>
-<p>复制上去后，给密钥起个名字，如下图我的是“myfirstkey”，然后点击Add SSH Key即可。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z18lloxpj31g30nwq48.jpg" alt=""></p>
+<p>3.登录github，如下图，将上面复制好的ssh key公钥添加到你的github中。（点击头像，settings下找到ssh keys）</p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1Edz0U.png" alt="1Edz0U.png"></p>
+<p>复制上去后，给密钥起个名字，例如我的是“myfirstkey”，然后点击Add SSH Key即可。</p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1EwS7F.png" alt="1EwS7F.png"></p>
 <p>添加完成</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z1aqhlnzj31c20mqgmy.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1EwCtJ.png" alt="1EwCtJ.png"></p>
 <h2 id="仓库的创建"><a href="#仓库的创建" class="headerlink" title="仓库的创建"></a>仓库的创建</h2><h3 id="1-先远程再本地（建议使用）"><a href="#1-先远程再本地（建议使用）" class="headerlink" title="1.先远程再本地（建议使用）"></a>1.先远程再本地（建议使用）</h3><p>　　最佳选择是先创建远程库然后克隆到本地，但是创建远程库的时候选Initialize this repository with a README，这样GitHub会自动为我们创建一个README.md文件。</p>
 <p>创建远程仓库：testgit</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z1cu3paij31gs0qbac5.jpg" alt=""></p>
-<p>复制仓库链接：<a href="https://github.com/ZhongEagles/testgit.git" target="_blank" rel="noopener">https://github.com/ZhongEagles/testgit.git</a></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z1hyjewjj31ge0n7jtg.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1EwA6x.png" alt="1EwA6x.png"></p>
+<p>点击进入，复制仓库链接：<a href="https://github.com/ZhongEagles/testgit.git" target="_blank" rel="noopener">https://github.com/ZhongEagles/testgit.git</a></p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1EwZnK.png" alt="1EwZnK.png"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# git clone 你刚刚复制的仓库链接</span><br><span class="line">正克隆到 &apos;testgit&apos;...</span><br><span class="line">remote: Enumerating objects: 3, done.</span><br><span class="line">remote: Counting objects: 100% (3/3), done.</span><br><span class="line">remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0</span><br><span class="line">Unpacking objects: 100% (3/3), done.</span><br><span class="line">[root@localhost ~]# ls</span><br><span class="line">anaconda-ks.cfg  firstgit  testgit</span><br><span class="line">[root@localhost ~]# cd testgit/</span><br><span class="line">[root@localhost testgit]# ls</span><br><span class="line">README.md</span><br><span class="line">[root@localhost testgit]#</span><br></pre></td></tr></table></figure>
 <p>然后你就可以在你的本地仓库进行开发了，例如我们写一个a.txt，然后同步到远程仓库。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost testgit]# vim a.txt</span><br><span class="line">[root@localhost testgit]# cat a.txt </span><br><span class="line">hello my testgit!</span><br><span class="line">[root@localhost testgit]# </span><br><span class="line">[root@localhost testgit]# git add a.txt</span><br><span class="line">[root@localhost testgit]# git commit -m &quot;write a.txt&quot;</span><br><span class="line">[master 4e2168d] write a.txt</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br><span class="line"> create mode 100644 a.txt</span><br><span class="line">[root@localhost testgit]# git push -u origin master </span><br><span class="line"></span><br><span class="line">-u是update的意思，master是主分支的意思，这里需要你输入github账户名密码。</span><br></pre></td></tr></table></figure>
 <p>到网页上刷新一下，可以看到你推送上来的a.txt已经在这个远程仓库里面了。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z2aedoepj30zh0kdt9w.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1EwZnK.png" alt="1EwZnK.png"></p>
 <h3 id="2-先本地再远程（不建议使用）"><a href="#2-先本地再远程（不建议使用）" class="headerlink" title="2.先本地再远程（不建议使用）"></a>2.先本地再远程（不建议使用）</h3><p>继续我们上一篇文章中用到的本地仓库firstgit。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost testgit]# cd ..</span><br><span class="line">[root@localhost ~]# cd firstgit/</span><br><span class="line">[root@localhost firstgit]# ls</span><br><span class="line">1.txt  readme.txt</span><br><span class="line">[root@localhost firstgit]#</span><br></pre></td></tr></table></figure>
-<p>在远程也创建一个仓库：firstgit</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z2l086pwj31g90p4gng.jpg" alt=""></p>
-<p>现在我们需要把这个仓库与远程仓库进行关联，复制仓库链接</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z2m4co2gj31cl0m140f.jpg" alt=""></p>
+<p>1）在远程也创建一个仓库：firstgit，同上；</p>
+<p>2）现在我们需要把这个仓库与远程仓库进行关联，复制仓库链接；</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost firstgit]# git remote add origin https://github.com/ZhongEagles/firstgit.git</span><br><span class="line">[root@localhost firstgit]# git push -u origin master </span><br><span class="line"></span><br><span class="line">输入账号密码</span><br></pre></td></tr></table></figure>
 <p>刷新一下网页，可以看到推送上去的俩文件。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z2otbussj31dx0l5wfp.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1EwKtH.png" alt="1EwKtH.png"></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
 <li>根据提示信息：<ul>
 <li>在命令行中创建新的仓库并关联</li>
@@ -621,8 +617,7 @@
 </ul>
 <p>　　最佳选择是先创建远程库然后克隆到本地，但是创建远程库的时候选Initialize this repository with a README，这样GitHub会自动为我们创建一个README.md文件。</p>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>　　github的pull requests是指在本地修改了别人的代码之后，请求别人的同意，别人同意就能同步，不同意就被驳回。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1z2reh4jej319q0n1mz1.jpg" alt=""></p>
-<p>本篇到此结束</p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1Ewl9A.png" alt="1Ewl9A.png"></p>
 
       
     </div>
@@ -792,7 +787,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">146</span>
+                    <span class="site-state-item-count">145</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

@@ -124,13 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-ansible-04 ansible-playbook">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dompv9acj30u00jl1gi.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dor7s12hj30th0lh7u8.jpg">
-<meta property="og:updated_time" content="2019-03-24T03:23:38.187Z">
+<meta property="og:updated_time" content="2020-01-20T01:51:47.639Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-ansible-04 ansible-playbook">
 <meta name="twitter:description" content="linux-ansible-04 ansible-playbook">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dompv9acj30u00jl1gi.jpg">
 
 
 
@@ -489,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-24 11:23:38" itemprop="dateModified" datetime="2019-03-24T11:23:38+08:00">2019-03-24</time>
+                <time title="修改时间：2020-01-20 09:51:47" itemprop="dateModified" datetime="2020-01-20T09:51:47+08:00">2020-01-20</time>
               
             
           </span>
@@ -640,14 +637,11 @@ roles: 角色
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/hosts</span><br><span class="line"></span><br><span class="line">#在文档中加入下列两行</span><br><span class="line"></span><br><span class="line">192.168.141.53 node2</span><br><span class="line">192.168.141.69 node3</span><br></pre></td></tr></table></figure>
 <h4 id="通过playbook添加用户示例"><a href="#通过playbook添加用户示例" class="headerlink" title="通过playbook添加用户示例"></a>通过playbook添加用户示例</h4><p>（1）给远程主机node3添加用户test</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# vim user.yml</span><br><span class="line">[root@test ~]# cat user.yml </span><br><span class="line">- hosts: node3</span><br><span class="line">  remote_user: root</span><br><span class="line">  gather_facts: False</span><br><span class="line">  vars:</span><br><span class="line">    - user: test</span><br><span class="line">  tasks:</span><br><span class="line">  - name: create user</span><br><span class="line">    user: name=&#123;&#123; user &#125;&#125;</span><br><span class="line">[root@test ~]# ansible-playbook user.yml</span><br><span class="line"></span><br><span class="line">PLAY [node3] *********************************************************************************************************</span><br><span class="line"></span><br><span class="line">TASK [create user] ***************************************************************************************************</span><br><span class="line">changed: [node3]</span><br><span class="line"></span><br><span class="line">PLAY RECAP ***********************************************************************************************************</span><br><span class="line">node3                      : ok=1    changed=1    unreachable=0    failed=0   </span><br><span class="line"></span><br><span class="line">[root@test ~]# ansible node3 -a &quot;id test&quot;</span><br><span class="line">node3 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">uid=1000(test) gid=1000(test) groups=1000(test)</span><br><span class="line"></span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dompv9acj30u00jl1gi.jpg" alt=""></p>
 <p>上面的playbook 实现的功能是新增一个用户：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">name：对该playbook实现的功能做一个概述，后面执行过程中，会打印name变量的值</span><br><span class="line">hosts：指定了对哪些主机进行参作</span><br><span class="line">remote_user：指定了使用什么用户登录远程主机操作</span><br><span class="line">gather_facts：指定了在以下任务部分执行前，是否先执行setup模块获取主机相关信息，这在后面的task会使用到setup获取的信息时用到</span><br><span class="line">vars：指定了变量，这里指定了一个user变量，其值为test，需要注意的是，变量值一定要用引号引起来</span><br><span class="line">tasks：指定了一个任务，其下面的name参数同样是对任务的描述，在执行过程中会打印出来。user提定了调用user模块，name是user模块里的一个参数，而增加的用户名字调用了上面user变量的值</span><br></pre></td></tr></table></figure>
 <p>（2）删除远程主机test的账号<br>只需改一行：</p>
 <p>user: name=”“ state=absent remove=yes </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@test ~]# vim user.yml</span><br><span class="line">[root@test ~]# cat user.yml </span><br><span class="line">- hosts: node3</span><br><span class="line">  remote_user: root</span><br><span class="line">  gather_facts: False</span><br><span class="line">  vars:</span><br><span class="line">    - user: test</span><br><span class="line">  tasks:</span><br><span class="line">  - name: create user</span><br><span class="line">    user: name=&#123;&#123; user &#125;&#125; state=absent remove=yes</span><br><span class="line">[root@test ~]# ansible node3 -a &quot;id test&quot;</span><br><span class="line">node3 | CHANGED | rc=0 &gt;&gt;</span><br><span class="line">uid=1000(test) gid=1000(test) groups=1000(test)</span><br><span class="line"></span><br><span class="line">[root@test ~]# ansible-playbook user.yml</span><br><span class="line"></span><br><span class="line">PLAY [node3] *********************************************************************************************************</span><br><span class="line"></span><br><span class="line">TASK [create user] ***************************************************************************************************</span><br><span class="line">changed: [node3]</span><br><span class="line"></span><br><span class="line">PLAY RECAP ***********************************************************************************************************</span><br><span class="line">node3                      : ok=1    changed=1    unreachable=0    failed=0   </span><br><span class="line"></span><br><span class="line">[root@test ~]# ansible node3 -a &quot;id test&quot;</span><br><span class="line">node3 | FAILED | rc=1 &gt;&gt;</span><br><span class="line">id: test: no such usernon-zero return code</span><br><span class="line"></span><br><span class="line">[root@test ~]#</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dor7s12hj30th0lh7u8.jpg" alt=""></p>
-<p>本篇到此结束</p>
 
       
     </div>
@@ -817,7 +811,7 @@ roles: 角色
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">146</span>
+                    <span class="site-state-item-count">145</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
