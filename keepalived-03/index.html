@@ -124,20 +124,20 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-keepalived-03 Nginx+Apache部署">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wlthq1jaj30nc08bjrq.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wlw9xxbmj30lq0kw7nt.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wmm5xhcdj30wz0krtbs.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wnhz7n3tj30px0jr19q.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wn06bbn4j30py0k2an7.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wnjlgpbpj30lq0kwqh1.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wnkemc4dj30t00kqe36.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wnl87s73j30sp0jdali.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wnmjag8sj30np0mv1ev.jpg">
-<meta property="og:updated_time" content="2019-04-09T12:34:06.484Z">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1Vi1Gq.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1Viqeg.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1VFCOU.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1Vk0v6.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1Vkg5d.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1VkhxP.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1VkLPs.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1VkX2q.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1VkzrT.png">
+<meta property="og:updated_time" content="2020-01-23T09:06:53.699Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-keepalived-03 Nginx+Apache部署">
 <meta name="twitter:description" content="linux-keepalived-03 Nginx+Apache部署">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wlthq1jaj30nc08bjrq.jpg">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/01/23/1Vi1Gq.png">
 
 
 
@@ -496,7 +496,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-09 20:34:06" itemprop="dateModified" datetime="2019-04-09T20:34:06+08:00">2019-04-09</time>
+                <time title="修改时间：2020-01-23 17:06:53" itemprop="dateModified" datetime="2020-01-23T17:06:53+08:00">2020-01-23</time>
               
             
           </span>
@@ -590,22 +590,22 @@
 <p>noed3、node4</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@node3 ~]# firewall-cmd --add-port=80/tcp --permanent</span><br><span class="line">success</span><br><span class="line">[root@node3 ~]# firewall-cmd --reload</span><br><span class="line">success</span><br><span class="line">[root@node3 ~]# </span><br><span class="line">[root@node3 ~]# vim /etc/selinux/config </span><br><span class="line">[root@node3 ~]# cat /etc/selinux/config |grep  SELINUX</span><br><span class="line"># SELINUX= can take one of these three values:</span><br><span class="line">SELINUX=disabled</span><br><span class="line"># SELINUXTYPE= can take one of three two values:</span><br><span class="line">SELINUXTYPE=targeted </span><br><span class="line">[root@node3 ~]#</span><br><span class="line">[root@node3 ~]# setenforce 0</span><br><span class="line">[root@node3 ~]# getenforce </span><br><span class="line">Permissive</span><br><span class="line">[root@node3 ~]#</span><br></pre></td></tr></table></figure>
 <h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><h3 id="nginx部署"><a href="#nginx部署" class="headerlink" title="nginx部署"></a>nginx部署</h3><p>node1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 ~]# yum install epel-release -y</span><br><span class="line">[root@node1 ~]# yum install nginx -y</span><br><span class="line">[root@node1 ~]# cd /etc/nginx/conf.d/</span><br><span class="line">[root@node1 conf.d]# vim proxy.conf </span><br><span class="line">[root@node1 conf.d]# cat proxy.conf </span><br><span class="line">upstream websers&#123;</span><br><span class="line">    server 192.168.141.12;</span><br><span class="line">    server 192.168.141.132;</span><br><span class="line">&#125;</span><br><span class="line">server&#123;</span><br><span class="line">    listen  80;</span><br><span class="line">    server_name 192.168.141.53;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass  http://websers;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">[root@node1 conf.d]# </span><br><span class="line">[root@node1 conf.d]# systemctl restart nginx</span><br><span class="line">[root@node1 conf.d]# systemctl enable nginx</span><br><span class="line">[root@node1 conf.d]# nginx -s reload</span><br><span class="line">[root@node1 conf.d]#</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 ~]# yum install epel-release -y</span><br><span class="line">[root@node1 ~]# yum install nginx -y</span><br><span class="line">[root@node1 ~]# cd /etc/nginx/conf.d/</span><br><span class="line">[root@node1 conf.d]# vim proxy.conf </span><br><span class="line">[root@node1 conf.d]# cat proxy.conf </span><br><span class="line">upstream websers&#123;</span><br><span class="line">    server 192.168.141.12;</span><br><span class="line">    server 192.168.141.132;</span><br><span class="line">&#125;</span><br><span class="line">server&#123;</span><br><span class="line">    listen  8080;</span><br><span class="line">    server_name 192.168.141.53;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass  http://websers;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">[root@node1 conf.d]# </span><br><span class="line">[root@node1 conf.d]# systemctl restart nginx</span><br><span class="line">[root@node1 conf.d]# systemctl enable nginx</span><br><span class="line">[root@node1 conf.d]# nginx -s reload</span><br><span class="line">[root@node1 conf.d]#</span><br></pre></td></tr></table></figure>
 <h3 id="apache部署"><a href="#apache部署" class="headerlink" title="apache部署"></a>apache部署</h3><p>node3</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@node3 ~]# yum install httpd -y</span><br><span class="line">[root@node3 ~]# echo &quot;i am web1&quot; &gt; /var/www/html/index.html</span><br><span class="line">[root@node3 ~]# systemctl restart httpd</span><br><span class="line">[root@node3 ~]# systemctl enable httpd</span><br></pre></td></tr></table></figure>
 <p>node4</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@node4 ~]# yum install httpd -y</span><br><span class="line">[root@node3 ~]# echo &quot;i am web2&quot; &gt; /var/www/html/index.html</span><br><span class="line">[root@node4 ~]# systemctl restart httpd</span><br><span class="line">[root@node4 ~]# systemctl enable httpd</span><br></pre></td></tr></table></figure>
 <p>检查node3、node4的apache服务是否正常</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wlthq1jaj30nc08bjrq.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1Vi1Gq.png" alt="1Vi1Gq.png"></p>
 <p>用cmd检查node1的nginx服务是否正常</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wlw9xxbmj30lq0kw7nt.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1Viqeg.png" alt="1Viqeg.png"></p>
 <p>查看apache服务日志</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@node3 ~]# cat /var/log/httpd/access_log</span><br><span class="line">192.168.141.1 - - [09/Apr/2019:07:25:13 -0400] &quot;GET / HTTP/1.1&quot; 200 10 &quot;-&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0&quot;</span><br><span class="line">192.168.141.1 - - [09/Apr/2019:07:25:13 -0400] &quot;GET /favicon.ico HTTP/1.1&quot; 404 209 &quot;-&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0&quot;</span><br><span class="line">192.168.141.53 - - [09/Apr/2019:07:28:21 -0400] &quot;GET / HTTP/1.0&quot; 200 10 &quot;-&quot; &quot;curl/7.55.1&quot;</span><br><span class="line">192.168.141.53 - - [09/Apr/2019:07:28:23 -0400] &quot;GET / HTTP/1.0&quot; 200 10 &quot;-&quot; &quot;curl/7.55.1&quot;</span><br><span class="line">192.168.141.53 - - [09/Apr/2019:07:28:24 -0400] &quot;GET / HTTP/1.0&quot; 200 10 &quot;-&quot; &quot;curl/7.55.1&quot;</span><br><span class="line">192.168.141.53 - - [09/Apr/2019:07:28:25 -0400] &quot;GET / HTTP/1.0&quot; 200 10 &quot;-&quot; &quot;curl/7.55.1&quot;</span><br><span class="line">192.168.141.53 - - [09/Apr/2019:07:28:25 -0400] &quot;GET / HTTP/1.0&quot; 200 10 &quot;-&quot; &quot;curl/7.55.1&quot;</span><br><span class="line">[root@node3 ~]# </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@node4 ~]# cat /var/log/httpd/access_log</span><br><span class="line">192.168.141.1 - - [09/Apr/2019:19:25:26 +0800] &quot;GET / HTTP/1.1&quot; 200 10 &quot;-&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0&quot;</span><br><span class="line">192.168.141.1 - - [09/Apr/2019:19:25:26 +0800] &quot;GET /favicon.ico HTTP/1.1&quot; 404 209 &quot;-&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0&quot;</span><br><span class="line">192.168.141.53 - - [09/Apr/2019:19:28:22 +0800] &quot;GET / HTTP/1.0&quot; 200 10 &quot;-&quot; &quot;curl/7.55.1&quot;</span><br><span class="line">192.168.141.53 - - [09/Apr/2019:19:28:23 +0800] &quot;GET / HTTP/1.0&quot; 200 10 &quot;-&quot; &quot;curl/7.55.1&quot;</span><br><span class="line">192.168.141.53 - - [09/Apr/2019:19:28:24 +0800] &quot;GET / HTTP/1.0&quot; 200 10 &quot;-&quot; &quot;curl/7.55.1&quot;</span><br><span class="line">192.168.141.53 - - [09/Apr/2019:19:28:25 +0800] &quot;GET / HTTP/1.0&quot; 200 10 &quot;-&quot; &quot;curl/7.55.1&quot;</span><br><span class="line">[root@node4 ~]#</span><br></pre></td></tr></table></figure>
 <p>　　可以看到，node3与node4日志记录里，访问自己的是node1：192.168.141.53。那么问题来了，如果某用户通过node1的代理在node3上登录了我们的网站，他刷新网页的时候，万一刷新的网页数据被node1负载均衡转发给了node4，然而node4上面是没有其对应session的，这样的话，该用户就不得不再次输入账号和密码，是很荒唐的一件事情。但是其实呢，nginx用的七层代理可以避免这种情况的发生，所以不需要进行手动干预，这些在我前几篇博客中有详细的介绍，这里只是提一下。</p>
 <p>为了方便我们运维人员来观察是谁访问了我们的apache服务器，我们需要修改一下日志格式。</p>
 <p>首先看一下官方文档：</p>
 <p><a href="http://httpd.apache.org/docs/2.2/mod/mod_log_config.html" target="_blank" rel="noopener">http://httpd.apache.org/docs/2.2/mod/mod_log_config.html</a></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wmm5xhcdj30wz0krtbs.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1VFCOU.png" alt="1VFCOU.png"></p>
 <p>查看当前apache服务日志格式</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@node3 ~]# cat /etc/httpd/conf/httpd.conf | grep LogFormat</span><br><span class="line">    LogFormat &quot;%h %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%&#123;Referer&#125;i\&quot; \&quot;%&#123;User-Agent&#125;i\&quot;&quot; combined</span><br><span class="line">    LogFormat &quot;%h %l %u %t \&quot;%r\&quot; %&gt;s %b&quot; common</span><br><span class="line">      LogFormat &quot;%h %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%&#123;Referer&#125;i\&quot; \&quot;%&#123;User-Agent&#125;i\&quot; %I %O&quot; combinedio</span><br><span class="line">[root@node3 ~]#</span><br></pre></td></tr></table></figure>
 <p>　　可以看到，若要在apache日志文件中看到客户端ip，需要加一个 \”%{X-Real-IP}i\” ，其中X-Real-IP是我们在nginx定义的变量，气质为客户端的真实ip地址。</p>
@@ -613,25 +613,23 @@
 <p>　　在nginx配置中使用proxy_set_header X-Real-IP $remote_addr;并且去httpd服务器定义日志格式<br>LogFormat “ \”%{X-Real-IP}i\” %h %l %u %t \”%r\” %&gt;s %b \”%{Referer}i\” \”%{User-Agent}i\”” combined</p>
 <p>node1上：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 ~]# cd /etc/nginx/conf.d/</span><br><span class="line">[root@node1 conf.d]# vim proxy.conf </span><br><span class="line"></span><br><span class="line">在location / &#123;</span><br><span class="line">         proxy_pass  http://websers;</span><br><span class="line">    &#125;</span><br><span class="line">里面加上：</span><br><span class="line">proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line"></span><br><span class="line">保存退出</span><br><span class="line">[root@node1 ~]# systemctl restart nginx</span><br><span class="line">[root@node1 ~]# nginx -s reload</span><br><span class="line">[root@node1 ~]#</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wnhz7n3tj30px0jr19q.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1Vk0v6.png" alt="1Vk0v6.png"></p>
 <p>node3上</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@node3 ~]# vim /etc/httpd/conf/httpd.conf</span><br><span class="line"></span><br><span class="line">将196行修改为：</span><br><span class="line">LogFormat &quot; \&quot;%&#123;X-Real-IP&#125;i\&quot; %h %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%&#123;Referer&#125;i\&quot; \&quot;%&#123;User-Agent&#125;i\&quot;&quot; combined</span><br><span class="line"></span><br><span class="line">保存退出</span><br><span class="line">[root@node3 ~]# systemctl restart httpd</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wn06bbn4j30py0k2an7.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1Vkg5d.png" alt="1Vkg5d.png"></p>
 <p>node4上</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@node4 ~]# vim /etc/httpd/conf/httpd.conf</span><br><span class="line"></span><br><span class="line">将196行修改为：</span><br><span class="line">LogFormat &quot; \&quot;%&#123;X-Real-IP&#125;i\&quot; %h %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%&#123;Referer&#125;i\&quot; \&quot;%&#123;User-Agent&#125;i\&quot;&quot; combined</span><br><span class="line"></span><br><span class="line">保存退出</span><br><span class="line">[root@node4 ~]# systemctl restart httpd</span><br></pre></td></tr></table></figure>
 <p>同上。</p>
-<p>现在再次用cmd来访问192.168.141.53</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wnjlgpbpj30lq0kwqh1.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1VkhxP.png" alt="1VkhxP.png"></p>
+<p>现在再次用cmd来访问192.168.141.53:8080</p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1VkLPs.png" alt="1VkLPs.png"></p>
 <p>然后回到node3上查看日志：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node3 ~]# cat /var/log/httpd/access_log</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wnkemc4dj30t00kqe36.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1VkX2q.png" alt="1VkX2q.png"></p>
 <p>然后回到node4上查看日志：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node4 ~]# cat /var/log/httpd/access_log</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wnl87s73j30sp0jdali.jpg" alt=""></p>
-<p>可以看到相比于之前的日志，日志条目最前面多了一个ip，这个ip显然就是我的电脑的ip，如下：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1wnmjag8sj30np0mv1ev.jpg" alt=""></p>
-<p>这样我们修改apache日志格式的目的就已经达到了。</p>
-<p>本篇到此结束。</p>
+<p><img src="https://s2.ax1x.com/2020/01/23/1VkzrT.png" alt="1VkzrT.png"></p>
+<p>　　可以看到相比于之前的日志，日志条目最前面多了一个ip，这个ip显然就是我的电脑的ip，此外还有我电脑的操作系统信息等，这样我们修改apache日志格式的目的就已经达到了。</p>
 
       
     </div>

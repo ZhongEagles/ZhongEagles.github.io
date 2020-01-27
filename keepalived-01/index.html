@@ -124,12 +124,12 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-keepalived-01 keepalived-基础学习">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1vc3mnaruj30kk0az75v.jpg">
-<meta property="og:updated_time" content="2019-04-14T07:56:33.809Z">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/23/1VC26O.png">
+<meta property="og:updated_time" content="2020-01-23T08:16:59.301Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-keepalived-01 keepalived-基础学习">
 <meta name="twitter:description" content="linux-keepalived-01 keepalived-基础学习">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1vc3mnaruj30kk0az75v.jpg">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/01/23/1VC26O.png">
 
 
 
@@ -488,7 +488,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-14 15:56:33" itemprop="dateModified" datetime="2019-04-14T15:56:33+08:00">2019-04-14</time>
+                <time title="修改时间：2020-01-23 16:16:59" itemprop="dateModified" datetime="2020-01-23T16:16:59+08:00">2020-01-23</time>
               
             
           </span>
@@ -570,11 +570,9 @@
       
 
       
-        <h1 id="linux-keepalived-01-keepalived-基础学习"><a href="#linux-keepalived-01-keepalived-基础学习" class="headerlink" title="linux-keepalived-01 keepalived-基础学习"></a>linux-keepalived-01 keepalived-基础学习</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
-<li>Keepalived是Linux下一个轻量级别的高可用解决方案，Keepalived起初是为LVS设计的，专门用来监控集群系统中各个服务节点的状态，如果某个服务器节点出现故障，Keepalived将检测到后自动将节点从集群系统中剔除。</li>
-<li>后来Keepalived又加入了VRRP的功能，VRRP（VritrualRouterRedundancyProtocol,虚拟路由冗余协议)出现的目的是解决静态路由出现的单点故障问题，通过VRRP可以实现网络不间断稳定运行，因此Keepalvied一方面具有服务器状态检测和故障隔离功能，另外一方面也有HAcluster功能。</li>
-<li>健康检查和失败切换是keepalived的两大核心功能。所谓的健康检查，就是采用tcp三次握手，icmp请求，http请求，udp echo请求等方式对负载均衡器后面的实际的服务器(通常是承载真实业务的服务器)进行保活；而失败切换主要是应用于配置了主备模式的负载均衡器，利用VRRP维持主备负载均衡器的心跳，当主负载均衡器出现问题时，由备负载均衡器承载对应的业务，从而在最大限度上减少流量损失，并提供服务的稳定性。</li>
-</ul>
+        <h1 id="linux-keepalived-01-keepalived-基础学习"><a href="#linux-keepalived-01-keepalived-基础学习" class="headerlink" title="linux-keepalived-01 keepalived-基础学习"></a>linux-keepalived-01 keepalived-基础学习</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>　　Keepalived是Linux下一个轻量级别的高可用解决方案，Keepalived起初是为LVS设计的，专门用来监控集群系统中各个服务节点的状态，如果某个服务器节点出现故障，Keepalived将检测到后自动将节点从集群系统中剔除。</p>
+<p>　　后来Keepalived又加入了VRRP的功能，VRRP（VritrualRouterRedundancyProtocol,虚拟路由冗余协议)出现的目的是解决静态路由出现的单点故障问题，通过VRRP可以实现网络不间断稳定运行，因此Keepalvied一方面具有服务器状态检测和故障隔离功能，另外一方面也有HAcluster功能。</p>
+<p>　　健康检查和失败切换是keepalived的两大核心功能。所谓的健康检查，就是采用tcp三次握手，icmp请求，http请求，udp echo请求等方式对负载均衡器后面的实际的服务器(通常是承载真实业务的服务器)进行保活；而失败切换主要是应用于配置了主备模式的负载均衡器，利用VRRP维持主备负载均衡器的心跳，当主负载均衡器出现问题时，由备负载均衡器承载对应的业务，从而在最大限度上减少流量损失，并提供服务的稳定性。</p>
 <h2 id="VRRP协议"><a href="#VRRP协议" class="headerlink" title="VRRP协议"></a>VRRP协议</h2><ul>
 <li>VRRP协议是一种容错的主备模式的协议，保证当主机的下一跳路由出现故障时，由另一台路由器来代替出现故障的路由器进行工作，通过VRRP可以在网络发生故障时透明的进行设备切换而不影响主机之间的数据通信。</li>
 <li>虚拟路由器：VRRP组中所有的路由器，拥有虚拟的IP+MAC(00-00-5e-00-01-VRID)地址</li>
@@ -600,7 +598,7 @@
 <li>传输层：利用TCP协议的端口连接和扫描技术检测后端服务器集群是否正常</li>
 <li>应用层：自定义keepalived工作方式（脚本）</li>
 </ul>
-<h2 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h2><p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1vc3mnaruj30kk0az75v.jpg" alt=""></p>
+<h2 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h2><p><img src="https://s2.ax1x.com/2020/01/23/1VC26O.png" alt="1VC26O.png"></p>
 <ul>
 <li>SchedulerI/OMultiplexer是一个I/O复用分发调度器，它负载安排Keepalived所有内部的任务请求</li>
 <li>Memory Mngt是一个内存管理机制，这个框架提供了访问内存的一些通用方法；</li>
@@ -629,9 +627,8 @@
 <h2 id="keepalived相关路径"><a href="#keepalived相关路径" class="headerlink" title="keepalived相关路径"></a>keepalived相关路径</h2><p>/etc/keepalived/keepalived.conf # 主配置文件<br>/etc/sysconfig/keepalived # 系统进程<br>/usr/bin/genhash # hash计算工具<br>/usr/lib/systemd/system/keepalived.service # 守护进程<br>/usr/sbin/keepalived # 命令工具</p>
 <h2 id="keepalived主从选举"><a href="#keepalived主从选举" class="headerlink" title="keepalived主从选举"></a>keepalived主从选举</h2><p>　　keepalived默认采用抢占模式，谁的优先级最高，谁就可以抢占到vip。例如node1的优先级是100，node2的优先级是90，一开始vip在node1上面。关闭node1上面的keepalived后，vip会漂移到node2上，可是一旦node1的keepalived再次开启，那么vip还是会漂移回到node1的。</p>
 <p><strong>选举机制</strong>：</p>
-<p>​    通过优先级<br>​    设置抢占和非抢占的参数：nopreempt（默认为抢占模式）</p>
+<p>​    1）通过优先级<br>​    2）设置抢占和非抢占的参数：nopreempt（默认为抢占模式）</p>
 <p>　　抢占模式：当某台优先级更高的节点加入集群中，立即重现选举master<br>　　非抢占模式：当master挂掉之后，才会重新选举</p>
-<p>本篇到此结束</p>
 
       
     </div>

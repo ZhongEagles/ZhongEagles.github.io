@@ -124,15 +124,14 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-基础学习-08 管道符、重定向与环境变量">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzauk3xoo5j30j80as7f2.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaune64xej30j80eqn9j.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaussg6mtj30j806tjy3.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzauy5blixj30j807zgq8.jpg">
-<meta property="og:updated_time" content="2019-02-23T13:23:01.834Z">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/24/1VxNJf.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/24/1VxTT1.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/24/1VzPtP.png">
+<meta property="og:updated_time" content="2020-01-24T02:37:24.689Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-基础学习-08 管道符、重定向与环境变量">
 <meta name="twitter:description" content="linux-基础学习-08 管道符、重定向与环境变量">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzauk3xoo5j30j80as7f2.jpg">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/01/24/1VxNJf.png">
 
 
 
@@ -491,7 +490,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-23 21:23:01" itemprop="dateModified" datetime="2019-02-23T21:23:01+08:00">2019-02-23</time>
+                <time title="修改时间：2020-01-24 10:37:24" itemprop="dateModified" datetime="2020-01-24T10:37:24+08:00">2020-01-24</time>
               
             
           </span>
@@ -633,10 +632,10 @@
 </table>
 <p>将当前的网络信息保存到当前目录中的network_info.txt文件中（输出重定向）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ifconfig &gt; network_info.txt</span><br><span class="line">[root@localhost ~]# cat network_info.txt</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzauk3xoo5j30j80as7f2.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/24/1VxNJf.png" alt="1VxNJf.png"></p>
 <p>追加一个日期到network_info.txt文件中（输出重定向）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# date &gt;&gt; network_info.txt </span><br><span class="line">[root@localhost ~]# cat network_info.txt</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaune64xej30j80eqn9j.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/24/1VxTT1.png" alt="1VxTT1.png"></p>
 <h2 id="管道符命令"><a href="#管道符命令" class="headerlink" title="管道符命令"></a>管道符命令</h2><h3 id="用于把前一个命令原本要输出到屏幕的标准正常数据当作是后一个命令的标准输入"><a href="#用于把前一个命令原本要输出到屏幕的标准正常数据当作是后一个命令的标准输入" class="headerlink" title="用于把前一个命令原本要输出到屏幕的标准正常数据当作是后一个命令的标准输入"></a>用于把前一个命令原本要输出到屏幕的标准正常数据当作是后一个命令的标准输入</h3><p>案例：统计当前Linux系统中有多少用户不能交互式登录系统</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# grep nologin /etc/passwd | wc -l</span><br><span class="line">16</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <h2 id="命令行通配符"><a href="#命令行通配符" class="headerlink" title="命令行通配符"></a>命令行通配符</h2><p>　　通配符就是通用的匹配信息的符号，比如星号（*）代表匹配零个或多个字符，问号（?）代表匹配单个字符，中括号内加上数字[0-9]代表匹配0～9之间的单个数字的字符，而中括号内加上字母[abc]则是代表匹配a、b、c三个字符中的任意一个字符。</p>
@@ -644,7 +643,7 @@
 <h3 id="查看系统中有哪些硬盘"><a href="#查看系统中有哪些硬盘" class="headerlink" title="查看系统中有哪些硬盘"></a>查看系统中有哪些硬盘</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ll /dev/sd*</span><br><span class="line">[root@localhost ~]# ll /dev/sd?</span><br><span class="line">[root@localhost ~]# ll /dev/sd[a-z]</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <p>案例2：</p>
 <h3 id="查看系统中有哪些分区"><a href="#查看系统中有哪些分区" class="headerlink" title="查看系统中有哪些分区"></a>查看系统中有哪些分区</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ll /dev/sd*[0-9]</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaussg6mtj30j806tjy3.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/24/1VzPtP.png" alt="1VzPtP.png"></p>
 <h1 id="常用转义字符"><a href="#常用转义字符" class="headerlink" title="常用转义字符"></a>常用转义字符</h1><p>Shell解释器还提供了特别丰富的转义字符来处理输入的特殊数据</p>
 <p>反斜杠（\）：使反斜杠后面的一个变量变为单纯的字符串。</p>
 <p>单引号（’’）：转义其中所有的变量为单纯的字符串。</p>
@@ -656,7 +655,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> [root@localhost ~]# curl myip.ipip.net</span><br><span class="line">当前 IP：112.24.12.22  来自于：中国 江苏 镇江  移动</span><br><span class="line">[root@localhost ~]# myip</span><br><span class="line">-bash: myip: command not found</span><br><span class="line">[root@localhost ~]# alias myip=&apos;curl myip.ipip.net&apos;</span><br><span class="line">[root@localhost ~]# myip</span><br><span class="line">当前 IP：112.24.12.22  来自于：中国 江苏 镇江  移动</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <p> 永久对当前用户生效</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim ~/.bashrc</span><br><span class="line"></span><br><span class="line">在下图所示处加上一行</span><br><span class="line">alias myip=&apos;curl myip.ipip.net&apos;</span><br><span class="line">保存退出</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzauy5blixj30j807zgq8.jpg" alt=""></p>
 <p>修改了~/.bashrc文件后必须使用source命令刷新才会生效</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# source ~/.bashrc</span><br><span class="line">[root@localhost ~]# myip</span><br><span class="line">当前 IP：112.24.12.22  来自于：中国 江苏 镇江  移动</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <h2 id="Linux系统中最重要的10个环境变量"><a href="#Linux系统中最重要的10个环境变量" class="headerlink" title="Linux系统中最重要的10个环境变量"></a>Linux系统中最重要的10个环境变量</h2><table>
@@ -709,7 +707,6 @@
 </tr>
 </tbody>
 </table>
-<p>本篇到此结束，这是linux基础学习章节的最后一篇，下一篇linux-09将进入到新的章节：运维进阶</p>
 
       
     </div>

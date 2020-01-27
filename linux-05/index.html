@@ -124,25 +124,16 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-基础学习-05 服务器基础环境配置和Yum软件仓库">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzah6npgpoj30j807qwm2.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzahkks88kj30j80es4c2.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzai6q75hpj30gg0i8tlr.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzai8l2jjpj30j80hkh1h.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaxwnz4b8j30j80jj7h6.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaxv2m1xmj30j805l75k.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzain241wvj30je0btgmv.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaini7qgej30mi0mqwh8.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzairda8arj30j90eqnbj.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaiufy3s8j30j805jads.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaixnzabzj30j8046tak.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaj86s58cj30ft0ci48k.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzak8xx4t2j30j906edke.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzgt4eq1pvj30j80h7mzp.jpg">
-<meta property="og:updated_time" content="2019-02-23T13:21:46.923Z">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/24/1VXHFf.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/24/1VXvOs.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/24/1VjSwq.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/24/1VjpT0.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/24/1VjPYT.png">
+<meta property="og:updated_time" content="2020-01-24T01:55:20.816Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-基础学习-05 服务器基础环境配置和Yum软件仓库">
 <meta name="twitter:description" content="linux-基础学习-05 服务器基础环境配置和Yum软件仓库">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzah6npgpoj30j807qwm2.jpg">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/01/24/1VXHFf.png">
 
 
 
@@ -501,7 +492,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-23 21:21:46" itemprop="dateModified" datetime="2019-02-23T21:21:46+08:00">2019-02-23</time>
+                <time title="修改时间：2020-01-24 09:55:20" itemprop="dateModified" datetime="2020-01-24T09:55:20+08:00">2020-01-24</time>
               
             
           </span>
@@ -585,47 +576,38 @@
       
         <h1 id="linux-基础学习-05-服务器基础环境配置和Yum软件仓库"><a href="#linux-基础学习-05-服务器基础环境配置和Yum软件仓库" class="headerlink" title="linux-基础学习-05 服务器基础环境配置和Yum软件仓库"></a>linux-基础学习-05 服务器基础环境配置和Yum软件仓库</h1><h2 id="查看和配置Linux系统的主机名："><a href="#查看和配置Linux系统的主机名：" class="headerlink" title="查看和配置Linux系统的主机名："></a>查看和配置Linux系统的主机名：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# hostname</span><br><span class="line">localhost.localdomain</span><br><span class="line">[root@localhost ~]# hostnamectl set-hostname abc</span><br><span class="line">[root@localhost ~]# hostname</span><br><span class="line">abc</span><br></pre></td></tr></table></figure>
 <h2 id="查看软件仓库列表"><a href="#查看软件仓库列表" class="headerlink" title="查看软件仓库列表"></a>查看软件仓库列表</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum repolist</span><br></pre></td></tr></table></figure>
-<p>如下图，我的yum源都是阿里云仓库的源。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzah6npgpoj30j807qwm2.jpg" alt=""></p>
+<p>如下图，我的yum源都是阿里云仓库和网易的源。</p>
+<p><img src="https://s2.ax1x.com/2020/01/24/1VXHFf.png" alt="1VXHFf.png"></p>
 <h2 id="将Yum仓库替换成中科大的仓库（Centos-7）"><a href="#将Yum仓库替换成中科大的仓库（Centos-7）" class="headerlink" title="将Yum仓库替换成中科大的仓库（Centos 7）"></a>将Yum仓库替换成中科大的仓库（Centos 7）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /etc/yum.repos.d/</span><br><span class="line">[root@localhost yum.repos.d]# mv CentOS-Base.repo CentOS-Base.repo.backup       //备份</span><br><span class="line">[root@localhost yum.repos.d]# wget -O CentOS-Base.repo https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=3</span><br><span class="line"></span><br><span class="line">查看yum源名称，可以看到已经不是阿里云的了</span><br><span class="line">[root@localhost yum.repos.d]# yum repolist </span><br><span class="line"></span><br><span class="line">清空之前的yum缓存和生成新的yum软件列表元数据</span><br><span class="line">[root@localhost yum.repos.d]# cd ~</span><br><span class="line">[root@localhost ~]# yum clean all &amp;&amp; yum makecache</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzahkks88kj30j80es4c2.jpg" alt=""></p>
 <h2 id="配置网卡信息（配置固定IP地址）"><a href="#配置网卡信息（配置固定IP地址）" class="headerlink" title="配置网卡信息（配置固定IP地址）"></a>配置网卡信息（配置固定IP地址）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
 <p>将ens33网卡配置如下（备注可以不写）：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">TYPE=&quot;Ethernet&quot;</span><br><span class="line">PROXY_METHOD=&quot;none&quot;</span><br><span class="line">BROWSER_ONLY=&quot;no&quot;</span><br><span class="line">BOOTPROTO=&quot;static&quot;	  	# 设备获得IP的方式设置为静态获取，固定ip</span><br><span class="line">DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV4_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6INIT=&quot;yes&quot;</span><br><span class="line">IPV6_AUTOCONF=&quot;yes&quot;</span><br><span class="line">IPV6_DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV6_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;</span><br><span class="line">NAME=&quot;ens33&quot;</span><br><span class="line">UUID=&quot;9c86a9bc-0939-4790-8580-274041e5eff3&quot;</span><br><span class="line">DEVICE=&quot;ens33&quot;</span><br><span class="line">ONBOOT=&quot;yes&quot;y			# 设备是否随着network的启动而启动</span><br><span class="line">IPADDR=192.168.141.12	# 设备的默认IP</span><br><span class="line">NETMASK=255.255.255.0	# 设备的默认掩码</span><br><span class="line">GATEWAY=192.168.141.2	# 设备的默认网关</span><br><span class="line">DNS1=114.114.114.114	# 设备DNS</span><br><span class="line">DNS2=8.8.8.8</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzai6q75hpj30gg0i8tlr.jpg" alt=""></p>
 <p>重启网络服务（你改了网卡ip，xshell远程连接就会断掉，需要重新连接）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl restart network</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Socket error Event: 32 Error: 10053.</span><br><span class="line">Connection closing...Socket close.</span><br><span class="line"></span><br><span class="line">Connection closed by foreign host.</span><br><span class="line"></span><br><span class="line">Disconnected from remote host(Test) at 09:46:57.</span><br><span class="line"></span><br><span class="line">Type `help&apos; to learn how to use Xshell prompt.</span><br><span class="line"></span><br><span class="line">你可以手动重新连接：</span><br><span class="line"></span><br><span class="line">[C:\~]$ ssh root@192.168.141.12		</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Connecting to 192.168.141.12:22...</span><br><span class="line">Connection established.</span><br><span class="line">To escape to local shell, press &apos;Ctrl+Alt+]&apos;.</span><br><span class="line"></span><br><span class="line">WARNING! The remote SSH server rejected X11 forwarding request.</span><br><span class="line">Last login: Thu Jan 17 20:41:17 2019 from 192.168.141.1</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">连接成功！</span><br><span class="line">[root@localhost ~]# ip add</span><br><span class="line">可以看到ens33的ip已经变成192.168.141.12了！</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzai8l2jjpj30j80hkh1h.jpg" alt=""></p>
 <h2 id="给网卡配置多个IP地址"><a href="#给网卡配置多个IP地址" class="headerlink" title="给网卡配置多个IP地址"></a>给网卡配置多个IP地址</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
 <p>将ens33网卡配置如下（备注可以不写）：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">TYPE=&quot;Ethernet&quot;</span><br><span class="line">PROXY_METHOD=&quot;none&quot;</span><br><span class="line">BROWSER_ONLY=&quot;no&quot;</span><br><span class="line">BOOTPROTO=&quot;static&quot;	  	# 设备获得IP的方式设置为静态获取，固定ip</span><br><span class="line">DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV4_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6INIT=&quot;yes&quot;</span><br><span class="line">IPV6_AUTOCONF=&quot;yes&quot;</span><br><span class="line">IPV6_DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV6_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;</span><br><span class="line">NAME=&quot;ens33&quot;</span><br><span class="line">UUID=&quot;9c86a9bc-0939-4790-8580-274041e5eff3&quot;</span><br><span class="line">DEVICE=&quot;ens33&quot;</span><br><span class="line">ONBOOT=&quot;yes&quot;y</span><br><span class="line"></span><br><span class="line">IPADDR=192.168.141.12	# 第1个IP</span><br><span class="line">NETMASK=255.255.255.0	# 设备的默认掩码</span><br><span class="line"></span><br><span class="line">IPADDR0=192.168.141.13	 # 第2个IP（secondary）</span><br><span class="line">NETMASK0=255.255.255.0</span><br><span class="line"></span><br><span class="line">IPADDR1=192.168.141.14	 # 第3个IP（secondary）</span><br><span class="line">NETMASK1=255.255.255.0</span><br><span class="line"></span><br><span class="line">IPADDR2=192.168.141.15	 # 第4个IP（secondary）</span><br><span class="line">NETMASK2=255.255.255.0</span><br><span class="line"></span><br><span class="line">GATEWAY1=192.168.141.2</span><br><span class="line">DNS1=114.114.114.114</span><br><span class="line">DNS2=8.8.8.8</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaxwnz4b8j30j80jj7h6.jpg" alt=""></p>
 <h4 id="注意事项（考试易错）："><a href="#注意事项（考试易错）：" class="headerlink" title="注意事项（考试易错）："></a>注意事项（考试易错）：</h4><p>　　首个ip是从IPADDR开始的，而从IPADDR0开始以及其之后的都是secondary 的网卡ip！这里一定要记住！</p>
 <p>有同学在考红帽认证的时候犯过这个错，望引以为戒！</p>
 <p>重启网络服务，查看网卡ip</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl restart network</span><br><span class="line">[root@localhost ~]# ip add | grep inet</span><br></pre></td></tr></table></figure>
-<p>如下图，可以看到多出来3个新的ip</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaxv2m1xmj30j805l75k.jpg" alt=""></p>
+<p>可以看到多出来3个新的ip</p>
 <h2 id="给Linux增加一块网卡，并且配置静态IP："><a href="#给Linux增加一块网卡，并且配置静态IP：" class="headerlink" title="给Linux增加一块网卡，并且配置静态IP："></a>给Linux增加一块网卡，并且配置静态IP：</h2><p>在VMware里点虚拟机设置，给虚拟机添加一块网卡（不用将虚拟机关机）</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzain241wvj30je0btgmv.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaini7qgej30mi0mqwh8.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/24/1VXvOs.png" alt="1VXvOs.png"></p>
+<p><img src="https://s2.ax1x.com/2020/01/24/1VjSwq.png" alt="1VjSwq.png"></p>
 <p>查看网卡：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ifconfig</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ip a</span><br></pre></td></tr></table></figure>
 <p>如下图，多出来的end37网卡就是我们新增加的网卡，其ip目前还是它dhcp自动获取到的</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzairda8arj30j90eqnbj.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/24/1VjpT0.png" alt="1VjpT0.png"></p>
 <p>新增的ens37是dhcp得到的IP，我们想自己配制成静态的IP，去/etc/sysconfig/network-scripts/目录下找ifcfg-ens37，发现没有这个配置文件，那里只有ens33的文件，哎！</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /etc/sysconfig/network-scripts/</span><br><span class="line">[root@localhost network-scripts]# ls</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaiufy3s8j30j805jads.jpg" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/01/24/1VjPYT.png" alt="1VjPYT.png"></p>
 <p>因此，我们需要复制ens33的配置文件ifcfg-ens33为ifcfg-ens37，重新编辑其内容</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost network-scripts]# cp ifcfg-ens33 ifcfg-ens37</span><br><span class="line">[root@localhost network-scripts]# ls</span><br><span class="line"></span><br><span class="line">[root@localhost network-scripts]# vim ifcfg-ens37</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaixnzabzj30j8046tak.jpg" alt=""></p>
 <p>其内容改为以下的形式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">TYPE=&quot;Ethernet&quot;</span><br><span class="line">PROXY_METHOD=&quot;none&quot;</span><br><span class="line">BROWSER_ONLY=&quot;no&quot;</span><br><span class="line">BOOTPROTO=&quot;static&quot;</span><br><span class="line">DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV4_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6INIT=&quot;yes&quot;</span><br><span class="line">IPV6_AUTOCONF=&quot;yes&quot;</span><br><span class="line">IPV6_DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV6_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;</span><br><span class="line">NAME=&quot;ens37&quot;									 # 修改网卡名</span><br><span class="line">UUID=&quot;9c86a9bc-0939-4790-8580-274041e5eff3&quot;</span><br><span class="line">DEVICE=&quot;ens37&quot;									 # 修改设备名</span><br><span class="line">ONBOOT=&quot;yes&quot;y</span><br><span class="line"></span><br><span class="line">IPADDR=192.168.141.111							 #设置一个与之前ens33网卡的三个ip不同的ip </span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY1=192.168.141.2</span><br><span class="line">DNS1=114.114.114.114</span><br><span class="line">DNS2=8.8.8.8</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzaj86s58cj30ft0ci48k.jpg" alt=""></p>
-<p>修改完成保存退出,重启网络服务</p>
+<p>修改完成保存退出，重启网络服务即可。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost network-scripts]# systemctl restart network</span><br><span class="line">[root@localhost network-scripts]# ifconfig ens37</span><br></pre></td></tr></table></figure>
-<p>如下图，网卡设置成功啦！</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzak8xx4t2j30j906edke.jpg" alt=""></p>
 <p>注意事项：</p>
 <p>　　将虚拟机关机再打开后，发现ens37的ip又变成了自动获取到的192.168.141.163，甚至有时候会发现ens37同时出现了两个ip：192.168.141.163和192.168.141.111</p>
 <p>这种情况，并不是配错了，只要再次重启网络服务即可！</p>
@@ -633,9 +615,7 @@
 <p>　　另外，在某些极端特殊的情况下，有时候，在重启虚拟机之后，两个网卡ens33和ens37都挂掉了，没有ip了，遇到这种情况，先尝试以下命令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ifup ens33</span><br><span class="line">ifup ens37</span><br></pre></td></tr></table></figure>
 <p>敲完之后网卡立马就up了，ip也有了。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzgt4eq1pvj30j80h7mzp.jpg" alt=""></p>
 <p>​    之前没有ip是你的网卡down的原因，在以后玩虚拟机的时候，可能会由于某些操作失误导致网卡down掉，这时候只要敲上述的ifup命令就好了。</p>
-<p>本篇到此结束，注意配置网卡的时候不要敲错了</p>
 
       
     </div>

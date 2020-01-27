@@ -124,7 +124,6 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-运维进阶-21 Squid部署代理缓存服务">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzuf4x3fc1j30j809j0w5.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlopvf8gj30j90a6my7.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlqm2ceij30it0gajsi.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlr9dn94j30iy0g53zn.jpg">
@@ -177,11 +176,11 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3kg4tgbj30ju0eita6.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3n1224ij30zk0m9go2.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3oa80qtj30lm0ionb6.jpg">
-<meta property="og:updated_time" content="2019-03-12T12:46:40.779Z">
+<meta property="og:updated_time" content="2020-01-25T13:41:31.552Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-运维进阶-21 Squid部署代理缓存服务">
 <meta name="twitter:description" content="linux-运维进阶-21 Squid部署代理缓存服务">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzuf4x3fc1j30j809j0w5.jpg">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlopvf8gj30j90a6my7.jpg">
 
 
 
@@ -540,7 +539,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-12 20:46:40" itemprop="dateModified" datetime="2019-03-12T20:46:40+08:00">2019-03-12</time>
+                <time title="修改时间：2020-01-25 21:41:31" itemprop="dateModified" datetime="2020-01-25T21:41:31+08:00">2020-01-25</time>
               
             
           </span>
@@ -631,7 +630,6 @@
 <p>​    代理服务器英文全称是Proxy Server，其功能就是代理网络用户去取得网络信息。</p>
 <p>​    Squid是一个缓存Internet 数据的软件，其接收用户的下载申请，并自动处理所下载的数据。当一个用户想要下载一个主页时，可以向Squid 发出一个申请，要Squid 代替其进行下载，然后Squid 连接所申请网站并请求该主页，接着把该主页传给用户同时保留一个备份，当别的用户申请同样的页面时，Squid 把保存的备份立即传给用户，使用户觉得速度相当快。Squid 可以代理HTTP、FTP、GOPHER、SSL和WAIS等协议并且Squid 可以自动地进行处理，可以根据自己的需要设置Squid，使之过滤掉不想要的东西。</p>
 <p>Squid代理服务器工作在TCP/IP的应用层：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzuf4x3fc1j30j809j0w5.jpg" alt=""></p>
 <h2 id="实验准备工作"><a href="#实验准备工作" class="headerlink" title="实验准备工作"></a>实验准备工作</h2><h3 id="实验原理"><a href="#实验原理" class="headerlink" title="实验原理"></a>实验原理</h3><p>　　我们需要两台虚拟机，一台是win10操作系统作为客户端，另一台我们新安装一个Centos 7的虚拟机Server。配置好虚拟机Server后，将Server作为客户端win10的代理服务器，从而让win10能够上网。为了大家能完全理解虚拟机通信原理，我这里将整体上的网络结构拓扑图画出来，如下图：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzvlopvf8gj30j90a6my7.jpg" alt=""></p>
 <p>​    在之前的文章中，我们讲解过网络适配器三种模式的工作原理，本次实验设置如下：</p>
@@ -863,7 +861,6 @@
 <p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy3oa80qtj30lm0ionb6.jpg" alt=""></p>
 <p>实验完毕</p>
 <p>实验做完了记得要把自己物理机的启用网络发现关闭掉。</p>
-<p>本篇到此结束</p>
 
       
     </div>
