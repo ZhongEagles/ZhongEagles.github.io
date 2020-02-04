@@ -124,21 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-运维进阶-24 PXE+Kickstart 无人值守安装系统">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g009un8zohj30j80hewgw.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g009x6kf1sj30mx0kfwfm.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dw8ggd0j30j80kin06.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dvvk286j30j80kgwfs.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dx3ssx2j30ir0oejsg.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dxkn1l9j30j80g4414.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dyowd64j30j80f0ad9.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00e13aop3j30j90elgnn.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00e7opqdtj30j80ee0u3.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g00egr6xu7j30j80h0aat.jpg">
-<meta property="og:updated_time" content="2019-02-23T13:40:40.731Z">
+<meta property="og:updated_time" content="2020-01-28T02:56:58.366Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-运维进阶-24 PXE+Kickstart 无人值守安装系统">
 <meta name="twitter:description" content="linux-运维进阶-24 PXE+Kickstart 无人值守安装系统">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g009un8zohj30j80hewgw.jpg">
 
 
 
@@ -497,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-23 21:40:40" itemprop="dateModified" datetime="2019-02-23T21:40:40+08:00">2019-02-23</time>
+                <time title="修改时间：2020-01-28 10:56:58" itemprop="dateModified" datetime="2020-01-28T10:56:58+08:00">2020-01-28</time>
               
             
           </span>
@@ -605,8 +594,6 @@
 </tbody>
 </table>
 <p>　　客户端主机先不要开机，服务器Server增加一块网卡，设置为仅主机模式，客户机client一块网卡为仅主机模式，尚未安装系统的客户机内存至少大于等于2G，其CD/DVD里不用放置iso系统镜像，如下图：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g009un8zohj30j80hewgw.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g009x6kf1sj30mx0kfwfm.jpg" alt=""></p>
 <h3 id="配置Server服务器"><a href="#配置Server服务器" class="headerlink" title="配置Server服务器"></a>配置Server服务器</h3><p>直接关闭服务器上防火墙和selinux，省事儿</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# setenforce 0</span><br><span class="line">[root@localhost ~]# systemctl stop firewalld</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <p>设置服务器新添加的仅主机模式网卡为固定ip</p>
@@ -638,20 +625,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vi /var/ftp/pub/ks.cfg </span><br><span class="line">5行 url --url=ftp://192.168.10.10   //删除原本的cdrom，把镜像来源定位到Server上</span><br><span class="line">30行 clearpart --all --initlabel    //意思是清空所有磁盘内容并初始化磁盘</span><br></pre></td></tr></table></figure>
 <p>　　如果觉得系统默认自带的应答文件参数较少，不能满足生产环境的需求，则可以通过Yum软件仓库来安装system-config-kickstart软件包。这是一款图形化的Kickstart应答文件生成工具，可以根据自己的需求生成自定义的应答文件，然后将生成的文件放到/var/ftp/pub目录中并将名字修改为ks.cfg即可。</p>
 <p>开启一台没有安装系统的虚拟机（内存至少大于等于2G）</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dw8ggd0j30j80kin06.jpg" alt=""></p>
 <p>选择否</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dvvk286j30j80kgwfs.jpg" alt=""></p>
 <p>下图中敲完回车不要急，等~</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dx3ssx2j30ir0oejsg.jpg" alt=""></p>
 <p>可以看到自动安装已经开始了，咱们不用去动它，它自己会装好的，我们耐心等待即可</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dxkn1l9j30j80g4414.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00dyowd64j30j80f0ad9.jpg" alt=""></p>
 <p>​    它自动给root设置了密码，就是我们之前提到的，和Server一样的root密码。我们不用进行任何操作，等，等蛮久的，等吧~</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00e13aop3j30j90elgnn.jpg" alt=""></p>
 <p>终于等到它完成了，点击重启</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00e7opqdtj30j80ee0u3.jpg" alt=""></p>
 <p>重启后，用root以及Server的root密码来登录客户机：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g00egr6xu7j30j80h0aat.jpg" alt=""></p>
 <p>可以看到登录成功！</p>
 <p>　　Server关机后保存好快照，以后咱们装新的虚拟机可以找开启Server后关掉防火墙和selinux后，让它自动安装系统。</p>
 <p>本篇到此结束。</p>
@@ -822,7 +801,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -893,7 +872,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -970,7 +967,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

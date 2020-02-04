@@ -1,8 +1,179 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/python-12/</loc>
+    <lastmod>2020-02-03</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/python-11/</loc>
+    <lastmod>2020-02-03</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/python-01/</loc>
+    <lastmod>2020-02-03</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/python-10/</loc>
+    <lastmod>2020-02-03</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/python-09/</loc>
+    <lastmod>2020-02-03</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/python-08/</loc>
+    <lastmod>2020-02-02</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/python-07/</loc>
+    <lastmod>2020-02-02</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/python-06/</loc>
+    <lastmod>2020-02-02</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/python-05/</loc>
+    <lastmod>2020-02-02</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/python-04/</loc>
+    <lastmod>2020-01-31</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/python-03/</loc>
+    <lastmod>2020-01-31</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/python-02/</loc>
+    <lastmod>2020-01-30</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-05/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-04/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/windows-12/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/windows-11/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/windows-10/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/mysql-04/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/mysql-03/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/memcache-01/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-32/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-30/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/linux-21/</loc>
-    <lastmod>2020-01-25</lastmod>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-10/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/keepalived-04/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/hexo-05/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/windows-14/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/windows-13/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/windows-05/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/windows-04/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/windows-03/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/windows-02/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/windows-01/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/shell-script-01/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/shell-04/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/shell-03/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/servers-02/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/servers-01/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhcsa-06/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhcsa-03/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhcsa-02/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-07/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-06/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhcsa-05/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhcsa-04/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-03/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-02/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/rhce-01/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/mysql-07/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/mysql-06/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/mysql-05/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-31/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-29/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-28/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-27/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-26/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-24/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/linux-22/</loc>
+    <lastmod>2020-01-28</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/linux-20/</loc>
     <lastmod>2020-01-25</lastmod>
@@ -34,9 +205,6 @@
     <loc>http://yoursite.com/linux-11/</loc>
     <lastmod>2020-01-24</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/linux-10/</loc>
-    <lastmod>2020-01-24</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/linux-09/</loc>
     <lastmod>2020-01-24</lastmod>
   </url>  <url>
@@ -65,9 +233,6 @@
     <lastmod>2020-01-24</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/keepalived-05/</loc>
-    <lastmod>2020-01-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/keepalived-04/</loc>
     <lastmod>2020-01-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/keepalived-03/</loc>
@@ -178,9 +343,6 @@
     <loc>http://yoursite.com/hexo-07/</loc>
     <lastmod>2020-01-20</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/hexo-05/</loc>
-    <lastmod>2020-01-20</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/hexo-04/</loc>
     <lastmod>2020-01-20</lastmod>
   </url>  <url>
@@ -214,9 +376,6 @@
     <loc>http://yoursite.com/mysql-11/</loc>
     <lastmod>2019-10-09</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/mysql-06/</loc>
-    <lastmod>2019-10-09</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/shell-script-05/</loc>
     <lastmod>2019-10-02</lastmod>
   </url>  <url>
@@ -227,9 +386,6 @@
     <lastmod>2019-10-02</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/shell-script-03/</loc>
-    <lastmod>2019-10-02</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/shell-script-01/</loc>
     <lastmod>2019-10-02</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/mysql-14/</loc>
@@ -250,23 +406,8 @@
     <loc>http://yoursite.com/mysql-08/</loc>
     <lastmod>2019-09-22</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/mysql-07/</loc>
-    <lastmod>2019-09-22</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/mysql-05/</loc>
-    <lastmod>2019-09-20</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/mysql-04/</loc>
-    <lastmod>2019-09-19</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/memcache-02/</loc>
     <lastmod>2019-09-12</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/memcache-01/</loc>
-    <lastmod>2019-09-12</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/mysql-03/</loc>
-    <lastmod>2019-09-08</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/mysql-01/</loc>
     <lastmod>2019-09-07</lastmod>
@@ -282,48 +423,6 @@
   </url>  <url>
     <loc>http://yoursite.com/rhce-08/</loc>
     <lastmod>2019-08-30</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-07/</loc>
-    <lastmod>2019-08-30</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-06/</loc>
-    <lastmod>2019-08-30</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-05/</loc>
-    <lastmod>2019-08-30</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-04/</loc>
-    <lastmod>2019-08-30</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-03/</loc>
-    <lastmod>2019-08-30</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-02/</loc>
-    <lastmod>2019-08-30</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhce-01/</loc>
-    <lastmod>2019-08-30</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/shell-04/</loc>
-    <lastmod>2019-08-09</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/shell-03/</loc>
-    <lastmod>2019-08-09</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhcsa-04/</loc>
-    <lastmod>2019-07-20</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhcsa-06/</loc>
-    <lastmod>2019-07-20</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhcsa-05/</loc>
-    <lastmod>2019-07-19</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhcsa-03/</loc>
-    <lastmod>2019-07-19</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/rhcsa-02/</loc>
-    <lastmod>2019-07-19</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/rhcsa-01/</loc>
     <lastmod>2019-07-19</lastmod>
@@ -343,12 +442,6 @@
     <loc>http://yoursite.com/shell-01/</loc>
     <lastmod>2019-04-15</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/servers-02/</loc>
-    <lastmod>2019-04-14</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/servers-01/</loc>
-    <lastmod>2019-04-14</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/servers-06/</loc>
     <lastmod>2019-04-14</lastmod>
   </url>  <url>
@@ -360,39 +453,6 @@
   </url>  <url>
     <loc>http://yoursite.com/servers-03/</loc>
     <lastmod>2019-04-14</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-30/</loc>
-    <lastmod>2019-03-24</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-29/</loc>
-    <lastmod>2019-03-21</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-31/</loc>
-    <lastmod>2019-03-18</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-32/</loc>
-    <lastmod>2019-03-18</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-28/</loc>
-    <lastmod>2019-03-13</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-26/</loc>
-    <lastmod>2019-03-13</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/windows-14/</loc>
-    <lastmod>2019-03-02</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/windows-13/</loc>
-    <lastmod>2019-02-28</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/windows-12/</loc>
-    <lastmod>2019-02-28</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/windows-11/</loc>
-    <lastmod>2019-02-28</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/windows-10/</loc>
-    <lastmod>2019-02-28</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/windows-09/</loc>
     <lastmod>2019-02-24</lastmod>
@@ -406,31 +466,7 @@
     <loc>http://yoursite.com/windows-06/</loc>
     <lastmod>2019-02-24</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/windows-05/</loc>
-    <lastmod>2019-02-24</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/windows-04/</loc>
-    <lastmod>2019-02-24</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/windows-03/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/windows-02/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/windows-01/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-27/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-24/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/linux-23/</loc>
-    <lastmod>2019-02-23</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/linux-22/</loc>
     <lastmod>2019-02-23</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/testmd/</loc>

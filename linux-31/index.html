@@ -124,23 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-运维进阶-31 OpenSSL实现CA证书">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g050idwu1lj30j90hpdiv.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g096t4jgjej30t70k77kh.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g096uhcpnjj30hq0oqn1i.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g096vcj42nj30jq0p0afx.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0970jsrahj30ke0oldkc.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g096wjce6sj30lq0m6mxy.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0979a3ctrj30e107fjri.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g097asnk3oj30lq0fawj6.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g09ilq5elhj31hc0rwqck.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g09img9olej31e40p4n3j.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g09imy2sckj310m0pu799.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g09j14hlklj31hc0o1wg4.jpg">
-<meta property="og:updated_time" content="2019-03-18T01:41:37.409Z">
+<meta property="og:updated_time" content="2020-01-28T03:10:40.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-运维进阶-31 OpenSSL实现CA证书">
 <meta name="twitter:description" content="linux-运维进阶-31 OpenSSL实现CA证书">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g050idwu1lj30j90hpdiv.jpg">
 
 
 
@@ -499,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-18 09:41:37" itemprop="dateModified" datetime="2019-03-18T09:41:37+08:00">2019-03-18</time>
+                <time title="修改时间：2020-01-28 11:10:40" itemprop="dateModified" datetime="2020-01-28T11:10:40+08:00">2020-01-28</time>
               
             
           </span>
@@ -586,7 +573,6 @@
 <p>　　另外，可以将证书理解为带有额外信息的公钥。</p>
 <h2 id="SSL-TLS"><a href="#SSL-TLS" class="headerlink" title="SSL/TLS"></a>SSL/TLS</h2><p>　　SSL/TLS是网络通信过程中非常重要的两个协议。互联网的通信安全就建立在SSL/TLS协议基础之上。他们通过一系列的加密行为保障了通信的安全，是如今互联网通信最主要的应用之一。</p>
 <p>　　SSL/TLS是一个很大的互联网应用，关于他们的介绍互联网上有很多，我们暂时不做详细的介绍。关于SSL/TLS通信的过程大致可以用下面的这张图来进行描述。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g050idwu1lj30j90hpdiv.jpg" alt=""></p>
 <h2 id="十六字真诀"><a href="#十六字真诀" class="headerlink" title="十六字真诀"></a>十六字真诀</h2><p>公钥加密，私钥解密<br>私钥签章，公钥验签</p>
 <h2 id="实验准备"><a href="#实验准备" class="headerlink" title="实验准备"></a>实验准备</h2><p>CA服务器：192.168.141.132</p>
 <p>客户机：192.168.141.69</p>
@@ -632,24 +618,14 @@
 <p>这里重启apache服务要放到最后，否则会报错。</p>
 <h2 id="windows导入根CA证书"><a href="#windows导入根CA证书" class="headerlink" title="windows导入根CA证书"></a>windows导入根CA证书</h2><p>　　将根linux的证书（就是CA服务器生成的自签名证书，ca.feng.com的那个cacert.pem）导出到windows上，然后将后缀名改为.crt，打开后点击安装证书</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install lrzsz -y</span><br><span class="line">[root@localhost ~]# sz /etc/pki/CA/cacert.pem</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">导出到自己电脑，如下图，改其后缀为crt，双击它开始安装证书。</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g096t4jgjej30t70k77kh.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g096uhcpnjj30hq0oqn1i.jpg" alt=""></p>
 <p>　　如上图，打开这个CA的自签名证书后就可以看到，颁发者和颁发给都是ca.feng.com，且不受信任，证书信息的标志那里都是一个大大的红色叉叉，我们需要手动安装这个证书，安装到本地计算机后，就受信任了，表示本地计算机信任了这个证书机构给它自己办法的证书。</p>
 <p>　　选择本地计算机，然后点击下一步</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g096vcj42nj30jq0p0afx.jpg" alt=""></p>
 <p>安装证书，最后下一步点完成</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0970jsrahj30ke0oldkc.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g096wjce6sj30lq0m6mxy.jpg" alt=""></p>
 <p>查看证书</p>
 <p>win+r，输入certmgr.msc点击确定即可</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0979a3ctrj30e107fjri.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g097asnk3oj30lq0fawj6.jpg" alt=""></p>
 <p>　　我们安装的证书是CA的自签名证书，名字叫做ca.feng.com，安装好之后，我们的电脑会对这个CA机构产生充分的信任，且对于这个CA机构颁发给任何网站的证书都会信任。之前我们的客户机：192.168.141.69搭建了apache服务，也算是有了一个网站了，虽然其网站主页还是下面这个“Testing 123”的页面，但是这个不妨碍我们的浏览器对其网站证书进行安全分析。</p>
 <p>　　如下图，我们打开<a href="https://192.168.141.69，会看到它的证书来自于ca.feng.com。之前我们的客户机192.168.141.69向CA服务器申请到的证书，现在就发挥了它的作用了，让我们的浏览器得以信任这个网站的证书，同时，由于mod_ssl模块是支持”https“中的“s”的，所以也能用https打开这个网址。" target="_blank" rel="noopener">https://192.168.141.69，会看到它的证书来自于ca.feng.com。之前我们的客户机192.168.141.69向CA服务器申请到的证书，现在就发挥了它的作用了，让我们的浏览器得以信任这个网站的证书，同时，由于mod_ssl模块是支持”https“中的“s”的，所以也能用https打开这个网址。</a></p>
-<h2 id="访问网站"><a href="#访问网站" class="headerlink" title="访问网站"></a>访问网站</h2><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g09ilq5elhj31hc0rwqck.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g09img9olej31e40p4n3j.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g09imy2sckj310m0pu799.jpg" alt=""></p>
-<h2 id="吊销证书"><a href="#吊销证书" class="headerlink" title="吊销证书"></a>吊销证书</h2><p>吊销证书是CA机构做的事，我们不用去做，这里只做方法演示。吊销不会立即生效，要等网站重启。</p>
+<h2 id="访问网站"><a href="#访问网站" class="headerlink" title="访问网站"></a>访问网站</h2><h2 id="吊销证书"><a href="#吊销证书" class="headerlink" title="吊销证书"></a>吊销证书</h2><p>吊销证书是CA机构做的事，我们不用去做，这里只做方法演示。吊销不会立即生效，要等网站重启。</p>
 <p>在根CA上根据客户提交的serial与subject信息，对比检验是否与index.txt文件中的信息一致，然后吊销证书</p>
 <p># 吊销子客户端的证书 使用revoke 命令</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost CA]# openssl ca -revoke /etc/pki/CA/https.crt</span><br><span class="line">Using configuration from /etc/pki/tls/openssl.cnf</span><br><span class="line">Enter pass phrase for /etc/pki/CA/private/cakey.pem:</span><br><span class="line">Revoking Certificate 01.</span><br><span class="line">Data Base Updated</span><br><span class="line">[root@localhost CA]#</span><br></pre></td></tr></table></figure>
@@ -662,7 +638,6 @@
 <p>吊销不会立即生效，要等网站重启，这里在客户机重启apache服务</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl restart httpd</span><br></pre></td></tr></table></figure>
 <p>查看吊销后的结果</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g09j14hlklj31hc0o1wg4.jpg" alt=""></p>
 <p>本篇到此结束。</p>
 
       
@@ -831,7 +806,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -902,7 +877,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -979,7 +972,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -124,32 +124,12 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-运维进阶-30 KVM">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g02o72cozmj30j80dlwga.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g02ofj9n0oj30j80gnn0j.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g02kmbf310j30j80es1aq.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0667t1kbvj30j80dk16g.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g066j2t8ovj30n00g2156.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g066okrvuyj30lv0fy4aq.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g066pr5yphj30lq0gb7h0.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g068z0r7h2j30je0gd10f.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g068zij7z2j30m80g9qbg.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dsm2ja2aj30od0kjqay.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0693hpf9sj30mj0fvakn.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g06945u89aj30kc0fn10t.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0694wimvsj30i30fbjx4.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g069642nqwj30l20g947k.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g06971g3t2j30nn0g4drj.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g077oowodwj30n60fcwq9.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g069kl7k8lj30nl0fjk1z.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g069qwm1pqj30h70boq9k.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g02ki3yymjj30qr0amaah.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g02kj4msklj30j804974x.jpg">
-<meta property="og:image" content="c:/Users/zhong/AppData/Roaming/Typora/typora-user-images/1549874068549.png">
-<meta property="og:updated_time" content="2019-03-24T04:55:40.792Z">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/28/1KQX5j.png">
+<meta property="og:updated_time" content="2020-01-28T04:39:39.964Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-运维进阶-30 KVM">
 <meta name="twitter:description" content="linux-运维进阶-30 KVM">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g02o72cozmj30j80dlwga.jpg">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/01/28/1KQX5j.png">
 
 
 
@@ -508,7 +488,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-24 12:55:40" itemprop="dateModified" datetime="2019-03-24T12:55:40+08:00">2019-03-24</time>
+                <time title="修改时间：2020-01-28 12:39:39" itemprop="dateModified" datetime="2020-01-28T12:39:39+08:00">2020-01-28</time>
               
             
           </span>
@@ -592,13 +572,10 @@
       
         <h1 id="linux-运维进阶-30-KVM"><a href="#linux-运维进阶-30-KVM" class="headerlink" title="linux-运维进阶-30 KVM"></a>linux-运维进阶-30 KVM</h1><h2 id="KVM"><a href="#KVM" class="headerlink" title="KVM"></a>KVM</h2><h3 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h3><p>　　Kernel-based Virtual Machine的简称，是一个开源的系统虚拟化模块，自Linux 2.6.20之后集成在Linux的各个主要发行版本中。它使用Linux自身的调度器进行管理，所以相对于Xen，其核心源码很少。KVM目前已成为学术界的主流VMM（ Virtual Machine Monitor,虚拟机监控器）之一。</p>
 <h3 id="检测虚拟化功能"><a href="#检测虚拟化功能" class="headerlink" title="检测虚拟化功能"></a>检测虚拟化功能</h3><p>　　如下图，把这个勾勾上，另外，做实验用的Server处理器和内存调大一些，因为接下来咱们要在虚拟机Server里新建虚拟机，也就是所谓的“虚拟机里的虚拟机”。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g02o72cozmj30j80dlwga.jpg" alt=""></p>
 <p>​    </p>
 <p>加一张桥接模式的网卡</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g02ofj9n0oj30j80gnn0j.jpg" alt=""></p>
 <p>　　KVM 是基于 x86 虚拟化扩展(Intel VT 或者 AMD-V) 技术的虚拟机软件，所以查看 CPU 是否支持 VT 技术，就可以判断是否支持KVM。有返回结果，如果结果中有vmx（Intel）或svm(AMD)字样，就说明CPU的支持的。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cat /proc/cpuinfo | egrep &apos;vmx|svm&apos;</span><br><span class="line"></span><br><span class="line">请看下图：</span><br></pre></td></tr></table></figure>
-<p>​    <img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g02kmbf310j30j80es1aq.jpg" alt=""></p>
 <p>　　关掉防火墙，关闭SELinux，将 /etc/sysconfig/selinux 中的 SELinux=enforcing 修改为 SELinux=disabled，这里注意，改了重启后才生效。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl stop firewalld</span><br><span class="line">[root@localhost ~]# systemctl disable firewalld</span><br><span class="line">Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.</span><br><span class="line">Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# vim /etc/sysconfig/selinux</span><br><span class="line">SELINUX=disabled</span><br><span class="line"></span><br><span class="line">保存退出</span><br><span class="line">[root@localhost ~]# getenforce </span><br><span class="line">Enforcing</span><br><span class="line">[root@localhost ~]# reboot</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">重启后再次查看：</span><br><span class="line">[root@localhost ~]# getenforce </span><br><span class="line">Disabled</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">说明已经关闭了selinux</span><br></pre></td></tr></table></figure>
 <h2 id="安装kvm环境"><a href="#安装kvm环境" class="headerlink" title="安装kvm环境"></a>安装kvm环境</h2><p>通过 yum 安装 kvm 基础包和管理工具</p>
@@ -616,7 +593,6 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">安装kvm基础包和管理工具</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# yum -y install qemu-kvm python-virtinst libvirt libvirt-python virt-manager libguestfs-tools bridge-utils virt-install python-virtualenv</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	其中有一个安装包python-virtinst特别坑，以前是可以直接用yum安装成功的，但是现在yum软件仓库里已经没有这个包了，即使是用命令：yum install epel-release安装并启用EPEL源后，也依然会提示没有可用包python-virtinst。yum软件仓库里没有，rpm软件仓库里倒是有，但是我尝试了n个版本，不是与这个冲突就是和那个矛盾，能把人气死，最后利用github开源出来的python-virtinst包安装终于成功了，实验才得以继续下去。</span><br><span class="line">	另外，如果你的python-virtinst包没有安装成功的话，后面虚拟机里安装虚拟机的时候，会总是报错：Kernel panic - not syncing: Fatal exception in inter，无论怎么也装不好。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">关机，保存快照，以防后面实验手滑敲错。</span><br><span class="line">[root@localhost ~]# poweroff</span><br><span class="line"></span><br><span class="line">开机，查看KVM模块是否被正确加载</span><br><span class="line">[root@localhost ~]#  lsmod | grep kvm</span><br><span class="line">kvm_intel             174841  0 </span><br><span class="line">kvm                   578518  1 kvm_intel</span><br><span class="line">irqbypass              13503  1 kvm</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <p>如下图，将上述yum命令再次执行，可以发现其他包都装好了，就python-virtinst最坑，我们后面再来安装它。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0667t1kbvj30j80dk16g.jpg" alt=""></p>
 <p>开启kvm服务，并且设置其开机自动启动</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl restart libvirtd</span><br><span class="line">[root@localhost ~]# systemctl enable libvirtd</span><br></pre></td></tr></table></figure>
 <h2 id="安装Linux虚拟机"><a href="#安装Linux虚拟机" class="headerlink" title="安装Linux虚拟机"></a>安装Linux虚拟机</h2><p>　　安装前要设置环境语言为英文LANG=”en_US.UTF-8”，如果是中文的话某些版本可能会报错。CentOS 7 在这里修改 /etc/locale.conf。</p>
@@ -659,30 +635,16 @@
 <p>　　此处配置截图太多，可参考这个教程里的截图：<a href="http://blog.51cto.com/zero01/2083896" target="_blank" rel="noopener">http://blog.51cto.com/zero01/2083896</a></p>
 <p>详细步骤：</p>
 <p>1.首先，一开始我们看到的是：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g066j2t8ovj30n00g2156.jpg" alt=""></p>
 <p>这里设置语言建议设置成英文的，不然后面玩虚拟机的时候会有乱码。</p>
 <p>2.设置语言，按数字1，回车进入以下界面，例如我要选Chinese就按数字68并回车即可，回车之后会让你选择是中文简体还是繁体，也是按下相应的数字并回车即可：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g066okrvuyj30lv0fy4aq.jpg" alt=""></p>
 <p>3.配置完成之后又会再次回到配置界面，这次我们来设置时区：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g066pr5yphj30lq0gb7h0.jpg" alt=""></p>
 <p>4.设置成亚洲上海的时区即可。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g068z0r7h2j30je0gd10f.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g068zij7z2j30m80g9qbg.jpg" alt=""></p>
 <p>5.设置系统安装盘：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1dsm2ja2aj30od0kjqay.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0693hpf9sj30mj0fvakn.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g06945u89aj30kc0fn10t.jpg" alt=""></p>
 <p>选择标准分区</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0694wimvsj30i30fbjx4.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g069642nqwj30l20g947k.jpg" alt=""></p>
 <p>6.设置root用户的密码：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g06971g3t2j30nn0g4drj.jpg" alt=""></p>
 <p>7.设置完root密码后，可以看到1到9所有选项都没有感叹号了，这表是要求你设置的选项你都设置完毕了，敲b开始安装系统：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g077oowodwj30n60fcwq9.jpg" alt=""></p>
 <p>8.安装完成之后就会停止在以下这个界面，按一下回车即可，这时就会重启安装完的系统：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g069kl7k8lj30nl0fjk1z.jpg" alt=""></p>
 <p>重启成功之后就会入到登录界面，可以看到我这里是成功登录的，登录上去，将它改名为centos。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g069qwm1pqj30h70boq9k.jpg" alt=""></p>
 <p>　　这时我们是处于一个虚拟终端的，因为安装了虚拟机，如果要退出来的话，应该说是切出来，按 <code>Ctrl + ]</code>即可。然后再次登录，如下图：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# 	#这里按Ctrl + ]，然后回车，就退出了虚拟终端</span><br><span class="line">[root@localhost ~]# virsh console --domain centos7_01	#再次连接虚拟终端</span><br><span class="line">Connected to domain centos7_01</span><br><span class="line">Escape character is ^]</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# hostname		#在虚拟终端里查看主机名称</span><br><span class="line">centos</span><br><span class="line">[root@localhost ~]# 				#这里再次按Ctrl + ]，然后回车，就退出了虚拟终端</span><br><span class="line">[root@localhost ~]# hostname		#现在查看咱们虚拟机的主机名称</span><br><span class="line">localhost.localdomain</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <p>现在关机保存快照（给宿主机保存快照）</p>
@@ -702,7 +664,6 @@
 <p>5.我们之前virt install 的时候，有个参数是bridge=virbr0，用的桥接网卡已经指定为virbr0了。</p>
 <p>Bridge模式配置</p>
 <p>　　Bridge方式即虚拟网桥的网络连接方式，是客户机和子网里面的机器能够互相通信。可以使虚拟机成为网络中具有独立IP的主机。桥接网络（也叫 物理设备共享）被用作把一个物理设备复制到一台虚拟机。网桥多用作高级设置，特别是主机多个网络接口的情况。</p>
-<p> <img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g02ki3yymjj30qr0amaah.jpg" alt=""></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install -y net-tools	#装了网络工具才能用命令：ifconfig</span><br><span class="line">[root@localhost ~]# systemctl restart libvirtd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@localhost ~]# virsh iface-bridge ens33 br0</span><br><span class="line">[root@localhost ~]# ifconfig</span><br></pre></td></tr></table></figure>
 <p>修改宿主机物理网卡配置（UUID不用改，它是设备标识号）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br><span class="line"></span><br><span class="line">删掉其他无用的行，保留下列4行，另外加一行BRIDGE=“virbr0&quot;，保存退出即可</span><br><span class="line"></span><br><span class="line">TYPE=Ethernet</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">NAME=&quot;ens33&quot;</span><br><span class="line">UUID=&quot;005e11a3-2859-4497-adc1-d531ddc2675f&quot;</span><br><span class="line">DEVICE=&quot;ens33&quot;</span><br><span class="line">ONBOOT=&quot;yes&quot;</span><br><span class="line">BRIDGE=“virbr0&quot;</span><br><span class="line">NM_CONTROLLED=&quot;no&quot;</span><br></pre></td></tr></table></figure>
@@ -717,9 +678,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/locale.conf </span><br><span class="line">LANG=&quot;en_US.UTF-8&quot;</span><br></pre></td></tr></table></figure>
 <p>配置宿主机网络-NAT模式</p>
 <p>　　NAT(Network Address Translation网络地址翻译)，NAT方式是kvm安装后的默认方式。它支持主机与虚拟机的互访，同时也支持虚拟机访问互联网，但不支持外界访问虚拟机。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g02kj4msklj30j804974x.jpg" alt=""></p>
 <p>　　其中virbr0是由宿主机虚拟机支持模块安装时产生的虚拟网络接口，也是一个switch和bridge，负责把内容分发到各虚拟机。几个虚拟机管理模块产生的接口关系如下图:</p>
-<p><img src="C:\Users\zhong\AppData\Roaming\Typora\typora-user-images\1549874068549.png" alt="1549874068549"></p>
+<p><img src="https://s2.ax1x.com/2020/01/28/1KQX5j.png" alt="1KQX5j.png"></p>
 <p>　　从图上可以看出，虚拟接口和物理接口之间没有连接关系，所以虚拟机只能在通过虚拟的网络访问外部世界，无法从网络上定位和访问虚拟主机。</p>
 <p>virbr0是一个桥接器，接收所有到网络192.168.122.*的内容。从下面命令可以验证：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~] brctl show</span><br><span class="line"># 输出结果</span><br><span class="line"># ---------------------</span><br><span class="line"># bridge name bridge id   STP enabled interfaces</span><br><span class="line"># br0   8000.3863bb44cf6c no    		eno1</span><br><span class="line">#               						vnet0</span><br><span class="line"># virbr0    8000.525400193f0f yes   virbr0-nic</span><br><span class="line">ip route</span><br><span class="line"># default via 192.168.188.1 dev br0</span><br><span class="line"># 169.254.0.0/16 dev br0  scope link  metric 1012</span><br><span class="line"># 192.168.122.0/24 dev virbr0  proto kernel  scope link  src 192.168.122.1</span><br><span class="line"># 192.168.188.0/24 dev br0  proto kernel  scope link  src 192.168.188.132</span><br></pre></td></tr></table></figure>
@@ -941,7 +901,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1012,7 +972,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1089,7 +1067,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

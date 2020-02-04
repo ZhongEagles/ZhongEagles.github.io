@@ -124,15 +124,12 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="rhce-05 第10-11题">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g5s7qv7ewoj30rc096wfg.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g5s83yneetj30f908umx8.jpg">
-<meta property="og:image" content="c:/Users/zhong/AppData/Roaming/Typora/typora-user-images/1565241016660.png">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g5s8dz0n3kj30li08wt9j.jpg">
-<meta property="og:updated_time" content="2019-08-30T05:44:56.211Z">
+<meta property="og:image" content="https://s2.ax1x.com/2020/01/28/1K1PSI.png">
+<meta property="og:updated_time" content="2020-01-28T04:50:47.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rhce-05 第10-11题">
 <meta name="twitter:description" content="rhce-05 第10-11题">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g5s7qv7ewoj30rc096wfg.jpg">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/01/28/1K1PSI.png">
 
 
 
@@ -491,7 +488,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-30 13:44:56" itemprop="dateModified" datetime="2019-08-30T13:44:56+08:00">2019-08-30</time>
+                <time title="修改时间：2020-01-28 12:50:47" itemprop="dateModified" datetime="2020-01-28T12:50:47+08:00">2020-01-28</time>
               
             
           </span>
@@ -584,9 +581,7 @@
 <p>5）用户ldapuser0能以读写形式访问/protected/project。</p>
 <p>system1：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install nfs-utils -y</span><br><span class="line">[root@localhost ~]# firewall-cmd --permanent --add-service=nfs</span><br><span class="line">[root@localhost ~]# firewall-cmd --permanent --add-service=rpc-bind</span><br><span class="line">[root@localhost ~]# firewall-cmd --permanent --add-service=mountd</span><br><span class="line">[root@localhost ~]# firewall-cmd --reload </span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@localhost ~]# mkdir -p /public /protected/project</span><br><span class="line">[root@localhost ~]# chown ldapuser0  /protected/project</span><br><span class="line">[root@localhost ~]# chown nfsnobody /public</span><br><span class="line">[root@localhost ~]# setfacl -m u:ldapuser0:rwx /protected/project/</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#设置selinux安全上下文</span><br><span class="line">[root@localhost ~]# semanage fcontext -a -t &apos;public_content_t&apos; &apos;/protected(/.*)?&apos;</span><br><span class="line">[root@localhost ~]# semanage fcontext -a -t &apos;public_content_rw_t&apos; &apos;/protected/project(/.*)?&apos;</span><br><span class="line">[root@localhost ~]# restorecon -Rv /protected/</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g5s7qv7ewoj30rc096wfg.jpg" alt=""></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# wget http://classroom.example.com/pub/keytabs/server0.keytab -O /etc/krb5.keytab</span><br><span class="line"></span><br><span class="line">#编辑 nfs 资源导出配置文件，注意不要有多余空格</span><br><span class="line">[root@system1 ~]# vim /etc/exports</span><br><span class="line">/public 172.25.0.0/24(ro,sync)</span><br><span class="line">/protected 172.25.0.0/24(rw,sync,sec=krb5p)</span><br><span class="line"></span><br><span class="line">#设置nfs版本</span><br><span class="line">[root@localhost ~]# vim /etc/sysconfig/nfs</span><br><span class="line">RPCNFSDARGS=&quot;-V 4.2&quot;</span><br><span class="line"></span><br><span class="line">#重启服务</span><br><span class="line">[root@localhost ~]# systemctl enable nfs-server nfs-secure-server</span><br><span class="line">[root@localhost ~]# systemctl restart nfs-server nfs-secure-server</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">#刷新并验证导出资源</span><br><span class="line">[root@localhost ~]# exportfs -ra</span><br><span class="line">[root@localhost ~]# exportfs</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g5s83yneetj30f908umx8.jpg" alt=""></p>
 <h3 id="11-挂载一个-NFS-共享"><a href="#11-挂载一个-NFS-共享" class="headerlink" title="11.挂载一个 NFS 共享"></a>11.挂载一个 NFS 共享</h3><p>在system2上挂载一个来自system1上的NFS共享，并符合下列要求：</p>
 <p>1）/pulbic共享挂载到本地的/mnt/nfsmount。</p>
 <p>2）/protected挂载到本地的/mnt/nfssecure,并使用安全的方式，密钥下载地址：</p>
@@ -595,10 +590,9 @@
 <p>4）这些文件系统在系统启动时自动挂载。</p>
 <p>system2：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#首先要明确，ldapuser0是系统预设的早已经存在的用户，不需要自己手动去添加。</span><br><span class="line">[root@localhost ~]# id ldapuser0</span><br></pre></td></tr></table></figure>
-<p><img src="C:\Users\zhong\AppData\Roaming\Typora\typora-user-images\1565241016660.png" alt="1565241016660"></p>
+<p><img src="https://s2.ax1x.com/2020/01/28/1K1PSI.png" alt="1K1PSI.png"></p>
 <p>下面是操作步骤</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# wget http://classroom.example.com/pub/keytabs/desktop0.keytab -O /etc/krb5.keytab</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# systemctl enable nfs-secure</span><br><span class="line">[root@localhost ~]# systemctl restart nfs-secure</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line">[root@localhost ~]# mkdir /mnt/nfssecure /mnt/nfsmount</span><br><span class="line">[root@localhost ~]# vim /etc/fstab </span><br><span class="line">server0.example.com:/public /mnt/nfsmount nfs defaults 0 0</span><br><span class="line">server0.example.com:/protected /mnt/nfssecure nfs defaults,sec=krb5p,v4.2 0 0</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">[root@localhost ~]# mount -a	</span><br><span class="line">[root@localhost ~]# df -Th</span><br><span class="line">#如下图挂载成功，这题基本就可以满分了</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g5s8dz0n3kj30li08wt9j.jpg" alt=""></p>
 <p>最后，验证用户ldapuser0能够在/mnt/nfssecure/project上创建文件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# su - ldapuser0</span><br><span class="line">Last login: Thu Aug  8 14:03:33 CST 2019 on pts/0</span><br><span class="line">[ldapuser0@localhost ~]$ kinit</span><br><span class="line">Password for ldapuser0@EXAMPLE.COM: [kerberos]</span><br><span class="line">[ldapuser0@localhost ~]$ cd /mnt/nfssecure/project/</span><br><span class="line">[ldapuser0@localhost project]$ touch test.txt</span><br></pre></td></tr></table></figure>
 
@@ -768,7 +762,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -839,7 +833,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -916,7 +928,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -124,14 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="rhce-07 第17-18题">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g5scbjprd2j30fr0dggm0.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g5scohedw2j30ln08kgm2.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g5sd1u313pj30m206s77q.jpg">
-<meta property="og:updated_time" content="2019-08-30T05:45:15.994Z">
+<meta property="og:updated_time" content="2020-01-28T03:21:37.382Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rhce-07 第17-18题">
 <meta name="twitter:description" content="rhce-07 第17-18题">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g5scbjprd2j30fr0dggm0.jpg">
 
 
 
@@ -490,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-30 13:45:15" itemprop="dateModified" datetime="2019-08-30T13:45:15+08:00">2019-08-30</time>
+                <time title="修改时间：2020-01-28 11:21:37" itemprop="dateModified" datetime="2020-01-28T11:21:37+08:00">2020-01-28</time>
               
             
           </span>
@@ -582,7 +578,6 @@
 <p>/root/foo.sh redhat|fedora</p>
 <p>system1：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /root/foo.sh</span><br><span class="line">[root@localhost ~]# chmod +x foo.sh </span><br><span class="line">[root@localhost ~]# cat foo.sh </span><br><span class="line">#!/bin/bash</span><br><span class="line">case $1 in</span><br><span class="line">	redhat)</span><br><span class="line">	echo &quot;fedora&quot;</span><br><span class="line">	;;</span><br><span class="line">	fedora)</span><br><span class="line">	echo &quot;redhat&quot;</span><br><span class="line">	;;</span><br><span class="line">	*)</span><br><span class="line">	echo &quot;/root/foo.sh redhat|fedora&quot;</span><br><span class="line">	;;</span><br><span class="line">esac</span><br><span class="line">[root@localhost ~]# ./foo.sh </span><br><span class="line">/root/foo.sh redhat|fedora</span><br><span class="line">[root@localhost ~]# ./foo.sh redhat</span><br><span class="line">fedora</span><br><span class="line">[root@localhost ~]# ./foo.sh fedora</span><br><span class="line">redhat</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g5scbjprd2j30fr0dggm0.jpg" alt=""></p>
 <h3 id="18-创建一个添加用户的脚本"><a href="#18-创建一个添加用户的脚本" class="headerlink" title="18.创建一个添加用户的脚本"></a>18.创建一个添加用户的脚本</h3><p>　　在system1上创建一个名为/root/batchusers,此脚本能够实现为系统system1创建本地用户，并且这些用户的用户名来自一个包含用户名列表的文件，同时满足下列要求:</p>
 <p>1）此脚本要求提供一个参数，此参数就是包含用户名列表的文件。</p>
 <p>2）如果没有提供参数，此脚本应该给出下面的提示信息Usage: /root/batusers userfile ,并且退出返回相应的值。</p>
@@ -594,12 +589,10 @@
 <p>system1：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /root/batchusers</span><br><span class="line">[root@localhost ~]# chmod +x batchusers </span><br><span class="line">[root@localhost ~]# cat batchusers </span><br><span class="line">#!/bin/bash</span><br><span class="line">if [ $# == 1 ];then</span><br><span class="line">	if [ -f $1 ];then</span><br><span class="line">		while read username;do</span><br><span class="line">			useradd -s /bin/false $username &amp;&gt;/dev/null</span><br><span class="line">		done&lt;$1</span><br><span class="line">	else</span><br><span class="line">		echo &quot;Input file not found&quot;</span><br><span class="line">	fi</span><br><span class="line">else</span><br><span class="line">	echo &quot;Usage: /root/batusers userfile&quot;</span><br><span class="line">fi</span><br><span class="line">[root@localhost ~]# ./batchusers </span><br><span class="line">Usage: /root/batusers userfile</span><br><span class="line">[root@localhost ~]# ./batchusers 123</span><br><span class="line">Input file not found</span><br><span class="line">[root@localhost ~]# wget http://classroom.example.com/materials/userlist</span><br><span class="line">[root@localhost ~]# ./batchusers userlist </span><br><span class="line">[root@localhost ~]# cat /etc/passwd</span><br><span class="line">[root@localhost ~]# curl http://classroom.example.com/materials/userlist</span><br></pre></td></tr></table></figure>
 <p>验证：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g5scohedw2j30ln08kgm2.jpg" alt=""></p>
 <h2 id="命令解析"><a href="#命令解析" class="headerlink" title="命令解析"></a>命令解析</h2><h3 id="bash的单引号’’，双引号””和反引号的区别。"><a href="#bash的单引号’’，双引号””和反引号的区别。" class="headerlink" title="bash的单引号’’，双引号””和反引号的区别。"></a>bash的单引号’’，双引号””和反引号<code></code>的区别。</h3><p>　　单引号’　‘ 和双引号”　“，这两者都是解决变量中间有空格的问题。在bash中，空格是一种很特殊的字符，比如在bash中这样定义string=hello world，这样就会报错，为了避免出错就得使用单引号’　‘和双引号”　“。</p>
 <h4 id="单引号’’，双引号””的区别"><a href="#单引号’’，双引号””的区别" class="headerlink" title="单引号’’，双引号””的区别"></a>单引号’’，双引号””的区别</h4><p>１）单引号’　‘剥夺了所有字符的特殊含义，单引号’　‘内就变成了单纯的字符。</p>
 <p>２）双引号”　“则对于双引号”　“内的参数替换($)和命令替换。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash</span><br><span class="line">[root@localhost ~]# n=100</span><br><span class="line">[root@localhost ~]# echo &apos;$n&apos;</span><br><span class="line">$n</span><br><span class="line">[root@localhost ~]# echo &quot;$n&quot;</span><br><span class="line">100</span><br><span class="line">[root@localhost ~]# echo $n</span><br><span class="line">100</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g5sd1u313pj30m206s77q.jpg" alt=""></p>
 <h4 id="反引号"><a href="#反引号" class="headerlink" title="反引号"></a>反引号<code></code></h4><p>　　反引号是命令替换，命令替换是指Shell可以先执行中的命令，将输出结果暂时保存，在适当的地方输出。下面的例子中，将命令执行结果保存在变量中：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash</span><br><span class="line">[root@localhost ~]# mydate=date</span><br><span class="line">[root@localhost ~]# echo &quot;mydate&quot;</span><br><span class="line">mydate</span><br><span class="line">[root@localhost ~]# echo &quot;$mydate&quot;</span><br><span class="line">date</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# mydate=&apos;date&apos;</span><br><span class="line">[root@localhost ~]# echo &quot;$mydate&quot;</span><br><span class="line">date</span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# </span><br><span class="line">[root@localhost ~]# mydate=`date`</span><br><span class="line">[root@localhost ~]# echo &quot;$mydate&quot;</span><br><span class="line">2019年 08月 08日 星期四 16:46:04 CST</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <p>　　由上面的三个例子可以看出，无论用单引号还是不加符号，都只能将字符串date赋值给mydate变量，导致后面输出这个变量的时候仅仅是输出字符串date。</p>
@@ -771,7 +764,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -842,7 +835,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -919,7 +930,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

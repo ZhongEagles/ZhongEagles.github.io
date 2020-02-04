@@ -124,18 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="rhcsa-03 第1-5题">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g5555ts9b5j30kl0hdtaa.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g555akbr6dj30kf0hbwf1.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g555fycebjj30kl080my0.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g555ko0508j30kk0a0t9u.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g555otcllij30kg0bddh3.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g555zwg6vlj30kp09amy5.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g5563xkk2uj30kn0aodgl.jpg">
-<meta property="og:updated_time" content="2019-07-19T07:14:40.289Z">
+<meta property="og:updated_time" content="2020-01-28T03:23:02.738Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rhcsa-03 第1-5题">
 <meta name="twitter:description" content="rhcsa-03 第1-5题">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g5555ts9b5j30kl0hdtaa.jpg">
 
 
 
@@ -494,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-19 15:14:40" itemprop="dateModified" datetime="2019-07-19T15:14:40+08:00">2019-07-19</time>
+                <time title="修改时间：2020-01-28 11:23:02" itemprop="dateModified" datetime="2020-01-28T11:23:02+08:00">2020-01-28</time>
               
             
           </span>
@@ -585,11 +577,9 @@
 <p>1）SeLinux的工作模式为enforcing</p>
 <p>2）要求系统重启后依然生效</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@server0 ~]# vim /etc/selinux/config </span><br><span class="line">[root@server0 ~]# cat /etc/selinux/config </span><br><span class="line">[root@server0 ~]# setenforce 1</span><br><span class="line">[root@server0 ~]# sestatus</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g5555ts9b5j30kl0hdtaa.jpg" alt=""></p>
 <h3 id="2-配置yum软件仓库"><a href="#2-配置yum软件仓库" class="headerlink" title="2.配置yum软件仓库"></a>2.配置yum软件仓库</h3><p>配置你的本地默认YUM软件仓库，仓库地址为<a href="http://classroom.example.com/content/rhel7.0/x86_64/dvd" target="_blank" rel="noopener">http://classroom.example.com/content/rhel7.0/x86_64/dvd</a></p>
 <p>方法1（建议采用）：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@server0 ~]# vim /etc/yum.repos.d/base.repo </span><br><span class="line">[root@server0 ~]# cat /etc/yum.repos.d/base.repo </span><br><span class="line">[rhcsa]</span><br><span class="line">name=EX200</span><br><span class="line">gpgcheck=0</span><br><span class="line">baseurl=http://classroom.example.com/content/rhel7.0/x86_64/dvd</span><br><span class="line">[root@server0 ~]# yum makecache </span><br><span class="line">[root@server0 ~]#</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g555akbr6dj30kf0hbwf1.jpg" alt=""></p>
 <p>方法2：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager --add-repo=&quot;http://classroom.example.com/content/rhel7.0/x86_64/dvd&quot;</span><br><span class="line">cat /etc/yum.repos.d/base.repo</span><br><span class="line">yum repolist</span><br><span class="line">rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release</span><br></pre></td></tr></table></figure>
 <h3 id="3-调整逻辑卷大小"><a href="#3-调整逻辑卷大小" class="headerlink" title="3.调整逻辑卷大小"></a>3.调整逻辑卷大小</h3><p>请按照以下要求调整本地逻辑卷lvm1的容量：</p>
@@ -599,13 +589,10 @@
 <p>4）调整后，保证其挂载目录不改变，文件系统完成</p>
 <p>首先，要先看lvm1的格式、大小，判断是该裁剪还是该扩容。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@server0 ~]# df -hT</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g555fycebjj30kl080my0.jpg" alt=""></p>
 <p>如上图所示，lvm1文件系统的格式为xfs，大小为253M，需要扩容为770M。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@server0 ~]# lvextend -L 770M /dev/vg1/lvm1 </span><br><span class="line">[root@server0 ~]# xfs_growfs /dev/vg1/lvm1 </span><br><span class="line"></span><br><span class="line">注意：如果这里lvm1的文件系统的格式为xfs，那么使用的是xfs_growfs；如果格式为ext4，那么需要用resize2fs</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g555ko0508j30kk0a0t9u.jpg" alt=""></p>
 <p>验证配置结果</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@server0 ~]# lvs</span><br><span class="line">[root@server0 ~]# df -hT</span><br><span class="line"></span><br><span class="line">如下图，逻辑卷大小和文件系统大小均已调整正确</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g555otcllij30kg0bddh3.jpg" alt=""></p>
 <p>考试时可能遇到需要裁剪逻辑卷的情况，可以参考附加题。</p>
 <p>参考命令解析</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">lvs:查看lv（逻辑卷）信息</span><br><span class="line">vgs:查看vg（卷组）信息</span><br><span class="line">pvs:查看pv（物理卷）信息</span><br><span class="line"></span><br><span class="line">lvextend指令用于在线扩展逻辑卷的空间大小，而不中断应用程序对逻辑卷的访问。</span><br><span class="line">	-L 指定逻辑卷的大小，单位为“kKmMgGtT”字节</span><br><span class="line">	-l 指定逻辑卷的大小（LE数）</span><br><span class="line"></span><br><span class="line">resize2fs：调整ext2\ext3\ext4文件系统的大小</span><br><span class="line">xfs_growfs :调整xfs文件系统的大小</span><br></pre></td></tr></table></figure>
@@ -616,7 +603,6 @@
 <p>4）新建一个名为sarah的用户，其不属于adminuser组，并将其shell设置为不可登陆shell</p>
 <p>5）natasha、harry和sarah三个用户的密码均设置为glegunge</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">groupadd -g 40000 adminuser</span><br><span class="line">useradd -G adminuser natasha</span><br><span class="line">useradd -G adminuser harry</span><br><span class="line">useradd -s /sbin/nologin sarah</span><br><span class="line">echo glegunge | passwd --stdin natasha</span><br><span class="line">echo glegunge | passwd --stdin harry</span><br><span class="line">echo glegunge | passwd --stdin sarah</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g555zwg6vlj30kp09amy5.jpg" alt=""></p>
 <p>参考命令解析</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">标准输入（STDIN）</span><br><span class="line">标准输出（STDOUT）</span><br><span class="line">标准错误输出（STDERR）</span><br><span class="line"></span><br><span class="line">敲错了如何删除用户：</span><br><span class="line">userdel -r xxx</span><br></pre></td></tr></table></figure>
 <h3 id="5-配置文件-var-tmp-fstab的权限"><a href="#5-配置文件-var-tmp-fstab的权限" class="headerlink" title="5.配置文件/var/tmp/fstab的权限"></a>5.配置文件/var/tmp/fstab的权限</h3><p>复制文件/etc/fstab到/var/tmp目录下，并按照以下要求配置/var/tmp/fstab文件的权限:</p>
@@ -627,7 +613,6 @@
 <p>5）用户harry对该文件既不能读也不能写</p>
 <p>6）所有其他用户（包括当前已有用户及未来创建的用户）对该文件都有读的权限</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/fstab /var/tmp/fstab</span><br><span class="line">chown root:root /var/tmp/fstab</span><br><span class="line">chmod a-x /var/tmp/fstab</span><br><span class="line">setfacl -m u:natasha:rw,u:harry:---,o::r /var/tmp/fstab</span><br><span class="line">getfacl /var/tmp/fstab</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g5563xkk2uj30kn0aodgl.jpg" alt=""></p>
 <p>参考命令解析</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setfacl命令可以用来细分linux下的文件权限。</span><br><span class="line">setfacl -help查看帮助，其参数-m指的是modify</span><br><span class="line">getfacl获取文件访问控制列表</span><br><span class="line">chmod命令可以把文件权限分为u,g,o三个组，而setfacl可以对每一个文件或目录设置更精确的文件权限。</span><br><span class="line"></span><br><span class="line">chmod</span><br><span class="line">	u代表用户</span><br><span class="line">	g代表组</span><br><span class="line">	o代表其他</span><br><span class="line">	a代表上述所有</span><br><span class="line">	</span><br><span class="line">setfacl</span><br><span class="line">	-m,       --modify-acl 更改文件的访问控制列表</span><br></pre></td></tr></table></figure>
 
@@ -797,7 +782,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -868,7 +853,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -945,7 +948,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

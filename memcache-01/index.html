@@ -124,14 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="memcache-01 MC介绍和安装">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g6vspyxu86j30nj0gg0tf.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g6vutyysaaj30oq06476r.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g6wzwogwekj30me0il781.jpg">
-<meta property="og:updated_time" content="2019-09-12T12:23:37.351Z">
+<meta property="og:updated_time" content="2020-01-28T04:41:03.690Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="memcache-01 MC介绍和安装">
 <meta name="twitter:description" content="memcache-01 MC介绍和安装">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g6vspyxu86j30nj0gg0tf.jpg">
 
 
 
@@ -490,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-12 20:23:37" itemprop="dateModified" datetime="2019-09-12T20:23:37+08:00">2019-09-12</time>
+                <time title="修改时间：2020-01-28 12:41:03" itemprop="dateModified" datetime="2020-01-28T12:41:03+08:00">2020-01-28</time>
               
             
           </span>
@@ -590,11 +586,9 @@
 <p>　　memcached尽管是“分布式”缓存服务器，但是服务器端并没有分布式功能。各个memcached不会互相通信以共享信息，分布式取决于客户端的实现。</p>
 <h2 id="MC缓存原理"><a href="#MC缓存原理" class="headerlink" title="MC缓存原理"></a>MC缓存原理</h2><p>　　1）浏览器首次访问应用服务器时，应用服务器先在memecached查找所需要的数据，可是memecached里却没有相应数据，因此应用服务器再去RDBMS（关系型数据库）中取数据，将数据保存到memecached，同时将数据显示到网页上。（下图紫色箭头）</p>
 <p>　　2）浏览器第二次以及二次之后，应用服务器直接在memecached查找所需要的数据，并且显示早网页上。（下图绿色箭头）</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g6vspyxu86j30nj0gg0tf.jpg" alt=""></p>
 <h2 id="memcached命令分类"><a href="#memcached命令分类" class="headerlink" title="memcached命令分类"></a>memcached命令分类</h2><p>　　Memcached提供了为数不多的几个命令来完成与服务器端的交互，这些命令基于memcached的协议实现。</p>
 <p><strong>1）存储类命令：</strong>set, add, replace, append, prepend<br><strong>2）获取数据类命令：</strong>get, delete, incr/decr<br><strong>3）统计类命令：</strong>stats, stats items, stats slabs, stats sizes<br><strong>4）清理命令：</strong> flush_all</p>
 <h2 id="安装memcached"><a href="#安装memcached" class="headerlink" title="安装memcached"></a>安装memcached</h2><h3 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install -y memcached</span><br><span class="line">[root@localhost ~]# systemctl restart memcached</span><br><span class="line">[root@localhost ~]# systemctl enable memcached</span><br><span class="line">[root@localhost ~]# netstat -tpnl</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g6vutyysaaj30oq06476r.jpg" alt=""></p>
 <p>如上图，启动memcached之后，其默认对应端口11211会处于监听状态。</p>
 <h3 id="2、memcached的常用选项说明"><a href="#2、memcached的常用选项说明" class="headerlink" title="2、memcached的常用选项说明"></a>2、memcached的常用选项说明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# memcached -h</span><br><span class="line"></span><br><span class="line">-l &lt;ip_addr&gt;：指定进程监听的地址；</span><br><span class="line">-d 以守护进程模式运行；</span><br><span class="line">-u &lt;username&gt;：以指定的用户身份运行memcached进程；</span><br><span class="line">-m &lt;num&gt;：用于缓存数据的最大内存空间，单位为MB，默认为64MB；</span><br><span class="line">-c &lt;num&gt;：最大支持的并发连接数，默认为1024；</span><br><span class="line">-p &lt;num&gt;: 指定监听的TCP端口，默认为11211；</span><br><span class="line">-U &lt;num&gt;：指定监听的UDP端口，默认为11211，0表示关闭UDP端口；</span><br><span class="line">-t &lt;threads&gt;：用于处理入站请求的最大线程数，仅在memcached编译时开启了支持线程才有效；</span><br><span class="line">-f &lt;num&gt;：设定Slab Allocator定义预先分配内存空间大小固定的块时使用的增长因子；</span><br><span class="line">-M 当内存空间不够使用时返回错误信息，而不是按LRU算法利用空间；</span><br><span class="line">-n 指定最小的slab chunk大小；单位是字节；</span><br><span class="line">-S 启用sasl进行用户认证；</span><br></pre></td></tr></table></figure>
 <p>3、配置文件</p>
@@ -605,7 +599,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet HOST PORT</span><br></pre></td></tr></table></figure>
 <p>实例1</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# telnet localhost 11211</span><br><span class="line">Trying ::1...</span><br><span class="line">Connected to localhost.</span><br><span class="line">Escape character is &apos;^]&apos;.</span><br><span class="line">^]						#按ctrl+]</span><br><span class="line">telnet&gt; 				#直接回车</span><br><span class="line">stats					#stats 命令用于返回统计信息例如 PID(进程号)、版本号、连接数等。</span><br><span class="line">#中间显示的内容省略</span><br><span class="line">#。。。。。。</span><br><span class="line">END</span><br><span class="line">quit</span><br><span class="line">Connection closed by foreign host.</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g6wzwogwekj30me0il781.jpg" alt=""></p>
 
       
     </div>
@@ -775,7 +768,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -846,7 +839,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -923,7 +934,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

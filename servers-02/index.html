@@ -124,16 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-servers-02 高可用">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1w7matqdnj30jy0h8aad.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1w82jcj0lj30vk0l0n0h.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1w8blg8gfj30w20egmxl.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1w9ckucamj30vk0eo74s.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g1w9gp93ogj30cz09p74p.jpg">
-<meta property="og:updated_time" content="2019-04-14T08:08:56.842Z">
+<meta property="og:updated_time" content="2020-01-28T03:24:31.764Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-servers-02 高可用">
 <meta name="twitter:description" content="linux-servers-02 高可用">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1w7matqdnj30jy0h8aad.jpg">
 
 
 
@@ -492,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-14 16:08:56" itemprop="dateModified" datetime="2019-04-14T16:08:56+08:00">2019-04-14</time>
+                <time title="修改时间：2020-01-28 11:24:31" itemprop="dateModified" datetime="2020-01-28T11:24:31+08:00">2020-01-28</time>
               
             
           </span>
@@ -576,11 +570,9 @@
       
         <h1 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h1><p>在上一篇文章中，我们的反向代理+负载均衡实例如下</p>
 <h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>node1（反向代理+负载均衡）：192.168.141.53<br>node3（web1）：192.168.141.12<br>node4（web2）：192.168.141.132</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1w7matqdnj30jy0h8aad.jpg" alt=""></p>
 <p>　　但是，如果node1（反向代理+负载均衡服务器）挂掉了怎么办？是不是会导致我们的网站无法访问，从而造成损失？</p>
 <p>　　这时候就需要引入高可用方案了，例如keepalived、hearbeat、coresync等。</p>
 <h2 id="高可用性"><a href="#高可用性" class="headerlink" title="高可用性"></a>高可用性</h2><p>　　高可用性HA（High Availability）指的是通过尽量缩短因日常维护操作（计划）和突发的系统崩溃（非计划）所导致的停机时间，以提高系统和应用的可用性。它与被认为是不间断操作的容错技术有所不同。HA系统是目前企业防止核心计算机系统因故障停机的最有效手段。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1w82jcj0lj30vk0l0n0h.jpg" alt=""></p>
 <h2 id="高可用架构"><a href="#高可用架构" class="headerlink" title="高可用架构"></a>高可用架构</h2><p>高可用架构应具备但不限于以下特征：</p>
 <p><strong>1、主从切换</strong></p>
 <p>　　很好理解，当其中一台机器的服务宕机后，对于服务调用者来说，能够迅速的切换到其他可用服务，从服务升级为主服务，这种切换速度应当控制在秒级别（几秒钟）。</p>
@@ -592,14 +584,11 @@
 <p><strong>3、易横向扩展</strong></p>
 <p>　　当用户量越来越多，已有服务不能承载更多的用户的时候，便需要对服务进行扩展，扩展的方式最好是不触动原有服务，对于服务的调用者是透明的。</p>
 <h2 id="实例解析"><a href="#实例解析" class="headerlink" title="实例解析"></a>实例解析</h2><p>node1（反向代理+负载均衡）：192.168.141.53<br>node2（反向代理+负载均衡）：192.168.141.69<br>node3（web1）：192.168.141.12<br>node4（web2）：192.168.141.132</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1w8blg8gfj30w20egmxl.jpg" alt=""></p>
 <p>　　为了防止node1挂掉导致客户端无法访问我们搭建在node3和node4上面的web网站，所以我们加了一台反向代理+负载均衡服务器：node2。</p>
 <p>　　可是新的问题随之而来，node1和node2的ip地址是不同的，客户端究竟应该访问node1还是node2呢？这就需要引入高可用方案keepalive+虚拟ip（vip）了。</p>
 <h2 id="实例解析-1"><a href="#实例解析-1" class="headerlink" title="实例解析"></a>实例解析</h2><p>node1（反向代理+负载均衡+keepalive主）：192.168.141.53<br>node2（反向代理+负载均衡+keepalive从）：192.168.141.69<br>node3（web1）：192.168.141.12<br>node4（web2）：192.168.141.132<br>vip：192.168.141.100</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1w9ckucamj30vk0eo74s.jpg" alt=""></p>
 <p>vip是基于vrrp协议的。vrrp组里有一台虚拟路由器，其具有虚拟ip+mac地址，该ip即vip。</p>
 <p>　　VRRP：Virtual Router Redundancy Protocol，虚拟路由冗余协议。VRRP说白了就是实现地址漂移的，是一种容错协议，在提高可靠性的同时，简化了主机的配置。该协议能够实现将可以承担网关功能的一组路由器加入到备份组中，形成一台虚拟路由器，由VRRP的选举机制决定哪台路由器承担转发任务，局域网内的主机只需将虚拟路由器配置为缺省网关。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g1w9gp93ogj30cz09p74p.jpg" alt=""></p>
 <p>　　同样的道理，在服务器架构中，nginx1、nginx2的两个对外接口做一个vrrp对外提供一个虚拟ip，成为vip。有了vip的存在，让客户访问同一个vip即可，客户请求从vip转发到node1或者node2的真实网卡ip上，实现对node3和node4上面web的访问。nginx1、nginx2两服务器互相监测对方nginx是否正常运行，二者之间有一个监控机制。nginx1、nginx2之间，从服务器对主服务器始终进行心跳检测（组播、广播），主服务器挂了则从服务器顶上，这个机制类似于OSPF协议中的DR/BDR。</p>
 <p>　　在lnamp架构中，最前面是nginx做反向代理加负载均衡和反向代理，后面有apache，再后面就是mysql，然后mysql后面是硬盘。apache服务器与mysql服务器交互，同时与缓存服务器（redies memcache）交互，因为从内存读取数据总比从直接从硬盘读数据快。nginx同时与apache的web1、web2交互，而web1、web2使用共享存储技术使得网站得以同步。</p>
 <p>keepalived：<br>单主模型：包括一主一从、一主多从模型</p>
@@ -776,7 +765,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -847,7 +836,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -924,7 +931,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -124,16 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="rhcsa-06 附加练习题">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g564dlvalqj30kl081gmb.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g564hm9woej30li0ap3zn.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g564dlvalqj30kl081gmb.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g564mou5loj30kr0emtae.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g564pfpvk1j30l90b0jsk.jpg">
-<meta property="og:updated_time" content="2019-07-20T03:11:06.718Z">
+<meta property="og:updated_time" content="2020-01-28T03:23:44.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rhcsa-06 附加练习题">
 <meta name="twitter:description" content="rhcsa-06 附加练习题">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g564dlvalqj30kl081gmb.jpg">
 
 
 
@@ -492,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-20 11:11:06" itemprop="dateModified" datetime="2019-07-20T11:11:06+08:00">2019-07-20</time>
+                <time title="修改时间：2020-01-28 11:23:44" itemprop="dateModified" datetime="2020-01-28T11:23:44+08:00">2020-01-28</time>
               
             
           </span>
@@ -582,23 +576,18 @@
 <p>3）调整后的容量可能出现误差，只要在950MiB - 1050MiB之间都是允许的</p>
 <p>4）调整后，保证其挂载目录不改变，文件系统完成</p>
 <p>首先查看本地逻辑卷home的容量，确定是要扩容还是裁剪。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g564dlvalqj30kl081gmb.jpg" alt=""></p>
 <p>　　可以看到逻辑卷home的容量为445M，小于1000M，因此要扩容。格式为ext4格式，因此要使用resize2fs命令（如果是xfs文件系统，需要用xfs_growfs 替换resize2fs ）。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@system1 ~]# lvextend -L 1000M /dev/exam/home </span><br><span class="line">[root@system1 ~]# resize2fs /dev/exam/home </span><br><span class="line"></span><br><span class="line">验证配置结果：</span><br><span class="line">[root@system1 ~]# lvs                                          </span><br><span class="line">[root@system1 ~]# df -hT</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g564hm9woej30li0ap3zn.jpg" alt=""></p>
 <h2 id="附加练习二：调整逻辑卷容量"><a href="#附加练习二：调整逻辑卷容量" class="headerlink" title="附加练习二：调整逻辑卷容量"></a>附加练习二：调整逻辑卷容量</h2><p>请按照以下要求调整本地逻辑卷srv的容量：</p>
 <p>1）调整后的逻辑卷及文件系统大小为400MiB</p>
 <p>2）调整后确保文件系统中已存在的内容不能被破坏</p>
 <p>3）调整后的容量可能出现误差，只要在350MiB - 440MiB之间都是允许的</p>
 <p>4）调整后，保证其挂载目录不改变，文件系统完成</p>
 <p>首先查看本地逻辑卷srv的容量，确定是要扩容还是裁剪。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g564dlvalqj30kl081gmb.jpg" alt=""></p>
 <p>　　由上图可以看到，当前逻辑卷srv的大小976M大于400M，因此要裁剪逻辑卷。由于其格式为ext4，因此使用的命令是resize2fs（如果是xfs文件系统，需要用xfs_growfs 替换resize2fs ）。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@system1 ~]# umount /dev/exam/srv </span><br><span class="line">[root@system1 ~]# e2fsck -f /dev/exam/srv </span><br><span class="line">[root@system1 ~]# resize2fs /dev/exam/srv 400M</span><br><span class="line">[root@system1 ~]# resize2fs -f /dev/exam/srv 400M</span><br><span class="line">[root@system1 ~]# lvreduce -L 400M /dev/exam/srv </span><br><span class="line">Do you really want to reduce srv? [y/n]: y</span><br><span class="line">[root@system1 ~]#</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g564mou5loj30kr0emtae.jpg" alt=""></p>
 <p>将刚刚卸载掉的逻辑卷重新挂载上，挂载验证配置结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@system1 ~]# mount -a</span><br><span class="line">[root@system1 ~]# lvs                                        </span><br><span class="line">[root@system1 ~]# df -hT</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g564pfpvk1j30l90b0jsk.jpg" alt=""></p>
 
       
     </div>
@@ -766,7 +755,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -837,7 +826,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -914,7 +921,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

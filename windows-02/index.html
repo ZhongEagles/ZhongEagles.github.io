@@ -124,13 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="windows-运维-02 工作组和域">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0athlpiinj30m70ae7bl.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0ati5xrbvj30qg0b5whv.jpg">
-<meta property="og:updated_time" content="2019-02-23T13:50:08.455Z">
+<meta property="og:updated_time" content="2020-01-28T03:29:08.823Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows-运维-02 工作组和域">
 <meta name="twitter:description" content="windows-运维-02 工作组和域">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0athlpiinj30m70ae7bl.jpg">
 
 
 
@@ -489,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-23 21:50:08" itemprop="dateModified" datetime="2019-02-23T21:50:08+08:00">2019-02-23</time>
+                <time title="修改时间：2020-01-28 11:29:08" itemprop="dateModified" datetime="2020-01-28T11:29:08+08:00">2020-01-28</time>
               
             
           </span>
@@ -572,7 +569,6 @@
 
       
         <h1 id="windows-运维-02-工作组和域"><a href="#windows-运维-02-工作组和域" class="headerlink" title="windows-运维-02 工作组和域"></a>windows-运维-02 工作组和域</h1><h2 id="什么是工作组？"><a href="#什么是工作组？" class="headerlink" title="什么是工作组？"></a>什么是工作组？</h2><p>　　工作组（Work Group）是局域网中的一个概念。它是最常见最简单最普通的资源管理模式，就是将不同的电脑按功能分别列入不同的组中，以方便管理。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0athlpiinj30m70ae7bl.jpg" alt=""></p>
 <p>　　在一个网络内，可能有成百上千台电脑，如果这些电脑不进行分组，都列在“网上邻居”内，可想而知会有多么乱。为了解决这一问题，早在Windows 9x/NT/2008就引用了“工作组”这个概念，将不同的电脑一般按功能分别列入不同的组中，如财务部的电脑都列入“财务部”工作组中，人事部的电脑都列入“人事部”工作组中。你要访问某个部门的资源，就在“网上邻居”里找到那个部门的工作组名，双击就可以看到那个部门的电脑了。</p>
 <p>　　那么怎么加入工作组呢？其实很简单，你只需要右击你的Windows桌面上的“网上邻居”，在弹出的菜单出选择“属性”，点击“标识”，在“计算机名”一栏中添入你想好的名字，在“工作组”一栏中添入你想加入的工作组名称。</p>
 <p>　　如果你输入的工作组名称以前没有，那么相当于新建一个工作组，当然只有你的电脑在里面。计算机名和工作组的长度不能超过15个英文字符，可以输入汉字，但是不能超过7个。“计算机说明”是附加信息，不填也可以，但是最好填上一些这台电脑主人的信息，如“技术部主管”等。单击[确定]按钮后，Windows 提示需要重新启动，按要求重新启动之后，再进入“网上邻居”，就可以看到你所在工作组的成员了。</p>
@@ -586,7 +582,6 @@
 <li>工作组中计算机都是平等的,对于其他计算机来说即是服务器,也是客户机. </li>
 <li>工作组的网络规模一般少于10台计算机. </li>
 </ol>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0ati5xrbvj30qg0b5whv.jpg" alt=""></p>
 <h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><p>　　行业某个哥们小张(某企业网络管理员),刚开始全单位8台计算机,他用的是工作组管理模式。网络配置很轻松,几乎不用管理.哪台机器有问题 就去哪来机器上解决.工作强度也不是很大。不到3个月时间.随着企业信息化的需要,公司的计算机台数增加到了50台.小张采用同样的管理方式。每天都很忙碌,从早上到公司到晚上离开,一直在解决网络中用户的计算机故障问题,病毒\IE首页篡改\甚至出现了公司内部恶意攻击的事件,经常晚上加班,通宵达旦的工作.但问题总是解决不了。一个月后,他被辞退了。为什么会这样呢?有没有更简单方便的管理方式呢? </p>
 <p>下面我们来看这么个例子: </p>
 <p>　　如果我们把工作组看成是原始社会,各服务器(人)各自为政，再想想刚刚的例子,小张公司的8台电脑最开始都是各自为政的，所以就不存在管理的概念，小张只能充当一个哪里出问题就去哪解决的故障排除机器般的被动角色。那么在网络日益应用广泛，结构越来越复杂的今天,我们可不可以，让我们的计算机网络世界也进化一下呢？比如在计算机中通过网络成立一个国家,在公司的一定范围内实现集中管理,中央集权！一个国家可以管理的范围只在一个国家内，想做更复杂范围更广阔的管理,需要什么样的体制呢？ 感谢地球,因为我们有联合国、欧盟。实现多个基本管理范围(国家，域)的联合管理，减少这些基本管理范围内的重复管理工作，方便相互之间资源调用。</p>
@@ -761,7 +756,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -832,7 +827,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -909,7 +922,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

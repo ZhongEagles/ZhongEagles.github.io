@@ -124,13 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="mysql-07 数据查询">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g782ixj45xj30q70q14qp.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g782pe3krhj318t0ho7wh.jpg">
-<meta property="og:updated_time" content="2019-09-22T07:20:45.320Z">
+<meta property="og:updated_time" content="2020-01-28T03:16:30.436Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql-07 数据查询">
 <meta name="twitter:description" content="mysql-07 数据查询">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g782ixj45xj30q70q14qp.jpg">
 
 
 
@@ -489,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-22 15:20:45" itemprop="dateModified" datetime="2019-09-22T15:20:45+08:00">2019-09-22</time>
+                <time title="修改时间：2020-01-28 11:16:30" itemprop="dateModified" datetime="2020-01-28T11:16:30+08:00">2020-01-28</time>
               
             
           </span>
@@ -704,14 +701,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#查询每一门课的间接先修课，即先修课的先修课</span><br><span class="line">#要查询同一个表两次，因此要为course表定义两个别名：first、second</span><br><span class="line">select first.cno,second.cpno</span><br><span class="line">from course first,course second</span><br><span class="line">where first.cpno=second.cno;</span><br></pre></td></tr></table></figure>
 <p>注意：上述语句逻辑关系是，1表的cpno等于2表的cno，然后select出2表对应的cpno，就完成了从1表的cpno到2表的cpno的过程，查询到了先修课的先修课。</p>
 <p>3）自然连接</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g782ixj45xj30q70q14qp.jpg" alt=""></p>
 <p><strong>悬浮元组：</strong>两个表做自然连接时，互相之间不存在公共属性值上相等的某些元组会被舍弃，这些被舍弃的元组称为悬浮元组，如上图中，R的第四个元组和S的第五个元组皆是被舍弃的悬浮元组。</p>
 <p>4）外连接查询</p>
 <p>外连接（outer join）：如果把悬浮元组也保存在关系（表）中，而在其他属性上填上空值null，则称作外连接；</p>
 <p>左外连接（left outer join或left joi）：只保留左边关系R的悬浮元组；</p>
 <p>右外连接（right outer join或right join）：只保留右边关系S的悬浮元组；</p>
 <p>如下图：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g782pe3krhj318t0ho7wh.jpg" alt=""></p>
 <p>外连接查询语句举例</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#查询每个学生机器选修课程的情况</span><br><span class="line">1）使用基本关系运算</span><br><span class="line">select student.*,sc.* from student,sc</span><br><span class="line">where student.sno=sc.sno;</span><br><span class="line"></span><br><span class="line">2）使用左外连接查询</span><br><span class="line">select student.sno,sname,ssex,sage,sdept,cno,grade</span><br><span class="line">from student left outer join sc on (student.sno=sc.sno)</span><br></pre></td></tr></table></figure>
 <p>5）多表连接查询</p>
@@ -911,7 +906,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -982,7 +977,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1059,7 +1072,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

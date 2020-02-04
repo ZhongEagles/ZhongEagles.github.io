@@ -146,13 +146,9 @@
 <meta property="og:image" content="https://i.loli.net/2019/09/08/eUuSOsrmkNXQfWw.png">
 <meta property="og:image" content="https://i.loli.net/2019/09/08/1t3H7Sn9yPVFZWs.png">
 <meta property="og:image" content="https://i.loli.net/2019/09/08/15mxQcSebGahWA2.png">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s3wlbez5j30n807uq7w.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s3ya86mij30an088tb8.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s3ylgxxwj30ex0610uv.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s41r4h1ij30m90eygt9.jpg">
 <meta property="og:image" content="https://i.loli.net/2019/09/08/iNH54WdnqkIKGua.png">
 <meta property="og:image" content="https://i.loli.net/2019/09/08/Zrz3HuJG8OcaAX9.png">
-<meta property="og:updated_time" content="2019-09-08T11:33:53.193Z">
+<meta property="og:updated_time" content="2020-01-28T04:41:52.483Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql-03 mysql 一主多从+主从复制+读写分离">
 <meta name="twitter:description" content="mysql-03 mysql 一主多从+主从复制+读写分离">
@@ -515,7 +511,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-08 19:33:53" itemprop="dateModified" datetime="2019-09-08T19:33:53+08:00">2019-09-08</time>
+                <time title="修改时间：2020-01-28 12:41:52" itemprop="dateModified" datetime="2020-01-28T12:41:52+08:00">2020-01-28</time>
               
             
           </span>
@@ -718,14 +714,10 @@
 <p><strong>master：</strong></p>
 <p><img src="https://i.loli.net/2019/09/08/15mxQcSebGahWA2.png" alt=""></p>
 <p><strong>slave1：</strong></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s3wlbez5j30n807uq7w.jpg" alt=""></p>
 <p><strong>slave2：</strong></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s3ya86mij30an088tb8.jpg" alt=""></p>
 <p>　　综合上面三图可知，“this is insert”这一行内容是插入到master之后，同步到两个slave的。因此，可以总结出，写操作是针对于master完成的，而读操作，是针对slave完成的，读写分离实现成功。</p>
 <h3 id="5）测试slave之间的切换功能"><a href="#5）测试slave之间的切换功能" class="headerlink" title="5）测试slave之间的切换功能"></a>5）测试slave之间的切换功能</h3><p>现在将slave1关机</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s3ylgxxwj30ex0610uv.jpg" alt=""></p>
 <p>然后在client上，查看表t的内容</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g6s41r4h1ij30m90eygt9.jpg" alt=""></p>
 <p>　　如上图，可以看到之前client尚且还是读取slave1上的数据，此时已经读取到了slave2上的数据，说明slave之间可以正常切换。</p>
 <h3 id="附：重启mysql-proxy的方法"><a href="#附：重启mysql-proxy的方法" class="headerlink" title="附：重启mysql-proxy的方法"></a>附：重启mysql-proxy的方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy logs]# netstat -tnlp</span><br><span class="line">[root@proxy logs]# kill 11659（这里填mysql-proxy对应PID）</span><br><span class="line">[root@proxy logs]# mysql-proxy --defaults-file=/usr/local/mysql-proxy/conf/mysql-proxy.conf</span><br><span class="line">[root@proxy ~]# cat /usr/local/mysql-proxy/logs/mysql-proxy.log</span><br></pre></td></tr></table></figure>
 <p>如下图，可以看到mysql-proxy重启成功。</p>
@@ -902,7 +894,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -973,7 +965,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1050,7 +1060,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

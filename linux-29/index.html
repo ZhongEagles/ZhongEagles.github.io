@@ -124,20 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-运维进阶-29 负载均衡">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g01hdqq7ixj30j80avdga.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g01hebra6nj30j80fbq3h.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g16yb9s8z1j30x40ma774.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g16ycvp5mlj30xi0hvqbl.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g16yd7b4e0j30ut09fjrh.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1aqsz0342j31hc0u0tbp.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g1ar0clny3j31hc0u0jv4.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g14qo9cqxuj30oe0jpglq.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g14qpifd7gj30rg0adq31.jpg">
-<meta property="og:updated_time" content="2019-03-21T13:55:49.163Z">
+<meta property="og:updated_time" content="2020-01-28T03:00:07.533Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-运维进阶-29 负载均衡">
 <meta name="twitter:description" content="linux-运维进阶-29 负载均衡">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g01hdqq7ixj30j80avdga.jpg">
 
 
 
@@ -496,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-21 21:55:49" itemprop="dateModified" datetime="2019-03-21T21:55:49+08:00">2019-03-21</time>
+                <time title="修改时间：2020-01-28 11:00:07" itemprop="dateModified" datetime="2020-01-28T11:00:07+08:00">2020-01-28</time>
               
             
           </span>
@@ -597,8 +587,6 @@
 <p>配置nginx提供web的服务器1和2</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">两台服务器都要修改端口号</span><br><span class="line">[root@client1 ]# vim /etc/nginx/nginx.conf</span><br><span class="line"> 39         listen       8080 default_server;</span><br><span class="line"> 40  #       listen       [::]:80 default_server;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">nginx服务器1：</span><br><span class="line">[root@client1 ~]# rm –rf /usr/share/nginx/html/index.html</span><br><span class="line">[root@client1 ~]# echo &quot;192.168.141.53&quot; &gt; /usr/share/nginx/html/index.html</span><br><span class="line">nginx服务器2：</span><br><span class="line">[root@client2 ~]# rm –rf /usr/share/nginx/html/index.html</span><br><span class="line">[root@client2 ~]# echo &quot;192.168.141.69&quot; &gt; /usr/share/nginx/html/index.html</span><br><span class="line"></span><br><span class="line">启动两台服务器的服务</span><br><span class="line">[root@localhost ~]# systemctl restart nginx</span><br><span class="line">[root@localhost ~]# systemctl enable nginx</span><br></pre></td></tr></table></figure>
 <h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>​    浏览器打开<a href="http://192.168.141.132:8080，然后不断刷新，可以看到显示出来的网页不断地在两个网页中来回切换。如下图：" target="_blank" rel="noopener">http://192.168.141.132:8080，然后不断刷新，可以看到显示出来的网页不断地在两个网页中来回切换。如下图：</a></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g01hdqq7ixj30j80avdga.jpg" alt="![](https://ws1.sinaimg.cn/large/006BPHF6gy1g01hebra6nj30j80fbq3h.jpg)"></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g01hebra6nj30j80fbq3h.jpg" alt=""></p>
 <p>在上面实验完成后，关机保存快照，然后恢复到干净的快照，接着做下面的实验</p>
 <h2 id="LVS实现负载均衡"><a href="#LVS实现负载均衡" class="headerlink" title="LVS实现负载均衡"></a>LVS实现负载均衡</h2><p>　　LVS是Linux Virtual Server的简写，意即Linux虚拟服务器，是一个虚拟的服务器集群系统。</p>
 <h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><p>做好上面的试验后将三台虚拟机恢复到一个干净的快照，接着做下面这个实验</p>
@@ -622,14 +610,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install httpd -y</span><br><span class="line">web服务器1：</span><br><span class="line">[root@client1 ~]# echo &quot;i am lvs 192.168.141.53&quot; &gt; /var/www/html/index.html</span><br><span class="line">web服务器2：</span><br><span class="line">[root@client2 ~]# echo &quot;i am lvs 192.168.141.69&quot; &gt; /var/www/html/index.html</span><br><span class="line"></span><br><span class="line">启动两台服务器的服务</span><br><span class="line">[root@localhost ~]# systemctl restart httpd</span><br><span class="line">[root@localhost ~]# systemctl enable httpd</span><br></pre></td></tr></table></figure>
 <p>现象:</p>
 <p>　　浏览器访问192.168.141.100，不断刷新，可以看到显示的内容在i am lvs 192.168.141.69和i am lvs 192.168.141.53之间来回切换。可以用低轨道离子炮攻击其中一个web服务器（关闭物理机防火墙），然后访问192.168.141.100，发现被攻击的web服务器的主页打不开了，只能打开另一个web服务器的主页了。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g16yb9s8z1j30x40ma774.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g16ycvp5mlj30xi0hvqbl.jpg" alt=""></p>
 <p>不断刷新192.168.141.100基本只能看到i am lvs 192.168.141.69，因为192.168.141.53正在被攻击。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g16yd7b4e0j30ut09fjrh.jpg" alt=""></p>
 <p>如果关闭了防火墙，试验结束后记得要开回去。另外，LOIC是用C#写的，属于恶意工具，会报毒，网上下载下来的LOIC可能会有恶意代码，所以可以去github上直接下载源码，然后自己编译即可。如下图，找到这个即可，下载量最高的那个：NewEraCraker/LOIC</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1aqsz0342j31hc0u0tbp.jpg" alt=""></p>
 <p>　　另外，在以后的运维工作中，尽量不要在网上直接下载软件，有些恶意代码真是防不胜防，被坑是很常见的。可以尽量在github上自己下载源码进行编译，这是最安全的方式。另外，<a href="https://sourceforge.net/是全世界最大的开源软件平台，可以在这里下载一些软件，基本无毒。" target="_blank" rel="noopener">https://sourceforge.net/是全世界最大的开源软件平台，可以在这里下载一些软件，基本无毒。</a></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g1ar0clny3j31hc0u0jv4.jpg" alt=""></p>
 <h2 id="HAProxy实现负载均衡"><a href="#HAProxy实现负载均衡" class="headerlink" title="HAProxy实现负载均衡"></a>HAProxy实现负载均衡</h2><h3 id="实验环境-1"><a href="#实验环境-1" class="headerlink" title="实验环境"></a>实验环境</h3><p>做好上面的试验后将三台虚拟机恢复到一个干净的快照，接着做下面这个实验</p>
 <p>Haproxy负载均衡器：192.168.141.132</p>
 <p>web服务器1：192.168.141.53</p>
@@ -646,9 +629,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@server ~]# systemctl restart haproxy</span><br><span class="line">[root@server ~]# systemctl enable haproxy</span><br></pre></td></tr></table></figure>
 <h3 id="配置web服务器"><a href="#配置web服务器" class="headerlink" title="配置web服务器"></a>配置web服务器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install httpd -y</span><br><span class="line">web服务器1：</span><br><span class="line">[root@client1 ~]# echo &quot;192.168.141.53&quot; &gt; /var/www/html/index.html</span><br><span class="line">web服务器2：</span><br><span class="line">[root@client2 ~]# echo &quot;192.168.141.69&quot; &gt; /var/www/html/index.html</span><br><span class="line"></span><br><span class="line">启动两台服务器的服务</span><br><span class="line">[root@localhost ~]# systemctl restart httpd</span><br><span class="line">[root@localhost ~]# systemctl enable httpd</span><br></pre></td></tr></table></figure>
 <p>http默认的就是80端口，所以直接敲负载均衡器的ip就可以，效果如下：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g14qo9cqxuj30oe0jpglq.jpg" alt=""></p>
 <p>不断刷新，可以看到显示的内容在192.168.141.69和192.168.141.53之间来回切换</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g14qpifd7gj30rg0adq31.jpg" alt=""></p>
 <p>本篇到此结束。</p>
 
       
@@ -817,7 +798,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -888,7 +869,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -965,7 +964,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

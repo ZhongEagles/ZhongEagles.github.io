@@ -124,25 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-运维进阶-22 iSCSI网络存储服务">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy48e8sr2j30hd0gz3zm.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy7vh7xukj30lj0l07fl.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy8fy7qkaj30lr0m91kx.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypgdz6pgj30j80gfq49.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypgndzzvj30j80fjn1v.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy8icgwxzj30sw0o6773.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy8mcx9e8j30sb0nfguw.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypb6xihbj30j70dhahx.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypd5nfdtj30ib0q6dnj.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypdi12uuj30ik0r0aia.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypgdz6pgj30j80gfq49.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypj6706lj30q10kfgq2.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypkmia3pj31hc0u079a.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypog3s38j30uz0opdia.jpg">
-<meta property="og:updated_time" content="2019-02-23T13:39:20.485Z">
+<meta property="og:updated_time" content="2020-01-28T02:55:59.889Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-运维进阶-22 iSCSI网络存储服务">
 <meta name="twitter:description" content="linux-运维进阶-22 iSCSI网络存储服务">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy48e8sr2j30hd0gz3zm.jpg">
 
 
 
@@ -501,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-23 21:39:20" itemprop="dateModified" datetime="2019-02-23T21:39:20+08:00">2019-02-23</time>
+                <time title="修改时间：2020-01-28 10:55:59" itemprop="dateModified" datetime="2020-01-28T10:55:59+08:00">2020-01-28</time>
               
             
           </span>
@@ -597,7 +582,6 @@
 <p>　　为了让各位读者做到知其然，知其所以然，以便在工作中灵活使用这项技术，下面将讲解一下iSCSI技术在生产环境中的优势和劣势。首先，iSCSI存储技术非常便捷，在访问存储资源的形式上发生了很大变化，摆脱了物理环境的限制，同时还可以把存储资源分给多个服务器共同使用，因此是一种非常推荐使用的存储技术。但是，iSCSI存储技术受到了网速的制约。以往，硬盘设备直接通过主板上的总线进行数据传输，现在则需要让互联网作为数据传输的载体和通道，因此传输速率和稳定性是iSCSI技术的瓶颈。随着网络技术的持续发展，相信iSCSI技术也会随之得以改善。</p>
 <p>　　既然要通过以太网来传输硬盘设备上的数据，那么数据是通过网卡传入到计算机中的么？这就有必要向大家介绍iSCSI-HBA卡了（见图17-1）。与一般的网卡不同（连接网络总线和内存，供计算机上网使用），iSCSI-HBA卡连接的则是SCSI接口或FC（光纤通道）总线和内存，专门用于在主机之间交换存储数据，其使用的协议也与一般网卡有本质的不同。运行Linux系统的服务器会基于iSCSI协议把硬盘设备命令与数据打包成标准的TCP/IP数据包，然后通过以太网传输到目标存储设备，而当目标存储设备接收到这些数据包后，还需要基于iSCSI协议把TCP/IP数据包解压成硬盘设备命令与数据。</p>
 <h2 id="iSCSI网络存储服务"><a href="#iSCSI网络存储服务" class="headerlink" title="iSCSI网络存储服务"></a>iSCSI网络存储服务</h2><h3 id="创建一个raid磁盘阵列"><a href="#创建一个raid磁盘阵列" class="headerlink" title="创建一个raid磁盘阵列"></a>创建一个raid磁盘阵列</h3><p>添加4个硬盘</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy48e8sr2j30hd0gz3zm.jpg" alt=""></p>
 <p>开机，检查硬盘是否添加成功</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ll /dev/sd?</span><br><span class="line">brw-rw----. 1 root disk 8,  0 Feb  7 07:08 /dev/sda</span><br><span class="line">brw-rw----. 1 root disk 8, 16 Feb  7 07:08 /dev/sdb</span><br><span class="line">brw-rw----. 1 root disk 8, 32 Feb  7 07:08 /dev/sdc</span><br><span class="line">brw-rw----. 1 root disk 8, 48 Feb  7 07:08 /dev/sdd</span><br><span class="line">brw-rw----. 1 root disk 8, 64 Feb  7 07:08 /dev/sde</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <p>创建raid阵列</p>
@@ -609,32 +593,19 @@
 <p>进入交互式iSCSI子系统配置iSCSI服务</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# targetcli</span><br><span class="line">Warning: Could not load preferences file /root/.targetcli/prefs.bin.</span><br><span class="line">targetcli shell version 2.1.fb46</span><br><span class="line">Copyright 2011-2013 by Datera, Inc and others.</span><br><span class="line">For help on commands, type &apos;help&apos;.</span><br><span class="line"></span><br><span class="line">/&gt; ls</span><br><span class="line">o- / ............................................................................. [...]</span><br><span class="line">  o- backstores .................................................................. [...]</span><br><span class="line">  | o- block ...................................................... [Storage Objects: 0]</span><br><span class="line">  | o- fileio ..................................................... [Storage Objects: 0]</span><br><span class="line">  | o- pscsi ...................................................... [Storage Objects: 0]</span><br><span class="line">  | o- ramdisk .................................................... [Storage Objects: 0]</span><br><span class="line">  o- iscsi ................................................................ [Targets: 0]</span><br><span class="line">  o- loopback ............................................................. [Targets: 0]</span><br><span class="line">  </span><br><span class="line">  # 为ISCSI服务提供资源池</span><br><span class="line">  </span><br><span class="line">/&gt; cd /backstores/block </span><br><span class="line">/backstores/block&gt; create disk0 /dev/md0</span><br><span class="line">Created block storage object disk0 using /dev/md0.</span><br><span class="line">/backstores/block&gt; cd /</span><br><span class="line">/&gt; ls</span><br><span class="line">o- / ............................................................................. [...]</span><br><span class="line">  o- backstores .................................................................. [...]</span><br><span class="line">  | o- block ...................................................... [Storage Objects: 1]</span><br><span class="line">  | | o- disk0 ............................. [/dev/md0 (40.0GiB) write-thru deactivated]</span><br><span class="line">  | |   o- alua ....................................................... [ALUA Groups: 1]</span><br><span class="line">  | |     o- default_tg_pt_gp ........................... [ALUA state: Active/optimized]</span><br><span class="line">  | o- fileio ..................................................... [Storage Objects: 0]</span><br><span class="line">  | o- pscsi ...................................................... [Storage Objects: 0]</span><br><span class="line">  | o- ramdisk .................................................... [Storage Objects: 0]</span><br><span class="line">  o- iscsi ................................................................ [Targets: 0]</span><br><span class="line">  o- loopback ............................................................. [Targets: 0]</span><br><span class="line">  </span><br><span class="line">  # 为iSCSI服务提供主机提供一个主机名，敲完create后将下面的iqn复制下来</span><br><span class="line">/&gt; cd iscsi</span><br><span class="line">/iscsi&gt; create</span><br><span class="line">Created target iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.70683bd3ee6d.</span><br><span class="line">Created TPG 1.</span><br><span class="line">Global pref auto_add_default_portal=true</span><br><span class="line">Created default portal listening on all IPs (0.0.0.0), port 3260.</span><br><span class="line"></span><br><span class="line">这里cd的就是上面复制下来的iqn</span><br><span class="line">/iscsi&gt; cd iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.70683bd3ee6d</span><br><span class="line"></span><br><span class="line"># 为客户机划分出lun提供存储资源</span><br><span class="line">/iscsi/iqn.20....70683bd3ee6d&gt; cd tpg1/luns </span><br><span class="line">/iscsi/iqn.20...e6d/tpg1/luns&gt; create /backstores/block/disk0 </span><br><span class="line">Created LUN 0.</span><br><span class="line">/iscsi/iqn.20...e6d/tpg1/luns&gt; cd ..</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 设置允许访问服务器控制访问列表，这里的iqn是linux客户端装完iscsi-initiator-utils之后在/etc/iscsi/initiatorname.iscsi 文件中得到的客户机iqn，注意不是上面用过的iqn，为了与之前那个iqn区分，咱们称呼它为iqn2吧。如下图：</span><br><span class="line"></span><br><span class="line">/iscsi/iqn.20...3bd3ee6d/tpg1&gt; cd acls</span><br><span class="line">/iscsi/iqn.20...e6d/tpg1/acls&gt; create iqn.1994-05.com.redhat:0191b6bea67</span><br><span class="line">Created Node ACL for iqn.1994-05.com.redhat:0191b6bea67</span><br><span class="line">Created mapped LUN 0.</span><br><span class="line">/iscsi/iqn.20...e6d/tpg1/acls&gt; exit</span><br><span class="line">Global pref auto_save_on_exit=true</span><br><span class="line">Configuration saved to /etc/target/saveconfig.json</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <p>咱们在XShell那里复制一个会话，在新的窗口复制下来新的iqn作为iqn2，然后回到原来那个窗口即可粘贴使用。</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy7vh7xukj30lj0l07fl.jpg" alt=""></p>
 <p>防火墙放行服务端的3260端口</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# firewall-cmd --add-port=3260/tcp --permanent</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --reload</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <p>现在再开一台linux虚拟机作为测试用的客户机，这里以client2为例：</p>
 <p>Linux客户机挂载服务端上的ISCSI硬盘</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum -y install iscsi-initiator-utils</span><br><span class="line">[root@localhost ~]# vi /etc/iscsi/initiatorname.iscsi </span><br><span class="line"></span><br><span class="line">这里将其iqn修改为咱们刚刚复制的iqn2</span><br><span class="line">InitiatorName=iqn.1994-05.com.redhat:0191b6bea67</span><br><span class="line">保存退出，重启iscsid服务</span><br><span class="line">[root@localhost ~]# systemctl restart iscsid</span><br><span class="line">[root@localhost ~]# systemctl enable iscsid</span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/iscsid.service to /usr/lib/systemd/system/iscsid.service.</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"> </span><br><span class="line"># 没有挂载之前我们只有一块硬盘</span><br><span class="line">[root@localhost ~]# ll /dev/sd?</span><br><span class="line">brw-rw----. 1 root disk 8, 0 2月   7 22:18 /dev/sda</span><br><span class="line">[root@localhost ~]# </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	挂载，再次检查，发现多出来一块硬盘，第二块就是我们挂载上来的iscsi硬盘（这里192.168.141.12是iscsi服务器的ip）</span><br><span class="line">[root@localhost ~]# iscsiadm -m discovery -t st -p 192.168.141.12 --login</span><br><span class="line">192.168.141.12:3260,1 iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.70683bd3ee6d</span><br><span class="line">Logging in to [iface: default, target: iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.70683bd3ee6d, portal: 192.168.141.12,3260] (multiple)</span><br><span class="line">Login to [iface: default, target: iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.70683bd3ee6d, portal: 192.168.141.12,3260] successful.</span><br><span class="line">[root@localhost ~]# ll /dev/sd?</span><br><span class="line">brw-rw----. 1 root disk 8,  0 2月   7 22:18 /dev/sda</span><br><span class="line">brw-rw----. 1 root disk 8, 16 2月   7 22:31 /dev/sdb</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy8fy7qkaj30lr0m91kx.jpg" alt=""></p>
 <h2 id="windows客户机挂载iSCSI"><a href="#windows客户机挂载iSCSI" class="headerlink" title="windows客户机挂载iSCSI"></a>windows客户机挂载iSCSI</h2><p>首先，先看看我电脑本来有几个硬盘：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypgdz6pgj30j80gfq49.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypgndzzvj30j80fjn1v.jpg" alt=""></p>
 <p>可以看到，本来我的电脑只有俩硬盘，一会咱们挂载成功后，理论上会多出一个硬盘来。</p>
-<h3 id="打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索"><a href="#打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索" class="headerlink" title="打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索"></a>打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy8icgwxzj30sw0o6773.jpg" alt=""></p>
-<h3 id="目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）"><a href="#目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）" class="headerlink" title="目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）"></a>目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzy8mcx9e8j30sb0nfguw.jpg" alt=""></p>
-<h3 id="为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2"><a href="#为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2" class="headerlink" title="为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2"></a>为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypb6xihbj30j70dhahx.jpg" alt=""></p>
-<h3 id="改完以后选择连接"><a href="#改完以后选择连接" class="headerlink" title="改完以后选择连接"></a>改完以后选择连接</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypd5nfdtj30ib0q6dnj.jpg" alt=""></p>
-<h3 id="显示已连接"><a href="#显示已连接" class="headerlink" title="显示已连接"></a>显示已连接</h3><p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypdi12uuj30ik0r0aia.jpg" alt=""></p>
-<p>现在再次看看我电脑上有几个硬盘：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypgdz6pgj30j80gfq49.jpg" alt=""></p>
+<h3 id="打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索"><a href="#打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索" class="headerlink" title="打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索"></a>打开windows自带的iSCSI发起程序，在windows10搜索栏即可搜索</h3><h3 id="目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）"><a href="#目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）" class="headerlink" title="目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）"></a>目标填上IP地址，选择快速连接点击完成（这里我已经连过一次了，下面那个可以不管，也可以刷新一下即可）</h3><h3 id="为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2"><a href="#为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2" class="headerlink" title="为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2"></a>为了能连接上，修改配置中的客户端名，修改成之前我们所谓的iqn2</h3><h3 id="改完以后选择连接"><a href="#改完以后选择连接" class="headerlink" title="改完以后选择连接"></a>改完以后选择连接</h3><h3 id="显示已连接"><a href="#显示已连接" class="headerlink" title="显示已连接"></a>显示已连接</h3><p>现在再次看看我电脑上有几个硬盘：</p>
 <p>我刚打开，就跳出个消息，说是要让我初始化磁盘2，点击确定即可，如下图：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypj6706lj30q10kfgq2.jpg" alt=""></p>
 <p>现在将磁盘管理全屏显示（太小了磁盘2就被遮住了），如下图：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypkmia3pj31hc0u079a.jpg" alt=""></p>
 <p>如上图，多出来的磁盘2就是咱们挂载上去的磁盘了。</p>
 <p>右键磁盘2，新建简单卷，然后一直点击下一步即可建成。</p>
 <p>接下来我们打开文件资源管理器，如下图，可以看到一个新加卷：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1fzypog3s38j30uz0opdia.jpg" alt=""></p>
 <p>本篇到此结束</p>
 
       
@@ -803,7 +774,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -874,7 +845,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -951,7 +940,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

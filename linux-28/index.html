@@ -124,21 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="linux-运维进阶-28 LNMP动态网站架构">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g015jiios7j30j70dtjtw.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g01611hc38j30j70a9dgf.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g01a1y2fsqj30j80cgaa7.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g01a9pmoqqj31280nz0vr.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g01aaai14fj317x0sf76j.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6ly1g11f462z08j30pg0d5gn3.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g01abihtsxj31bc0towhd.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g01ad1pnfrj315w0ssqak.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g01adpmoxmj31h40t640v.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g01ae26j8dj31hc0u0413.jpg">
-<meta property="og:updated_time" content="2019-03-13T12:02:39.170Z">
+<meta property="og:updated_time" content="2020-01-28T02:59:20.462Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-运维进阶-28 LNMP动态网站架构">
 <meta name="twitter:description" content="linux-运维进阶-28 LNMP动态网站架构">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g015jiios7j30j70dtjtw.jpg">
 
 
 
@@ -497,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-13 20:02:39" itemprop="dateModified" datetime="2019-03-13T20:02:39+08:00">2019-03-13</time>
+                <time title="修改时间：2020-01-28 10:59:20" itemprop="dateModified" datetime="2020-01-28T10:59:20+08:00">2020-01-28</time>
               
             
           </span>
@@ -638,9 +627,7 @@
 <p>要想启动Nginx服务程序以及将其加入到开机启动项中，也需要有脚本文件。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost nginx-1.6.0]# curl https://raw.githubusercontent.com/xcracker/linux_shell/master/init.d/nginx &gt; /etc/rc.d/init.d/nginx</span><br><span class="line">[root@localhost nginx-1.6.0]# chmod 755 /etc/rc.d/init.d/nginx </span><br><span class="line">[root@localhost nginx-1.6.0]# /etc/rc.d/init.d/nginx restart</span><br><span class="line">Reloading systemd:     [  确定  ]</span><br><span class="line">Starting nginx (via systemctl): [  确定  ]</span><br><span class="line">[root@localhost nginx-1.6.0]# chkconfig nginx on</span><br><span class="line">[root@localhost nginx-1.6.0]# firewall-cmd --add-port=80/tcp --permanent </span><br><span class="line">success</span><br><span class="line">[root@localhost nginx-1.6.0]# firewall-cmd --reload</span><br><span class="line">success</span><br><span class="line">[root@localhost nginx-1.6.0]#</span><br></pre></td></tr></table></figure>
 <p>上面curl链接的网址存放着脚本代码，如下图：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g015jiios7j30j70dtjtw.jpg" alt=""></p>
 <p>浏览器打开服务器ip，查看是否成功</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g01611hc38j30j70a9dgf.jpg" alt=""></p>
 <h2 id="配置PHP服务"><a href="#配置PHP服务" class="headerlink" title="配置PHP服务"></a>配置PHP服务</h2><p>yasm源码包是一款常见的开源汇编器</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost nginx-1.6.0]# cd ..</span><br><span class="line">[root@localhost src]# tar xzvf yasm-1.2.0.tar.gz </span><br><span class="line">[root@localhost src]# cd yasm-1.2.0</span><br><span class="line">[root@localhost yasm-1.2.0]# ./configure </span><br><span class="line">[root@localhost yasm-1.2.0]# make</span><br><span class="line">[root@localhost yasm-1.2.0]# make install</span><br></pre></td></tr></table></figure>
 <p>libmcrypt源码包是用于加密算法的扩展库程序</p>
@@ -686,17 +673,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost php-5.5.14]# cd /usr/local/src/</span><br><span class="line">[root@localhost src]# wget http://download.comsenz.com/DiscuzX/3.2/Discuz_X3.2_SC_UTF8.zip</span><br><span class="line">[root@localhost src]# unzip Discuz_X3.2_SC_UTF8.zip </span><br><span class="line">[root@localhost src]# rm -rf /usr/local/nginx/html/&#123;index.html,50x.html&#125;*</span><br><span class="line">[root@localhost src]# mv upload/* /usr/local/nginx/html/</span><br><span class="line">[root@localhost src]# chown -Rf www:www /usr/local/nginx/html</span><br><span class="line">[root@localhost src]# chmod -Rf 755 /usr/local/nginx/html</span><br><span class="line">[root@localhost src]# cd</span><br><span class="line">[root@localhost ~]# firewall-cmd --add-port=&#123;80,3306&#125;/tcp --permanent</span><br><span class="line">Warning: ALREADY_ENABLED: 80:tcp</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --reload</span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# setenforce 0</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
 <p>打开IP地址，加上/install，如果是下面这个样子，那九成九都是你的配置文件配置错了，需要再次检查：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g01a1y2fsqj30j80cgaa7.jpg" alt=""></p>
 <p>如果你的配置文件正确，那么基本上不会有问题，可以开始安装Discuz论坛了。</p>
 <p>浏览器敲入ip，它会跳转到<a href="http://192.168.141.132/install/，开始安装。" target="_blank" rel="noopener">http://192.168.141.132/install/，开始安装。</a></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g01a9pmoqqj31280nz0vr.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g01aaai14fj317x0sf76j.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6ly1g11f462z08j30pg0d5gn3.jpg" alt=""></p>
 <p>之前初始化mysql的时候你设置的root密码填上，另外再给你的论坛管理员admin想一个密码</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g01abihtsxj31bc0towhd.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g01ad1pnfrj315w0ssqak.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g01adpmoxmj31h40t640v.jpg" alt=""></p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g01ae26j8dj31hc0u0413.jpg" alt=""></p>
 <p>论坛登录成功！本篇到此结束。</p>
 
       
@@ -865,7 +844,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -936,7 +915,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1013,7 +1010,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

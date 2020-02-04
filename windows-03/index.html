@@ -124,14 +124,10 @@
 <meta property="og:site_name" content="峰">
 <meta property="og:description" content="windows-运维-03 活动目录">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0aw4dip22j30g00fhab4.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0aw67rqsvj30nw0e9wk1.jpg">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0awcgewz5j311x0ksgmb.jpg">
-<meta property="og:updated_time" content="2019-02-23T13:50:48.239Z">
+<meta property="og:updated_time" content="2020-01-28T03:29:29.655Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows-运维-03 活动目录">
 <meta name="twitter:description" content="windows-运维-03 活动目录">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006BPHF6gy1g0aw4dip22j30g00fhab4.jpg">
 
 
 
@@ -490,7 +486,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-23 21:50:48" itemprop="dateModified" datetime="2019-02-23T21:50:48+08:00">2019-02-23</time>
+                <time title="修改时间：2020-01-28 11:29:29" itemprop="dateModified" datetime="2020-01-28T11:29:29+08:00">2020-01-28</time>
               
             
           </span>
@@ -574,13 +570,10 @@
       
         <h1 id="windows-运维-03-活动目录"><a href="#windows-运维-03-活动目录" class="headerlink" title="windows-运维-03 活动目录"></a>windows-运维-03 活动目录</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>　　Active Directory（活动目录）是Windows Server 2003域环境中提供目录服务的组件。目录服务在微软平台上从Windows Server 2000开始引入，所以我们可以理解为活动目录是目录服务在微软平台的一种实现方式。当然目录服务在非微软平台上都有相应的实现。</p>
 <p>　　Windows Server 2012 R2有两种网络环境：工作组和域，默认是工作组网络环境，工作组网络也称为“对等式”的网络，因为网络中每台计算机的地位都是平等的。如下图：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0aw4dip22j30g00fhab4.jpg" alt=""></p>
 <h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><h3 id="1-命名空间"><a href="#1-命名空间" class="headerlink" title="1.命名空间"></a>1.命名空间</h3><p>　　命名空间是一个界定好的区域，比如我们把电话簿看成一个“命名空间”，那么我们就可以通过电话簿这个界定好的区域里面的某个人名，找到与这个人名相关的电话、地址以及公司名称等信息。而Windows Server的活动目录就一个命名空间，我们通过活动目录里的对象的名称就可以找到与这个对象相关的信息。活动目录的“命名空间”采用DNS的架构，所以活动目录的域名采用DNS的格式来命名。我们可以把域名命名为feng.com、abc.com等。</p>
 <h3 id="2-域、域树、林和组织单元"><a href="#2-域、域树、林和组织单元" class="headerlink" title="2.域、域树、林和组织单元"></a>2.域、域树、林和组织单元</h3><p>　　活动目录的逻辑结构包裹：域（Domain）、域树(Domain Tree)、林（Forest）和组织单元（Organization Unit）。如下图：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0aw67rqsvj30nw0e9wk1.jpg" alt=""></p>
 <p>　　域是一种逻辑分组，准确的说是一种环境，域是安全的最小边界。域环境能对网络中的资源集中统一的管理，要想实现域环境，你必须要计算机中安装活动目录。</p>
 <p>域树是由一组具有连续命名空间的域组成的。如下图：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006BPHF6gy1g0awcgewz5j311x0ksgmb.jpg" alt=""></p>
 <p>　　其中最上层的域名为feng.com，这个域是这棵域树的根域(root domain)，此根域下面有2个子域,分别是<a href="http://www.feng.com和file.feng.com。从图中我们可以看出他们的命名空间具有连续性。例如，域www.feng.com的后缀名包含着上一层父域的域名feng.com。其实子域www.feng.com和file.feng.com还都可以有自己的子域，图中没有给出而已。" target="_blank" rel="noopener">www.feng.com和file.feng.com。从图中我们可以看出他们的命名空间具有连续性。例如，域www.feng.com的后缀名包含着上一层父域的域名feng.com。其实子域www.feng.com和file.feng.com还都可以有自己的子域，图中没有给出而已。</a></p>
 <p>​    域树内的所有域共享一个Active Directory(活动目录)，这个活动目录内的数据分散地存储在各个域内，且每一个域只存储该域内的数据，如该域内的用户账户，计算机账户等，Windows Server将存储在各个域内的对象总称为Active Directory。</p>
 <p>​    林（Forest）是由一棵或多棵域树组成的，每棵域树独享连续的命名空间，不同域树之间没有命名空间的连续性。林中第一棵域树的根域也整个林的根域，同时也是林的名称。</p>
@@ -767,7 +760,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">145</span>
+                    <span class="site-state-item-count">157</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -838,7 +831,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -915,7 +926,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
